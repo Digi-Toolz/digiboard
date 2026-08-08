@@ -1,0 +1,187 @@
+/* ============================================================
+   DigiBoard Next 15.66 – Das Waldhelden-Schild und die Tagesinfos
+
+   Ab dieser Fassung sehe ich die Tafel selbst: ein kopfloser Browser
+   im Prüfstand lädt DigiBoard über http://localhost und macht ein
+   Bildschirmfoto. Bis 15.65 habe ich Gestaltung geändert, ohne das
+   Ergebnis je gesehen zu haben – daher die Schleife aus „probiert,
+   verschlimmert, nachgebessert".
+
+   Was auf dem Foto zu sehen war:
+
+   1 · „Unsere Waldh…" abgeschnitten, und die beiden Knöpfe „Groß" und
+       „Waldkarte" lagen ÜBEREINANDER („GroßWaldkarte").
+   2 · Die Tagesinfos standen zwar nicht mehr übereinander, aber die
+       Betonung wurde per `space-between` ans andere Ende der Zeile
+       geschoben – „Ausflug ............ am Freitag".
+   3 · Der Notizzettel oben rechts war hellgrau auf hellem Grund und
+       lag halb hinter den Wochentagen.
+   ============================================================ */
+
+/* ============================================================
+   1 · DAS SCHILD – Platz für Titel UND Knöpfe
+
+   Das Schild hat drei Spalten: `29px minmax(150px,1fr) auto`. Die
+   dritte ist für die Knöpfe gedacht und `auto` – sie sollte also so
+   breit werden wie ihr Inhalt. Sie tat es nicht, weil der Knopfbereich
+   selbst ein Raster mit zu engen Spuren ist. Ein Rasterfeld schrumpft
+   seinen Inhalt nicht, es lässt ihn überlaufen – und dann liegt
+   „Waldkarte" auf „Groß".
+
+   Zwei Knöpfe nebeneinander brauchen kein Raster. Sie brauchen eine
+   Reihe mit Abstand.
+   ============================================================ */
+
+/* `width:min(720px,88%)` half nicht: 88 % beziehen sich auf die Bühne,
+   und die ist an dieser Stelle nur gut 440 Pixel breit. Das Schild blieb
+   schmal, der Titel brach dreifach um.
+
+   `max-content` sagt dagegen: „so breit wie dein Inhalt" – begrenzt auf
+   94 % der Bühne, damit es nie herausläuft. */
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+  width:max-content!important;
+  max-width:min(760px,94%)!important;
+  min-height:0!important;
+  padding:7px 11px!important;
+  grid-template-columns:28px minmax(0,1fr) auto!important;
+  gap:10px!important;
+  align-items:center!important;
+}
+
+html body .app-shell .wall-fixed
+  .tree-title-actions-v1538.tree-title-actions-v1538{
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  display:flex!important;          /* war: grid mit zu engen Spuren */
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  gap:6px!important;
+  grid-template-columns:none!important;
+}
+html body .app-shell .wall-fixed
+  .tree-title-actions-v1538.tree-title-actions-v1538>button{
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  height:30px!important;
+  min-height:30px!important;
+  padding:0 10px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  border-radius:9px!important;
+  font-size:11.5px!important;
+}
+
+/* Titel und Untertitel dürfen umbrechen statt abzuschneiden. Der
+   Untertitel trägt seit 15.65 die Wachstumsangabe und ist dadurch
+   länger geworden – abschneiden hiesse, genau die neue Aussage zu
+   verstecken. */
+html body .app-shell .wall-fixed
+  .wall-title-v22>div:not(.tree-title-actions-v1538)>strong{
+  overflow:visible!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  font-size:15px!important;
+  line-height:1.15!important;
+}
+html body .app-shell .wall-fixed
+  .wall-title-v22>div:not(.tree-title-actions-v1538)>small{
+  overflow:visible!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  font-size:10.5px!important;
+  line-height:1.25!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+}
+
+/* ============================================================
+   2 · TAGESINFOS – zusammen, nicht auseinander
+
+   `justify-content:space-between` schiebt die Betonung ans andere Ende
+   der Zeile. In einer schmalen Spalte entsteht dadurch eine Lücke, die
+   aussieht wie ein Fehler: „Ausflug ........... am Freitag".
+
+   Die beiden Teile gehören zusammen: erst der Satz, dann die Betonung
+   direkt dahinter – und wenn kein Platz ist, direkt darunter.
+   ============================================================ */
+
+html body .app-shell .widget .info-row.info-row,
+html body .app-shell .info-row.styled-info-row{
+  justify-content:flex-start!important;
+  align-items:baseline!important;
+  gap:3px 8px!important;
+  padding:7px 4px!important;
+}
+html body .app-shell .info-row.info-row>span{
+  flex:0 1 auto!important;
+}
+html body .app-shell .info-row.info-row>strong{
+  flex:0 1 auto!important;
+  text-align:left!important;
+}
+
+/* Dieselbe Geschichte wie beim Wochenziel-Zettel, im Browser abgefragt:
+
+     .dashboard>.widget[data-id="info"]  →  #fff !important   (geerbt)
+
+   Weiße Schrift – richtig, solange die Tafel-Kachel dunkelgrün war.
+   Der Grund ist inzwischen hell, die Schriftfarbe blieb stehen. Die
+   Zeilen erben sie, weil `.styled-info-row span` auf `inherit` steht.
+
+   Hier reicht kein einzelner Selektor: die Farbe muss an der Kachel
+   selbst gesetzt werden, sonst erben die Zeilen weiter das Weiß. */
+html body .app-shell .dashboard>.widget[data-id="info"].widget.widget,
+html body .app-shell .dashboard>.widget[data-id="info"].widget.widget .info-row,
+html body .app-shell .dashboard>.widget[data-id="info"].widget.widget .info-row span,
+html body .app-shell .dashboard>.widget[data-id="info"].widget.widget .info-row strong{
+  color:#22402b!important;
+  text-shadow:none!important;
+}
+html body .app-shell .dashboard>.widget[data-id="info"].widget.widget .info-row strong{
+  font-weight:900!important;
+}
+
+/* ============================================================
+   3 · DER NOTIZZETTEL OBEN RECHTS
+
+   Hellgrau auf hellem Zettel, halb hinter den Wochentagen. Ein Ziel,
+   das die Klasse sich vorgenommen hat, gehört zu den wichtigsten
+   Sätzen auf der Tafel.
+   ============================================================ */
+
+/* Im Browser nachgesehen statt geraten – der Satz steckt hier:
+
+     div.weekly-goal-widget > h3     color: rgb(255,248,234)
+
+   Cremeweiß. Das war einmal richtig, als der Zettel einen dunkelgrünen
+   Grund hatte. Der Grund ist inzwischen hell; die Schriftfarbe ist
+   mitgewandert – nur eben nicht. */
+/* Der Browser selbst hat mir gesagt, wogegen ich antrete:
+
+     html body .app-shell .weekly-goal-widget.weekly-goal-widget h3
+       → #22432c !important          Spezifität 303
+     html body .app-shell .dashboard>.widget[data-id="weeklyGoal"] …
+       → #fff8ea !important          Spezifität 403   ← gewann
+
+   Ein Attributselektor `[data-id="weeklyGoal"]` zählt wie eine Klasse.
+   Deshalb hier vier Klassen statt zwei. */
+html body .app-shell .weekly-goal-widget.weekly-goal-widget.weekly-goal-widget.weekly-goal-widget h3,
+html body .app-shell .weekly-goal-widget.weekly-goal-widget.weekly-goal-widget.weekly-goal-widget p,
+html body .app-shell .weekly-goal-widget.weekly-goal-widget.weekly-goal-widget.weekly-goal-widget strong,
+html body .app-shell .weekly-goal-widget.weekly-goal-widget.weekly-goal-widget.weekly-goal-widget small{
+  color:#22432c!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+html body .app-shell .weekly-goal-widget.weekly-goal-widget.weekly-goal-widget h3{
+  font-size:15px!important;
+  line-height:1.25!important;
+  overflow:visible!important;
+  white-space:normal!important;
+}
