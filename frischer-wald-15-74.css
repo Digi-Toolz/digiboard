@@ -1,0 +1,60 @@
+/* DigiBoard Next 15.74 – frischer Tageswald ohne Märchenkulisse */
+
+html body .app-shell[data-theme="forest"] {
+  background-color: #bfe78e !important;
+  background-image:
+    radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.08), transparent 44%),
+    linear-gradient(180deg, rgba(255,255,255,.015), rgba(71,145,57,.025)),
+    url('forest-clearing-15.74.png') !important;
+  background-blend-mode: screen, soft-light, normal !important;
+  background-position: center, center, center center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+}
+
+@media (min-width: 761px) {
+  /* Die Kulisse bleibt klar: blauer Himmel, Sonne und natürliche Wiese. */
+  html body .app-shell[data-theme="forest"] .wall-fixed::before {
+    opacity: .16 !important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-clearing-light-v1542 {
+    opacity: .30 !important;
+    mix-blend-mode: screen !important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-depth-pines-v1542,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-background-grove-v1539 {
+    opacity: .08 !important;
+  }
+
+  /* Der Baum hebt sich satt vom hellen Himmel ab, ohne dunkle Schatten. */
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tree-main-image-v1539 {
+    filter:
+      drop-shadow(0 22px 17px rgba(32,76,31,.20))
+      saturate(1.12)
+      brightness(1.07)
+      contrast(1.035) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-shadow-v22 {
+    opacity: .55 !important;
+    background: rgba(35,82,31,.18) !important;
+  }
+
+  /* Weniger Märchen, mehr moderner Naturpfad: Dekorationen zurückhaltender. */
+  html body .app-shell[data-theme="forest"] .forest-story-owl-v1573,
+  html body .app-shell[data-theme="forest"] .forest-story-acorn-v1573 {
+    opacity: .82 !important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-story-glints-v1573 {
+    opacity: .46 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html body .app-shell[data-theme="forest"] {
+    background-image:
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(83,159,66,.04)),
+      url('forest-clearing-15.74.png') !important;
+    background-blend-mode: screen, normal !important;
+  }
+}
