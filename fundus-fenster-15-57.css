@@ -1,0 +1,267 @@
+/* ============================================================
+   DigiBoard Next 15.57 – Das Fundus-Fenster, einmal richtig
+
+   ------------------------------------------------------------
+   Warum 15.56 nicht gewirkt hat
+   ------------------------------------------------------------
+
+   Ich hatte mich darauf verlassen, dass eine später geladene Datei
+   gewinnt. Das gilt aber nur bei GLEICHER Spezifität. In diesem Projekt
+   stehen die entscheidenden Regeln mit VERDOPPELTEN Klassen da:
+
+       html body #teamDialog #teamWorkspace.materials-mode
+         .material-head-title.material-head-title { display:grid; … }
+
+   Die Klasse zweimal zu nennen ändert nichts an dem, was getroffen
+   wird – aber es hebt die Spezifität um eine Stufe. Meine Regel mit
+   einfacher Klasse verliert dagegen, egal an welcher Stelle sie steht.
+   In `fixes.css` stehen 166 solcher Selektoren, in `fundus-15-33.css`
+   noch einmal 16.
+
+   Genau diese eine Regel – `grid-template-columns:auto minmax(0,1fr)` –
+   stellte Überschrift und Erklärung nebeneinander und quetschte
+   „Fächer, Ordner und vorbereitete Stunden an einem Ort" in eine
+   Handtuchspalte.
+
+   ------------------------------------------------------------
+   Was diese Datei anders macht
+   ------------------------------------------------------------
+
+   Nicht noch eine Schicht Übermalung, sondern für DIESES eine Fenster
+   der Aufräumschritt: Die widersprechenden Regeln werden zuerst
+   STILLGELEGT (Abschnitt 1), danach wird das Fenster genau EINMAL
+   beschrieben (Abschnitt 2).
+
+   Der Trick dabei ist bewusst simpel: Das Fenster wird von einem Raster
+   (`grid`) auf eine Spalte (`flex`) umgestellt. Damit werden sämtliche
+   `grid-area:`- und `grid-template-rows:`-Angaben der alten Dateien
+   wirkungslos – sie gelten nur in einem Raster. Man muss sie also nicht
+   einzeln jagen.
+   ============================================================ */
+
+/* ============================================================
+   1 · STILLLEGEN
+
+   Dreifache Klasse, damit diese Regeln über den verdoppelten stehen.
+   Das ist kein schöner CSS-Stil – es ist die einzige Möglichkeit, ohne
+   die alten Dateien anzufassen. Beim endgültigen Aufräumen fallen
+   diese Untiefen zusammen mit den alten Blöcken weg.
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace.materials-mode.materials-mode{
+  display:flex!important;          /* war: grid mit festen Zeilenhöhen */
+  flex-direction:column!important;
+  gap:10px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-library-panel.material-library-panel.material-library-panel{
+  box-sizing:border-box!important;
+  width:100%!important;            /* stand vorher nur so breit wie sein Inhalt */
+  max-width:none!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  overflow:visible!important;
+}
+
+/* ============================================================
+   2 · DER KOPF: TITEL OBEN, ERKLÄRUNG DARUNTER
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-head.material-head.material-head{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:12px 16px!important;
+  display:block!important;         /* war: flex */
+  overflow:visible!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-head-title.material-head-title.material-head-title{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  display:block!important;         /* war: grid, zwei Spalten – DER Fehler */
+  grid-template-columns:none!important;
+  gap:0!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-head-title.material-head-title h3{
+  width:auto!important;
+  margin:0!important;
+  display:block!important;
+  color:#20502f!important;
+  font-size:clamp(18px,1.6vw,25px)!important;
+  line-height:1.15!important;
+  white-space:normal!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-head-title.material-head-title p{
+  width:auto!important;
+  max-width:62ch!important;
+  margin:4px 0 0!important;
+  display:block!important;
+  color:#5c7360!important;
+  font-size:12px!important;
+  font-weight:650!important;
+  line-height:1.4!important;
+  white-space:normal!important;
+  text-align:left!important;
+}
+
+/* ============================================================
+   3 · DER ARBEITSBEREICH WÄCHST, STATT SICH ABZUSCHNEIDEN
+
+   Vorher endete die Panel-Rasterzeile auf `minmax(0,1fr)`. Das heißt:
+   „nimm den Rest der Höhe – und wenn der Inhalt größer ist, schneide
+   ihn ab." Daher die Scrollbalken im Scrollbalken.
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-workspace.material-workspace.material-workspace{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.6fr) minmax(290px,.7fr)!important;
+  align-items:start!important;
+  gap:12px!important;
+  overflow:visible!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-item-list.material-item-list.material-item-list,
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-add-card.material-add-card.material-add-card{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:block!important;
+  overflow:visible!important;
+  padding:12px!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-page-grid.material-page-grid{
+  height:auto!important;
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr))!important;
+  grid-template-rows:auto!important;
+  gap:9px!important;
+  overflow:visible!important;
+}
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-item.material-item{
+  height:auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+
+/* Die Reiter fliessen und brechen um, statt in sechs starren Spalten
+   auf 58 Pixel Höhe zu stehen. */
+html body #teamDialog #teamWorkspace.materials-mode
+  .material-drawer-tabs.material-drawer-tabs.material-drawer-tabs{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))!important;
+  gap:8px!important;
+  overflow:visible!important;
+}
+
+/* ============================================================
+   4 · LESBARE SCHRIFT
+
+   7 bis 9 Pixel waren kein Gestaltungswille, sondern der Versuch,
+   Inhalt in eine zu kleine Kiste zu pressen. Die Kiste ist weg.
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace.materials-mode .drawer-tab.drawer-tab strong{font-size:12.5px!important}
+html body #teamDialog #teamWorkspace.materials-mode .drawer-tab.drawer-tab small{font-size:10px!important}
+html body #teamDialog #teamWorkspace.materials-mode .material-list-head h4{font-size:15px!important}
+html body #teamDialog #teamWorkspace.materials-mode .material-list-head p{font-size:11.5px!important}
+html body #teamDialog #teamWorkspace.materials-mode .material-add-card .status-note{font-size:11px!important}
+html body #teamDialog #teamWorkspace.materials-mode .material-add-card select,
+html body #teamDialog #teamWorkspace.materials-mode .material-add-card input,
+html body #teamDialog #teamWorkspace.materials-mode .material-add-card textarea{font-size:12.5px!important}
+
+/* ============================================================
+   5 · DAS FENSTER SELBST: EINE SEITE, EIN SCROLLBALKEN
+   ============================================================ */
+
+html body #teamDialog .dialog-card.dialog-card:has(#teamWorkspace.materials-mode),
+html body #teamDialog .dialog-card.dialog-card:has(#teamWorkspace.overview-mode),
+html body #teamDialog .dialog-card.dialog-card:has(#teamWorkspace.settings-mode){
+  width:min(1320px,96vw)!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:92vh!important;
+  overflow:hidden auto!important;
+  overscroll-behavior:contain!important;
+}
+
+/* ============================================================
+   6 · HANDY: NICHTS SCHWEBT MEHR ÜBEREINANDER
+
+   Auf dem iPhone standen Zurück-Knopf, Titel, „Person wechseln" und
+   Zahnrad übereinander, weil die Kopfzeile auf 46 Pixel festgesetzt war
+   und zwei Knöpfe absolut darüber lagen. Auch hier: dreifache Klasse,
+   sonst gewinnen die alten Regeln.
+   ============================================================ */
+
+@media (max-width:760px){
+  html body #teamDialog #teamWorkspace.materials-mode
+    .material-workspace.material-workspace.material-workspace{
+    grid-template-columns:1fr!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode
+    .material-page-grid.material-page-grid{
+    grid-template-columns:1fr!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode
+    .material-drawer-tabs.material-drawer-tabs.material-drawer-tabs{
+    grid-template-columns:repeat(auto-fit,minmax(136px,1fr))!important;
+  }
+
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav.team-workspace-nav{
+    position:static!important;
+    grid-area:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:8px!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    gap:7px!important;
+    border-radius:14px!important;
+  }
+  html body #teamDialog .team-close-button.team-close-button.team-close-button,
+  html body #teamDialog .team-top-settings-button.team-top-settings-button.team-top-settings-button{
+    position:static!important;
+    top:auto!important;
+    right:auto!important;
+    margin:0!important;
+    flex:0 0 auto!important;
+  }
+  html body #teamDialog .dialog-card.dialog-card{
+    padding:calc(env(safe-area-inset-top,0px) + 10px) 10px
+            calc(env(safe-area-inset-bottom,0px) + 10px)!important;
+  }
+}
