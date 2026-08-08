@@ -92,10 +92,49 @@ html body #settingsDialog .settings-group-children.settings-group-children{
      weil die Knöpfe durch fremde Regeln auf volle Breite standen.
      Jetzt reihen sie sich von links auf und brechen erst um, wenn es
      wirklich eng wird. */
+  /* NEXT 15.61 – Die Knöpfe standen UNTEREINANDER, mittig, jeder auf
+     eigener Zeile: erst der grüne Zurück-Knopf, darunter 👥, darunter
+     die Reiter, darunter das Zahnrad.
+
+     Der Grund war eine einzige Zeile in override.css:
+
+         .team-workspace-nav{ flex-direction:column }
+
+     Spezifität 100, ganz ohne `!important` – und sie hat trotzdem
+     gewonnen, weil ich `flex-direction` schlicht NIE gesetzt habe.
+     Meine Regeln bestimmten `display`, `flex-wrap` und `align-items`;
+     die Richtung blieb unangetastet und damit bei „Spalte".
+
+     Eine Regel muss nicht stark sein, um zu gewinnen. Sie muss nur die
+     einzige sein, die etwas zu der Eigenschaft sagt. */
   html body #teamDialog #teamWorkspace
     .team-workspace-nav.team-workspace-nav.team-workspace-nav{
+    box-sizing:border-box!important;
+    width:100%!important;            /* hing noch an fixes.css – jetzt hier */
+    flex-direction:row!important;
     justify-content:flex-start!important;
     align-items:center!important;
+  }
+  /* `.team-nav-left` steht auf `display:contents` (handy-15-46.css),
+     seine Knöpfe hängen also direkt in der Kopfzeile. Sie dürfen sich
+     nicht auf volle Breite ziehen, sonst ist jeder wieder eine Zeile. */
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav #backToBoardButton,
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav .team-person-button,
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav>button{
+    width:auto!important;
+    flex:0 0 auto!important;
+    margin:0!important;
+  }
+  /* Die beiden Reiter „Meine Übersicht / Alle Füchse" bekommen die
+     zweite Zeile für sich – dafür sind sie zu breit. */
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav .team-page-tabs{
+    order:9!important;
+    flex:1 1 100%!important;
+    width:100%!important;
   }
   html body #teamDialog #teamWorkspace
     .team-workspace-nav.team-workspace-nav>*,

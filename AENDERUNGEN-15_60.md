@@ -82,3 +82,56 @@ hat. Beim Verschieben von Markup ist das Verdoppeln der häufigste Fehler.
 - Und eine dritte, die schlicht falsch war: „kein Ziel doppelt" sah nur
   `data-settings-target` – drei Kacheln zeigen aber legitim auf
   `settingsDaily` und unterscheiden sich erst durch `data-daily-card`.
+
+---
+
+# 15.61 – Nachtrag: der gestapelte Handy-Kopf
+
+Auf deinem Bildschirmfoto standen die Knöpfe **untereinander**, jeder mittig
+auf eigener Zeile: grüner Zurück-Knopf, darunter 👥, darunter die Reiter,
+darunter das Zahnrad.
+
+Der Grund war eine einzige Zeile in `override.css`:
+
+```css
+.team-workspace-nav{ flex-direction:column }
+```
+
+Spezifität **100**, ganz ohne `!important` – und sie hat trotzdem gewonnen.
+Nicht weil sie stark war, sondern weil ich `flex-direction` **nie gesetzt
+habe**. Ich hatte `display`, `flex-wrap` und `align-items` bestimmt und mich
+darauf verlassen, dass mir damit das Layout gehört. Tat es nicht.
+
+> Eine Regel muss nicht stark sein, um zu gewinnen.
+> Sie muss nur die einzige sein, die etwas zu der Eigenschaft sagt.
+
+Jetzt steht die Kopfzeile in einer Reihe: Zurück-Knopf, Person, Zahnrad
+nebeneinander; die beiden Reiter „Meine Übersicht / Alle Füchse" bekommen
+die zweite Zeile für sich, weil sie dafür zu breit sind.
+
+## Der Prüfstand prüft jetzt vollständig
+
+Bisher habe ich nur die Eigenschaften geprüft, an die ich **gedacht** hatte –
+genau die also, die schon in Ordnung waren. Ab jetzt wird ein Bauteil
+komplett durchgegangen: `display`, `flex-direction`, `flex-wrap`,
+`justify-content`, `align-items`, `position`, `width`, `height`. Für jede
+davon muss der Sieger aus den neuen Dateien kommen.
+
+Diese Prüfung fand sofort eine zweite Lücke: `width` auf der Kopfzeile hing
+noch an `fixes.css`. Der Wert war zufällig richtig (`100%`) – aber „zufällig
+richtig" ist genau die Sorte Zustand, aus der beim nächsten Eingriff wieder
+ein Fehler wird. Steht jetzt ebenfalls in der neuen Datei.
+
+```
+node pruefstand.mjs .          135 von 135 bestanden
+
+  Handy-Kopf: keine Layout-Eigenschaft haengt noch an einer Altdatei
+    → alle in neuer Hand
+```
+
+## Zum Bildschirmfoto selbst
+
+Das war noch die Fassung **vor** 15.60 – der Streifen rechts und die
+Stapelung stammen beide daher. Nach dem Hochladen von 15.61 bitte einmal die
+Seite auf dem iPhone schließen und neu öffnen; Safari hält den alten
+Service Worker sonst hartnäckig fest.
