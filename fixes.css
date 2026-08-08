@@ -1,0 +1,4061 @@
+/* ============================================================
+   DigiBoard Next – fixes.css
+   Neue Datei, Variante A (minimalinvasiv).
+
+   Enthaelt ausschliesslich Stile fuer Elemente, die es vorher nicht gab.
+   Wird in index.html als LETZTES Stylesheet geladen, damit die 10.156
+   !important-Regeln aus override.css hier nicht hineinregieren.
+   Es wird bewusst keine bestehende Regel ueberschrieben.
+   ============================================================ */
+
+/* Warnleiste, wenn saveState() nicht speichern konnte (z. B. Speicher voll).
+   Vorher gab es in diesem Fall ueberhaupt keine Rueckmeldung. */
+#storageWarningBar{
+  position:fixed;
+  left:50%;
+  bottom:max(18px,env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%);
+  z-index:9999;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  max-width:min(680px,calc(100vw - 32px));
+  padding:14px 16px;
+  border-radius:14px;
+  border:2px solid #8a3b12;
+  background:#fff4e2;
+  color:#5b2708;
+  font:600 15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-shadow:0 12px 34px rgba(0,0,0,.32);
+  animation:storageWarningIn .22s ease-out;
+}
+
+/* ================================================================
+   NEXT 15.33 · RUHIGER FUNDUS
+   Eine Navigation, ein Fach-Editor, keine schwebenden Duplikate.
+   ================================================================ */
+
+html body #teamDialog #workspaceBannerActions,
+html body #teamDialog #backToTeamOverview,
+html body #teamDialog .material-head-controls,
+html body #teamDialog .drawer-icon-edit{
+  display:none!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .material-head{
+  min-height:64px!important;
+  margin:0!important;
+  padding:12px 16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  border:1px solid #d5e3ce!important;
+  border-radius:18px!important;
+  background:linear-gradient(135deg,#fff 0%,#f3f8ec 100%)!important;
+  box-shadow:none!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .material-head-title{
+  min-width:0!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  color:#245a3a!important;
+  font-size:clamp(22px,2.1vw,32px)!important;
+  line-height:1.1!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .material-drawer-tabs{
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:4px!important;
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr))!important;
+  align-items:stretch!important;
+  gap:8px!important;
+  overflow:visible!important;
+  border:1px solid #d5e3ce!important;
+  border-radius:16px!important;
+  background:#f5f8f0!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .drawer-tab-wrap{
+  width:100%!important;
+  min-width:0!important;
+  display:block!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .drawer-tab{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:50px!important;
+  padding:9px 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  border:1px solid #c9dbc4!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  color:#28583b!important;
+  line-height:1.15!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .drawer-tab.active{
+  border-color:#26984b!important;
+  background:linear-gradient(135deg,#168846,#45b755)!important;
+  box-shadow:0 5px 12px rgba(28,119,64,.16)!important;
+  color:#fff!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .material-search-row{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto auto!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode .material-search-field{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:44px!important;
+  margin:0!important;
+  border:1px solid #c9dbc4!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode #editActiveDrawerButton,
+html body #teamDialog #teamWorkspace.materials-mode #addDrawerButton{
+  box-sizing:border-box!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:9px 14px!important;
+  border:1px solid #c9dbc4!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  color:#28583b!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
+}
+
+html body #teamDialog #teamWorkspace.materials-mode #editActiveDrawerButton:hover,
+html body #teamDialog #teamWorkspace.materials-mode #addDrawerButton:hover{
+  border-color:#28984c!important;
+  background:#eef8e9!important;
+}
+
+html body #iconPickerDialog form{
+  box-sizing:border-box!important;
+  width:min(520px,calc(100vw - 24px))!important;
+  max-height:min(720px,calc(100vh - 24px))!important;
+  padding:20px!important;
+  overflow:auto!important;
+  border:1px solid #d4e2cd!important;
+  border-radius:22px!important;
+  background:#fbfdf8!important;
+  box-shadow:0 24px 70px rgba(20,69,39,.28)!important;
+}
+
+html body #iconPickerDialog .drawer-name-editor-v1533{
+  margin:12px 0!important;
+  display:grid!important;
+  gap:6px!important;
+  color:#28583b!important;
+  font-size:13px!important;
+  font-weight:850!important;
+}
+
+html body #iconPickerDialog .drawer-name-editor-v1533 input{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:46px!important;
+  padding:10px 12px!important;
+  border:1px solid #bdd2b9!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  color:#234f37!important;
+  font:inherit!important;
+  font-size:16px!important;
+}
+
+html body #iconPickerDialog .icon-picker-grid{
+  margin:8px 0 14px!important;
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+
+html body #iconPickerDialog .icon-picker-grid button{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  aspect-ratio:1!important;
+  border:1px solid #d3dfce!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  font-size:22px!important;
+}
+
+html body #iconPickerDialog .icon-picker-grid button.is-active{
+  border-color:#268e49!important;
+  background:#e5f6dd!important;
+  box-shadow:0 0 0 3px rgba(38,142,73,.14)!important;
+}
+
+html body #iconPickerDialog .icon-picker-footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+}
+
+html body #iconPickerDialog #iconPickerSaveDrawer{
+  min-height:44px!important;
+  border-radius:12px!important;
+  background:linear-gradient(135deg,#168846,#45b755)!important;
+}
+
+html body #iconPickerDialog #iconPickerStatus{
+  min-height:18px!important;
+  margin:8px 0 0!important;
+  color:#a53d31!important;
+  font-size:12px!important;
+  font-weight:800!important;
+}
+
+@media (min-width:701px){
+  html body #teamDialog #teamWorkspace.materials-mode{
+    grid-template-areas:'nav' 'tabs' 'content'!important;
+    grid-template-rows:52px 44px minmax(0,1fr)!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode>.team-workspace-nav{
+    grid-area:nav!important;
+    position:relative!important;
+    inset:auto!important;
+    display:grid!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode>.team-page-tabs{
+    grid-area:tabs!important;
+    position:relative!important;
+    inset:auto!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode>.material-library-panel{
+    grid-area:content!important;
+    min-height:0!important;
+    display:grid!important;
+    grid-template-rows:auto auto auto minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+}
+
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace.materials-mode .material-head{
+    min-height:54px!important;
+    padding:10px 12px!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode .material-head-title{
+    font-size:22px!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode .material-drawer-tabs{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode .material-search-row{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode .material-search-field{
+    grid-column:1/-1!important;
+  }
+
+  html body #teamDialog #teamWorkspace.materials-mode #editActiveDrawerButton,
+  html body #teamDialog #teamWorkspace.materials-mode #addDrawerButton{
+    width:100%!important;
+    min-width:0!important;
+    padding:8px!important;
+    white-space:normal!important;
+  }
+}
+
+@media (max-width:520px){
+  html body #iconPickerDialog .icon-picker-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  }
+
+  html body #iconPickerDialog .icon-picker-footer{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+
+  html body #iconPickerDialog .icon-picker-footer button{
+    width:100%!important;
+  }
+}
+
+#storageWarningBar .storage-warning-text{ flex:1; }
+
+#storageWarningBar .storage-warning-close{
+  flex:0 0 auto;
+  width:30px;
+  height:30px;
+  border:0;
+  border-radius:50%;
+  background:#e7d3ba;
+  color:#5b2708;
+  font-size:15px;
+  line-height:1;
+  cursor:pointer;
+}
+
+#storageWarningBar .storage-warning-close:hover{ background:#d9bd9c; }
+
+#storageWarningBar .storage-warning-close:focus-visible{
+  outline:3px solid #0b6b45;
+  outline-offset:2px;
+}
+
+@keyframes storageWarningIn{
+  from{ opacity:0; transform:translate(-50%,14px); }
+  to  { opacity:1; transform:translate(-50%,0); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #storageWarningBar{ animation:none; }
+}
+
+@media (max-width:520px){
+  #storageWarningBar{
+    left:12px;
+    right:12px;
+    max-width:none;
+    transform:none;
+    animation:none;
+  }
+}
+
+/* =========================================================================
+   04.08.2026 – Marc: drei Korrekturen nach Screenshots
+   1) Fundus & Vorbereitung: Knöpfe (Zahnrad/Zurück) gehören oben rechts
+      neben den Titel, der Hilfetext darunter – nicht mehr mittig schwebend.
+   2) „Heute im Blick“ + Kinderliste als eine zusammenhängende, hellbraune
+      Kartei-Fläche; „Heute im Blick“ und „Alle Kinder & Punkte“ exakt
+      gleich groß, Titel dort zweizeilig wie links.
+   3) „Mein Unterricht“ / „Auf der Tafel“ gleich groß, dezente Eigenfarbe,
+      neues Tafel-Icon; Name der angemeldeten Person oben im Header.
+   Alle Regeln sind bewusst sehr hoch spezifisch (mehrfach wiederholte
+   Klassen), damit sie unabhängig von älteren, tiefer im Stylesheet
+   liegenden Regeln zuverlässig gewinnen.
+   ========================================================================= */
+
+/* ---- 1) Fundus & Vorbereitung: Kopfzeile neu ordnen ---- */
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head.material-head{
+    display:flex!important; flex-wrap:wrap!important;
+    align-items:flex-start!important; justify-content:space-between!important;
+    gap:6px 10px!important; position:relative!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-title.material-head-title{
+    order:1!important; flex:1 1 auto!important; min-width:0!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-controls.material-head-controls{
+    order:2!important; flex:0 0 auto!important; display:flex!important; gap:7px!important;
+    margin:1px 0 0!important; position:static!important; top:auto!important; right:auto!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-help.material-head-help{
+    order:3!important; flex:1 1 100%!important; margin:6px 0 0!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-icon-button.material-head-icon-button{
+    width:36px!important; height:36px!important; border-radius:12px!important;
+    display:grid!important; place-items:center!important;
+    border:1px solid rgba(60,90,50,.16)!important;
+    box-shadow:0 2px 7px rgba(35,60,30,.14)!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-icon-button.material-head-icon-button.settings.settings{
+    background:linear-gradient(150deg,#fdf1d4,#f0d089)!important; color:#5b4110!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-icon-button.material-head-icon-button.back.back{
+    background:linear-gradient(150deg,#ffffff,#e7efe0)!important; color:#2f4a28!important;
+  }
+}
+
+/* ---- 2) „Heute im Blick“ als aufgeklappte, hellbraune Kartei ---- */
+@media (max-width:700px){
+  html body .mobile-personal-hub .mobile-today-lead.mobile-today-lead{
+    background:linear-gradient(180deg,#f3e3c9,#ecd6b0)!important;
+    border:1px solid #d9bd8c!important; border-radius:18px!important;
+    padding:10px!important; box-shadow:0 6px 16px rgba(90,60,25,.16)!important;
+  }
+  html body .mobile-personal-hub .mobile-today-lead .mobile-incident-list.mobile-incident-list{
+    background:transparent!important; box-shadow:none!important; padding:0!important; margin-top:9px!important;
+  }
+  html body .mobile-personal-hub .mobile-today-lead .mobile-incident.mobile-incident{
+    background:rgba(255,255,255,.75)!important; border-radius:12px!important;
+  }
+  html body .mobile-personal-hub .mobile-today-lead .mobile-all-good.mobile-all-good{
+    background:rgba(255,255,255,.6)!important; border-radius:12px!important; color:#3c2c14!important;
+  }
+  html body .mobile-personal-hub .mobile-today-lead .mobile-all-good.mobile-all-good strong{color:#3c2c14!important}
+  html body .mobile-personal-hub .mobile-today-lead .mobile-all-good.mobile-all-good small{color:#6b573d!important}
+
+  /* Heute im Blick + Alle Kinder & Punkte exakt gleich groß */
+  html body .mobile-personal-hub .mobile-today-top-row.mobile-today-top-row{
+    display:flex!important; align-items:stretch!important; gap:8px!important;
+  }
+  html body .mobile-personal-hub .mobile-today-top-row .mobile-today-head.mobile-today-head,
+  html body .mobile-personal-hub .mobile-today-top-row .nav-children-wide.nav-children-wide{
+    flex:1 1 50%!important; min-width:0!important; min-height:78px!important; box-sizing:border-box!important;
+  }
+
+  /* Alle Kinder & Punkte: eigenes Icon-Badge + zweizeiliger Titel wie links */
+  html body .mobile-personal-hub .nav-children-wide.nav-children-wide{
+    display:flex!important; flex-direction:column!important; align-items:flex-start!important;
+    justify-content:center!important; gap:2px!important; position:relative!important;
+    padding:10px 26px 10px 11px!important; text-align:left!important;
+    background:linear-gradient(150deg,#2e8a4c,#3fae5a)!important;
+  }
+  html body .mobile-personal-hub .nav-children-wide .mobile-nav-icon.mobile-nav-icon{
+    width:26px!important; height:26px!important; display:grid!important; place-items:center!important;
+    border-radius:50%!important; background:rgba(255,255,255,.24)!important;
+    font-size:14px!important; margin-bottom:3px!important;
+  }
+  html body .mobile-personal-hub .nav-children-wide strong{
+    display:block!important; font-size:13px!important; line-height:1.2!important; color:#fff!important;
+  }
+  html body .mobile-personal-hub .nav-children-wide strong .nav-tile-break{
+    display:block!important; font-size:12px!important;
+  }
+  html body .mobile-personal-hub .nav-children-wide small{
+    display:block!important; margin-top:3px!important; font-size:9px!important; color:rgba(255,255,255,.88)!important;
+  }
+  html body .mobile-personal-hub .nav-children-wide .mobile-nav-chevron.mobile-nav-chevron{
+    position:absolute!important; right:9px!important; top:9px!important; font-size:15px!important; color:#fff!important;
+  }
+}
+
+/* ---- 3) Mein Unterricht / Auf der Tafel: gleich groß, eigene Farbe ---- */
+@media (max-width:700px){
+  html body .mobile-personal-hub .mobile-quick-nav.mobile-quick-nav{
+    display:grid!important; grid-template-columns:1fr 1fr!important; gap:9px!important; align-items:stretch!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .mobile-nav-tile.mobile-nav-tile{
+    min-height:66px!important; box-sizing:border-box!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .nav-lesson.nav-lesson{
+    background:linear-gradient(150deg,#edf6e8,#dbecd1)!important; border:1px solid #c6e0b8!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .nav-lesson.nav-lesson strong{color:#2b4a24!important}
+  html body .mobile-personal-hub .mobile-quick-nav .nav-board.nav-board{
+    background:linear-gradient(150deg,#eaf2f8,#d6e7f1)!important; border:1px solid #b9d7e8!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .nav-board.nav-board strong{color:#1f425a!important}
+}
+
+/* ---- Name der angemeldeten Person oben im grünen Header ---- */
+.topbar-person-badge{
+  display:inline-flex; align-items:center; gap:5px;
+  margin-left:9px; padding:4px 11px 4px 5px;
+  border-radius:999px; background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.3);
+}
+.topbar-person-badge #topbarPersonIcon{
+  width:20px; height:20px; display:grid; place-items:center;
+  border-radius:50%; background:#fff; font-size:11px;
+}
+.topbar-person-badge #topbarPersonName{
+  font-size:11px; font-weight:850; color:#fff; letter-spacing:.02em; white-space:nowrap;
+}
+@media (max-width:700px){
+  html body .topbar .topbar-person-badge.topbar-person-badge{margin-left:6px; padding:3px 9px 3px 3px}
+  html body .topbar .topbar-person-badge #topbarPersonName{font-size:10px}
+}
+
+/* =========================================================================
+   04.08.2026 (Teil 2) – Marc: Cockpit-Ansicht (Tablet/Laptop, „Meine Übersicht“)
+   1) Kinder-Zeilen bei Heute im Blick: ganze Zeile farbig statt nur Rand.
+   2) Wochenziel: kleiner, moderner, aufgeräumter.
+   3) Favoriten-Werkzeug oben (z. B. Prowise): Symbol/Text nicht mehr von
+      Weiß verdeckt – jetzt durchgehend grün mit weißer, lesbarer Schrift
+      und einer kleinen Stern-Ecke statt überlappendem Symbol.
+   ========================================================================= */
+
+/* ---- 1) Kinder-Zeilen komplett einfärben (nicht nur der Rand) ---- */
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident.warning{
+  background:#fff2b9!important; border-left-color:#edc84e!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident.ban,
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident.veto{
+  background:#ffe0dd!important; border-left-color:#e16b62!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident.note{
+  background:#e0efff!important; border-left-color:#70a9df!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident.praise,
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident.positive{
+  background:#e0f4dc!important; border-left-color:#76ba70!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident strong{color:#233524!important}
+html body #teamDialog #teamWorkspace .cockpit-incident.cockpit-incident small{color:#4b5a4b!important}
+
+/* ---- 2) Wochenziel: kleiner, moderner ---- */
+html body #teamDialog #teamWorkspace .cockpit-card.cockpit-goal.cockpit-goal{
+  position:relative!important; padding:13px 15px!important; border-radius:16px!important;
+  background:linear-gradient(155deg,#fbfef6,#eef6e2)!important;
+  border:1px solid rgba(60,110,66,.14)!important; box-shadow:0 4px 12px rgba(35,70,40,.08)!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head{
+  margin-bottom:7px!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head small{
+  font-size:8.5px!important; letter-spacing:.11em!important; color:#71875e!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head h3{
+  font-size:14px!important; margin:2px 0 0!important; font-weight:850!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head>button{
+  font-size:9.5px!important; padding:5px 10px!important; border-radius:999px!important;
+  background:#fff!important; border:1px solid #d8e4cb!important; color:#3d6a45!important;
+  font-weight:800!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-row{
+  display:flex!important; flex-direction:column!important; gap:9px!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal #cockpitGoalText.cockpitGoalText,
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal #cockpitGoalText{
+  margin:0!important; padding-right:58px!important; font-size:12.5px!important;
+  font-weight:700!important; color:#2e4a2e!important; line-height:1.35!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-status.cockpit-goal-status{
+  position:absolute!important; top:13px!important; right:15px!important;
+  font-size:8.5px!important; padding:4px 9px!important; font-weight:850!important;
+  border-radius:999px!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-actions{
+  display:flex!important; gap:7px!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.cockpit-goal-button{
+  flex:1 1 0!important; border:0!important; border-radius:999px!important; padding:8px 10px!important;
+  font-size:11.5px!important; font-weight:800!important; box-shadow:none!important; cursor:pointer!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.yes.yes{
+  background:#e3f5e4!important; color:#237a34!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.yes.yes:disabled{
+  background:#eef3ea!important; color:#9fb098!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.no.no{
+  background:#fbe4e1!important; color:#a4392c!important;
+}
+
+/* ---- 3) Favoriten-Werkzeug oben (Prowise & Co.): lesbar statt weiß-verdeckt ---- */
+html body #teamDialog #teamWorkspace #cockpitFavoriteTools .cockpit-tool-link.cockpit-tool-link{
+  position:relative!important; overflow:visible!important;
+  background:linear-gradient(150deg,#2e8a4c,#3fae5a)!important; color:#fff!important;
+  border:1px solid rgba(255,255,255,.4)!important;
+}
+html body #teamDialog #teamWorkspace #cockpitFavoriteTools .cockpit-tool-link.cockpit-tool-link>span:first-child{
+  background:rgba(255,255,255,.26)!important; color:#fff!important;
+  display:grid!important; place-items:center!important;
+}
+html body #teamDialog #teamWorkspace #cockpitFavoriteTools .cockpit-tool-link.cockpit-tool-link strong,
+html body #teamDialog #teamWorkspace #cockpitFavoriteTools .cockpit-tool-link.cockpit-tool-link small{
+  color:#fff!important; opacity:1!important;
+}
+html body #teamDialog #teamWorkspace #cockpitFavoriteTools .cockpit-tool-link.cockpit-tool-link>b{
+  position:absolute!important; top:-6px!important; right:-6px!important;
+  width:18px!important; height:18px!important; border-radius:50%!important;
+  display:grid!important; place-items:center!important; font-size:10px!important; line-height:1!important;
+  background:#ffce42!important; color:#7a4e00!important; box-shadow:0 2px 5px rgba(0,0,0,.25)!important;
+}
+
+/* =========================================================================
+   04.08.2026 (Teil 3) – Marc: zwei Fehler gemeldet per Screenshot
+   1) Dialog „Fundus & Vorbereitung mit Code schützen?“ (und ähnliche
+      schmale Dialoge) waren als <dialog> nur 420px breit, die Karte
+      darin wollte aber bis zu 1100px breit sein – dadurch hing der
+      Großteil des Inhalts (Titel, Button-Text) außerhalb des sichtbaren
+      Rahmens und sah wie „halb abgeschnitten“ bzw. „gestapelt“ aus.
+   2) Der runde orangene Schließen-Knopf saß in vielen Fenstern ganz in
+      der äußersten Ecke – auf einem großen Touch-Board schwer zu
+      erreichen. Jetzt mit spürbar mehr Abstand zum Rand.
+   ========================================================================= */
+
+/* ---- 1) Schmaler Dialog: Karte darf nicht breiter sein als der Rahmen ---- */
+.materials-pin-ask-dialog .dialog-card{
+  width:min(420px,90vw)!important;
+  max-width:420px!important;
+  box-sizing:border-box!important;
+}
+
+/* ---- 2) Schließen-Knopf: mehr Abstand zum Rand, besser erreichbar ---- */
+html body .close-button{
+  margin:3px 3px 0 0!important;
+}
+html body .team-close-button{
+  top:max(36px,6.5vh)!important;
+  right:max(36px,4.5vw)!important;
+}
+@media(max-width:700px){
+  html body .team-close-button{
+    top:calc(20px + env(safe-area-inset-top,0px))!important;
+    right:20px!important;
+  }
+}
+
+/* =========================================================================
+   05.08.2026 – Marc: Kopfzeile „Fundus & Vorbereitung“ endgültig aufgeräumt
+
+   Vorher: Zahnrad und Zurück-Pfeil schwebten frei mitten auf der Seite,
+   zusätzlich gab es weiter unten noch einmal ein „Zurück“ – doppelt und
+   schwer zu treffen. Der rechte Teil des grünen Banners war leer.
+
+   Jetzt: Beide Knöpfe sitzen fest oben rechts IM grünen Kästchen –
+   das Zahnrad ganz außen rechts, links daneben ein kleiner runder
+   orangener Zurück-Knopf. Der Rest ist ausgeblendet, damit „Zurück“
+   nur noch genau einmal vorkommt.
+   ========================================================================= */
+
+.workspace-banner-actions[hidden]{ display:none!important; }
+
+.workspace-banner-actions{
+  position:absolute;
+  top:50%;
+  right:13px;
+  transform:translateY(-50%);
+  z-index:4;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.workspace-banner-action{
+  width:42px; height:42px;
+  min-width:42px; min-height:42px;
+  padding:0; margin:0;
+  border-radius:50%;
+  display:grid; place-items:center;
+  font-size:18px; line-height:1; font-weight:900;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.workspace-banner-action.back{
+  background:linear-gradient(145deg,#ffa53f,#e8720a);
+  border:2px solid #ffd7ab;
+  color:#fff;
+  box-shadow:0 4px 12px rgba(120,55,5,.34);
+}
+
+.workspace-banner-action.settings{
+  background:linear-gradient(150deg,#fff6db,#f4cf7b);
+  border:2px solid rgba(255,255,255,.75);
+  color:#5b4110;
+  box-shadow:0 4px 12px rgba(20,50,25,.26);
+}
+
+.workspace-banner-action:active{ transform:scale(.93); }
+
+.workspace-banner-action:focus-visible{
+  outline:3px solid #fff;
+  outline-offset:2px;
+}
+
+@media (max-width:700px){
+  /* Die alten, frei schwebenden Knöpfe in der Panel-Kopfzeile entfallen –
+     ihre Aufgabe übernehmen jetzt die beiden Knöpfe im grünen Banner. */
+  html body #teamDialog #teamWorkspace .material-head-controls.material-head-controls{
+    display:none!important;
+  }
+  /* Kopfzeile: Titel oben, Beschreibungstext sauber darunter. */
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head.material-head{
+    display:flex!important; flex-direction:row!important; flex-wrap:wrap!important;
+    align-items:flex-start!important; justify-content:flex-start!important;
+    gap:4px 10px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-title.material-head-title{
+    flex:1 1 100%!important; min-width:0!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head-help.material-head-help{
+    flex:1 1 100%!important; margin:4px 0 0!important;
+  }
+  /* Platz im Banner für die beiden Knöpfe */
+  html body #teamDialog #teamWorkspace.materials-mode>.personal-workspace-banner{
+    padding-right:108px!important;
+  }
+  html body #teamDialog #teamWorkspace .workspace-banner-actions{ right:11px!important; }
+}
+
+/* =========================================================================
+   05.08.2026 – Marc: „Füchse im Blick“ (Variante A)
+
+   Vorher standen eine Überschrift und ein Knopf gleich groß nebeneinander –
+   zwei verschiedene Dinge in gleicher Form, das wirkte unruhig und
+   ungleich. Jetzt gibt es eine durchgehende Kopfleiste über die volle
+   Breite; der Knopf sitzt als kompakte Pille rechts darin. Die
+   aufgefallenen Füchse hängen sichtbar an dieser Leiste.
+   ========================================================================= */
+
+.fox-lead-bar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 11px;
+  border-radius:15px;
+  background:linear-gradient(150deg,#6b4425,#4a2d15);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(60,35,10,.22);
+}
+
+.fox-lead-face{
+  flex:0 0 40px;
+  width:40px; height:40px;
+  display:grid; place-items:center;
+  border-radius:50%;
+  font-size:23px; line-height:1;
+  background:linear-gradient(150deg,#ffe9b0,#f0c04a);
+  box-shadow:0 0 0 3px rgba(255,255,255,.18);
+}
+
+.fox-lead-copy{ flex:1 1 auto; min-width:0; }
+
+.fox-lead-copy strong{
+  display:block;
+  font-size:16px; font-weight:900; line-height:1.15;
+  color:#fff;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.fox-lead-copy time{
+  display:block;
+  margin-top:1px;
+  font-size:11px; font-weight:700;
+  color:#e6d3b4;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.fox-lead-button{
+  flex:0 0 auto;
+  display:flex; align-items:center; gap:4px;
+  border:0; cursor:pointer;
+  padding:10px 12px;
+  border-radius:999px;
+  background:linear-gradient(150deg,#3fae5a,#2e8a4c);
+  color:#fff;
+  font:900 11.5px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  white-space:nowrap;
+  box-shadow:0 3px 9px rgba(20,70,35,.3);
+  -webkit-tap-highlight-color:transparent;
+}
+
+.fox-lead-button b{ font-size:14px; line-height:1; }
+.fox-lead-button:active{ transform:scale(.96); }
+.fox-lead-button:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
+
+/* Die Fuchsliste schließt direkt an die Leiste an */
+html body .mobile-personal-hub .mobile-today-lead .mobile-incident-list.mobile-incident-list{
+  margin-top:9px!important;
+}
+
+/* =========================================================================
+   05.08.2026 – Marc, drei Feinheiten (15.18)
+   ========================================================================= */
+
+/* 1) Zurück ganz außen rechts, das Einstellrad links daneben.
+      Die Reihenfolge steckt jetzt in index.html – hier nur zur Sicherheit,
+      falls eine ältere Fassung der Seite noch im Speicher liegt. */
+.workspace-banner-actions .workspace-banner-action.settings{ order:1; }
+.workspace-banner-actions .workspace-banner-action.back{ order:2; }
+
+/* 2) „Alle Füchse“ etwas größer und damit leichter zu treffen. */
+.fox-lead-button{
+  padding:12px 15px;
+  font-size:13px;
+  border-radius:999px;
+}
+.fox-lead-button b{ font-size:16px; }
+
+/* 3) Der Abstand über dem grünen Banner wurde doppelt gerechnet:
+      einmal als Innenabstand des Dialogs (`#teamDialog`) und noch einmal
+      als Außenabstand des Banners – beide Male mit der Höhe der
+      iPhone-Statusleiste. Dadurch stand oben ein großes leeres Feld.
+      Der Dialog behält den Abstand, das Banner bekommt nur noch einen
+      kleinen, festen Wert. */
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace.materials-mode>.personal-workspace-banner{
+    margin-top:4px!important;
+  }
+  html body #teamDialog .dialog-card{ padding-top:6px!important; }
+}
+
+/* Nachtrag 15.18: Der größere Knopf hat den Titel abgeschnitten
+   („Füchse im Bli…“). Fuchsgesicht, Abstände und Schriftgröße daneben
+   leicht verkleinert, damit „Füchse im Blick“ wieder ganz dasteht. */
+.fox-lead-bar{ gap:8px; padding:10px; }
+.fox-lead-face{ flex:0 0 36px; width:36px; height:36px; font-size:21px; }
+.fox-lead-copy strong{ font-size:15px; }
+.fox-lead-button{ padding:12px 14px; }
+
+/* =========================================================================
+   05.08.2026 – Marc, Screenshots (15.19)
+
+   1) Das Wochenziel war eine hohe eigene Karte mit doppelter Überschrift
+      („WOCHENZIEL“ und „🎯 Wochenziel“), großem Textblock und zwei breiten
+      Knöpfen – viel Fläche für eine einzige Ja/Nein-Frage. Jetzt eine
+      einzige schmale Zeile.
+   2) Am „Nein“ stand ein zweites ✕: eines steckt im Text, ein weiteres
+      kam aus einer älteren Regel als Pseudo-Element dazu. In der schmalen
+      Karte brach der Text zusätzlich um – daher „✕ / Nein✕“.
+   3) Der orangene Schließen-Knopf war absolut in der scrollenden Karte
+      verankert. Beim Herunterscrollen wanderte er nach oben aus dem
+      sichtbaren Bereich und wurde an der Kartenkante halbiert. Er hängt
+      jetzt fest am Fenster und ist immer vollständig da.
+   4) Fundus & Vorbereitung: Suchleiste über die volle Breite, große
+      Fächer-Chips, Ordner als lange Balken untereinander – zusammen fast
+      der halbe Bildschirm für sehr wenig Inhalt. Jetzt kompakt und in
+      Spalten.
+   5) Kopfzeile: die Zeile „Sammeln · Planen · Auf der Tafel zeigen“ ist
+      entfallen (steckt jetzt nur noch in index.html nicht mehr drin), der
+      Zurück-Knopf sitzt grün und mittig auf dem Balken, der Balken hat
+      Abstand zur Kante und runde Enden.
+   ========================================================================= */
+
+/* ---- 1) + 2) Wochenziel: eine einzige kompakte Zeile ---- */
+html body #teamDialog #teamWorkspace .cockpit-card.cockpit-goal.cockpit-goal{
+  position:relative!important;
+  display:flex!important; align-items:center!important; flex-wrap:wrap!important;
+  gap:7px 9px!important;
+  padding:8px 11px!important;
+  border-radius:13px!important;
+  background:linear-gradient(150deg,#fbfef6,#eef6e2)!important;
+  border:1px solid rgba(60,110,66,.16)!important;
+  box-shadow:0 2px 7px rgba(35,70,40,.07)!important;
+}
+/* Kopfzeile und Zeile lösen sich auf – ihre Teile werden selbst zu
+   Gliedern der einen Zeile. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head,
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-row{
+  display:contents!important;
+}
+/* „WOCHENZIEL“ stand direkt über „🎯 Wochenziel“ – doppelt gemoppelt. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head small{
+  display:none!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head>div{
+  order:1!important; flex:0 0 auto!important; min-width:0!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head h3{
+  margin:0!important;
+  font-size:11.5px!important; font-weight:900!important;
+  color:#4a6b45!important; white-space:nowrap!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal #cockpitGoalText{
+  order:2!important; flex:1 1 140px!important; min-width:0!important;
+  margin:0!important; padding:0!important;
+  font-size:12.5px!important; font-weight:750!important;
+  color:#2b452b!important; line-height:1.3!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-status.cockpit-goal-status{
+  position:static!important; order:3!important; flex:0 0 auto!important;
+  top:auto!important; right:auto!important;
+  padding:3px 8px!important; border-radius:999px!important;
+  font-size:8.5px!important; font-weight:850!important; white-space:nowrap!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-actions{
+  order:4!important; flex:0 0 auto!important;
+  display:flex!important; gap:5px!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.cockpit-goal-button{
+  flex:0 0 auto!important;
+  border:0!important; border-radius:999px!important;
+  padding:6px 13px!important;
+  font-size:11.5px!important; font-weight:850!important; line-height:1!important;
+  white-space:nowrap!important; box-shadow:none!important; cursor:pointer!important;
+}
+/* Das zweite ✕ kam von hier – Pseudo-Zeichen abschalten, das ✕ im Text reicht. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button::before,
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button::after{
+  content:none!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head>button{
+  order:5!important; flex:0 0 auto!important;
+  padding:5px 10px!important; border-radius:999px!important;
+  background:#fff!important; border:1px solid #d8e4cb!important;
+  color:#3d6a45!important; font-size:9.5px!important; font-weight:800!important;
+}
+/* Auf schmalen Geräten darf die Zeile in zwei umbrechen – Text oben,
+   Status und Knöpfe darunter. */
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal #cockpitGoalText{
+    flex:1 1 100%!important;
+  }
+  html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-actions{
+    margin-left:auto!important;
+  }
+}
+
+/* ---- 3) Schließen-Knopf: hängt am Fenster, nie mehr angeschnitten ---- */
+html body #teamDialog .close-button.team-close-button{
+  position:fixed!important;
+  top:calc(env(safe-area-inset-top,0px) + 16px)!important;
+  right:calc(env(safe-area-inset-right,0px) + 18px)!important;
+  margin:0!important;
+  z-index:90!important;
+}
+
+/* ---- 4) Fundus & Vorbereitung: kompakt und in Spalten ---- */
+
+/* Fächer-Chips kleiner */
+html body #teamDialog #teamWorkspace .material-drawer-tabs.material-drawer-tabs{
+  display:flex!important; flex-wrap:wrap!important; gap:6px!important;
+  margin:0 0 8px!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab.drawer-tab{
+  padding:6px 11px!important; border-radius:11px!important;
+  font-size:12px!important; gap:5px!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab span{ font-size:14px!important; }
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab small{ font-size:9.5px!important; }
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-icon-edit,
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-delete{
+  width:17px!important; height:17px!important; font-size:9.5px!important; line-height:1!important;
+}
+
+/* Suchfeld: kurz und rechts neben „＋ Fach“ statt über die ganze Breite.
+   Auf dem Handy bleibt es breit – dort ist die Zeile ohnehin schmal. */
+@media (min-width:701px){
+  html body #teamDialog #teamWorkspace .material-search-row.material-search-row{
+    display:flex!important; align-items:center!important; justify-content:flex-end!important;
+    gap:8px!important; margin:0 0 9px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-search-row .material-search-field{
+    flex:0 1 240px!important; min-width:0!important;
+    padding:5px 10px!important; border-radius:999px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-search-row #materialSearchInput{
+    min-width:0!important; padding:3px 0!important; font-size:12px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-search-row .add-drawer-inline{
+    flex:0 0 auto!important; padding:7px 13px!important;
+    border-radius:999px!important; font-size:12px!important;
+  }
+}
+
+/* Überschrift der Liste („AGs · 3 Ordner · 0 Inhalte hier …“) kleiner */
+html body #teamDialog #teamWorkspace .material-list-head.material-list-head{
+  margin:0 0 7px!important; padding:0!important;
+}
+html body #teamDialog #teamWorkspace .material-list-head h4{
+  margin:0!important; font-size:15px!important;
+}
+html body #teamDialog #teamWorkspace .material-list-head p{
+  margin:1px 0 0!important; font-size:10.5px!important;
+}
+
+/* Ordnerpfad als schmale Leiste */
+html body #teamDialog #teamWorkspace .material-folder-crumbs.material-folder-crumbs{
+  display:flex!important; flex-wrap:wrap!important; align-items:center!important;
+  gap:4px!important; margin:0 0 8px!important; padding:0!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-crumbs .material-crumb{
+  padding:4px 9px!important; border-radius:999px!important; font-size:11px!important;
+}
+
+/* Ordner: zwei bis drei nebeneinander statt lange Balken untereinander */
+html body #teamDialog #teamWorkspace .material-folder-grid.material-folder-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(195px,1fr))!important;
+  gap:7px!important; margin:0 0 8px!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card.material-folder-card{
+  display:flex!important; align-items:center!important; gap:8px!important;
+  width:auto!important; min-height:0!important;
+  padding:8px 9px!important; border-radius:12px!important;
+  text-align:left!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card .material-folder-icon{
+  flex:0 0 auto!important; font-size:16px!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card .material-folder-copy{
+  flex:1 1 auto!important; min-width:0!important;
+  display:block!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card .material-folder-copy strong{
+  display:block!important; font-size:12.5px!important; line-height:1.2!important;
+  white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card .material-folder-copy small{
+  display:block!important; font-size:9.5px!important; line-height:1.25!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card .material-folder-actions{
+  flex:0 0 auto!important; display:flex!important; gap:3px!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card .material-folder-actions button{
+  width:22px!important; height:22px!important; padding:0!important;
+  border-radius:7px!important; font-size:10px!important; line-height:1!important;
+}
+
+/* Inhalte ebenfalls in Spalten, sobald Platz da ist */
+@media (min-width:701px){
+  html body #teamDialog #teamWorkspace .material-page-grid.material-page-grid{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fill,minmax(255px,1fr))!important;
+    gap:8px!important;
+  }
+}
+
+/* ---- 5) Kopfzeile: Balken mit Abstand, Zurück grün und mittig darauf ---- */
+html body #teamDialog #teamWorkspace .material-library-panel.material-library-panel{
+  position:relative!important;
+  border-top:0!important;
+  padding-top:20px!important;
+  overflow:visible!important;
+}
+html body #teamDialog #teamWorkspace .material-library-panel.material-library-panel::before{
+  content:''!important;
+  position:absolute!important;
+  left:20px!important; right:20px!important; top:9px!important;
+  height:5px!important; border-radius:999px!important;
+  background:linear-gradient(90deg,#7cc45f,#2e8a4c)!important;
+  pointer-events:none!important;
+}
+/* Der Knopf sitzt mittig auf dem Balken – in der üblichen Grün-Optik. */
+html body #teamDialog #teamWorkspace .material-library-panel .material-head-controls.material-head-controls{
+  position:absolute!important;
+  left:50%!important; top:11px!important;
+  transform:translate(-50%,-50%)!important;
+  display:flex!important; align-items:center!important; gap:7px!important;
+  margin:0!important; padding:0!important; z-index:6!important;
+}
+html body #teamDialog #teamWorkspace .material-library-panel .material-head-icon-button.material-head-icon-button{
+  width:34px!important; height:34px!important;
+  min-width:34px!important; min-height:34px!important;
+  padding:0!important; margin:0!important;
+  display:grid!important; place-items:center!important;
+  border-radius:50%!important;
+  font-size:16px!important; line-height:1!important; font-weight:900!important;
+  box-shadow:0 3px 8px rgba(20,55,30,.26)!important;
+}
+html body #teamDialog #teamWorkspace .material-library-panel .material-head-icon-button.back{
+  background:linear-gradient(150deg,#3fae5a,#2e8a4c)!important;
+  border:2px solid #fff!important;
+  color:#fff!important;
+}
+html body #teamDialog #teamWorkspace .material-library-panel .material-head-icon-button.settings{
+  background:linear-gradient(150deg,#fff6db,#f4cf7b)!important;
+  border:2px solid #fff!important;
+  color:#5b4110!important;
+}
+/* Der Titel rutscht unter den Balken, damit sich nichts überlagert. */
+html body #teamDialog #teamWorkspace .material-library-panel .material-head.material-head{
+  margin-top:4px!important;
+}
+
+/* =========================================================================
+   05.08.2026 (abends) – Marc, zwei Screenshots (15.20)
+
+   1) Wochenziel im Cockpit: die Zeile selbst war seit 15.19 schmal, die
+      Karte darunter blieb aber hoch – unter der einen Zeile stand ein
+      halber Handschuh voll Leere. Ursache: override.css gibt in
+      `@media(max-width:1050px)` jeder Cockpit-Karte `min-height:180px`
+      und ab 820px noch `min-height:150px`. Für eine Ja/Nein-Zeile ist das
+      zu viel. Die Karte wächst jetzt nur noch mit ihrem Inhalt.
+      Dazu eine ruhigere Optik: 🎯-Etikett als kleiner Chip, der Zieltext
+      als Hauptsache, Status und Ja/Nein rechts als kompakte Gruppe.
+   2) Das Kopf-Icon oben links stand in einem weißen Kasten, der auf dem
+      grünen Balken der Waldseite deutlich zu sehen war. Hintergrund,
+      Rahmen und Schatten sind abgeschaltet – das Icon steht frei.
+   ========================================================================= */
+
+/* ---- 1a) Die leere Fläche unter der Wochenziel-Zeile ---- */
+html body #teamDialog #teamWorkspace .cockpit-card.cockpit-goal.cockpit-goal{
+  min-height:0!important;
+  height:auto!important;
+  align-self:start!important;
+  overflow:visible!important;
+}
+/* Auch in den beiden Handy-/Tablet-Stufen, in denen override.css die
+   Mindesthöhe setzt. */
+@media (max-width:1050px){
+  html body #teamDialog #teamWorkspace .cockpit-card.cockpit-goal.cockpit-goal{
+    min-height:0!important; height:auto!important;
+  }
+}
+@media (max-width:820px){
+  html body #teamDialog #teamWorkspace .cockpit-card.cockpit-goal.cockpit-goal{
+    min-height:0!important; height:auto!important;
+  }
+}
+
+/* ---- 1b) Optik: ruhiger, heller, moderner ---- */
+html body #teamDialog #teamWorkspace .cockpit-card.cockpit-goal.cockpit-goal{
+  display:flex!important; align-items:center!important; flex-wrap:wrap!important;
+  gap:8px 10px!important;
+  padding:10px 12px!important;
+  border-radius:15px!important;
+  background:linear-gradient(135deg,#ffffff 0%,#f5faec 100%)!important;
+  border:1px solid rgba(60,110,66,.13)!important;
+  box-shadow:0 1px 2px rgba(35,70,40,.05), 0 7px 18px rgba(35,70,40,.06)!important;
+}
+
+/* Das Etikett: „🎯 Wochenziel“ stand als Überschrift da und wiederholte,
+   was der Chip schon sagt. Sichtbar bleibt ein kleiner Chip. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head h3{
+  display:none!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head small{
+  display:inline-flex!important; align-items:center!important; gap:5px!important;
+  margin:0!important;
+  padding:4px 9px 4px 7px!important;
+  border-radius:999px!important;
+  background:rgba(72,134,82,.11)!important;
+  color:#3d6a45!important;
+  font-size:8px!important; font-weight:900!important; letter-spacing:.1em!important;
+  line-height:1!important; white-space:nowrap!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head small::before{
+  content:"🎯"; font-size:11px; letter-spacing:0;
+}
+
+/* Der Zieltext ist die Hauptsache: größer, zwei Zeilen erlaubt. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal #cockpitGoalText,
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal p#cockpitGoalText{
+  order:2!important; flex:1 1 150px!important; min-width:0!important;
+  margin:0!important; padding:0!important;
+  font-size:13px!important; font-weight:750!important;
+  color:#24401f!important; line-height:1.3!important;
+  white-space:normal!important; text-overflow:clip!important;
+  display:-webkit-box!important; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden!important;
+}
+
+/* Status und Knöpfe rücken als eine Gruppe nach rechts. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-status.cockpit-goal-status{
+  order:3!important;
+  padding:4px 9px!important;
+  font-size:8px!important; letter-spacing:.03em!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-actions{
+  order:4!important; gap:4px!important;
+  padding:2px!important;
+  border-radius:999px!important;
+  background:rgba(45,90,52,.06)!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.cockpit-goal-button{
+  padding:6px 12px!important;
+  font-size:11px!important; font-weight:850!important;
+  border-radius:999px!important;
+  transition:transform .12s ease, box-shadow .12s ease!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.yes{
+  background:linear-gradient(140deg,#2f9d55,#4fb352)!important; color:#fff!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.no{
+  background:#fff!important; color:#a5493f!important;
+  border:1px solid rgba(165,73,63,.24)!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.cockpit-goal-button:disabled{
+  opacity:.55!important; box-shadow:none!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.cockpit-goal-button:not(:disabled):active{
+  transform:scale(.96)!important;
+}
+/* „Mehr“ bleibt hinten und zurückhaltend. */
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head>button{
+  order:5!important;
+  padding:5px 10px!important;
+  font-size:9px!important;
+}
+
+/* Handy: Zieltext oben über die volle Breite, alles andere darunter. */
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal #cockpitGoalText,
+  html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal p#cockpitGoalText{
+    flex:1 1 100%!important; order:2!important;
+  }
+  html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-status.cockpit-goal-status{
+    order:3!important;
+  }
+  html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-actions{
+    order:4!important; margin-left:auto!important;
+  }
+}
+
+/* ---- 2) Kopf-Icon ohne weißen Kasten ---- */
+html body .topbar .brand .brand-fox,
+html body .topbar .brand #brandMascot,
+html body .topbar .brand img{
+  background:none!important;
+  background-color:transparent!important;
+  border:0!important;
+  outline:0!important;
+  padding:0!important;
+  box-shadow:none!important;
+  border-radius:11px!important;
+}
+html body .topbar .brand,
+html body .topbar .brand::before,
+html body .topbar .brand::after{
+  background:none!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+
+/* =========================================================================
+   NEXT 15.21 – NATÜRLICHER KLASSENBAUM + WARME WALD-WERKZEUGE
+   ========================================================================= */
+
+/* Der Baum erhält einen lesbaren Aufbau aus Boden, Stamm, innerem Schatten
+   und lichtdurchlässigem Blätterdach. Die Kinderfotos bleiben dabei bewusst
+   die hellsten Punkte im Baum. */
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+  isolation:isolate!important;
+  filter:drop-shadow(0 24px 20px rgba(29,69,30,.22)) saturate(1.04)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22::after{
+  content:""!important;position:absolute!important;z-index:-2!important;
+  left:17%!important;right:17%!important;bottom:4%!important;height:12%!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(35,72,31,.34),rgba(35,72,31,0) 70%)!important;
+  filter:blur(8px)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-trunk-v22{
+  background:
+    linear-gradient(92deg,transparent 0 17%,rgba(255,215,137,.16) 19% 23%,transparent 25% 57%,rgba(81,39,16,.18) 60% 65%,transparent 68%),
+    repeating-linear-gradient(96deg,rgba(91,46,20,.16) 0 2px,transparent 2px 11px),
+    linear-gradient(90deg,#9a5e2c 0%,#c8833e 27%,#d99a4d 45%,#a95f2a 75%,#794019 100%)!important;
+  border:1px solid rgba(91,46,20,.25)!important;
+  box-shadow:inset 9px 0 12px rgba(255,210,123,.13),inset -11px 0 15px rgba(79,35,14,.22),0 10px 12px rgba(49,62,28,.14)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-branch-v22{
+  background:linear-gradient(180deg,#bd7838,#8b4b21 72%,#633318)!important;
+  box-shadow:inset 0 3px rgba(245,188,102,.2),0 5px 7px rgba(58,53,26,.16)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-v22{
+  filter:drop-shadow(0 16px 12px rgba(27,76,31,.23))!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .leaf-blob-v22{
+  border:1px solid rgba(25,91,38,.09)!important;
+  background:
+    radial-gradient(circle at 34% 27%,rgba(236,255,174,.38) 0 9%,transparent 10%),
+    radial-gradient(circle at 62% 68%,rgba(26,112,47,.18),transparent 48%),
+    linear-gradient(145deg,#80c950,#45a441 58%,#277c38)!important;
+  box-shadow:inset 5px 7px 9px rgba(230,255,172,.13),inset -7px -8px 11px rgba(20,91,39,.18),0 5px 8px rgba(24,76,31,.14)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-fill-v100 i:nth-child(3n+1){filter:saturate(.92) brightness(.9)!important}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-fill-v100 i:nth-child(3n+2){filter:saturate(1.06) brightness(1.08)!important}
+html body .app-shell[data-theme="forest"] .wall-fixed .sun-dapple-v82{
+  opacity:.48!important;filter:blur(7px)!important;mix-blend-mode:screen!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 .avatar-v22{
+  box-shadow:0 0 0 3px #f0b631,0 0 0 6px rgba(255,247,199,.78),0 9px 14px rgba(34,68,28,.22)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 strong{
+  border-color:rgba(45,91,47,.2)!important;
+  background:linear-gradient(180deg,#fffef2,#eff7dc)!important;
+  box-shadow:0 5px 10px rgba(35,70,31,.18)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-growth-badge-v1184{
+  border:1px solid rgba(255,240,176,.35)!important;
+  background:linear-gradient(135deg,rgba(24,100,51,.94),rgba(65,142,58,.92))!important;
+  box-shadow:0 8px 18px rgba(28,65,28,.18),inset 0 1px rgba(255,255,255,.14)!important;
+  backdrop-filter:blur(5px)!important;
+}
+
+/* Werkzeugleiste: eine leichte Wald-Werkbank. Jedes Werkzeug hat einen
+   eigenen, zurückhaltenden Farbstreifen und ein klareres Antipp-Ziel. */
+html body .app-shell .forest-tool-belt-v1521.dock{
+  height:54px!important;min-height:54px!important;gap:5px!important;padding:6px 8px!important;
+  border:2px solid #6c3b1d!important;border-radius:18px!important;
+  background:
+    linear-gradient(90deg,rgba(255,231,174,.08) 1px,transparent 1px) 0 0/54px 100%,
+    linear-gradient(180deg,#8a512b 0%,#65381f 52%,#4d2a19 100%)!important;
+  box-shadow:inset 0 2px rgba(255,226,166,.2),inset 0 -5px rgba(47,22,11,.16),0 11px 23px rgba(31,54,25,.24)!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock::after{
+  content:"WALDWERKZEUGE"!important;position:absolute!important;left:18px!important;top:-8px!important;
+  padding:2px 8px!important;border:1px solid rgba(99,57,25,.38)!important;border-radius:99px!important;
+  background:#f6e3a7!important;color:#6b4924!important;box-shadow:0 2px 5px rgba(52,35,20,.16)!important;
+  font-size:6px!important;font-weight:950!important;letter-spacing:.12em!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button{
+  position:relative!important;min-width:76px!important;height:40px!important;min-height:40px!important;
+  padding:3px 10px 3px!important;border:1px solid rgba(255,238,197,.16)!important;border-radius:11px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.025))!important;
+  color:#fff6dd!important;text-shadow:0 1px 2px rgba(50,24,12,.55)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.12)!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button::after{
+  content:""!important;position:absolute!important;left:10px!important;right:10px!important;bottom:2px!important;
+  height:3px!important;border-radius:99px!important;background:var(--tool-accent,#e5bd65)!important;opacity:.88!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(2){--tool-accent:#67a9e6}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(3){--tool-accent:#efbc43}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(4){--tool-accent:#66c8cb}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(5){--tool-accent:#ef785f}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(6){--tool-accent:#8ed35c}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(7){--tool-accent:#c99be5}
+html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(8){--tool-accent:#f09550}
+html body .app-shell .forest-tool-belt-v1521.dock>button:hover,
+html body .app-shell .forest-tool-belt-v1521.dock>button:focus-visible{
+  color:#fff!important;background:linear-gradient(180deg,rgba(255,231,166,.2),rgba(255,255,255,.05))!important;
+  border-color:rgba(255,231,166,.38)!important;transform:translateY(-2px)!important;
+  box-shadow:0 6px 11px rgba(46,23,12,.2),inset 0 1px rgba(255,255,255,.16)!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button span{
+  font-weight:780!important;letter-spacing:.01em!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock .kids-forest-entrance{
+  border-color:#f4c75e!important;background:linear-gradient(180deg,#df842e,#a94e22)!important;
+}
+@media(max-width:1100px) and (min-width:761px){
+  html body .app-shell .forest-tool-belt-v1521.dock{gap:3px!important;padding-inline:5px!important}
+  html body .app-shell .forest-tool-belt-v1521.dock>button{min-width:66px!important;padding-inline:7px!important;font-size:9px!important}
+}
+@media(max-width:760px){
+  html body .app-shell .forest-tool-belt-v1521.dock::after{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .app-shell .forest-tool-belt-v1521.dock>button{transition:none!important}
+}
+
+/* =========================================================================
+   NEXT 15.23 – DER STAUNENDE KLASSENWALD
+   Neue eigenständige Waldillustration, klare Bühne für Baum und Werkzeuge,
+   dazu drei kleine Entdeckungen. Keine Personen oder Kinderfotos im Bild.
+   ========================================================================= */
+@media(min-width:761px){
+  html body .app-shell[data-theme="forest"]{
+    background-color:#dff0a5!important;
+    background-image:url('forest-clearing-15.24.png')!important;
+    background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;
+    filter:saturate(1.035) contrast(1.015)!important;
+  }
+  html body .app-shell[data-theme="forest"]::before{
+    display:block!important;content:""!important;position:absolute!important;inset:0!important;z-index:2!important;
+    background:
+      radial-gradient(ellipse at 50% 26%,rgba(255,253,221,.12),transparent 48%),
+      linear-gradient(90deg,rgba(4,44,26,.11),transparent 14%,transparent 86%,rgba(4,44,26,.12)),
+      linear-gradient(180deg,rgba(255,246,191,.025),transparent 62%,rgba(24,75,39,.06))!important;
+    pointer-events:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-ambient>.forest-squirrel,
+  html body .app-shell[data-theme="forest"] .forest-ambient>.forest-birdhouse,
+  html body .app-shell[data-theme="forest"] .forest-ambient>.forest-lantern,
+  html body .app-shell[data-theme="forest"] .forest-ambient>.mushroom-1,
+  html body .app-shell[data-theme="forest"] .forest-ambient>.mushroom-2{
+    display:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-light{
+    background:
+      radial-gradient(ellipse at 49% 28%,rgba(255,252,207,.2),transparent 48%),
+      linear-gradient(112deg,transparent 9%,rgba(255,244,178,.11) 29%,transparent 47%)!important;
+    opacity:.8!important;
+  }
+}
+
+html body .app-shell .forest-secret-v1523{
+  --secret-size:30px;position:absolute!important;z-index:26!important;
+  width:var(--secret-size)!important;height:var(--secret-size)!important;padding:0!important;
+  display:grid!important;place-items:center!important;border:1px solid rgba(255,244,177,.5)!important;
+  border-radius:50%!important;background:radial-gradient(circle,rgba(255,241,145,.36),rgba(255,225,89,.08) 55%,transparent 70%)!important;
+  color:#fff1a0!important;box-shadow:0 0 12px rgba(255,227,94,.3)!important;cursor:pointer!important;
+  animation:forestSecretGlow1523 3.2s ease-in-out infinite!important;
+}
+html body .app-shell .forest-secret-v1523 span{font-size:13px!important;filter:drop-shadow(0 0 4px #fff0a2)!important}
+html body .app-shell .forest-secret-v1523.secret-den{left:4.9%!important;top:50%!important}
+html body .app-shell .forest-secret-v1523.secret-house{right:4.6%!important;top:17%!important;animation-delay:-1.1s!important}
+html body .app-shell .forest-secret-v1523.secret-lantern{right:9.2%!important;top:61%!important;animation-delay:-2.1s!important}
+html body .app-shell .forest-secret-v1523:hover,
+html body .app-shell .forest-secret-v1523:focus-visible{transform:scale(1.22)!important;background:#ffe673!important;color:#73501e!important;outline:3px solid rgba(255,255,224,.72)!important}
+html body .app-shell .forest-secret-v1523.is-found{opacity:.36!important;animation:none!important}
+html body .app-shell .forest-secret-toast-v1523{
+  position:absolute!important;z-index:400!important;left:50%!important;top:178px!important;transform:translateX(-50%)!important;
+  width:max-content!important;max-width:360px!important;display:grid!important;grid-template-columns:42px 1fr!important;
+  align-items:center!important;gap:10px!important;padding:10px 15px 10px 11px!important;
+  border:2px solid rgba(255,233,155,.74)!important;border-radius:16px!important;
+  background:linear-gradient(135deg,rgba(36,105,53,.97),rgba(16,75,49,.97))!important;color:#fff!important;
+  box-shadow:0 13px 28px rgba(22,54,29,.28),inset 0 1px rgba(255,255,255,.16)!important;
+  animation:forestSecretToast1523 .32s ease-out both!important;
+}
+html body .app-shell .forest-secret-toast-v1523>span{display:grid!important;place-items:center!important;width:42px!important;height:42px!important;border-radius:13px!important;background:rgba(255,241,175,.17)!important;font-size:25px!important}
+html body .app-shell .forest-secret-toast-v1523>div{display:grid!important;gap:2px!important}
+html body .app-shell .forest-secret-toast-v1523 strong{font-size:14px!important}
+html body .app-shell .forest-secret-toast-v1523 small{font-size:9px!important;color:#e9f5d5!important}
+
+/* Baum vor der detailreicheren Kulisse etwas ruhiger und körperlicher. */
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+  filter:drop-shadow(0 26px 23px rgba(24,61,28,.25)) saturate(.98)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-v22{
+  filter:drop-shadow(0 18px 14px rgba(20,65,28,.26)) contrast(1.025)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-title-v22,
+html body .app-shell[data-theme="forest"] .wall-fixed .wall-title-v22{
+  backdrop-filter:blur(3px)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22{
+  box-shadow:inset 0 0 0 3px rgba(255,250,218,.76),0 7px 0 #4b2814,0 17px 27px rgba(26,48,23,.27)!important;
+}
+@keyframes forestSecretGlow1523{50%{transform:scale(1.12);opacity:.68;box-shadow:0 0 19px rgba(255,226,82,.58)}}
+@keyframes forestSecretToast1523{from{opacity:0;transform:translate(-50%,-9px) scale(.96)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@media(max-width:760px){
+  html body .app-shell .forest-secret-v1523{display:none!important}
+  html body .app-shell .forest-secret-toast-v1523{position:fixed!important;left:12px!important;right:12px!important;top:74px!important;width:auto!important;max-width:none!important;transform:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .app-shell .forest-secret-v1523,
+  html body .app-shell .forest-secret-toast-v1523{animation:none!important}
+}
+
+/* NEXT 15.24 – MEHR TIEFE: Bach, Brücke, Waldspuren und feinere Lichtluft */
+@media(min-width:761px){
+  html body .app-shell[data-theme="forest"]{
+    background-image:url('forest-clearing-15.24.png')!important;
+    background-position:center center!important;background-size:cover!important;
+    filter:saturate(1.025) contrast(1.01)!important;
+  }
+  html body .app-shell[data-theme="forest"]::before{
+    background:
+      radial-gradient(ellipse at 50% 18%,rgba(255,254,225,.11),transparent 49%),
+      linear-gradient(90deg,rgba(3,39,24,.1),transparent 13%,transparent 87%,rgba(3,39,24,.11)),
+      linear-gradient(180deg,rgba(255,249,211,.025),transparent 57%,rgba(20,68,36,.055))!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-light{
+    background:
+      radial-gradient(ellipse at 48% 25%,rgba(255,250,198,.17),transparent 46%),
+      linear-gradient(109deg,transparent 10%,rgba(255,241,166,.1) 28%,transparent 45%),
+      linear-gradient(74deg,transparent 58%,rgba(255,247,190,.075) 72%,transparent 86%)!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-mist{
+    opacity:.16!important;filter:blur(18px)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+    filter:drop-shadow(0 27px 24px rgba(20,57,27,.27)) saturate(.975) brightness(1.015)!important;
+  }
+}
+
+/* Die Lichtpunkte sitzen etwas dezenter in der detailreicheren Kulisse. */
+html body .app-shell .forest-secret-v1523{
+  --secret-size:27px;opacity:.74!important;
+  box-shadow:0 0 9px rgba(255,227,94,.25)!important;
+}
+html body .app-shell .forest-secret-v1523:hover,
+html body .app-shell .forest-secret-v1523:focus-visible{opacity:1!important}
+
+/* Ein hauchdünner Lichtsaum verbindet Hintergrund, Baum und Schatzpfad. */
+html body .app-shell[data-theme="forest"] .wall-fixed::after{
+  content:""!important;position:absolute!important;z-index:-1!important;pointer-events:none!important;
+  left:11%!important;right:11%!important;bottom:7%!important;height:19%!important;border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(255,235,137,.115),transparent 68%)!important;
+  filter:blur(13px)!important;
+}
+
+/* =========================================================================
+   06.08.2026 – 15.25 · Marc: Handy-Ansicht geradegerückt
+   Ursachen aus den Screenshots:
+   A) Die grüne Kopfleiste hat keine Höhe für die iOS-Statusleiste reserviert
+      (black-translucent) – Uhrzeit lag über „DigiBoard“.
+   B) In den Kacheln „Mein Unterricht“/„Auf der Tafel“ standen <strong> und
+      <small> nebeneinander in einer Zeile, weil display:block fehlte.
+   C) .team-page-tabs hatte in materials-mode eine feste Höhe von 38px, auf
+      dem Handy aber nur EINE Spalte – die drei Reiter lagen übereinander.
+   D) .drawer-icon-edit (Stift) war nicht positioniert und rutschte deshalb
+      unter die Fach-Kachel.
+   E) Suchfeld: eigenes Emoji + native WebKit-Lupe ergaben zwei Lupen.
+   ========================================================================= */
+
+/* ---- A) Kopfleiste: Platz für die Statusleiste des iPhones ---- */
+@media (max-width:700px){
+  html body .app-shell .topbar.topbar{
+    height:auto!important;
+    min-height:calc(60px + env(safe-area-inset-top,0px))!important;
+    padding-top:calc(8px + env(safe-area-inset-top,0px))!important;
+    padding-bottom:8px!important;
+    display:flex!important; align-items:center!important;
+    gap:8px!important; flex-wrap:nowrap!important;
+  }
+  /* Textpille „Offline bereit“ gehört auf dem Handy nicht in die enge Zeile.
+     Die Information steht weiterhin unter „Einstellungen“ zur Verfügung. */
+  html body .app-shell .top-actions .status-pill.status-pill{display:none!important}
+  html body .app-shell .brand .brand-status-line{display:none!important}
+
+  html body .app-shell .brand.brand{
+    flex:0 1 auto!important; min-width:0!important; overflow:hidden!important;
+  }
+  html body .app-shell .brand strong{
+    display:block!important; white-space:nowrap!important;
+    overflow:hidden!important; text-overflow:ellipsis!important;
+  }
+  html body .app-shell .topbar .topbar-person-badge.topbar-person-badge{
+    flex:0 0 auto!important; max-width:34vw!important; overflow:hidden!important;
+  }
+  html body .app-shell .topbar .build-badge{display:none!important}
+  html body .app-shell .top-actions.top-actions{
+    flex:0 0 auto!important; margin-left:auto!important; gap:6px!important;
+  }
+}
+
+/* ---- B) Kacheln „Mein Unterricht“ / „Auf der Tafel“: Zeilenumbruch ---- */
+@media (max-width:700px){
+  html body .mobile-personal-hub .mobile-quick-nav .mobile-nav-tile.mobile-nav-tile{
+    display:flex!important; flex-direction:column!important;
+    align-items:flex-start!important; justify-content:center!important;
+    gap:2px!important; padding:11px 12px!important;
+    border-radius:16px!important; text-align:left!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .mobile-nav-tile .mobile-nav-icon{
+    display:block!important; margin:0 0 3px!important; font-size:19px!important; line-height:1!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .mobile-nav-tile strong{
+    display:block!important; width:100%!important;
+    font-size:13.5px!important; line-height:1.15!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .mobile-nav-tile small{
+    display:block!important; width:100%!important; margin-top:1px!important;
+    font-size:9.5px!important; line-height:1.2!important; font-weight:700!important;
+  }
+  html body .mobile-personal-hub .mobile-quick-nav .nav-lesson.nav-lesson small{color:#5a7a52!important}
+  html body .mobile-personal-hub .mobile-quick-nav .nav-board.nav-board small{color:#4a6c85!important}
+}
+
+/* ---- C) Bereichs-Reiter im Teambereich: keine Überlappung mehr ---- */
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace > .team-page-tabs.team-page-tabs,
+  html body #teamDialog #teamWorkspace.materials-mode > .team-page-tabs.team-page-tabs,
+  html body #teamDialog #teamWorkspace.overview-mode > .team-page-tabs.team-page-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    height:auto!important; min-height:0!important;
+    gap:5px!important; padding:5px!important; margin:0 0 10px!important;
+    border-radius:14px!important; overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .team-page-tabs.team-page-tabs button{
+    height:auto!important; min-height:42px!important;
+    padding:6px 4px!important; font-size:9.5px!important; line-height:1.15!important;
+    white-space:normal!important; overflow-wrap:anywhere!important;
+  }
+}
+
+/* ---- D) Fach-Kachel: Stift und × liegen wieder in der Kachel ---- */
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab-wrap{
+  position:relative!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-icon-edit.drawer-icon-edit{
+  position:absolute!important; left:6px!important; bottom:5px!important;
+  width:20px!important; height:20px!important; padding:0!important;
+  border:0!important; border-radius:7px!important;
+  background:rgba(255,255,255,.78)!important;
+  font-size:10px!important; line-height:1!important; cursor:pointer!important;
+  display:grid!important; place-items:center!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab.drawer-tab{
+  padding-bottom:22px!important;
+}
+
+/* ---- E) Suchfeld: nur noch eine Lupe, Text wird nicht abgeschnitten ---- */
+html body #teamDialog #teamWorkspace #materialSearchInput{
+  -webkit-appearance:none!important; appearance:none!important;
+  text-overflow:ellipsis!important;
+}
+html body #teamDialog #teamWorkspace #materialSearchInput::-webkit-search-decoration,
+html body #teamDialog #teamWorkspace #materialSearchInput::-webkit-search-results-button,
+html body #teamDialog #teamWorkspace #materialSearchInput::-webkit-search-results-decoration{
+  -webkit-appearance:none!important; display:none!important;
+}
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace .material-search-row.material-search-row{
+    display:flex!important; align-items:center!important; gap:7px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-search-row .material-search-field{
+    flex:1 1 auto!important; min-width:0!important;
+  }
+  html body #teamDialog #teamWorkspace .material-search-row .add-drawer-inline{
+    flex:0 0 auto!important; white-space:nowrap!important;
+  }
+}
+
+/* =========================================================================
+   06.08.2026 – 15.25 · Einstellungen in zwei klare Gruppen
+   „Meine Einstellungen“ (persönlich) und „Allgemeine Einstellungen“ (Team).
+   Die bestehenden Kachel-Stile bleiben unverändert – es kommen nur die
+   Gruppenüberschriften dazu und die feste Rasterhöhe wird gelöst, weil es
+   jetzt zwei Raster untereinander gibt statt eines mit fester Zeilenzahl.
+   ========================================================================= */
+html body #settingsDialog .settings-home{ overflow:auto!important; }
+html body #settingsDialog .settings-home .settings-group{ margin:0 0 18px!important; }
+html body #settingsDialog .settings-home .settings-group:last-child{ margin-bottom:4px!important; }
+
+html body #settingsDialog .settings-group-head{
+  display:flex!important; align-items:center!important; gap:10px!important;
+  margin:0 2px 10px!important; padding:8px 11px!important;
+  border-radius:14px!important; border:1px solid rgba(60,110,66,.14)!important;
+  background:linear-gradient(150deg,#f7fcef,#eaf4dd)!important;
+}
+html body #settingsDialog .settings-group-shared .settings-group-head{
+  background:linear-gradient(150deg,#f3f8fd,#e3eef8)!important;
+  border-color:rgba(60,100,140,.16)!important;
+}
+html body #settingsDialog .settings-group-icon{
+  flex:0 0 auto!important; width:34px!important; height:34px!important;
+  display:grid!important; place-items:center!important;
+  border-radius:11px!important; background:#fff!important; font-size:18px!important;
+  box-shadow:0 2px 7px rgba(40,70,40,.12)!important;
+}
+html body #settingsDialog .settings-group-head>div{ display:grid!important; gap:2px!important; min-width:0!important; }
+html body #settingsDialog .settings-group-head strong{ font-size:14px!important; color:#25503a!important; }
+html body #settingsDialog .settings-group-shared .settings-group-head strong{ color:#234a63!important; }
+html body #settingsDialog .settings-group-head small{ font-size:10px!important; line-height:1.35!important; color:#6c7d69!important; }
+
+/* Raster darf jetzt mitwachsen (vorher feste Höhe und feste Zeilenzahl) */
+html body #settingsDialog .settings-home-grid.settings-home-grid{
+  height:auto!important; grid-template-rows:none!important;
+  grid-auto-rows:minmax(0,auto)!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+html body #settingsDialog .settings-home-grid-personal.settings-home-grid-personal{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+html body #settingsDialog .settings-home-grid .tile-icon.share{ background:#e6f0ff!important; }
+
+@media (max-width:760px){
+  html body #settingsDialog .settings-home-grid.settings-home-grid{
+    grid-template-columns:1fr 1fr!important;
+  }
+  html body #settingsDialog .settings-home-grid>button{ min-height:112px!important; }
+  html body #settingsDialog .settings-group-head{ padding:7px 10px!important; }
+  html body #settingsDialog .settings-group-head small{ font-size:9px!important; }
+}
+
+/* Datei-Weitergabe: derselbe ruhige Look wie das Backup-Feld */
+html body #settingsDialog .settings-share-panel #shareClassPackageBtn{
+  min-height:46px!important; padding:0 16px!important;
+  border:0!important; border-radius:13px!important;
+  background:linear-gradient(135deg,#1f7a9c,#3aa7c4)!important; color:#fff!important;
+  font-size:13px!important; font-weight:850!important; cursor:pointer!important;
+}
+html body #settingsDialog .settings-share-panel .panel-help{
+  margin-top:9px!important; font-size:10.5px!important; line-height:1.45!important; color:#7a6a4e!important;
+}
+
+/* =========================================================================
+   06.08.2026 – 15.26 · Marc: Logo, Kopfleiste, Wochenziel, Fundus
+   ========================================================================= */
+
+/* ---- 1) Kopfleiste: ruhig, gerade, überall gleich ---------------------- */
+/* Vorher standen drei Zeilen untereinander (Name, Untertitel, Statuszeile).
+   Dadurch war der Textblock höher als die Pillen daneben und „DigiBoard“
+   wirkte nach oben verrutscht. Jetzt zwei Zeilen, alles mittig ausgerichtet.
+   Der Speicherstatus steht weiterhin in der Pille rechts. */
+html body .app-shell .topbar.topbar{
+  align-items:center!important;
+  gap:12px!important;
+}
+html body .app-shell .brand.brand{
+  display:flex!important; align-items:center!important; gap:11px!important;
+  min-width:0!important;
+}
+html body .app-shell .brand>span{
+  display:flex!important; flex-direction:column!important;
+  justify-content:center!important; gap:1px!important; min-width:0!important;
+}
+html body .app-shell .brand strong{
+  display:block!important;
+  font-size:21px!important; line-height:1.08!important;
+  letter-spacing:-.015em!important; font-weight:850!important;
+}
+html body .app-shell .brand small{
+  display:block!important;
+  font-size:10.5px!important; line-height:1.2!important;
+  font-weight:650!important; letter-spacing:.005em!important;
+  color:rgba(255,255,255,.74)!important;
+}
+/* Die dritte Zeile („● Offline bereit“) doppelt nur die Pille rechts. */
+html body .app-shell .brand .brand-status-line{display:none!important}
+
+/* Das Logo bekommt überall dieselbe Form wie die anderen runden Symbole. */
+html body .app-shell .brand .brand-fox{
+  flex:0 0 auto!important;
+  width:36px!important; height:36px!important;
+  border-radius:11px!important;
+  object-fit:cover!important;
+  background:rgba(255,255,255,.14)!important;
+  box-shadow:0 2px 7px rgba(12,45,26,.28)!important;
+}
+html body .morning-intro .intro-fox{
+  border-radius:26px!important; object-fit:cover!important;
+  box-shadow:0 12px 30px rgba(24,60,32,.28)!important;
+}
+
+@media (max-width:700px){
+  html body .app-shell .brand strong{font-size:18px!important}
+  html body .app-shell .brand small{font-size:9.5px!important}
+  html body .app-shell .brand .brand-fox{width:32px!important;height:32px!important;border-radius:10px!important}
+}
+
+/* ---- 2) Wochenziel: nicht mehr abgeschnitten, ein Klick genügt --------- */
+/* Ursache: `.team-cockpit` hatte in der Übersicht eine feste zweite
+   Zeilenhöhe von 124px zusammen mit `overflow:hidden`. Die Ja/Nein-Knöpfe
+   lagen damit außerhalb der Karte. */
+@media (max-width:900px){
+  html body #teamDialog #teamWorkspace.overview-mode>.team-cockpit{
+    height:auto!important; max-height:none!important;
+    grid-template-rows:auto!important; overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-card.cockpit-goal{
+    min-height:0!important; height:auto!important; overflow:visible!important;
+  }
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-actions{
+  display:grid!important; grid-template-columns:1fr 1fr!important; gap:8px!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.cockpit-goal-button{
+  min-height:42px!important; padding:9px 8px!important;
+  font-size:12px!important; font-weight:850!important;
+  white-space:nowrap!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.yes.yes{
+  background:linear-gradient(150deg,#3fae5a,#2e8a4c)!important; color:#fff!important;
+}
+html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-goal-button.no.no{
+  background:#fdeae6!important; color:#a4392c!important;
+  border:1px solid #f0c4bb!important;
+}
+
+/* ---- 3) Fundus & Vorbereitung auf dem Handy ---------------------------- */
+@media (max-width:700px){
+  /* Der Vollbild-Dialog beginnt direkt unter der Statusleiste des iPhones.
+     Ohne diesen Abstand lagen Uhrzeit und Dynamic Island auf den Reitern. */
+  html body #teamDialog .dialog-card{
+    padding-top:calc(10px + env(safe-area-inset-top,0px))!important;
+  }
+  html body #teamDialog #teamWorkspace .team-page-tabs.team-page-tabs{
+    top:calc(env(safe-area-inset-top,0px))!important;
+  }
+
+  /* Der grüne Zierstrich über dem Titel hatte auf dem Handy keine Funktion
+     mehr – die Knöpfe darauf sind hier ohnehin ausgeblendet. */
+  html body #teamDialog #teamWorkspace .material-library-panel.material-library-panel::before{
+    display:none!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel.material-library-panel{
+    padding-top:13px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-library-panel .material-head.material-head{
+    margin:0 0 10px!important;
+  }
+  /* Überschrift darf hier ruhig kräftig sein – sie ist die Orientierung. */
+  html body #teamDialog #teamWorkspace .material-head-title.material-head-title,
+  html body #teamDialog #teamWorkspace .material-head-title h3{
+    font-size:20px!important; line-height:1.15!important; font-weight:900!important;
+    letter-spacing:-.015em!important; margin:0!important;
+  }
+  html body #teamDialog #teamWorkspace .material-head-help.material-head-help{
+    font-size:10.5px!important; line-height:1.35!important; margin:5px 0 0!important;
+  }
+  /* Fächer rücken direkt unter die Überschrift. */
+  html body #teamDialog #teamWorkspace .material-drawer-tabs.material-drawer-tabs{
+    margin:0 0 12px!important;
+  }
+}
+
+/* ---- 4) Fach-Kacheln ohne versehentliches Löschen ---------------------- */
+/* Das × sass direkt auf der Zählerblase und wurde beim Antippen des Fachs
+   leicht mitgetroffen. Löschen läuft jetzt über den Stift → Icon-Dialog. */
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-delete{
+  display:none!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab.drawer-tab{
+  padding-right:14px!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-icon-edit.drawer-icon-edit{
+  left:auto!important; right:6px!important; bottom:6px!important;
+  background:rgba(255,255,255,.86)!important;
+  box-shadow:0 1px 4px rgba(30,60,35,.18)!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab.active + .drawer-icon-edit{
+  background:rgba(255,255,255,.92)!important;
+}
+
+/* Löschknopf im Icon-Dialog */
+html body #iconPickerDialog .icon-picker-footer{
+  margin-top:14px!important; padding-top:12px!important;
+  border-top:1px solid rgba(60,90,50,.14)!important;
+  display:flex!important; justify-content:flex-end!important;
+}
+html body #iconPickerDialog .icon-picker-danger{
+  min-height:40px!important; padding:0 15px!important;
+  border:1px solid #f0c4bb!important; border-radius:12px!important;
+  background:#fdeae6!important; color:#a4392c!important;
+  font-size:12.5px!important; font-weight:800!important; cursor:pointer!important;
+}
+html body #iconPickerDialog .icon-picker-danger:hover{background:#fbdcd6!important}
+html body #iconPickerDialog .icon-picker-danger[hidden]{display:none!important}
+
+/* ---- 5) „Neuer Ordner“ steht nicht mehr lose herum -------------------- */
+html body #teamDialog #teamWorkspace .material-folder-card.material-folder-new{
+  border:2px dashed rgba(53,120,70,.34)!important;
+  background:linear-gradient(150deg,#f6fbef,#eaf5e0)!important;
+  color:#2f6b41!important; box-shadow:none!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card.material-folder-new:hover{
+  border-color:#3fae5a!important; background:#f0f9e7!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-new .material-folder-icon{
+  display:grid!important; place-items:center!important;
+  width:26px!important; height:26px!important; border-radius:9px!important;
+  background:#dcefd2!important; color:#2f6b41!important;
+  font-size:15px!important; line-height:1!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-new strong{color:#2f6b41!important}
+html body #teamDialog #teamWorkspace .material-folder-new small{color:#6d8a6d!important}
+
+/* =========================================================================
+   NEXT 15.28 – KLASSENWALD, KLASSENBAUM UND WALDWERKZEUGE
+   Ein ruhiger Hintergrund, ein klarer Baum und eine durchgängige Bedienleiste.
+   Die Regeln sind bewusst am Dateiende gebündelt, damit der ältere Design-
+   Verlauf nicht mehr zu doppelten Schatten, Kronen oder Werkzeugstilen führt.
+   ========================================================================= */
+:root{
+  --forest-ink-1528:#214b35;
+  --forest-ink-soft-1528:#58705f;
+  --forest-paper-1528:#fffdf2;
+  --forest-paper-deep-1528:#f2e7c5;
+  --forest-line-1528:rgba(54,91,58,.18);
+  --forest-shadow-1528:0 12px 28px rgba(25,61,35,.17);
+}
+
+@media (min-width:761px){
+  /* Waldlichtung: Das Bild traegt die Szene. Doppelte Emoji-Dekorationen
+     verschwinden, die drei kleinen Entdeckungen bleiben aber klickbar. */
+  html body .app-shell[data-theme="forest"]{
+    background-color:#dfeeb8!important;
+    background-image:url('forest-clearing-15.24.png')!important;
+    background-position:center center!important;
+    background-size:cover!important;
+    background-repeat:no-repeat!important;
+    filter:none!important;
+  }
+  html body .app-shell[data-theme="forest"]::before{
+    display:block!important;
+    background:
+      radial-gradient(ellipse at 50% 21%,rgba(255,254,226,.22),transparent 45%),
+      linear-gradient(90deg,rgba(8,47,29,.13),transparent 16%,transparent 84%,rgba(8,47,29,.14)),
+      linear-gradient(180deg,rgba(255,252,221,.04) 0%,transparent 54%,rgba(17,68,36,.09) 100%)!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-depth-layers,
+  html body .app-shell[data-theme="forest"] .forest-ambient>span{
+    display:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-light{
+    opacity:.55!important;
+    background:
+      radial-gradient(ellipse at 49% 20%,rgba(255,252,202,.2),transparent 43%),
+      linear-gradient(113deg,transparent 12%,rgba(255,244,175,.09) 30%,transparent 47%)!important;
+  }
+  html body .app-shell[data-theme="forest"] .season-effects{
+    opacity:.42!important;
+  }
+
+  /* Werkzeugkarten: gleiche Ecken, gleiche Tiefe und keine zufaelligen
+     Drehungen. Inhaltsfarben bleiben je nach Werkzeug unterscheidbar. */
+  html body .app-shell .dashboard>.widget:not([data-id="clock"]):not([data-id="weeklyGoal"]){
+    border-radius:18px!important;
+    clip-path:none!important;
+    transform:none!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.72),var(--forest-shadow-1528)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="schedule"]{
+    border:1px solid rgba(129,104,55,.2)!important;
+    background:linear-gradient(180deg,rgba(255,254,244,.98),rgba(248,241,220,.97))!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="schedule"]::before,
+  html body .app-shell .dashboard>.widget[data-id="meal"]::after{
+    display:none!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="meal"]{
+    border:1px solid rgba(129,104,55,.23)!important;
+    background:linear-gradient(155deg,#fff8df,#efd99b)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="info"]{
+    border:3px solid rgba(91,57,29,.72)!important;
+    background:linear-gradient(160deg,#247b59,#13513f)!important;
+    box-shadow:inset 0 0 0 1px rgba(255,239,190,.17),var(--forest-shadow-1528)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="birthday"]{
+    border:1px solid rgba(159,105,146,.28)!important;
+    border-radius:18px!important;
+    background:linear-gradient(155deg,#fffafd,#f5e5f1)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]{
+    border:1px solid rgba(74,43,23,.72)!important;
+    border-radius:16px!important;
+    background:linear-gradient(180deg,#8b5935,#613a24)!important;
+    box-shadow:inset 0 1px rgba(255,238,192,.18),0 5px 0 #48291a,0 12px 22px rgba(32,52,29,.2)!important;
+  }
+  html body .app-shell .dashboard>.widget .widget-head h2{
+    letter-spacing:-.012em!important;
+  }
+
+  /* Klassenbaum: nur die detailreiche Vektorkrone bildet den Baum. Die
+     historischen CSS-Kronen, Aeste und Wurzeln werden nicht zusaetzlich
+     daruebergelegt. Fotos, Waldgast und Gluecksblatt bleiben interaktiv. */
+  html body .app-shell[data-theme="forest"] .wall-fixed{
+    isolation:isolate!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+    left:0!important;
+    right:0!important;
+    top:38px!important;
+    bottom:54px!important;
+    background:url('tree-canopy-10.4.svg') center bottom/contain no-repeat!important;
+    transform:translateZ(0) scale(.99)!important;
+    transform-origin:50% 100%!important;
+    filter:drop-shadow(0 18px 15px rgba(23,62,30,.2)) saturate(1.02)!important;
+    animation:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-trunk-v22,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-branch-v22,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-v22,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-fill-v100,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-roots-v80,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-shadow-v22,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-nest-v82,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-friends-v80,
+  html body .app-shell[data-theme="forest"] .wall-fixed .sun-dapple-v82{
+    display:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22::before{
+    left:16%!important;
+    right:16%!important;
+    top:8%!important;
+    height:48%!important;
+    opacity:.62!important;
+    background:radial-gradient(ellipse at 50% 42%,rgba(255,248,175,.2),transparent 68%)!important;
+    filter:blur(9px)!important;
+    animation:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-title-v22{
+    top:0!important;
+    min-width:210px!important;
+    padding:8px 14px!important;
+    border:1px solid rgba(72,43,25,.72)!important;
+    border-radius:14px!important;
+    background:linear-gradient(180deg,rgba(112,70,40,.98),rgba(72,43,27,.98))!important;
+    color:#fff8df!important;
+    box-shadow:inset 0 1px rgba(255,239,192,.2),0 5px 0 rgba(54,31,20,.9),0 11px 20px rgba(29,52,28,.16)!important;
+    backdrop-filter:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-title-v22 small{
+    color:#eed9a7!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-portraits-v22{
+    left:5%!important;
+    right:5%!important;
+    top:4%!important;
+    bottom:12%!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22{
+    width:68px!important;
+    min-width:68px!important;
+    height:82px!important;
+    min-height:82px!important;
+    animation:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .avatar-v22{
+    width:54px!important;
+    height:54px!important;
+    border:3px solid #fffdf0!important;
+    box-shadow:0 0 0 3px #e8b53e,0 7px 14px rgba(27,69,33,.2)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 strong{
+    min-width:58px!important;
+    max-width:92px!important;
+    padding:3px 7px!important;
+    border:1px solid rgba(42,82,47,.16)!important;
+    background:rgba(255,254,244,.96)!important;
+    color:var(--forest-ink-1528)!important;
+    font-size:9px!important;
+    box-shadow:0 4px 9px rgba(25,61,33,.13)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .hero-child .avatar-v22{
+    box-shadow:0 0 0 4px #f1ba32,0 0 0 8px rgba(255,229,111,.25),0 9px 17px rgba(27,69,33,.24)!important;
+    animation:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22{
+    left:2%!important;
+    right:2%!important;
+    bottom:0!important;
+    height:50px!important;
+    grid-template-columns:auto minmax(160px,1fr) auto!important;
+    gap:10px!important;
+    padding:7px 10px!important;
+    border:1px solid rgba(105,73,35,.28)!important;
+    border-radius:15px!important;
+    background:linear-gradient(180deg,rgba(255,253,235,.98),rgba(239,226,190,.98))!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.8),0 7px 18px rgba(34,63,33,.18)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22>span{
+    font-size:24px!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22 strong{
+    color:var(--forest-ink-1528)!important;
+    font-size:13px!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22 small,
+  html body .app-shell[data-theme="forest"] .wall-fixed .reward-journey-v1179>small{
+    color:var(--forest-ink-soft-1528)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .progress-v22{
+    height:10px!important;
+    border:1px solid rgba(83,68,35,.3)!important;
+    background:#d8ddc7!important;
+    box-shadow:inset 0 2px 3px rgba(52,65,42,.14)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .reward-chest:not(.is-open),
+  html body .app-shell[data-theme="forest"] .wall-fixed .reward-chest>b{
+    animation:none!important;
+  }
+
+  /* Waldwerkzeuge: eine helle Werkbank mit semantischen Farbakzenten,
+     mindestens 52 Pixel hohen Zielen und einem eindeutigen Fokuszustand. */
+  html body .app-shell .forest-tool-belt-v1521.dock{
+    left:50%!important;
+    right:auto!important;
+    bottom:10px!important;
+    width:min(1040px,calc(100% - 28px))!important;
+    max-width:1040px!important;
+    height:66px!important;
+    min-height:66px!important;
+    padding:6px!important;
+    display:grid!important;
+    grid-template-columns:1.18fr repeat(7,minmax(0,1fr))!important;
+    gap:4px!important;
+    border:1px solid rgba(66,91,60,.24)!important;
+    border-radius:20px!important;
+    background:linear-gradient(180deg,rgba(255,254,244,.97),rgba(238,231,205,.96))!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.86),0 10px 28px rgba(24,55,33,.24)!important;
+    transform:translateX(-50%)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock::before{
+    display:none!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock::after{
+    content:"WALDWERKZEUGE"!important;
+    left:18px!important;
+    right:auto!important;
+    top:-10px!important;
+    bottom:auto!important;
+    width:auto!important;
+    height:auto!important;
+    padding:3px 8px!important;
+    border:1px solid rgba(54,83,52,.18)!important;
+    border-radius:999px!important;
+    background:#f7f1d9!important;
+    color:#55705d!important;
+    font-size:7px!important;
+    font-weight:900!important;
+    letter-spacing:.13em!important;
+    opacity:1!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button{
+    --tool-accent:#4d9360;
+    --tool-soft:#e2efdc;
+    position:relative!important;
+    min-width:0!important;
+    width:100%!important;
+    height:52px!important;
+    min-height:52px!important;
+    margin:0!important;
+    padding:5px 7px!important;
+    display:grid!important;
+    grid-template-columns:32px minmax(0,1fr)!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:6px!important;
+    border:1px solid transparent!important;
+    border-radius:14px!important;
+    background:transparent!important;
+    color:var(--forest-ink-1528)!important;
+    text-shadow:none!important;
+    box-shadow:none!important;
+    transform:none!important;
+    transition:background .16s ease,border-color .16s ease,transform .16s ease,box-shadow .16s ease!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button::after{
+    display:none!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(1){--tool-accent:#c96e28;--tool-soft:#f9e2c6}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(2){--tool-accent:#397fb4;--tool-soft:#deebf5}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(3){--tool-accent:#4e8b4f;--tool-soft:#e0eed9}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(4){--tool-accent:#308a91;--tool-soft:#dcf0ef}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(5){--tool-accent:#b67234;--tool-soft:#f5e5cf}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(6){--tool-accent:#568f3f;--tool-soft:#e2efd8}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(7){--tool-accent:#7c68aa;--tool-soft:#e9e3f3}
+  html body .app-shell .forest-tool-belt-v1521.dock>button:nth-child(8){--tool-accent:#b45f35;--tool-soft:#f5dfd2}
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{
+    position:static!important;
+    width:32px!important;
+    height:32px!important;
+    display:grid!important;
+    place-items:center!important;
+    border:0!important;
+    border-radius:10px!important;
+    background:var(--tool-soft)!important;
+    color:var(--tool-accent)!important;
+    box-shadow:none!important;
+    transform:none!important;
+    filter:none!important;
+    font-size:18px!important;
+    line-height:1!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-label{
+    min-width:0!important;
+    display:block!important;
+    overflow:hidden!important;
+    color:inherit!important;
+    font-size:9px!important;
+    font-weight:800!important;
+    line-height:1.12!important;
+    text-align:left!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:hover,
+  html body .app-shell .forest-tool-belt-v1521.dock>button:focus-visible,
+  html body .app-shell .forest-tool-belt-v1521.dock>button.is-active,
+  html body .app-shell .forest-tool-belt-v1521.dock>button.active,
+  html body .app-shell .forest-tool-belt-v1521.dock>button[aria-pressed="true"]{
+    border-color:color-mix(in srgb,var(--tool-accent) 34%,transparent)!important;
+    background:var(--tool-soft)!important;
+    color:#183d2a!important;
+    transform:translateY(-1px)!important;
+    box-shadow:0 5px 11px rgba(28,63,36,.12)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:focus-visible{
+    outline:3px solid rgba(28,104,62,.28)!important;
+    outline-offset:1px!important;
+  }
+
+  /* Jahreszeiten bleiben erhalten, ohne den Baum erneut aufzubauen. */
+  html body .app-shell[data-theme="forest"].season-autumn .wall-fixed .tree-scene-v22{
+    filter:sepia(.22) saturate(1.08) hue-rotate(-9deg) drop-shadow(0 18px 15px rgba(54,47,25,.2))!important;
+  }
+  html body .app-shell[data-theme="forest"].season-winter .wall-fixed .tree-scene-v22{
+    filter:saturate(.58) brightness(1.08) drop-shadow(0 18px 15px rgba(45,66,70,.18))!important;
+  }
+}
+
+@media (min-width:761px) and (max-width:1050px){
+  html body .app-shell .forest-tool-belt-v1521.dock>button{
+    grid-template-columns:1fr!important;
+    grid-template-rows:29px auto!important;
+    align-content:center!important;
+    justify-items:center!important;
+    gap:2px!important;
+    padding:3px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{
+    width:28px!important;height:28px!important;font-size:16px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-label{
+    width:100%!important;font-size:7px!important;text-align:center!important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  html body .app-shell .forest-tool-belt-v1521.dock>button,
+  html body .app-shell .wall-fixed .child-card-v22,
+  html body .app-shell .wall-fixed .reward-chest{
+    animation:none!important;
+    transition:none!important;
+  }
+}
+/* Die Ordnerreihe schließt jetzt sichtbar ab, statt frei zu schweben. */
+html body #teamDialog #teamWorkspace .material-folder-grid.material-folder-grid{
+  padding:9px!important; border-radius:14px!important;
+  border:1px solid rgba(60,90,50,.12)!important;
+  background:rgba(246,250,241,.72)!important;
+}
+
+/* =========================================================================
+   06.08.2026 – 15.27 · Marc, Nachbesserung zu 15.26
+   ========================================================================= */
+
+/* ---- 1) „DigiBoard“ weniger fett, Untertitel auch auf dem Handy ------- */
+html body .app-shell .brand strong{
+  font-size:20px!important; font-weight:720!important;
+  letter-spacing:-.01em!important;
+}
+html body .app-shell .brand small{
+  font-weight:560!important; letter-spacing:.012em!important;
+  color:rgba(255,255,255,.68)!important;
+}
+@media (max-width:700px){
+  /* Der Untertitel war auf dem Handy komplett ausgeblendet – dadurch stand
+     „DigiBoard“ allein und wirkte umso wuchtiger. Er ist jetzt wieder da,
+     nur sehr zurückhaltend. */
+  html body .app-shell .brand small:not(.brand-status-line){
+    display:block!important;
+    font-size:8.5px!important; line-height:1.25!important; font-weight:600!important;
+    white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important;
+  }
+  html body .app-shell .brand strong{font-size:16.5px!important; font-weight:700!important}
+}
+
+/* ---- 2) Fach-Kacheln: Stift sauber daneben statt darüber -------------- */
+/* Der Stift lag bisher als frei schwebender Knopf auf der Kachel und
+   überdeckte das Fach-Symbol. Jetzt steht er als eigene schmale Spalte
+   rechts neben der Kachel – nichts überlappt mehr. */
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab-wrap{
+  display:flex!important; align-items:stretch!important; gap:5px!important;
+  position:relative!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-tab.drawer-tab{
+  flex:1 1 auto!important; min-width:0!important;
+  padding:11px 12px!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-icon-edit.drawer-icon-edit{
+  position:static!important;
+  flex:0 0 auto!important; align-self:center!important;
+  width:32px!important; height:32px!important;
+  border:1px solid rgba(60,90,50,.16)!important; border-radius:11px!important;
+  background:#fff!important;
+  font-size:13px!important; line-height:1!important;
+  display:grid!important; place-items:center!important;
+  box-shadow:0 2px 6px rgba(30,60,35,.12)!important; cursor:pointer!important;
+}
+html body #teamDialog #teamWorkspace .material-drawer-tabs .drawer-icon-edit:hover{
+  border-color:#3fae5a!important; background:#f4fbee!important;
+}
+
+/* ---- 3) „＋ Fach“ wieder in Warmorange -------------------------------- */
+html body #teamDialog #teamWorkspace .material-search-row .add-drawer-inline.add-drawer-inline,
+html body #teamDialog #teamWorkspace #addDrawerButton{
+  border:0!important;
+  background:linear-gradient(150deg,#f7a63c,#e07c1f)!important;
+  color:#fff!important;
+  font-weight:850!important;
+  box-shadow:0 4px 11px rgba(158,86,15,.26)!important;
+}
+html body #teamDialog #teamWorkspace #addDrawerButton:hover{
+  background:linear-gradient(150deg,#ffb552,#e88a28)!important;
+}
+
+/* ---- 4) Ordnerreihe: gleich hohe Kacheln statt flacher Balken --------- */
+html body #teamDialog #teamWorkspace .material-folder-grid.material-folder-grid{
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr))!important;
+  gap:8px!important; align-items:stretch!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-card.material-folder-card{
+  min-height:56px!important; box-sizing:border-box!important;
+  padding:10px 11px!important; border-radius:14px!important;
+}
+@media (max-width:700px){
+  html body #teamDialog #teamWorkspace .material-folder-grid.material-folder-grid{
+    grid-template-columns:1fr 1fr!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-card.material-folder-card{
+    min-height:62px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-card .material-folder-copy strong{
+    font-size:12px!important; white-space:normal!important; line-height:1.15!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-card .material-folder-copy small{
+    font-size:9px!important;
+  }
+}
+/* Die Anlege-Kachel ist eine Aktion, kein Link – deshalb kein Blau. */
+html body #teamDialog #teamWorkspace .material-folder-card.material-folder-new,
+html body #teamDialog #teamWorkspace .material-folder-card.material-folder-new *{
+  color:#2f6b41!important;
+}
+html body #teamDialog #teamWorkspace .material-folder-new small{color:#6d8a6d!important}
+
+/* =========================================================================
+   NEXT 15.29 – KLASSENWALD IM GLEICHGEWICHT
+   Feinschliff nach der Ansicht auf Neocities: keine Überlagerung am Motto,
+   kein leerer Unterrichtsbalken und eine sauber zentrierte Fortschrittskarte.
+   ========================================================================= */
+@media (min-width:761px){
+  /* Das Klassenmotto sitzt als kleine Plakette am Begrüßungsfeld und kann
+     nicht mehr mit Uhr oder Essenskarte kollidieren. */
+  html body .app-shell .hero>.hero-kicker{
+    left:50%!important;
+    right:auto!important;
+    top:-13px!important;
+    bottom:auto!important;
+    width:max-content!important;
+    max-width:310px!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:5px 12px!important;
+    border:1px solid rgba(78,108,58,.19)!important;
+    border-radius:999px!important;
+    background:rgba(255,253,227,.96)!important;
+    color:#426245!important;
+    box-shadow:0 5px 13px rgba(35,75,41,.12)!important;
+    transform:translateX(-50%)!important;
+    font-size:9px!important;
+    line-height:1.15!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+  }
+
+  /* Ohne laufende oder nächste Stunde bleibt kein weißer Platzhalter stehen. */
+  html body .app-shell .forest-lesson-now:empty{
+    display:none!important;
+  }
+  html body .app-shell .forest-lesson-now:not(:empty){
+    bottom:-48px!important;
+    min-width:390px!important;
+    border-color:rgba(75,111,65,.18)!important;
+    background:rgba(255,253,239,.96)!important;
+    box-shadow:0 7px 18px rgba(30,67,39,.13)!important;
+  }
+
+  /* Der Fuchs gehört optisch zum Begrüßungsfeld statt frei in der Mitte zu
+     schweben. */
+  html body .app-shell .hero .hero-fox{
+    right:-34px!important;
+    bottom:12px!important;
+    width:58px!important;
+    height:58px!important;
+    display:grid!important;
+    place-items:center!important;
+    border:3px solid rgba(255,253,222,.92)!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle at 45% 35%,#fff7ce,#dbeaa9)!important;
+    box-shadow:0 8px 17px rgba(32,71,39,.16)!important;
+    filter:none!important;
+    font-size:42px!important;
+    line-height:1!important;
+  }
+
+  /* Baum etwas kleiner: Fotos bleiben gut sichtbar, während wieder mehr von
+     Lichtung, Weg und Waldtiefe zu sehen ist. */
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+    top:45px!important;
+    bottom:60px!important;
+    background-size:91% 94%!important;
+    transform:translateZ(0) scale(.92)!important;
+    transform-origin:50% 100%!important;
+    filter:drop-shadow(0 15px 13px rgba(23,62,30,.18)) saturate(1.01)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-portraits-v22{
+    left:8%!important;
+    right:8%!important;
+    top:6%!important;
+    bottom:14%!important;
+  }
+
+  /* 15.28 hatte left/right neu gesetzt, aber width und transform aus einer
+     alten Regel geerbt. Dieser vollständige Reset hält die Karte im Baum. */
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22{
+    left:7%!important;
+    right:7%!important;
+    bottom:0!important;
+    width:auto!important;
+    max-width:none!important;
+    height:54px!important;
+    min-height:54px!important;
+    grid-template-columns:minmax(165px,.9fr) minmax(190px,1.25fr) 74px!important;
+    gap:11px!important;
+    padding:6px 11px!important;
+    overflow:visible!important;
+    transform:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22::before,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22::after{
+    display:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .reward-chest{
+    justify-self:end!important;
+    transform:scale(.82)!important;
+    transform-origin:center!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22{
+    min-width:0!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22>div{
+    min-width:0!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22 em,
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22 strong,
+  html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22 small{
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  /* Werkzeugleiste und Baumabschluss bekommen bewusst Luft zueinander. */
+  html body .app-shell .forest-tool-belt-v1521.dock{
+    bottom:12px!important;
+  }
+}
+
+@media (min-width:761px) and (max-width:1250px){
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+    background-size:88% 92%!important;
+    transform:translateZ(0) scale(.9)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22{
+    left:6%!important;
+    right:6%!important;
+    grid-template-columns:minmax(145px,.85fr) minmax(155px,1.1fr) 66px!important;
+    gap:8px!important;
+  }
+}
+
+/* ============================================================
+   NEXT 15.30 · FUNKTIONEN KLAR, DIALOGE AUS EINEM GUSS
+   Diese Regeln stehen bewusst zuletzt. Sie loesen die historisch
+   gewachsenen Sonderlayouts fuer Backup, Stundenplan und Teambereich ab.
+   ============================================================ */
+
+/* --- Kinderdaten sichern und laden ------------------------- */
+html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsShare,
+html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsBackup{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  align-content:start!important;
+  gap:18px!important;
+  width:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:16px 20px 22px!important;
+  padding:26px!important;
+  overflow:visible!important;
+  border:1px solid #d9e8de!important;
+  border-radius:20px!important;
+  background:linear-gradient(145deg,#fbfefb,#eff8f1)!important;
+  box-shadow:0 8px 24px rgba(8,69,45,.07)!important;
+}
+html body #settingsDialog #settingsShare[hidden],
+html body #settingsDialog #settingsBackup[hidden]{display:none!important}
+html body #settingsDialog #settingsShare>div:first-child,
+html body #settingsDialog #settingsBackup>div:first-child{
+  display:grid!important;
+  grid-template-columns:58px minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:16px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+html body #settingsDialog #settingsShare>div:first-child>span,
+html body #settingsDialog #settingsBackup>div:first-child>span{
+  display:grid!important;
+  place-items:center!important;
+  width:58px!important;
+  height:58px!important;
+  border-radius:17px!important;
+  background:#e1f3e4!important;
+  font-size:30px!important;
+  box-shadow:inset 0 0 0 1px rgba(21,124,72,.1)!important;
+}
+html body #settingsDialog #settingsShare h3,
+html body #settingsDialog #settingsBackup h3{
+  margin:1px 0 7px!important;
+  color:#164d34!important;
+  font-size:24px!important;
+  line-height:1.12!important;
+}
+html body #settingsDialog #settingsShare p,
+html body #settingsDialog #settingsBackup p{
+  width:auto!important;
+  max-width:850px!important;
+  margin:0!important;
+  color:#5b7063!important;
+  font-size:14px!important;
+  line-height:1.55!important;
+}
+html body #settingsDialog #settingsShare .icloud-backup-actions,
+html body #settingsDialog #settingsBackup .icloud-backup-actions{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:0!important;
+}
+html body #settingsDialog #settingsShare .icloud-backup-actions button,
+html body #settingsDialog #settingsBackup .icloud-backup-actions button{
+  width:auto!important;
+  min-width:220px!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:11px 18px!important;
+  border:0!important;
+  border-radius:13px!important;
+  background:linear-gradient(135deg,#11875a,#38ad63)!important;
+  color:#fff!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  box-shadow:0 7px 17px rgba(14,119,71,.18)!important;
+}
+html body #settingsDialog #settingsShare .icloud-backup-actions button.secondary,
+html body #settingsDialog #settingsBackup .icloud-backup-actions button+button{
+  border:1px solid #bad4c1!important;
+  background:#fff!important;
+  color:#21603e!important;
+  box-shadow:none!important;
+}
+html body #settingsDialog #settingsShare .status-note,
+html body #settingsDialog #settingsBackup .status-note{
+  min-height:22px!important;
+  padding:8px 11px!important;
+  border-radius:10px!important;
+  background:#eaf5ec!important;
+  color:#276342!important;
+  font-weight:800!important;
+}
+html body #settingsDialog #settingsShare .panel-help,
+html body #settingsDialog #settingsBackup .panel-help{
+  padding:12px 14px!important;
+  border-left:4px solid #d49b2d!important;
+  border-radius:9px!important;
+  background:#fff8df!important;
+  color:#6f5726!important;
+}
+
+/* --- Stundenplan: jede Zeile bleibt lesbar ----------------- */
+html body #settingsDialog #settingsPlan{
+  min-height:0!important;
+  overflow:hidden!important;
+}
+html body #settingsDialog #settingsPlan>.schedule-workspace{
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+  gap:12px!important;
+  height:calc(min(820px,100dvh - 40px) - 190px)!important;
+  min-height:430px!important;
+  margin:0!important;
+  padding:16px!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:18px!important;
+  background:#fff!important;
+}
+html body #settingsDialog .schedule-mode-tabs{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:5px!important;
+  width:min(520px,100%)!important;
+  margin:0!important;
+  padding:4px!important;
+}
+html body #settingsDialog .schedule-mode-tabs button{
+  min-height:38px!important;
+  padding:7px 13px!important;
+  border:0!important;
+  border-radius:10px!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+html body #settingsDialog #scheduleBasePanel,
+html body #settingsDialog #scheduleDayPanel{
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+  gap:10px!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+html body #settingsDialog #scheduleBasePanel[hidden],
+html body #settingsDialog #scheduleDayPanel[hidden]{display:none!important}
+html body #settingsDialog .schedule-plan-head,
+html body #settingsDialog .simple-day-change-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 220px!important;
+  align-items:end!important;
+  gap:18px!important;
+  margin:0!important;
+  padding:13px 15px!important;
+  border:1px solid #dce9de!important;
+  border-radius:14px!important;
+  background:#f4f9f3!important;
+}
+html body #settingsDialog .schedule-plan-head h3,
+html body #settingsDialog .simple-day-change-head h3{
+  margin:2px 0!important;
+  color:#244f35!important;
+  font-size:18px!important;
+}
+html body #settingsDialog .schedule-plan-head p,
+html body #settingsDialog .simple-day-change-head p{
+  margin:0!important;
+  color:#6f7f72!important;
+  font-size:10px!important;
+}
+html body #settingsDialog .schedule-plan-head label,
+html body #settingsDialog .simple-day-change-head label{
+  display:grid!important;
+  gap:5px!important;
+  color:#536b59!important;
+  font-size:9px!important;
+  font-weight:900!important;
+}
+html body #settingsDialog .schedule-plan-head select,
+html body #settingsDialog .simple-day-change-head input{
+  width:100%!important;
+  height:42px!important;
+  padding:7px 11px!important;
+  border:1px solid #cbdccf!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:#214d34!important;
+  font-size:13px!important;
+  font-weight:850!important;
+}
+html body #settingsDialog .week-schedule-editor,
+html body #settingsDialog .override-editor{
+  display:grid!important;
+  align-content:start!important;
+  gap:8px!important;
+  min-height:0!important;
+  max-height:none!important;
+  padding:2px 5px 8px 2px!important;
+  overflow:auto!important;
+  background:transparent!important;
+}
+html body #settingsDialog .schedule-arrival-row{
+  display:grid!important;
+  grid-template-columns:34px 118px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:45px!important;
+  padding:7px 11px!important;
+  border:1px solid #cbe4da!important;
+  border-radius:12px!important;
+  background:linear-gradient(90deg,#e9f8f4,#f6f9df)!important;
+}
+html body #settingsDialog .schedule-edit-row{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:36px 118px minmax(180px,1fr) minmax(180px,1fr)!important;
+  grid-auto-rows:auto!important;
+  align-items:center!important;
+  gap:7px 10px!important;
+  min-height:62px!important;
+  padding:8px 11px!important;
+  overflow:visible!important;
+  border:1px solid #d9e5d8!important;
+  border-radius:13px!important;
+  background:#fbfdfb!important;
+}
+html body #settingsDialog .schedule-edit-row label{
+  display:grid!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+html body #settingsDialog .schedule-edit-row label small{
+  display:block!important;
+  color:#64766a!important;
+  font-size:8px!important;
+  font-weight:900!important;
+}
+html body #settingsDialog .schedule-edit-row input{
+  display:block!important;
+  width:100%!important;
+  height:38px!important;
+  min-width:0!important;
+  padding:7px 10px!important;
+  border:1px solid #cfded1!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  color:#2d4937!important;
+  font-size:12px!important;
+  font-weight:750!important;
+}
+html body #settingsDialog .schedule-edit-row .schedule-time{
+  font-size:11px!important;
+  white-space:nowrap!important;
+}
+html body #settingsDialog .schedule-edit-row .schedule-break-chip{
+  position:static!important;
+  inset:auto!important;
+  grid-column:3/-1!important;
+  justify-self:start!important;
+  width:auto!important;
+  margin:0!important;
+  padding:4px 9px!important;
+  transform:none!important;
+  border:1px solid #edcf75!important;
+  border-radius:999px!important;
+  background:#fff5c8!important;
+  color:#705a21!important;
+  font-size:8px!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+  z-index:auto!important;
+}
+
+/* --- Klassenteam: verlaessliches Kartenraster -------------- */
+html body #teamDialog.team-selection-open .dialog-card{
+  width:min(1180px,94vw)!important;
+  min-height:520px!important;
+  height:auto!important;
+  max-height:92vh!important;
+  padding:20px!important;
+  overflow:auto!important;
+  border:1px solid rgba(29,104,59,.18)!important;
+  border-radius:25px!important;
+  background:linear-gradient(180deg,#f4fae9,#edf5df)!important;
+}
+html body #teamDialog.team-selection-open .team-selection-view{
+  display:grid!important;
+  align-content:start!important;
+  gap:22px!important;
+  min-height:440px!important;
+  padding:32px 24px 28px!important;
+  border-radius:20px!important;
+  background:linear-gradient(145deg,#fbfdf5,#f0f7e4)!important;
+}
+html body #teamDialog.team-selection-open .team-switcher-head{
+  min-height:96px!important;
+  margin:0!important;
+  padding:0 54px 0 0!important;
+}
+html body #teamDialog.team-selection-open .team-switcher-head>div{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:14px!important;
+}
+html body #teamDialog.team-selection-open .team-switcher-head h3{
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:15px 28px!important;
+  border:0!important;
+  border-radius:15px!important;
+  background:linear-gradient(135deg,#176e43,#39a34f)!important;
+  color:#fff!important;
+  font-size:25px!important;
+  text-align:center!important;
+  box-shadow:0 9px 20px rgba(20,93,55,.18)!important;
+}
+html body #teamDialog.team-selection-open .team-member-grid{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:13px!important;
+  width:100%!important;
+  min-height:170px!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body #teamDialog.team-selection-open .team-member-card{
+  display:grid!important;
+  grid-template-rows:70px minmax(0,1fr)!important;
+  place-items:center!important;
+  gap:9px!important;
+  min-width:0!important;
+  min-height:165px!important;
+  padding:16px 11px!important;
+  border:1px solid #cddfc7!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  color:#28513a!important;
+  box-shadow:0 8px 20px rgba(25,73,40,.08)!important;
+  transform:none!important;
+}
+html body #teamDialog.team-selection-open .team-member-card:hover{
+  border-color:#6fb076!important;
+  transform:translateY(-2px)!important;
+  box-shadow:0 13px 26px rgba(25,96,50,.14)!important;
+}
+html body #teamDialog.team-selection-open .team-member-icon{
+  display:grid!important;
+  place-items:center!important;
+  width:66px!important;
+  height:66px!important;
+  border-radius:20px!important;
+  background:#edf6de!important;
+  font-size:35px!important;
+}
+html body #teamDialog.team-selection-open .team-member-card>span:last-child{
+  display:grid!important;
+  gap:4px!important;
+  min-width:0!important;
+  text-align:center!important;
+}
+html body #teamDialog.team-selection-open .team-member-card strong{
+  font-size:13px!important;
+  line-height:1.2!important;
+}
+html body #teamDialog.team-selection-open .team-member-card small{
+  color:#758277!important;
+  font-size:9px!important;
+  line-height:1.3!important;
+}
+
+/* --- Mein Bereich: eine Kopfzeile, eine Navigation --------- */
+@media(min-width:701px){
+  html body #teamDialog.team-workspace-open .dialog-card{
+    width:min(1320px,96vw)!important;
+    height:min(760px,94vh)!important;
+    max-height:94vh!important;
+    padding:12px 15px 15px!important;
+    overflow:hidden!important;
+    border:1px solid rgba(25,95,53,.17)!important;
+    border-radius:24px!important;
+    background:#f3f7ec!important;
+  }
+  html body #teamDialog.team-workspace-open>.dialog-card>.dialog-head,
+  html body #teamDialog.team-workspace-open .team-close-button,
+  html body #teamDialog.team-workspace-open .team-scroll-top{display:none!important}
+  html body #teamDialog #teamWorkspace{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:52px 44px minmax(0,1fr)!important;
+    grid-template-areas:'nav' 'tabs' 'content'!important;
+    gap:9px!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+  html body #teamDialog #teamWorkspace[hidden]{display:none!important}
+  html body #teamDialog #teamWorkspace>.team-workspace-nav{
+    grid-area:nav!important;
+    position:relative!important;
+    inset:auto!important;
+    display:grid!important;
+    grid-template-columns:auto minmax(150px,1fr) minmax(0,auto)!important;
+    align-items:center!important;
+    gap:12px!important;
+    width:100%!important;
+    height:52px!important;
+    min-height:52px!important;
+    margin:0!important;
+    padding:6px 10px!important;
+    border:1px solid #cfe0d1!important;
+    border-radius:14px!important;
+    background:#fff!important;
+    box-shadow:0 4px 13px rgba(10,67,42,.06)!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left{
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+    flex-wrap:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left button{
+    min-height:36px!important;
+    margin:0!important;
+    padding:7px 11px!important;
+    border:1px solid #d5e2d7!important;
+    border-radius:10px!important;
+    background:#f7faf7!important;
+    color:#28543a!important;
+    font-size:9px!important;
+    font-weight:900!important;
+    box-shadow:none!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left #backToBoardButton{
+    border-color:#168551!important;
+    background:#168551!important;
+    color:#fff!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left #openPersonalSettingsButton{
+    width:36px!important;
+    min-width:36px!important;
+    padding:0!important;
+    background:#fff3c4!important;
+    color:#68501e!important;
+    font-size:16px!important;
+  }
+  html body #teamDialog #teamWorkspace .workspace-person-title{
+    justify-self:center!important;
+    margin:0!important;
+    color:#245137!important;
+    font-size:18px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace .team-header-favorites{
+    display:flex!important;
+    justify-content:flex-end!important;
+    gap:6px!important;
+    max-width:360px!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  html body #teamDialog #teamWorkspace .team-header-favorites .team-teaching-tool-button{
+    min-width:92px!important;
+    height:36px!important;
+    padding:3px 7px!important;
+    border-radius:9px!important;
+    font-size:7px!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-page-tabs{
+    grid-area:tabs!important;
+    position:relative!important;
+    inset:auto!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:5px!important;
+    width:100%!important;
+    height:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:4px!important;
+    border:1px solid #d4e2d6!important;
+    border-radius:13px!important;
+    background:#edf4ec!important;
+    box-shadow:none!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-page-tabs button{
+    height:34px!important;
+    min-height:34px!important;
+    padding:5px 10px!important;
+    border:0!important;
+    border-radius:9px!important;
+    background:transparent!important;
+    color:#496250!important;
+    font-size:10px!important;
+    font-weight:900!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-page-tabs button.active{
+    background:#fff!important;
+    color:#147548!important;
+    box-shadow:0 3px 9px rgba(14,82,49,.1)!important;
+  }
+  html body #teamDialog #teamWorkspace>.personal-workspace-banner,
+  html body #teamDialog #teamWorkspace>#backToTeamOverview,
+  html body #teamDialog #teamWorkspace .material-head-controls,
+  html body #teamDialog #teamWorkspace .workspace-banner-actions,
+  html body #teamDialog #teamWorkspace .cockpit-person-actions{display:none!important}
+  html body #teamDialog #teamWorkspace>.team-cockpit,
+  html body #teamDialog #teamWorkspace>.material-library-panel,
+  html body #teamDialog #teamWorkspace>.teacher-grid,
+  html body #teamDialog #teamWorkspace>.weekly-goal-team-panel,
+  html body #teamDialog #teamWorkspace>#personalWorkspaceSettings{
+    grid-area:content!important;
+    min-height:0!important;
+    margin:0!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode>.team-cockpit{
+    display:grid!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-person-strip{
+    grid-template-columns:minmax(190px,.8fr) minmax(0,1fr)!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-favorite-tools{
+    grid-column:2!important;
+  }
+
+  /* Fundus: Suchfeld und Eingabeformular koennen sich nicht mehr ueberlagern. */
+  html body #teamDialog #teamWorkspace.materials-mode>.material-library-panel{
+    display:grid!important;
+    grid-template-rows:auto auto auto minmax(0,1fr)!important;
+    gap:9px!important;
+    padding:15px!important;
+    overflow:hidden!important;
+    border:1px solid #d5e2d3!important;
+    border-radius:17px!important;
+    background:#fff!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-head{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    min-height:34px!important;
+    margin:0!important;
+    padding:0 2px!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-head h3{
+    margin:0!important;
+    color:#245538!important;
+    font-size:18px!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-drawer-tabs{
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+    height:auto!important;
+    min-height:46px!important;
+    margin:0!important;
+    padding:3px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-drawer-tabs>*{
+    flex:0 0 auto!important;
+    min-height:40px!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-search-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:9px!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-search-field{
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:30px minmax(0,1fr) 30px!important;
+    align-items:center!important;
+    width:100%!important;
+    min-width:0!important;
+    height:42px!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid #ceddd0!important;
+    border-radius:11px!important;
+    background:#fafcfa!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-search-icon{
+    position:static!important;
+    display:grid!important;
+    place-items:center!important;
+    font-size:14px!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode #materialSearchInput{
+    width:100%!important;
+    min-width:0!important;
+    height:40px!important;
+    margin:0!important;
+    padding:7px 4px!important;
+    border:0!important;
+    outline:0!important;
+    background:transparent!important;
+    color:#2e4d38!important;
+    font-size:12px!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode #materialSearchClear{
+    position:static!important;
+    width:26px!important;
+    height:26px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:8px!important;
+    background:#edf3ed!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode #addDrawerButton{
+    position:static!important;
+    min-width:104px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:8px 13px!important;
+    border:0!important;
+    border-radius:11px!important;
+    background:#ef932a!important;
+    color:#fff!important;
+    font-size:11px!important;
+    font-weight:900!important;
+    transform:none!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-workspace{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(330px,390px)!important;
+    gap:13px!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-item-list{
+    min-width:0!important;
+    min-height:0!important;
+    padding:12px!important;
+    overflow:auto!important;
+    border:1px solid #dbe6d9!important;
+    border-radius:14px!important;
+    background:#fbfdf8!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    align-content:start!important;
+    gap:8px!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:14px!important;
+    overflow:auto!important;
+    border:1px solid #cfe0d0!important;
+    border-radius:14px!important;
+    background:#f7fbf4!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card h4{
+    margin:0!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-toggle{
+    width:100%!important;
+    min-height:38px!important;
+    padding:7px 10px!important;
+    border:0!important;
+    border-radius:10px!important;
+    background:#e4f1df!important;
+    color:#275439!important;
+    font-size:13px!important;
+    font-weight:900!important;
+    text-align:left!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card label{
+    display:grid!important;
+    gap:4px!important;
+    margin:0!important;
+    color:#274b35!important;
+    font-size:9px!important;
+    font-weight:900!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card input:not([type="checkbox"]),
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card select,
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card textarea{
+    width:100%!important;
+    min-width:0!important;
+    min-height:39px!important;
+    margin:0!important;
+    padding:8px 10px!important;
+    border:1px solid #c8d9ca!important;
+    border-radius:10px!important;
+    background:#fff!important;
+    color:#263f30!important;
+    font-size:11px!important;
+    font-weight:650!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-add-card textarea{
+    min-height:68px!important;
+    resize:vertical!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .today-pin-choice{
+    display:flex!important;
+    align-items:center!important;
+    gap:8px!important;
+    min-height:44px!important;
+    padding:8px 10px!important;
+    border:1px solid #ead089!important;
+    border-radius:11px!important;
+    background:#fff8dc!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .today-pin-choice input{
+    flex:0 0 auto!important;
+    width:22px!important;
+    height:22px!important;
+    margin:0!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode #addMaterialButton{
+    min-height:44px!important;
+    border-radius:11px!important;
+    font-size:12px!important;
+  }
+}
+
+@media(max-width:900px) and (min-width:701px){
+  html body #teamDialog #teamWorkspace .team-header-favorites{display:none!important}
+  html body #teamDialog #teamWorkspace>.team-workspace-nav{grid-template-columns:auto 1fr!important}
+  html body #teamDialog #teamWorkspace.materials-mode .material-workspace{grid-template-columns:minmax(0,1fr) minmax(280px,330px)!important}
+}
+
+@media(max-width:700px){
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsShare,
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsBackup{
+    margin:10px!important;
+    padding:18px!important;
+  }
+  html body #settingsDialog #settingsShare>div:first-child,
+  html body #settingsDialog #settingsBackup>div:first-child{
+    grid-template-columns:46px minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+  html body #settingsDialog #settingsShare>div:first-child>span,
+  html body #settingsDialog #settingsBackup>div:first-child>span{width:46px!important;height:46px!important;font-size:23px!important}
+  html body #settingsDialog #settingsShare h3,
+  html body #settingsDialog #settingsBackup h3{font-size:19px!important}
+  html body #settingsDialog #settingsShare .icloud-backup-actions,
+  html body #settingsDialog #settingsBackup .icloud-backup-actions{display:grid!important}
+  html body #settingsDialog #settingsShare .icloud-backup-actions button,
+  html body #settingsDialog #settingsBackup .icloud-backup-actions button{width:100%!important;min-width:0!important}
+  html body #settingsDialog #settingsPlan>.schedule-workspace{height:auto!important;min-height:0!important;overflow:visible!important}
+  html body #settingsDialog #scheduleBasePanel,
+  html body #settingsDialog #scheduleDayPanel{overflow:visible!important}
+  html body #settingsDialog .schedule-plan-head,
+  html body #settingsDialog .simple-day-change-head{grid-template-columns:1fr!important}
+  html body #settingsDialog .week-schedule-editor,
+  html body #settingsDialog .override-editor{overflow:visible!important}
+  html body #settingsDialog .schedule-edit-row{
+    grid-template-columns:34px 96px minmax(0,1fr)!important;
+  }
+  html body #settingsDialog .schedule-edit-row label:first-of-type{grid-column:3!important}
+  html body #settingsDialog .schedule-edit-row label:last-of-type{grid-column:3!important}
+  html body #settingsDialog .schedule-edit-row .schedule-break-chip{grid-column:2/-1!important}
+  html body #teamDialog.team-selection-open .team-member-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body #teamDialog.team-selection-open .team-switcher-head h3{font-size:18px!important}
+}
+
+/* Die alten 15.x-Kompaktregeln fuer grosse Displays waren besonders
+   spezifisch. Dieser abschliessende Block hebt sie gezielt auf. */
+html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsShare[hidden],
+html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsBackup[hidden]{display:none!important}
+
+@media(min-width:1051px){
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsPlan:not([hidden]){
+    box-sizing:border-box!important;
+    display:block!important;
+    width:auto!important;
+    height:calc(min(820px,100dvh - 40px) - 160px)!important;
+    min-height:500px!important;
+    max-height:none!important;
+    margin:12px 16px 16px!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border:0!important;
+    border-radius:18px!important;
+    background:#fff!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan>.settings-section.schedule-workspace{
+    box-sizing:border-box!important;
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:44px minmax(0,1fr)!important;
+    align-items:stretch!important;
+    gap:10px!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:14px!important;
+    overflow:hidden!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-mode-tabs{
+    grid-column:1!important;
+    grid-row:1!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    width:min(520px,100%)!important;
+    height:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:4px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-mode-tabs button{
+    height:36px!important;
+    min-height:36px!important;
+    padding:6px 12px!important;
+    font-size:10px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan #scheduleBasePanel:not([hidden]),
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan #scheduleDayPanel:not([hidden]){
+    grid-column:1!important;
+    grid-row:2!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto minmax(0,1fr)!important;
+    gap:9px!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head{
+    grid-column:1!important;
+    grid-row:1!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 220px!important;
+    align-items:end!important;
+    gap:16px!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:68px!important;
+    margin:0!important;
+    padding:10px 13px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head>div,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head>div{
+    display:block!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head>div>small,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head>div>small,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head p,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head p{
+    display:block!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head h3,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head h3{
+    margin:2px 0!important;
+    font-size:16px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head p,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head p{font-size:8px!important}
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-plan-head select,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .simple-day-change-head input{
+    height:38px!important;
+    min-height:38px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .week-schedule-editor,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .override-editor{
+    grid-column:1!important;
+    grid-row:2!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-auto-rows:max-content!important;
+    align-content:start!important;
+    gap:7px!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:1px 5px 7px 1px!important;
+    overflow:auto!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-arrival-row{
+    grid-column:1!important;
+    grid-row:auto!important;
+    display:grid!important;
+    grid-template-columns:34px 118px minmax(0,1fr)!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:42px!important;
+    padding:6px 10px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row{
+    box-sizing:border-box!important;
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:36px 118px minmax(180px,1fr) minmax(180px,1fr)!important;
+    grid-template-rows:auto!important;
+    grid-auto-rows:auto!important;
+    align-items:center!important;
+    gap:7px 10px!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:58px!important;
+    padding:7px 10px!important;
+    overflow:visible!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row .lesson-number,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row .schedule-time,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row label,
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row label:nth-of-type(1),
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row label:nth-of-type(2){
+    grid-column:auto!important;
+    grid-row:auto!important;
+    align-self:center!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row label{
+    position:static!important;
+    display:grid!important;
+    gap:3px!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row label small{
+    display:block!important;
+    font-size:7px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row input{
+    height:34px!important;
+    min-height:34px!important;
+    padding:5px 9px!important;
+    font-size:10px!important;
+  }
+  html body #settingsDialog:has(#settingsPlan:not([hidden])) #settingsPlan .schedule-edit-row .schedule-break-chip{
+    position:static!important;
+    inset:auto!important;
+    grid-column:3/-1!important;
+    grid-row:auto!important;
+    justify-self:start!important;
+    width:auto!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:3px 8px!important;
+    transform:none!important;
+    font-size:7px!important;
+    white-space:normal!important;
+    z-index:auto!important;
+  }
+}
+
+@media(min-width:701px){
+  html body #teamDialog #teamWorkspace.materials-mode .material-library-panel .material-head-controls.material-head-controls,
+  html body #teamDialog #teamWorkspace.materials-mode #materialHeadSettings,
+  html body #teamDialog #teamWorkspace.materials-mode #materialHeadBack{
+    display:none!important;
+    width:0!important;
+    height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+}
+
+/* ======================================================================
+   NEXT 15.31 · DER WALD LEBT
+   Der Klassenbaum erzählt seinen Tagesstand nun direkt, die Karten der
+   Waldhelden sind eindeutig und die Werkbank zeigt nützliche Live-Werte.
+   ====================================================================== */
+
+html body .app-shell .wall-fixed .tree-today-badge-v1531{
+  position:absolute!important;
+  z-index:38!important;
+  right:2%!important;
+  top:-10px!important;
+  min-width:108px!important;
+  min-height:34px!important;
+  padding:5px 9px 5px 6px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  border:1px solid rgba(255,248,205,.78)!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,rgba(255,252,224,.96),rgba(230,244,199,.95))!important;
+  color:#285738!important;
+  box-shadow:0 5px 0 rgba(60,81,39,.12),0 9px 15px rgba(27,68,33,.16)!important;
+  pointer-events:none!important;
+}
+html body .app-shell .wall-fixed .tree-today-badge-v1531>span{
+  width:24px!important;
+  height:24px!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 auto!important;
+  border-radius:8px!important;
+  background:#fff8d2!important;
+  font-size:15px!important;
+}
+html body .app-shell .wall-fixed .tree-today-badge-v1531>div{
+  min-width:0!important;
+  display:grid!important;
+  gap:1px!important;
+}
+html body .app-shell .wall-fixed .tree-today-badge-v1531 strong{
+  font-size:8px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+html body .app-shell .wall-fixed .tree-today-badge-v1531 small{
+  color:#58705a!important;
+  font-size:5.5px!important;
+  font-weight:800!important;
+  letter-spacing:.02em!important;
+  white-space:nowrap!important;
+}
+html body .app-shell .wall-fixed .forest-phase-sunlit .tree-today-badge-v1531,
+html body .app-shell .wall-fixed .forest-phase-celebration .tree-today-badge-v1531{
+  border-color:#f0c95a!important;
+  background:linear-gradient(180deg,#fff7bd,#f3dd7b)!important;
+}
+html body .app-shell .wall-fixed .forest-phase-sunlit .tree-glow-v80{
+  opacity:.72!important;
+}
+html body .app-shell .wall-fixed .forest-phase-celebration .tree-glow-v80{
+  opacity:.92!important;
+  filter:saturate(1.18)!important;
+}
+
+html body .app-shell .wall-fixed .tree-child-state-v1531{
+  position:absolute!important;
+  left:50%!important;
+  bottom:-16px!important;
+  z-index:8!important;
+  width:max-content!important;
+  max-width:112px!important;
+  padding:3px 7px!important;
+  border:1px solid rgba(31,111,59,.18)!important;
+  border-radius:999px!important;
+  background:rgba(231,249,215,.98)!important;
+  color:#2d743d!important;
+  box-shadow:0 4px 9px rgba(30,74,37,.13)!important;
+  opacity:0!important;
+  transform:translate(-50%,-4px)!important;
+  font-size:6px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  pointer-events:none!important;
+  transition:opacity .18s ease,transform .18s ease!important;
+}
+html body .app-shell .wall-fixed .child-card-v22.is-open{
+  z-index:60!important;
+  transform:translate(-50%,-53%) scale(1.06)!important;
+}
+html body .app-shell .wall-fixed .child-card-v22.is-open .tree-child-state-v1531{
+  opacity:1!important;
+  transform:translate(-50%,0)!important;
+}
+html body .app-shell .wall-fixed .empty-tree-v22{
+  position:absolute!important;
+  z-index:34!important;
+  left:50%!important;
+  top:49%!important;
+  width:min(230px,52%)!important;
+  padding:12px 14px!important;
+  display:grid!important;
+  justify-items:center!important;
+  gap:3px!important;
+  border:1px solid rgba(82,119,60,.2)!important;
+  border-radius:17px!important;
+  background:rgba(255,253,230,.91)!important;
+  color:#315f3a!important;
+  box-shadow:0 10px 22px rgba(35,75,39,.16)!important;
+  transform:translate(-50%,-50%)!important;
+  text-align:center!important;
+  backdrop-filter:blur(6px)!important;
+}
+html body .app-shell .wall-fixed .empty-tree-v22>span{font-size:25px!important;line-height:1!important}
+html body .app-shell .wall-fixed .empty-tree-v22>strong{font-size:9px!important;line-height:1.2!important}
+html body .app-shell .wall-fixed .empty-tree-v22>small{color:#60765f!important;font-size:6.5px!important;line-height:1.3!important}
+
+html body .app-shell .wall-fixed .forest-milestones-v1531{
+  margin-top:1px!important;
+  display:flex!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  color:#6c755f!important;
+  font-size:5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+
+html body .app-shell .forest-tool-belt-v1521.dock .dock-copy-v1531{
+  min-width:0!important;
+  display:grid!important;
+  align-content:center!important;
+  gap:2px!important;
+  text-align:left!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock .dock-status-v1531{
+  display:block!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  color:color-mix(in srgb,var(--tool-accent) 82%,#314a39)!important;
+  font-size:6.5px!important;
+  font-weight:800!important;
+  line-height:1.1!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button.is-forest-pressed{
+  border-color:color-mix(in srgb,var(--tool-accent) 48%,transparent)!important;
+  background:var(--tool-soft)!important;
+  transform:translateY(1px) scale(.97)!important;
+  box-shadow:inset 0 2px 4px rgba(36,61,39,.12)!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button.is-playing{
+  --tool-accent:#a6412f!important;
+  --tool-soft:#f7d9cf!important;
+  border-color:#d88874!important;
+  background:#f7d9cf!important;
+}
+html body .app-shell .forest-secret-v1523.is-found{
+  opacity:.72!important;
+  filter:saturate(.7)!important;
+}
+
+@media(max-width:1050px){
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-copy-v1531{
+    justify-items:center!important;
+    text-align:center!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-status-v1531{display:none!important}
+  html body .app-shell .wall-fixed .tree-today-badge-v1531{right:0!important;transform:scale(.9)!important;transform-origin:right top!important}
+}
+@media(max-width:760px){
+  html body .app-shell .wall-fixed .tree-today-badge-v1531{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .app-shell .wall-fixed .tree-child-state-v1531,
+  html body .app-shell .forest-tool-belt-v1521.dock>button{transition:none!important}
+}
+
+/* ======================================================================
+   NEXT 15.32 · FÜCHSE SCHNELL UND SICHER BEWERTEN
+   Sechs Aktionen bekommen sechs feste Plätze. Die persönliche Navigation
+   bleibt beim Scrollen erreichbar und enthält nur noch echte Ziele.
+   ====================================================================== */
+
+html body #teamDialog #teamWorkspace>.team-page-tabs{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+html body #teamWorkspace .material-head-subtitle-v1532{
+  margin:3px 0 0!important;
+  color:#708171!important;
+  font-size:9px!important;
+  font-weight:700!important;
+  line-height:1.25!important;
+}
+
+/* Die sechs Schnellaktionen bleiben auch auf breiten Geräten in einer
+   vollständig sichtbaren Reihe. */
+html body #teamWorkspace .compact-team-points .compact-rating-row{
+  grid-template-columns:minmax(96px,1fr) 202px!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions{
+  width:202px!important;
+  min-width:202px!important;
+  display:grid!important;
+  grid-template-columns:repeat(6,30px)!important;
+  grid-template-rows:32px!important;
+  align-items:center!important;
+  justify-content:end!important;
+  gap:4px!important;
+  overflow:visible!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-btn,
+html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut{
+  position:static!important;
+  inset:auto!important;
+  width:30px!important;
+  min-width:30px!important;
+  max-width:30px!important;
+  height:30px!important;
+  min-height:30px!important;
+  max-height:30px!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-rows:1fr!important;
+  place-items:center!important;
+  border:1px solid rgba(44,68,48,.14)!important;
+  border-radius:9px!important;
+  box-shadow:none!important;
+  transform:none!important;
+  font-size:0!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions small{display:none!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-symbol{
+  width:auto!important;
+  height:auto!important;
+  display:block!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font-size:17px!important;
+  line-height:1!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-green{background:#daf0d8!important;color:#15933a!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-yellow{background:#fff0bd!important;color:#dca900!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-red{background:#f8d9d5!important;color:#cb382f!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-direct{background:#f6e8ae!important;color:#aa7413!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-ban{
+  background:linear-gradient(145deg,#db5148,#b5312b)!important;
+  color:#fff!important;
+  border-color:#a92b26!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-ban .ban-glyph{
+  display:block!important;
+  color:#fff!important;
+  font:900 17px/1 Arial,sans-serif!important;
+  text-shadow:none!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut{
+  background:#e7e9e2!important;
+  color:#48594e!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut>span{
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+}
+
+@media(max-width:700px){
+  html body #teamDialog.team-workspace-open>.dialog-card{
+    box-sizing:border-box!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-height:100dvh!important;
+    margin:0!important;
+    padding:0 9px 18px!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#eef5df!important;
+    scroll-padding-top:118px!important;
+  }
+  html body #teamDialog #teamWorkspace,
+  html body #teamDialog #teamWorkspace.points-mode,
+  html body #teamDialog #teamWorkspace.materials-mode{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:100%!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+
+  /* Zurück, Person wechseln und Einstellungen bleiben ganz oben. */
+  html body #teamDialog #teamWorkspace>.team-workspace-nav,
+  html body #teamDialog #teamWorkspace.materials-mode>.team-workspace-nav,
+  html body #teamDialog #teamWorkspace.points-mode>.team-workspace-nav{
+    position:sticky!important;
+    z-index:110!important;
+    top:0!important;
+    inset-block-start:0!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:58px!important;
+    min-height:58px!important;
+    margin:0!important;
+    padding:7px!important;
+    display:block!important;
+    border:1px solid #c9dbc9!important;
+    border-radius:0 0 13px 13px!important;
+    background:rgba(248,252,242,.97)!important;
+    box-shadow:0 8px 16px rgba(30,69,38,.14)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left{
+    width:100%!important;
+    height:44px!important;
+    display:grid!important;
+    grid-template-columns:minmax(132px,1.35fr) minmax(104px,1fr) 44px!important;
+    align-items:center!important;
+    gap:6px!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left button{
+    width:100%!important;
+    min-width:0!important;
+    height:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:5px 7px!important;
+    border:1px solid #d0ded0!important;
+    border-radius:11px!important;
+    background:#fff!important;
+    color:#315a3d!important;
+    font-size:10px!important;
+    font-weight:900!important;
+    white-space:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left #backToBoardButton{
+    border-color:#147c49!important;
+    background:#147c49!important;
+    color:#fff!important;
+  }
+  html body #teamDialog #teamWorkspace .team-nav-left #openPersonalSettingsButton{
+    padding:0!important;
+    background:#fff0bc!important;
+    color:#6b541f!important;
+    font-size:17px!important;
+  }
+  html body #teamDialog #teamWorkspace .workspace-person-title,
+  html body #teamDialog #teamWorkspace .team-header-favorites{display:none!important}
+
+  /* Nur Übersicht und Füchse & Punkte – direkt unter der Zurück-Leiste. */
+  html body #teamDialog #teamWorkspace>.team-page-tabs,
+  html body #teamDialog #teamWorkspace.materials-mode>.team-page-tabs,
+  html body #teamDialog #teamWorkspace.points-mode>.team-page-tabs{
+    position:sticky!important;
+    z-index:109!important;
+    top:58px!important;
+    inset-block-start:58px!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:52px!important;
+    min-height:52px!important;
+    margin:0 0 9px!important;
+    padding:5px!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+    border:1px solid #ccddca!important;
+    border-radius:0 0 13px 13px!important;
+    background:rgba(240,247,230,.98)!important;
+    box-shadow:0 7px 13px rgba(35,70,40,.1)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-page-tabs button{
+    width:100%!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:5px 8px!important;
+    border:1px solid #d4dfcf!important;
+    border-radius:10px!important;
+    background:#fff!important;
+    color:#31583e!important;
+    font-size:10px!important;
+    font-weight:900!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-page-tabs button.active{
+    border-color:#19824c!important;
+    background:linear-gradient(135deg,#17834c,#37a957)!important;
+    color:#fff!important;
+    box-shadow:0 3px 8px rgba(21,108,61,.23)!important;
+  }
+  html body #teamDialog #teamWorkspace>#backToTeamOverview{display:none!important}
+
+  /* Fundus: eine ruhige Inhaltsüberschrift statt einer dritten Navigation. */
+  html body #teamDialog #teamWorkspace.materials-mode>.material-library-panel{
+    margin:0!important;
+    padding:10px!important;
+    border:1px solid #cbdcc5!important;
+    border-radius:17px!important;
+    background:rgba(255,255,251,.91)!important;
+    box-shadow:0 8px 20px rgba(39,76,42,.09)!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-head{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:64px!important;
+    margin:0 0 9px!important;
+    padding:10px 12px!important;
+    display:flex!important;
+    align-items:center!important;
+    border:1px solid #d7e3ce!important;
+    border-left:6px solid #2b974e!important;
+    border-radius:14px!important;
+    background:linear-gradient(135deg,#f8fbf2,#eaf4df)!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-head-title h3{
+    margin:0!important;
+    color:#24543a!important;
+    font-size:20px!important;
+    line-height:1.08!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-head-subtitle-v1532{
+    display:block!important;
+    margin-top:4px!important;
+    font-size:9px!important;
+  }
+  html body #teamDialog #teamWorkspace.materials-mode .material-head-controls{display:none!important}
+
+  /* Punkte-Kopf: erst Wall of Fame, danach Suche. */
+  html body #teamDialog #teamWorkspace.points-mode>.teacher-grid{
+    display:block!important;
+    margin:0!important;
+  }
+  html body #teamDialog #teamWorkspace.points-mode .compact-team-points{
+    min-height:0!important;
+    margin:0!important;
+    padding:8px!important;
+    border:1px solid #cfdfc8!important;
+    border-radius:17px!important;
+    background:rgba(255,255,252,.84)!important;
+    box-shadow:none!important;
+  }
+  html body #teamWorkspace.points-mode .points-panel-head{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0 0 8px!important;
+    padding:13px!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto auto!important;
+    gap:9px!important;
+    align-items:stretch!important;
+    border-radius:16px!important;
+    background:linear-gradient(135deg,#176a40,#36a151)!important;
+  }
+  html body #teamWorkspace.points-mode .points-panel-head>div{grid-row:1!important;min-width:0!important}
+  html body #teamWorkspace.points-mode .points-panel-head h3{
+    margin:0!important;
+    color:#fff!important;
+    font-size:22px!important;
+    line-height:1.08!important;
+  }
+  html body #teamWorkspace.points-mode .points-panel-head .panel-help{
+    margin:5px 0 0!important;
+    color:rgba(255,255,255,.8)!important;
+    font-size:10px!important;
+    line-height:1.3!important;
+  }
+  html body #teamWorkspace.points-mode .compact-publication{
+    grid-row:2!important;
+    position:relative!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:46px!important;
+    margin:0!important;
+    border:1px solid rgba(255,255,255,.4)!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.14)!important;
+    color:#fff!important;
+    overflow:visible!important;
+  }
+  html body #teamWorkspace.points-mode .compact-publication>summary{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-height:44px!important;
+    padding:11px 12px!important;
+    color:#fff!important;
+    font-size:11px!important;
+    font-weight:900!important;
+  }
+  html body #teamWorkspace.points-mode .compact-publication[open] .compact-publication-body{
+    position:static!important;
+    width:100%!important;
+    margin:0!important;
+    padding:10px!important;
+    border:0!important;
+    border-radius:0 0 11px 11px!important;
+    background:#f7faef!important;
+    color:#35533c!important;
+    box-shadow:none!important;
+  }
+  html body #teamWorkspace.points-mode .student-search{
+    grid-row:3!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:46px!important;
+    min-height:46px!important;
+    margin:0!important;
+    padding:0 11px!important;
+    display:grid!important;
+    grid-template-columns:28px minmax(0,1fr)!important;
+    align-items:center!important;
+    border:1px solid rgba(255,255,255,.38)!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.18)!important;
+    color:#fff!important;
+  }
+  html body #teamWorkspace.points-mode .student-search input{
+    width:100%!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0 5px!important;
+    border:0!important;
+    outline:0!important;
+    background:transparent!important;
+    color:#fff!important;
+    font-size:15px!important;
+    box-shadow:none!important;
+  }
+  html body #teamWorkspace.points-mode .student-search input::placeholder{color:rgba(255,255,255,.78)!important}
+
+  /* Kompakte Fuchskarte: Name oben, sechs große Aktionen direkt darunter. */
+  html body #teamWorkspace.points-mode .compact-team-points .student-list,
+  html body #teamWorkspace.substitute-mode .compact-team-points .student-list{
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-auto-rows:auto!important;
+    gap:8px!important;
+    overflow:visible!important;
+  }
+  html body #teamWorkspace .compact-team-points .compact-rating-row{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:94px!important;
+    min-height:94px!important;
+    max-height:94px!important;
+    margin:0!important;
+    padding:7px!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:39px 38px!important;
+    gap:4px!important;
+    align-items:center!important;
+    border:1px solid #d4dfce!important;
+    border-radius:14px!important;
+    background:#fff!important;
+    box-shadow:0 4px 10px rgba(39,72,40,.07)!important;
+    overflow:hidden!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-point-name{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    height:39px!important;
+    min-height:39px!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:36px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:8px!important;
+    border:0!important;
+    background:transparent!important;
+    text-align:left!important;
+  }
+  html body #teamWorkspace .compact-rating-row .mini-avatar{
+    width:36px!important;
+    height:36px!important;
+    border:1px solid #bcd0bc!important;
+    border-radius:10px!important;
+    background:#edf3e8!important;
+    box-shadow:none!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-point-name strong{
+    display:block!important;
+    color:#26543a!important;
+    font-size:13px!important;
+    line-height:1.05!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-point-name small{
+    display:block!important;
+    margin-top:2px!important;
+    color:#728073!important;
+    font-size:7px!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-measure-list{display:none!important}
+  html body #teamWorkspace .compact-rating-row .student-direct-actions{
+    grid-column:1!important;
+    grid-row:2!important;
+    width:100%!important;
+    min-width:0!important;
+    height:38px!important;
+    display:grid!important;
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    grid-template-rows:38px!important;
+    align-items:stretch!important;
+    gap:4px!important;
+    overflow:visible!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .point-btn,
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    padding:3px 2px!important;
+    display:grid!important;
+    grid-template-rows:17px 10px!important;
+    place-items:center!important;
+    gap:1px!important;
+    border-radius:9px!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-direct-actions small{
+    display:block!important;
+    overflow:hidden!important;
+    color:inherit!important;
+    font-size:6.5px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .point-symbol{font-size:15px!important}
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .point-ban .ban-glyph{font-size:15px!important}
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut>span{font-size:11px!important}
+}

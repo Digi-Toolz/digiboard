@@ -1,0 +1,123 @@
+/* ============================================================
+   DigiBoard Next 15.53 – Kinderfotos: Feld, Meldung, Sichtbarkeit
+
+   Warum es diese Datei gibt:
+
+   Das Dateifeld der Kinderliste war das letzte im Projekt, das noch nach dem
+   alten Muster versteckt wurde:
+
+       .photo-upload-button input{
+         position:absolute; width:1px; height:1px;
+         opacity:0; pointer-events:none;
+       }
+
+   Genau dieses Muster war schon zweimal die Ursache eines Fehlers:
+   in 15.47 bei den Sicherungsdateien und in 15.51 bei den Teamfotos. Die
+   Kinderliste wurde damals uebersehen.
+
+   Drei Dinge sind daran falsch:
+
+   1. `pointer-events:none` – das Feld kann NIE direkt angetippt werden. Am
+      Mac rettet der Umweg ueber das <label> die Lage, auf iPad und iPhone
+      verlangt Safari die Geste aber auf dem Feld selbst.
+   2. `position:absolute` in einem <label> ohne eigenen Bezugspunkt – das
+      Feld rutscht aus dem Knopf heraus an eine voellig andere Stelle der
+      Seite.
+   3. 1x1 Pixel und `font-size` unter 16px – iOS zoomt beim Fokus hinein.
+
+   Hier gilt jetzt dasselbe Rezept wie bei den Teamkarten: der Knopf ist der
+   Bezugspunkt, das Feld deckt ihn vollstaendig ab, ist unsichtbar, aber
+   wirklich vorhanden und wirklich antippbar.
+   ============================================================ */
+
+html body .photo-upload-button{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  cursor:pointer!important;
+}
+
+/* Der Beschriftungstext darf den Klick nicht abfangen – er liegt unter dem
+   Feld und wuerde ihn sonst schlucken. */
+html body .photo-upload-button>span.photo-upload-label-v1553{
+  position:relative!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+html body .photo-upload-button input[type="file"]{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:32px!important;
+  margin:0!important;
+  padding:0!important;
+  display:block!important;
+  opacity:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:transparent!important;
+  font-size:16px!important;      /* verhindert den iOS-Zoom beim Fokus */
+  cursor:pointer!important;
+  pointer-events:auto!important; /* der eigentliche Fehler bis 15.52 */
+  -webkit-appearance:none!important;
+  appearance:none!important;
+}
+html body .photo-upload-button input[type="file"]::-webkit-file-upload-button{
+  width:100%!important;
+  height:100%!important;
+  opacity:0!important;
+  border:0!important;
+  background:transparent!important;
+  cursor:pointer!important;
+}
+html body .photo-upload-button:focus-within{
+  outline:3px solid #ffa941!important;
+  outline-offset:2px!important;
+}
+
+/* ------------------------------------------------------------
+   Die Meldung muss dort stehen, wo geklickt wurde
+
+   Bisher landete jede Rueckmeldung – auch jede Fehlermeldung – in einem
+   einzigen Absatz UNTERHALB der Liste. Bei 22 Kindern ist der ausserhalb
+   des Bildschirms. Wer oben auf ein Foto klickte, sah deshalb nichts
+   passieren, obwohl die App durchaus etwas zu sagen hatte.
+
+   Jede Karte bekommt jetzt eine eigene Meldezeile.
+   ------------------------------------------------------------ */
+html body .class-student-card .foto-meldung-v1553{
+  grid-column:1/-1!important;
+  display:none;
+  margin:2px 0 0!important;
+  padding:6px 9px!important;
+  border-radius:9px!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.4!important;
+  text-align:left!important;
+  white-space:normal!important;
+}
+html body .class-student-card .foto-meldung-v1553.ist-sichtbar{display:block!important}
+html body .class-student-card .foto-meldung-v1553.art-arbeit{
+  background:#eef4fb!important;border:1px solid #c3d6ea!important;color:#2c4a68!important;
+}
+html body .class-student-card .foto-meldung-v1553.art-gut{
+  background:#eef7ea!important;border:1px solid #bcd9b0!important;color:#2f5330!important;
+}
+html body .class-student-card .foto-meldung-v1553.art-fehler{
+  background:#fdeeec!important;border:1px solid #f0b9b1!important;color:#7d2c20!important;
+}
+html body .class-student-card .foto-meldung-v1553 b{font-weight:900!important}
+
+/* Der Sammelhinweis unter der Liste bleibt, faellt aber nicht mehr auf. */
+html body #classManagementStatus:not(:empty){
+  margin-top:8px!important;
+  padding:7px 10px!important;
+  border-radius:10px!important;
+  background:#f3f7ee!important;
+  border:1px solid #d5e3c9!important;
+  font-size:11px!important;
+}

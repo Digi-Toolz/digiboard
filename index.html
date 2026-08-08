@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b6b45" />
+  <title>DigiBoard Next 15.53 – Wald, Baum und Begrüßung</title>
+  <link rel="manifest" href="manifest.webmanifest?v=15510" />
+  <!-- KORREKTUR 4 – Symbole ergaenzt. Ohne sie war die App nicht installierbar
+       und hatte auf dem iPhone-Homescreen kein Icon. -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=15510" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15510" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=15510" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DigiBoard" />
+  <link rel="stylesheet" href="styles.css?v=15530" />
+  <link rel="stylesheet" href="override.css?v=15530" />
+  <!-- Fundus 15.33 bewusst zuletzt: beseitigt alte, überlagernde Fundus-Regeln. -->
+  <link rel="stylesheet" href="fixes.css?v=15530" />
+  <link rel="stylesheet" href="fundus-15-33.css?v=15530" />
+  <link rel="stylesheet" href="wald-15-34.css?v=15530" />
+  <link rel="stylesheet" href="begrussung-15-35.css?v=15530" />
+  <link rel="stylesheet" href="kinderansicht-15-36.css?v=15530" />
+  <link rel="stylesheet" href="wald-tools-15-38.css?v=15530" />
+  <link rel="stylesheet" href="wald-hintergrund-15-39.css?v=15530" />
+  <link rel="stylesheet" href="oberflaeche-15-40.css?v=15530" />
+  <link rel="stylesheet" href="persoenlicher-kopf-15-41.css?v=15530" />
+  <link rel="stylesheet" href="waldtiefe-15-42.css?v=15530" />
+  <link rel="stylesheet" href="handy-und-daten-15-43.css?v=15530" />
+  <link rel="stylesheet" href="wald-und-gruss-15-44.css?v=15530" />
+  <link rel="stylesheet" href="waldbuehne-15-45.css?v=15530" />
+  <link rel="stylesheet" href="handy-15-46.css?v=15530" />
+  <link rel="stylesheet" href="dateien-und-einstellungen-15-47.css?v=15530" />
+  <link rel="stylesheet" href="scrollen-15-48.css?v=15530" />
+  <link rel="stylesheet" href="team-und-werkzeuge-15-51.css?v=15530" />
+  <link rel="stylesheet" href="kinderfotos-15-53.css?v=15530" />
+</head>
+<body>
+  <div class="forest-light" aria-hidden="true"></div>
+  <div class="season-effects" aria-hidden="true">
+    <span class="season-particle p1"></span><span class="season-particle p2"></span><span class="season-particle p3"></span>
+    <span class="season-particle p4"></span><span class="season-particle p5"></span><span class="season-particle p6"></span>
+    <span class="season-particle p7"></span><span class="season-particle p8"></span><span class="season-particle p9"></span>
+    <span class="season-particle p10"></span><span class="season-particle p11"></span><span class="season-particle p12"></span>
+  </div>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="DigiBoard Startseite">
+        <img id="brandMascot" class="brand-fox" src="brand-icon-96.png?v=15510" alt="" width="36" height="36">
+        <span><strong>DigiBoard</strong><small>Die digitale Klassentafel</small><small id="brandStatusLine" class="brand-status-line"></small></span>
+        </a><span id="topbarPersonBadge" class="topbar-person-badge"><span id="topbarPersonIcon">🦊</span><strong id="topbarPersonName">Mein Bereich</strong></span><span class="build-badge" id="buildBadge">NEXT · AKTUELL</span>
+      <div class="top-actions">
+        <span id="cloudStatus" class="status-pill">● Lokal gespeichert</span>
+        <button id="modeButton" class="top-button team-area-button" type="button" data-tooltip="Person wählen und persönliche Übersicht öffnen">👥 <span>Teambereich</span></button>
+        <button id="motionToggleButton" class="top-button motion-toggle-button" type="button" aria-pressed="false" title="Animationen anhalten" aria-label="Animationen anhalten"><span aria-hidden="true">Ⅱ</span></button>
+        <button id="settingsButton" class="top-button top-settings-icon" type="button" aria-label="Einstellungen öffnen" title="Einstellungen"><span aria-hidden="true">⚙</span></button>
+      </div>
+    </header>
+
+    <div class="forest-depth-layers" aria-hidden="true">
+      <span class="far-canopy far-canopy-left"></span><span class="far-canopy far-canopy-right"></span>
+      <span class="forest-path-stones path-stone-1"></span><span class="forest-path-stones path-stone-2"></span><span class="forest-path-stones path-stone-3"></span>
+      <span class="depth-tree depth-tree-a"></span><span class="depth-tree depth-tree-b"></span>
+      <span class="depth-tree depth-tree-c"></span><span class="depth-tree depth-tree-d"></span>
+      <span class="depth-shrub shrub-a"></span><span class="depth-shrub shrub-b"></span>
+      <span class="depth-shrub shrub-c"></span><span class="depth-shrub shrub-d"></span>
+      <span class="forest-log"></span><span class="forest-stone stone-a"></span><span class="forest-stone stone-b"></span>
+      <span class="firefly ff1"></span><span class="firefly ff2"></span><span class="firefly ff3"></span>
+      <span class="firefly ff4"></span><span class="firefly ff5"></span><span class="firefly ff6"></span>
+    </div>
+    <div class="season-layer" aria-hidden="true"></div>
+    <div class="forest-ambient" aria-hidden="true">
+      <span class="sun-orb"></span>
+      <span class="sunbeam beam-1"></span><span class="sunbeam beam-2"></span><span class="sunbeam beam-3"></span>
+      <span class="soft-cloud cloud-1"></span><span class="soft-cloud cloud-2"></span>
+      <span class="forest-bird bird-1">🐦</span><span class="forest-bird bird-2">🐦</span>
+      <span class="forest-butterfly butterfly-1">🦋</span><span class="forest-butterfly butterfly-2">🦋</span>
+      <span class="forest-squirrel">🐿️</span>
+      <span class="forest-mushroom mushroom-1">🍄</span><span class="forest-mushroom mushroom-2">🍄</span>
+      <span class="forest-flower flower-1">🌼</span><span class="forest-flower flower-2">🌸</span>
+      <span class="forest-grass grass-1">🌿</span><span class="forest-grass grass-2">🌱</span>
+      <span class="forest-owl">🦉</span><span class="forest-deer">🦌</span><span class="forest-rabbit">🐇</span><span class="forest-bee">🐝</span>
+      <span class="forest-log"></span><span class="forest-stump"></span><span class="forest-signpost"></span><span class="forest-lantern">🏮</span><span class="forest-vine vine-left"></span><span class="forest-vine vine-right"></span><span class="forest-fox-stage">🦊</span><span class="forest-owl-stage">🦉</span><span class="forest-birdhouse">🏠</span><span class="forest-flowers flowers-left">🌼🌿</span><span class="forest-flowers flowers-right">🌷🌱</span>
+      <span class="forest-stone stone-1"></span><span class="forest-stone stone-2"></span><span class="forest-stone stone-3"></span>
+      <span class="forest-bush bush-1"></span><span class="forest-bush bush-2"></span>
+      <span class="forest-fern fern-1"></span><span class="forest-fern fern-2"></span><span class="forest-fern fern-3"></span>
+      <span class="forest-branch branch-left"></span><span class="forest-branch branch-right"></span>
+      <span class="forest-mist mist-1"></span><span class="forest-mist mist-2"></span>
+      <span class="firefly f1"></span><span class="firefly f2"></span><span class="firefly f3"></span><span class="firefly f4"></span><span class="firefly f5"></span>
+      <span class="hanging-leaves leaves-a"></span><span class="hanging-leaves leaves-b"></span>
+      <span class="forest-depth-fern depth-fern-a"></span><span class="forest-depth-fern depth-fern-b"></span>
+      <span class="forest-bird-perch">🐦</span><span class="forest-ladybird">🐞</span>
+      <button class="forest-secret-v1523 secret-den" type="button" data-forest-secret="den" aria-label="Den Fuchsbau entdecken"><span>✨</span></button>
+      <button class="forest-secret-v1523 secret-house" type="button" data-forest-secret="house" aria-label="Das Vogelhaus entdecken"><span>✨</span></button>
+      <button class="forest-secret-v1523 secret-lantern" type="button" data-forest-secret="lantern" aria-label="Die Waldlaterne entdecken"><span>✨</span></button>
+    </div>
+    <div id="morningIntro" class="morning-intro" aria-hidden="true">
+      <div class="intro-sun"></div><img id="introMascot" class="intro-fox" src="icon-512.png" alt="" width="150" height="150"><div id="introText" class="intro-text">Willkommen in der Fuchsklasse!</div>
+    </div>
+
+    <section class="hero" aria-labelledby="greetingTitle">
+      <span class="hero-leaf left">🌿</span>
+      <p class="hero-kicker">Schön, dass ihr da seid!</p>
+      <div class="hero-copy-v1535">
+        <h1 id="greetingTitle"><span class="greeting-desktop-v1540">Guten Morgen, <strong>Füchse</strong><b aria-hidden="true">!</b></span><span class="greeting-mobile-v1540">Guten Morgen, Füchse!</span></h1>
+        <p id="heroDate" class="hero-date"></p>
+        <div class="morning-language weekly-greeting-v1535"><span id="morningLanguageLabel" class="weekly-greeting-copy-v1535" aria-live="polite">Guten Morgen</span><div class="weekly-greeting-actions-v1535"><button id="speakGreetingButton" type="button" aria-label="Wochenbegrüßung anhören"><span aria-hidden="true">🔊</span><strong>Anhören</strong></button><button id="nextGreetingButton" type="button" aria-label="Andere Begrüßungssprache zeigen"><span aria-hidden="true">↻</span><strong>Sprache</strong></button></div></div>
+        <div id="forestLessonNow" class="forest-lesson-now" aria-live="polite"></div>
+      </div>
+      <div id="heroMascot" class="hero-fox" aria-hidden="true">🦊</div>
+      <span class="hero-leaf right">🍃</span>
+    </section>
+
+    <section class="mobile-personal-hub" aria-label="Meine mobile Übersicht">
+      <article class="mobile-today-card mobile-today-lead">
+        <header class="fox-lead-bar">
+          <span id="mobileTodayMascot" class="fox-lead-face">🦊</span>
+          <span class="fox-lead-copy"><strong id="mobileTodayTitle">Füchse im Blick</strong><time id="mobileTodayDate"></time></span>
+          <button type="button" class="fox-lead-button" data-mobile-personal="points">Alle Füchse<b aria-hidden="true">›</b></button>
+        </header>
+        <div id="mobileIncidentList" class="mobile-incident-list"></div>
+      </article>
+
+      <nav class="mobile-quick-nav" aria-label="Schnellzugriff">
+        <button type="button" class="mobile-nav-tile nav-lesson" data-mobile-personal="materials">
+          <span class="mobile-nav-icon">🗂️</span><strong>Mein Unterricht</strong><small>Fundus &amp; Vorbereiten</small>
+        </button>
+        <button type="button" class="mobile-nav-tile nav-board" id="mobileNavBoard">
+          <span class="mobile-nav-icon">🖥️</span><strong>Auf der Tafel</strong><small id="mobileNavBoardHint">Unterricht zeigen</small>
+        </button>
+      </nav>
+
+      <article class="mobile-pins-card mobile-pins-compact">
+        <header><div><small>HEUTE VORBEREITET</small><strong>📌 Angepinnt</strong></div><button type="button" data-mobile-personal="materials">Alle öffnen</button></header>
+        <div id="mobilePinnedList" class="mobile-pinned-list"></div>
+      </article>
+
+      <details class="mobile-more-tools">
+        <summary>Mehr Werkzeuge</summary>
+        <div class="mobile-work-grid">
+          <button type="button" data-mobile-personal="settings"><span>⚙️</span><div><strong>Vorbereitung</strong><small>Werkzeuge einstellen</small></div></button>
+          <button type="button" id="mobileSwitchPerson"><span>👥</span><div><strong>Person wechseln</strong><small>Anderes Teammitglied</small></div></button>
+        </div>
+        <article class="mobile-board-control">
+          <header><span>📺</span><div><small>ÖFFENTLICHE TAFEL</small><strong>Unterricht auf der Tafel</strong><p id="mobileBoardPrivacy">🔒 Nur du siehst diese Auswahl.</p></div><b id="mobileBoardStatus">Privat</b></header>
+          <div class="mobile-board-fields">
+            <label>Fach<select id="mobileBoardSubject"></select></label>
+            <label>Vorbereitung<select id="mobileBoardLesson"></select></label>
+          </div>
+          <div id="mobileBoardPreview" class="mobile-board-preview"></div>
+          <div class="mobile-board-actions"><button id="mobilePublishBoard" type="button">📺 Auf der Tafel zeigen</button><button id="mobileClearBoard" type="button">Tafel freigeben</button></div>
+        </article>
+        <article id="mobileLiveLesson" class="mobile-live-lesson" aria-live="polite"></article>
+      </details>
+    </section>
+
+    <section id="boardLessonStage" class="board-lesson-stage" hidden aria-live="polite">
+      <header><span id="boardLessonTeacherIcon">👩‍🏫</span><div><small>JETZT IM UNTERRICHT</small><strong id="boardLessonTeacher">Lehrkraft</strong></div><b>LIVE</b></header>
+      <div class="board-lesson-main"><span id="boardLessonIcon">📘</span><div><small id="boardLessonSubject">Fach</small><h2 id="boardLessonTitle">Unterricht</h2><p id="boardLessonNote"></p></div></div>
+      <a id="boardLessonOpen" href="#" target="_blank" rel="noopener">Unterricht öffnen ↗</a>
+    </section>
+
+    <button id="wallFocusBackdrop" class="wall-focus-backdrop" type="button" hidden aria-label="Wall-of-Fame-Großansicht schließen"></button>
+    <section id="wallMount" class="wall-fixed" aria-label="Klassenbaum und gemeinsamer Belohnungsfortschritt"></section>
+    <main id="dashboard" class="dashboard" aria-label="Digitale Klassentafel"></main>
+
+    <footer id="forestToolBelt" class="dock forest-tool-belt-v1521" aria-label="Waldwerkzeuge und Schnellzugriff">
+      <button id="openKidsDock" class="kids-forest-entrance" type="button" data-forest-tool="kids" aria-label="Fuchsbereich öffnen"><span class="kids-entrance-fox dock-icon" aria-hidden="true">🦊</span><span class="dock-copy-v1531"><strong id="kidsAreaLabel" class="dock-label">Fuchsbereich</strong><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button type="button" data-focus-widget="schedule" aria-label="Stundenplan öffnen"><span class="dock-icon" aria-hidden="true">📅</span><span class="dock-copy-v1531"><span class="dock-label">Stundenplan</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button type="button" data-focus-widget="wall" aria-label="Klassenbaum öffnen"><span class="dock-icon" aria-hidden="true">🌳</span><span class="dock-copy-v1531"><span class="dock-label">Klassenbaum</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button id="clockDockButton" type="button" data-focus-widget="clock" aria-label="Uhr öffnen"><span class="dock-icon" aria-hidden="true">⏰</span><span class="dock-copy-v1531"><span class="dock-label">Uhr</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button type="button" data-focus-widget="weeklyGoal" aria-label="Wochenziel öffnen"><span class="dock-icon" aria-hidden="true">🎯</span><span class="dock-copy-v1531"><span class="dock-label">Wochenziel</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button id="servicesDockButton" class="services-dock-button" type="button" data-forest-tool="services" aria-label="Dienste öffnen"><span class="dock-icon" aria-hidden="true">🤝</span><span class="dock-copy-v1531"><span class="dock-label">Dienste</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button type="button" data-focus-widget="notes" aria-label="Aufgaben öffnen"><span class="dock-icon" aria-hidden="true">📝</span><span class="dock-copy-v1531"><span class="dock-label">Aufgaben</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+      <button id="cleanupMusicDock" class="cleanup-dock-button" type="button" data-forest-tool="cleanup" aria-label="Aufräummusik öffnen"><span class="dock-icon" aria-hidden="true">🎵</span><span class="dock-copy-v1531"><span class="dock-label">Aufräumen</span><small class="dock-status-v1531" aria-hidden="true"></small></span></button>
+    </footer>
+  </div>
+
+  <dialog id="materialsPinAskDialog" class="dialog materials-pin-ask-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-head">
+        <div><p class="eyebrow">Fundus &amp; Vorbereitung</p><h2>🔒 Mit Code schützen?</h2></div>
+        <button class="close-button" value="cancel" aria-label="Schließen">✕</button>
+      </div>
+      <p class="dialog-subtitle">Möchtest du diesen Bereich mit einem 4-stelligen Code schützen, damit niemand aus Versehen hineinklickt? Du kannst das jederzeit in den Einstellungen ändern.</p>
+      <div class="materials-pin-ask-actions">
+        <button id="materialsPinAskYes" type="button" class="primary-button">🔒 Ja, Code einrichten</button>
+        <button id="materialsPinAskNo" type="button" class="secondary-button">Nein, nicht nötig</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="materialsPinDialog" class="dialog materials-pin-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-head">
+        <div><p class="eyebrow">Geschützter Bereich</p><h2 id="materialsPinTitle">🔒 Code eingeben</h2><p id="materialsPinSubtitle" class="dialog-subtitle">„Fundus &amp; Vorbereitung“ ist mit einem Code geschützt.</p></div>
+        <button class="close-button" value="cancel" aria-label="Schließen">✕</button>
+      </div>
+      <div id="materialsPinDots" class="materials-pin-dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div id="materialsPinKeypad" class="materials-pin-keypad"></div>
+      <p id="materialsPinError" class="materials-pin-error" aria-live="polite"></p>
+      <label class="materials-pin-remember"><input id="materialsPinRemember" type="checkbox"> Auf diesem Gerät merken</label>
+    </form>
+  </dialog>
+
+  <dialog id="teamDialog" class="dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-head">
+        <button class="close-button team-close-button" value="cancel" aria-label="Teambereich schließen">✕</button>
+      </div>
+      <button id="teamScrollTopButton" type="button" class="team-scroll-top" aria-label="Im Teambereich nach oben">↑ <span>Nach oben</span></button>
+      <section id="teamSelectionView" class="team-switcher team-selection-view" aria-label="Mitglied des Klassenteams auswählen">
+        <div class="team-switcher-head">
+          <div><span id="teamSelectionMascot" class="team-selection-mascot" aria-hidden="true">🦊</span><h3 id="teamSelectionTitle">Unser Klassenteam der Fuchsklasse</h3><span class="team-title-sprig" aria-hidden="true">🌿</span></div>
+        </div>
+        <div id="teamMemberGrid" class="team-member-grid"></div>
+      </section>
+
+      <section id="substituteSetupView" class="panel substitute-setup-view" hidden>
+        <button id="backToTeamSelectionFromSubstitute" type="button" class="team-back-button">← Zurück zur Auswahl</button>
+        <div class="substitute-setup-head"><span>🔄</span><div><p class="eyebrow">Vertretungszugang</p><h3>Wer vertritt heute?</h3><p class="panel-help">Nach der Namenseingabe sind ausschließlich Füchse, Bewertungen und Notizen sichtbar. Persönliche Bereiche bleiben geschützt.</p></div></div>
+        <div class="substitute-add-row"><label>Name der Vertretung<input id="substituteNameInput" type="text" maxlength="40" placeholder="z. B. Frau Berger"></label><button id="addSubstituteButton" type="button" class="primary-button">Vertretung starten</button></div>
+        <div id="substitutePersonList" class="substitute-person-list"></div>
+        <p id="substituteStatus" class="status-note" aria-live="polite"></p>
+      </section>
+
+      <div id="teamWorkspace" class="team-personal-workspace" hidden>
+      <div class="team-workspace-nav team-unified-nav-v1541">
+        <div class="team-nav-left">
+          <button id="backToBoardButton" type="button" class="team-board-button"><span aria-hidden="true">←</span><strong>Zurück zur Tafel</strong></button>
+          <button id="changeTeamPersonButton" type="button" class="team-person-button"><span aria-hidden="true">👥</span><strong>Person wechseln</strong></button>
+        </div>
+        <nav class="team-page-tabs" aria-label="Bereiche im Teambereich">
+          <button type="button" data-team-page="overview">🏠 Meine Übersicht</button>
+          <button type="button" data-team-page="points">🦊 Alle Füchse</button>
+        </nav>
+        <button id="openPersonalSettingsButton" type="button" class="team-top-settings-button" aria-label="Meinen Bereich einstellen" title="Meinen Bereich einstellen"><span aria-hidden="true">⚙️</span></button>
+        <strong id="workspacePersonTitle" class="workspace-person-title" aria-hidden="true">Mein Bereich</strong>
+        <div id="teamTeachingToolList" class="team-teaching-tool-list team-header-favorites" aria-label="Favoriten und Schnellzugriffe"></div>
+      </div>
+      <div class="personal-workspace-banner">
+        <div class="personal-workspace-person"><span id="personalWorkspaceIcon">👩‍🏫</span><div><strong id="personalWorkspaceName">Lehrkraft</strong><em id="personalWorkspaceRole">Klassenteam</em></div></div>
+      </div>
+
+      <section id="teamCockpit" class="team-cockpit" data-team-page-section="cockpit" aria-label="Persönliche Tagesübersicht">
+        <article class="cockpit-card cockpit-pins">
+          <div class="cockpit-person-strip">
+            <div class="cockpit-person-identity"><span id="cockpitPersonIcon">👩‍🏫</span><div><strong id="cockpitPersonName">Mein Bereich</strong><em id="cockpitPersonRole">Klassenteam</em></div></div>
+            <div class="cockpit-person-actions"><button id="cockpitBackToBoard" type="button">← Zurück zur Tafel</button><button id="cockpitChangePerson" type="button">Person wechseln</button><button id="cockpitOpenSettings" type="button" aria-label="Persönlichen Bereich einstellen">⚙️</button></div>
+            <div id="cockpitFavoriteTools" class="cockpit-favorite-tools" aria-label="Persönliche Unterrichtswerkzeuge"></div>
+          </div>
+          <div class="cockpit-head"><div><small>GESTERN VORBEREITET · HEUTE BEREIT</small><h3>📌 Heute angepinnt</h3></div><button type="button" data-cockpit-more="materials">Pinnwand öffnen</button></div>
+          <div id="cockpitPinnedList" class="cockpit-button-grid"></div>
+          <section class="cockpit-subject-section">
+            <div class="cockpit-section-title"><strong>📚 Meine Fächer</strong><small id="cockpitTodaySubjects" class="cockpit-today-subjects"></small></div>
+            <div id="cockpitSubjectGrid" class="cockpit-subject-grid"></div>
+          </section>
+          <div class="cockpit-left-bottom">
+            <section class="cockpit-quick-box"><div class="cockpit-section-title"><strong>🗂️ Mein Fundus</strong><small>Sammlung &amp; Vorbereitung</small></div><div id="cockpitMaterialQuick" class="cockpit-material-quick"></div><button type="button" data-cockpit-more="materials">Fundus &amp; Vorbereitung</button></section>
+            <section class="cockpit-quick-box cockpit-favorites-box"><div class="cockpit-section-title"><strong>⭐ Favoriten</strong><small>Schnell starten</small></div><div id="cockpitFavorites" class="cockpit-favorites"></div></section>
+          </div>
+        </article>
+        <article class="cockpit-card cockpit-children">
+          <div class="cockpit-children-title"><span id="cockpitTodayMascot">🦊</span><div><h3 id="cockpitTodayTitle">Heute im Blick</h3><time id="cockpitTodayDate"></time></div></div>
+          <small class="cockpit-children-hint">Ermahnungen · Notizen · Pausenverbote</small>
+          <div id="cockpitIncidentList" class="cockpit-incident-list"></div>
+          <div class="cockpit-quick-entry">
+            <select id="cockpitStudentSelect" aria-label="Fuchs auswählen"></select>
+            <select id="cockpitIncidentType" aria-label="Eintrag auswählen"><option value="warning">🟡 Ermahnung</option><option value="note">📝 Notiz</option><option value="ban">🔴 Verbot</option><option value="praise">🟢 Lob</option></select>
+            <input id="cockpitIncidentNote" type="text" maxlength="80" placeholder="Kurze Notiz (optional)">
+            <button id="cockpitAddIncident" type="button">＋ Eintragen</button>
+          </div>
+          <p id="cockpitIncidentStatus" class="status-note" aria-live="polite"></p>
+          <button class="cockpit-all-children-button" type="button" data-cockpit-more="points">🦊 Alle Füchse &amp; Punkte öffnen</button>
+        </article>
+        <article class="cockpit-card cockpit-goal">
+          <div class="cockpit-head"><div><small>WOCHENZIEL</small><h3>🎯 Wochenziel</h3></div><button type="button" data-cockpit-more="goal">Mehr</button></div>
+          <div class="cockpit-goal-row">
+            <p id="cockpitGoalText"></p>
+            <div class="cockpit-goal-actions">
+              <button id="cockpitGoalConfirm" class="cockpit-goal-button yes" type="button">✓ Geschafft</button>
+              <button id="cockpitGoalReject" class="cockpit-goal-button no" type="button">✕ Nicht geschafft</button>
+            </div>
+            <span id="cockpitGoalStatus" class="cockpit-goal-status">Noch offen</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel subject-launchpad-panel" data-team-panel="subject" data-team-page-section="subject" aria-labelledby="subjectLaunchpadTitle">
+        <div class="subject-launchpad-head">
+          <div>
+            <p class="eyebrow">Persönlicher Unterrichtsstart</p>
+            <h3 id="subjectLaunchpadTitle">🚀 Meine Fächer heute</h3>
+            <p class="panel-help">Ein Fach mit gespeichertem Link öffnet die vorbereitete Unterrichtsstunde direkt.</p>
+          </div>
+          <span class="safe-login-note">🔒 Keine Passwörter im DigiBoard</span>
+        </div>
+        <div id="todayLessonLaunch" class="today-lesson-launch"></div>
+        <div id="subjectLaunchGrid" class="subject-launch-grid"></div>
+        <p id="subjectLaunchStatus" class="status-note" aria-live="polite"></p>
+      </section>
+
+      <details id="personalWorkspaceSettings" class="panel personal-workspace-settings" data-team-page-section="settings">
+        <summary>⚙️ Meine Startseite einrichten</summary>
+        <button id="personalSettingsBack" type="button" class="personal-settings-back">← Zurück zu meiner Übersicht</button>
+        <div class="personal-settings-head"><div><p class="eyebrow">PERSÖNLICH FÜR DIESEN ZUGANG</p><h3>Startwerkzeuge &amp; Favoriten</h3><p>Lege fest, was oben zum Starten und was in deiner Übersicht als Favorit erscheint.</p></div><span>⭐</span></div>
+        <div class="personal-settings-grid">
+          <label>Anzeigename<input id="personalDisplayNameInput" type="text" maxlength="40"></label>
+          <label>Symbol<input id="personalIconInput" type="text" maxlength="4"></label>
+          <label>Farbe<input id="personalAccentInput" type="color" value="#315f28"></label>
+        </div>
+        <div class="personal-panel-options">
+          <label><input id="showMaterialsPanel" type="checkbox"> Fächer und Fundus anzeigen</label>
+          <label><input id="showGoalPanel" type="checkbox"> Wochenziel anzeigen</label>
+          <label><input id="showPublicationPanel" type="checkbox"> Tafel-Veröffentlichung anzeigen</label>
+        </div>
+        <div class="materials-pin-settings">
+          <div class="materials-pin-head"><span>🔒</span><div><strong>Zugangscode für Fundus &amp; Vorbereitung</strong><small>Schützt „Mein Unterricht“ vor neugierigen Blicken – kein echter Sicherheitsschutz, eher ein Sichtschutz.</small></div></div>
+          <label class="materials-pin-toggle"><input id="materialsPinEnableToggle" type="checkbox"> Fundus &amp; Vorbereitung mit einem Code schützen?</label>
+          <div id="materialsPinFields" class="materials-pin-row" hidden>
+            <label>4-stelliger Code<input id="materialsPinInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="z. B. 1234"></label>
+            <button id="materialsPinForgetDevice" type="button" class="secondary-button">Dieses Gerät vergessen</button>
+          </div>
+          <p id="materialsPinStatus" class="status-note"></p>
+        </div>
+        <section class="startpage-tool-settings">
+          <div class="startpage-tool-heading"><div><h4>🚀 Meine Auswahl</h4><small>★ bestimmt das bevorzugte Startwerkzeug · Pfeile ändern die Reihenfolge</small></div></div>
+          <div id="teachingToolManageList" class="teaching-tool-manage-list"></div>
+          <div class="teaching-tool-fields">
+            <label>Vorlage<select id="teachingToolSelect"><option value="prowise">Prowise Presenter</option><option value="classroomscreen">Classroomscreen</option><option value="youtube">YouTube</option><option value="google">Google</option><option value="safari">Safari-Start</option><option value="chrome">Chrome-Start</option><option value="custom">Eigener Link</option></select></label>
+            <label>Wo anzeigen?<select id="teachingToolPlacement"><option value="start">Oben als Startwerkzeug</option><option value="favorite">Nur bei Favoriten</option><option value="both">Oben und Favoriten</option></select></label>
+            <label>Name<input id="teachingToolLabelInput" type="text" maxlength="24" placeholder="z. B. Lernplattform"></label>
+            <label>Link<input id="teachingToolUrlInput" type="url" placeholder="https://…"></label>
+            <button id="saveTeachingToolButton" type="button" class="primary-button">＋ Hinzufügen</button>
+          </div>
+          <p id="teachingToolStatus" class="status-note" aria-live="polite"></p>
+        </section>
+        <section class="personal-icloud-profile">
+          <div><span>☁️</span><div><h4>Mein persönliches Profil</h4><p>Sichert Startseite, Favoriten, Fächer, Fundus und angepinnte Vorbereitungen dieses Zugangs.</p></div></div>
+          <div class="personal-icloud-actions">
+            <button id="exportPersonalProfile" type="button">⬇️ Profildatei speichern</button>
+            <button id="importPersonalProfile" type="button">⬆️ Aus iCloud laden</button>
+            <input id="personalProfileFile" class="datei-eingabe-v1547 datei-eingabe-frei-v1547" type="file" accept="application/json,text/plain,.json,*/*" aria-label="Profildatei auswählen">
+          </div>
+          <small class="personal-icloud-location">Mac: Die Datei landet direkt im Safari-Ordner „Downloads“. iPhone/iPad: Im Teilen-Fenster „In Dateien sichern“ → „iCloud Drive“ wählen.</small>
+          <p id="personalProfileStatus" class="status-note" aria-live="polite"></p>
+        </section>
+        <button id="savePersonalWorkspaceButton" type="button" class="primary-button personal-save-button">Meine Startseite speichern</button>
+        <p id="personalWorkspaceStatus" class="status-note"></p>
+      </details>
+
+      <section class="panel weekly-goal-team-panel" data-team-panel="goal" data-team-page-section="goal">
+        <div class="editor-head"><div><h3>🎯 Wochenziel bestätigen</h3><p id="weeklyGoalTeamText" class="panel-help"></p></div><span id="weeklyGoalTodayBadge" class="editor-badge">Noch offen</span></div>
+        <div class="weekly-goal-vote-actions">
+          <button id="weeklyGoalGreen" type="button" class="goal-vote green">✓ Als Erwachsener bestätigen</button>
+        </div>
+        <p id="weeklyGoalDecisionHelp" class="panel-help">Erst die grüne Fuchsstimme und diese Bestätigung ergeben einen erfolgreichen Tag.</p>
+      </section>
+
+      <section class="panel material-library-panel" data-team-panel="materials" data-team-page-section="materials">
+        <div class="material-head">
+          <div class="material-head-title">
+            <h3>🗂️ Fundus &amp; Vorbereitung</h3>
+            <p class="material-head-subtitle-v1532">Fächer, Ordner und vorbereitete Stunden an einem Ort</p>
+          </div>
+        </div>
+        <div id="materialDrawerTabs" class="material-drawer-tabs"></div>
+        <div class="material-search-row"><label class="material-search-field"><span class="material-search-icon">🔍</span><input id="materialSearchInput" type="search" placeholder="Suchen – Titel oder Notiz" aria-label="Im aktuellen Fach suchen"><button id="materialSearchClear" type="button" aria-label="Suche leeren" hidden>✕</button></label><button id="editActiveDrawerButton" type="button" class="secondary-button edit-active-drawer-v1533">✏️ Aktives Fach bearbeiten</button><button id="addDrawerButton" type="button" class="secondary-button add-drawer-inline">＋ Fach</button></div>
+        <div class="material-workspace">
+          <div id="materialItemList" class="material-item-list"></div>
+          <aside class="material-add-card">
+            <h4><button id="materialAddToggle" type="button" class="material-add-toggle" aria-expanded="false">＋ Unterricht vorbereiten<b aria-hidden="true">▾</b></button></h4>
+            <label>Titel<input id="materialTitleInput" type="text" placeholder="z. B. Richtig rechnen – Seite 5"></label>
+            <label>Link oder Freigabe<input id="materialLinkInput" type="url" placeholder="Prowise-, Cloud- oder Web-Link"></label>
+            <label>Art<select id="materialTypeInput"><option>Prowise Presenter</option><option>Prowise Teach</option><option>Link</option><option>Arbeitsblatt</option><option>Spiel</option><option>Unterrichtsreihe</option><option>Angebot</option><option>Video</option><option>Sonstiges</option></select></label>
+            <label>Kurze Notiz<textarea id="materialNoteInput" rows="3" placeholder="Wofür ist das Material gedacht?"></textarea></label>
+            <label class="today-pin-choice"><input id="materialTodayInput" type="checkbox"> <span>📌 Für heute vorbereiten (bleibt zunächst privat)</span></label>
+            <p id="materialSaveLocation" class="status-note material-save-location"></p>
+            <button id="addMaterialButton" type="button" class="primary-button">Im Fundus speichern</button>
+            <p id="materialStatus" class="status-note"></p>
+          </aside>
+        </div>
+      </section>
+
+      <div class="teacher-grid" data-team-page-section="points">
+        <section class="panel compact-team-points">
+          <div class="points-panel-head"><div><h3 id="teamPanelTitle">Punkte &amp; Beobachtungen</h3><p class="panel-help">Farbe direkt antippen. „Mehr“ öffnet Notiz, Verlauf und weitere Maßnahmen.</p></div>
+            <details class="publication-panel compact-publication" data-team-panel="publication">
+              <summary>🏆 Wall of Fame steuern</summary>
+              <div class="compact-publication-body"><p>Automatisch täglich um <strong>14:59 Uhr</strong>.</p><div class="publication-quick-actions"><button id="publishNow" type="button" class="primary-button">Jetzt veröffentlichen</button><button id="pausePublish" type="button" class="secondary-button">Heute anhalten</button><button id="restorePublish" type="button" class="secondary-button">Letzte wiederherstellen</button></div><p id="publishStatus" class="status-note"></p><hr class="reset-divider"><div class="reset-all-box"><button id="resetPointsButton" type="button" class="reset-all-button">↺ Alle Punkte auf 0 setzen</button><p id="resetPointsStatus" class="status-note"></p><small>Setzt heutige Punkte, Blätter und Beobachtungen auf allen verbundenen Geräten zurück. Füchse, Fotos und Fundus bleiben erhalten.</small></div></div>
+            </details>
+            <label class="student-search"><span aria-hidden="true">⌕</span><input id="teacherStudentSearch" type="search" autocomplete="off" placeholder="Fuchs suchen …" aria-label="Fuchs suchen"></label>
+          </div>
+          <div id="teacherStudentList" class="student-list"></div>
+        </section>
+      </div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="iconPickerDialog" class="dialog icon-picker-dialog">
+    <form method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">Aktives Fach bearbeiten</p><h2>🎨 Name &amp; Symbol</h2><p id="iconPickerTitle" class="dialog-subtitle"></p></div><button class="close-button" value="cancel" aria-label="Schließen">✕</button></div>
+      <label class="drawer-name-editor-v1533">Fachname<input id="iconPickerDrawerName" type="text" maxlength="32" autocomplete="off"></label>
+      <div id="iconPickerGrid" class="icon-picker-grid"></div>
+      <div class="icon-picker-footer">
+        <button id="iconPickerDeleteDrawer" type="button" class="icon-picker-danger">🗑 Dieses Fach löschen</button>
+        <button id="iconPickerSaveDrawer" type="button" class="primary-button">Änderungen speichern</button>
+      </div>
+      <p id="iconPickerStatus" class="status-note" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <dialog id="materialMoveDialog" class="dialog material-move-dialog">
+    <form method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">Fundus ordnen</p><h2>📁 In Ordner verschieben</h2><p id="materialMoveTitle" class="dialog-subtitle"></p></div><button class="close-button" value="cancel" aria-label="Schließen">✕</button></div>
+      <label class="material-move-label">Zielordner<select id="materialMoveSelect"></select></label>
+      <div class="material-move-actions"><button id="materialMoveConfirm" type="button" class="primary-button">Verschieben</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="pointsDialog" class="dialog points-dialog">
+    <form method="dialog" class="dialog-card points-card">
+      <div class="dialog-head points-head">
+        <div><p class="eyebrow">Schnellzugriff</p><h2>🟢 Punkte vergeben</h2><p class="dialog-subtitle">Ein Fingertipp pro Fuchs. Gelb und Rot bleiben intern.</p></div>
+        <button class="close-button" value="cancel" aria-label="Schließen">✕</button>
+      </div>
+      <section class="points-active-person">
+        <span>Eintrag durch:</span>
+        <select id="pointsTeamSelect" aria-label="Teammitglied auswählen"></select>
+      </section>
+      <div class="points-legend"><span>🟢 Positiv</span><span>🟡 Ermahnung</span><span>🔴 Veto</span><span>⭐ Direkt Grün</span><span><b class="legend-ban-glyph">⊘</b> Verbot</span></div>
+      <section class="panel points-main-panel">
+        <div id="quickPointsStudentList" class="student-list quick-points-list"></div>
+      </section>
+      <details class="panel point-history-panel">
+        <summary>🕘 Heutige Einträge anzeigen</summary>
+        <div id="pointHistoryList" class="point-history-list"></div>
+      </details>
+      <div class="points-sticky-footer"><p id="quickPointStatus">Bereit</p><button class="secondary-button" value="cancel">Fertig</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="mobilePointsDialog" class="dialog mobile-points-dialog">
+    <section class="mobile-points-card">
+      <header>
+        <div><small>MEINE KLASSE</small><h2>Alle Füchse &amp; Punkte</h2><p id="mobilePointsFeedback" aria-live="polite">🟢🟡🔴 tippen · Name antippen für Notizen, Verlauf &amp; Zurücknehmen</p></div>
+        <button id="mobilePointsClose" type="button" aria-label="Mobile Punkteansicht schließen">✕</button>
+      </header>
+      <div class="mobile-points-goal">
+        <div class="mobile-points-goal-text"><span>🎯</span><p id="mobilePointsGoalText">Wochenziel</p></div>
+        <div class="mobile-points-goal-actions">
+          <button id="mobilePointsGoalYes" type="button" class="mobile-goal-yes">✓ Ja</button>
+          <button id="mobilePointsGoalNo" type="button" class="mobile-goal-no">✕ Nein</button>
+        </div>
+      </div>
+      <div class="mobile-points-toolbar">
+        <label class="mobile-child-search"><span aria-hidden="true">🔍</span><input id="mobileChildSearch" type="search" placeholder="Fuchs suchen – Anfangsbuchstaben …" aria-label="Fuchs suchen"></label>
+        <button id="mobilePointsLayout" type="button" class="mobile-layout-toggle" aria-label="Darstellung wechseln">⣿</button>
+      </div>
+      <div id="mobilePointsGrid" class="mobile-points-grid"></div>
+    </section>
+  </dialog>
+
+  <dialog id="mobileChildActionsDialog" class="dialog mobile-child-actions-dialog">
+    <section class="mobile-child-actions-card">
+      <header><span id="mobileActionPhoto"></span><div><small>KIND AUSGEWÄHLT</small><h2 id="mobileActionName">Fuchs</h2><p id="mobileActionSummary"></p></div><button id="mobileActionClose" type="button">✕</button></header>
+      <div class="mobile-action-buttons">
+        <button type="button" data-mobile-point="green" class="green">🟢<span>Grüner Punkt</span></button>
+        <button type="button" data-mobile-point="yellow" class="yellow">🟡<span>Gelbe Karte</span></button>
+        <button type="button" data-mobile-point="red" class="red">🔴<span>Veto / Rot</span></button>
+        <button type="button" data-mobile-point="direct" class="direct">★<span>Direkt Grün</span></button>
+        <button id="mobileOpenBan" type="button" class="ban">⛔<span>Verbot eintragen</span></button>
+      </div>
+      <div class="mobile-correction-row">
+        <button id="mobileUndoPoint" type="button" class="mobile-undo-button">↩︎ Letzten zurücknehmen</button>
+        <button id="mobileResetChild" type="button" class="mobile-reset-button">↺ Auf 0 setzen</button>
+      </div>
+      <p id="mobileChildFeedback" class="mobile-child-feedback" aria-live="polite"></p>
+      <section class="mobile-note-editor">
+        <label for="mobileChildNote">Notiz schreiben</label>
+        <textarea id="mobileChildNote" rows="3" placeholder="Was ist heute wichtig?"></textarea>
+        <button id="mobileChildNoteSave" type="button">Notiz speichern</button>
+        <div id="mobileChildNotes" class="mobile-child-notes"></div>
+      </section>
+      <button id="mobileOpenFullProfile" type="button" class="mobile-full-profile">Ganzes Fuchsprofil öffnen ›</button>
+    </section>
+  </dialog>
+
+  <dialog id="studentDetailsDialog" class="dialog student-details-dialog">
+    <form method="dialog" class="dialog-card student-details-card">
+      <button class="close-button student-details-close" value="cancel" aria-label="Fuchsprofil schließen">✕</button>
+      <header class="student-profile-head">
+        <span id="studentDetailsPhoto" class="student-details-photo"></span>
+        <div><p class="eyebrow">Fuchsprofil</p><h2 id="studentDetailsName">Fuchs</h2><p id="studentDetailsSummary">Alle Beobachtungen auf einen Blick</p></div>
+        <button id="printStudentReport" type="button" class="student-report-print">🖨 Bericht drucken</button>
+      </header>
+      <section id="studentDetailsStats" class="student-details-stats"></section>
+      <div class="student-details-grid">
+        <section class="student-details-panel current"><div class="student-details-section-head"><h3>⏳ Aktuell</h3><small>Laufende Maßnahmen</small></div><div id="studentCurrentMeasures" class="student-current-measures"></div></section>
+        <section class="student-details-panel history"><div class="student-details-section-head"><h3>🕘 Verlauf</h3><small>Notizen, Entwicklung und Verbesserungen</small></div><div id="studentIncidentHistory" class="student-incident-history"></div></section>
+        <section class="student-details-panel add">
+          <div class="student-details-section-head"><h3>＋ Neuer Eintrag</h3><small>Wird dem angemeldeten Erwachsenen zugeordnet</small></div>
+          <div class="student-detail-entry-form">
+            <select id="studentDetailType" aria-label="Art des Eintrags"><option value="note">📝 Notiz</option><option value="warning">🟡 Ermahnung</option><option value="ban">⛔ Pausen- oder Fußballverbot</option><option value="praise">🟢 Lob / Verbesserung</option></select>
+            <select id="studentDetailBanKind" aria-label="Art des Verbots"><option value="break">🛝 Pausenverbot</option><option value="football">⚽ Fußballverbot</option><option value="ipad">📱 iPad-Verbot</option><option value="other">⛔ Anderes Verbot</option></select>
+            <input id="studentDetailNote" type="text" maxlength="120" placeholder="Was ist passiert oder hat sich verbessert?">
+            <select id="studentDetailDuration" aria-label="Dauer"><option value="0">Keine Laufzeit</option><option value="today">Bis heute</option><option value="1">1 Tag</option><option value="3">3 Tage</option><option value="7">1 Woche</option><option value="open">Bis es beendet wird</option></select>
+            <button id="studentDetailSave" type="button">Eintrag speichern</button>
+          </div>
+          <p id="studentDetailStatus" class="status-note" aria-live="polite"></p>
+        </section>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="quickBanDialog" class="dialog quick-ban-dialog">
+    <form method="dialog" class="dialog-card quick-ban-card">
+      <button class="close-button quick-ban-close" value="cancel" aria-label="Schließen">✕</button>
+      <header class="quick-ban-head"><span>🚫</span><div><p class="eyebrow">SCHNELLE MASSNAHME</p><h2>Verbot für <strong id="quickBanStudentName">Fuchs</strong></h2><p>Mehrere Verbote können gleichzeitig ausgewählt werden.</p></div></header>
+      <div class="quick-ban-options">
+        <label><input type="checkbox" name="quickBanKind" value="football"><span>🚫⚽</span><strong>Fußballverbot</strong></label>
+        <label><input type="checkbox" name="quickBanKind" value="break"><span>🚫🛝</span><strong>Pausenverbot</strong></label>
+        <label><input type="checkbox" name="quickBanKind" value="ipad"><span>🚫📱</span><strong>iPad-Verbot</strong></label>
+        <label><input type="checkbox" name="quickBanKind" value="other"><span>⛔</span><strong>Anderes Verbot</strong></label>
+      </div>
+      <div class="quick-ban-fields">
+        <label>Dauer<select id="quickBanDuration"><option value="today">Bis heute</option><option value="1">1 Tag</option><option value="3">3 Tage</option><option value="7">1 Woche</option><option value="open">Bis es beendet wird</option></select></label>
+        <label>Kurze Begründung <small>(optional)</small><input id="quickBanNote" type="text" maxlength="100" placeholder="z. B. Regel wiederholt nicht eingehalten"></label>
+      </div>
+      <button id="saveQuickBanButton" class="quick-ban-save" type="button">✓ Ausgewählte Verbote eintragen</button>
+      <p id="quickBanStatus" class="status-note" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <dialog id="widgetFocusDialog" class="dialog widget-focus-dialog">
+    <form method="dialog" class="dialog-card widget-focus-card">
+      <div class="dialog-head">
+        <div><p class="eyebrow">Schnellansicht</p><h2 id="widgetFocusTitle">Tafelinformation</h2></div>
+        <button class="close-button" value="cancel" aria-label="Schnellansicht schließen">✕</button>
+      </div>
+      <section id="widgetFocusBody" class="widget-focus-body" aria-live="polite"></section>
+    </form>
+  </dialog>
+
+  <dialog id="serviceDialog" class="dialog service-dialog">
+    <form method="dialog" class="dialog-card service-card">
+      <div class="dialog-head">
+        <div><p class="eyebrow">Gemeinsam durch die Woche</p><h2>🤝 Unsere Dienste</h2><p class="dialog-subtitle">Alle Aufgaben und eingeteilten Füchse auf einen Blick. Tippe einen Dienst an, um mehr zu sehen.</p><span id="serviceWeekLabel" class="service-week-label">Diese Woche</span></div>
+        <button class="close-button" value="cancel" aria-label="Dienst-Auslosung schließen">✕</button>
+      </div>
+      <section id="weeklyServiceResult" class="weekly-service-result" aria-live="polite"></section>
+      <details class="service-planner-tools">
+        <summary>⚙️ Dienste einteilen oder neu auslosen</summary>
+        <section class="service-picker-panel">
+          <label>Dienst auswählen<select id="weeklyServiceSelect" aria-label="Wochendienst auswählen"></select></label>
+          <button id="drawWeeklyService" type="button" class="primary-button">🎲 Zwei Füchse auslosen</button>
+        </section>
+      </details>
+      <div class="service-actions"><button id="clearWeeklyServices" type="button" class="secondary-button">Neue Woche beginnen</button><button class="primary-button" value="cancel">Fertig</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="dialog">
+    <form method="dialog" class="dialog-card wide settings-card">
+      <div class="dialog-head">
+        <div class="settings-title-block"><h2>⚙️ Einstellungen & Tafelinhalte</h2></div>
+        <div id="settingsDetailBar" class="settings-detail-bar" hidden><button id="settingsHomeBack" type="button"><span aria-hidden="true">←</span><span>Zur Übersicht</span></button><strong id="settingsDetailTitle">Bereich</strong><span>Speichert direkt für das Klassenteam.</span></div>
+        <button class="close-button" value="cancel" aria-label="Schließen">✕</button>
+      </div>
+
+      <section id="settingsHome" class="settings-home">
+        <header><small>WAS MÖCHTEST DU ÄNDERN?</small><h3>Einstellungszentrale</h3><p>Wähle einen Bereich. Danach siehst du nur die Einstellungen, die du gerade brauchst.</p></header>
+        <div class="settings-group settings-group-personal">
+          <div class="settings-group-head">
+            <span class="settings-group-icon">🦊</span>
+            <div><strong>Meine Einstellungen</strong><small>Nur für dich auf diesem Gerät – dein Unterricht, deine Vorbereitung, deine Ansicht.</small></div>
+          </div>
+          <div class="settings-home-grid settings-home-grid-personal">
+            <button type="button" data-settings-target="settingsTools"><span class="tile-icon tools">🧰</span><div><strong>Meine Ansicht &amp; Werkzeuge</strong><small>Was auf deiner Tafel sichtbar ist, Layout und Schatztruhe</small></div><b>›</b></button>
+            <button type="button" id="settingsOpenMaterials"><span class="tile-icon plan">🗂️</span><div><strong>Mein Unterricht</strong><small>Fundus &amp; Vorbereitung öffnen – Fächer, Ordner, Pinnwand</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsBackup"><span class="tile-icon backup">☁️</span><div><strong>Sichern &amp; Laden</strong><small>Backup deines Geräts für iCloud Drive</small></div><b>›</b></button>
+          </div>
+        </div>
+
+        <div class="settings-group settings-group-shared">
+          <div class="settings-group-head">
+            <span class="settings-group-icon">👥</span>
+            <div><strong>Allgemeine Einstellungen</strong><small>Gilt für die ganze Klasse und alle Kolleginnen und Kollegen.</small></div>
+          </div>
+          <div class="settings-home-grid settings-home-grid-shared">
+            <button type="button" data-settings-target="settingsDaily" data-daily-card="messages"><span class="tile-icon info">📣</span><div><strong>Tagesinfos</strong><small>Nachrichten gestalten und Vorschau sehen</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsDaily" data-daily-card="food"><span class="tile-icon food">🍽️</span><div><strong>Essen &amp; Geburtstag</strong><small>Speiseplan und Geburtstagskind</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsDaily" data-daily-card="task"><span class="tile-icon task">📝</span><div><strong>Aufgaben</strong><small>Arbeitsauftrag und Hinweise</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsWeekly"><span class="tile-icon goal">🎯</span><div><strong>Wochenziel</strong><small>Ziel, Tage und Aufräummusik</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsClass"><span class="tile-icon kids">👧</span><div><strong>Füchse</strong><small>Namen, Fotos und Geburtstage</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsPlan"><span class="tile-icon plan">📅</span><div><strong>Stundenplan</strong><small>Wochenplan und Änderung für einen Tag</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsWorld"><span class="tile-icon world">🌍</span><div><strong>Klassenwelt</strong><small>Name, Maskottchen und Farben</small></div><b>›</b></button>
+            <button type="button" data-settings-target="settingsShare"><span class="tile-icon share">📲</span><div><strong>Kinderdaten aufs Handy</strong><small>Fotos und Geburtstage als Datei an Kolleginnen weitergeben</small></div><b>›</b></button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="settings-jump-nav" aria-label="Einstellungsbereiche">
+        <a href="#settingsDaily">📌 Heute</a>
+        <a href="#settingsChanges">🔄 Änderungen</a>
+        <a href="#settingsWeekly">🎯 Woche</a>
+        <a href="#settingsClass">👧 Füchse</a>
+        <a href="#settingsPlan">📅 Grundplan</a>
+        <a href="#settingsWorld">🌍 Klassenwelt</a>
+      </nav>
+
+
+      <section id="settingsDaily" class="panel settings-section daily-settings-home">
+        <div class="editor-head"><div><p class="eyebrow">Täglich gebraucht</p><h3>📌 Heute auf der Tafel</h3><p class="panel-help">Hier stehen die Dinge, die ihr im Schulalltag schnell ändern müsst.</p></div><span class="editor-badge daily">Startbereich</span></div>
+        <div class="daily-settings-grid">
+          <fieldset class="daily-card daily-messages" data-daily-settings-card="messages"><legend>📣 Nachrichten & Tagesinfos</legend>
+            <p class="field-help">Jede Zeile kann einzeln gestaltet werden. Rechts siehst du sofort die spätere Tafelansicht.</p>
+            <textarea id="infoInput" hidden aria-hidden="true"></textarea>
+            <div class="info-composer-layout">
+              <section class="info-line-editor-panel">
+                <div id="infoLineEditor" class="info-line-editor"></div>
+                <button id="addInfoLine" type="button" class="add-info-line">＋ Neue Infozeile</button>
+              </section>
+              <aside class="info-live-preview">
+                <header><span>🌲</span><div><small>VORSCHAU AUF DER TAFEL</small><strong>Tagesinfos</strong></div></header>
+                <div id="infoLivePreview" class="info-preview-lines"></div>
+              </aside>
+            </div>
+          </fieldset>
+          <fieldset class="daily-card daily-food" data-daily-settings-card="food"><legend>🍽 Essen & Geburtstag</legend>
+            <div class="meal-planner-layout">
+              <section class="meal-month-panel">
+                <header><div><small>MONATSPLAN</small><h4 id="mealMonthTitle">Essen im Monat</h4></div><label>Monat<input id="mealMonthInput" type="month"></label></header>
+                <div class="meal-weekdays"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span></div>
+                <div id="mealMonthGrid" class="meal-month-grid"></div>
+              </section>
+              <section class="meal-day-editor">
+                <header><small>AUSGEWÄHLTER TAG</small><h4 id="mealSelectedDate">Heute</h4></header>
+                <div class="meal-day-fields">
+                  <label>Mittagessen<input id="mealTitleInput" type="text" placeholder="z. B. Nudeln"></label>
+                  <label>Beschreibung<input id="mealDetailInput" type="text" placeholder="z. B. mit Tomatensoße"></label>
+                  <label>Nachtisch<input id="dessertInput" type="text" placeholder="optional"></label>
+                  <label>Geburtstagskind<input id="birthdayNameInput" type="text" placeholder="optional"></label>
+                </div>
+                <div class="meal-editor-actions"><button id="saveMealDay" type="button">✓ Diesen Tag speichern</button><button id="saveMealFavorite" type="button">★ Als Favorit</button></div>
+                <p id="mealPlannerStatus" class="status-note"></p>
+              </section>
+            </div>
+            <section class="meal-favorites-panel">
+              <header><div><small>SCHNELL EINFÜGEN</small><h4>Meine Essensfavoriten</h4></div><p>Ein Klick übernimmt das Gericht für den ausgewählten Tag.</p></header>
+              <div id="mealFavorites" class="meal-favorites"></div>
+              <section class="birthday-overview">
+                <header><div><small>AUS DER KINDERLISTE</small><h4>🎂 Geburtstage</h4></div></header>
+                <div id="birthdayOverviewList" class="birthday-overview-list"></div>
+                <p class="status-note">Geburtsdatum je Fuchs unter ⚙️ → Füchse eintragen – dann erscheint es hier und am Geburtstag automatisch auf der Tafel.</p>
+              </section>
+            </section>
+          </fieldset>
+          <fieldset class="daily-card daily-task-note" data-daily-settings-card="task"><legend>📝 Aufgaben & Arbeitsauftrag</legend>
+            <div class="task-editor-layout">
+              <section class="task-form-panel">
+                <div class="task-fields">
+                  <label>Titel<input id="taskNoteTitleInput" type="text" placeholder="z. B. Mathebuch"></label>
+                  <label>Was ist zu tun?<textarea id="taskNoteTaskInput" rows="2" placeholder="z. B. Richtig rechnen · Seite 5 · Nr. 1–3"></textarea></label>
+                  <label>Optionaler Tipp<input id="taskNoteHintInput" type="text" placeholder="z. B. Kontrolliere deine Ergebnisse."></label>
+                  <label class="task-color-field">Fachfarbe<select id="taskNoteColorInput"><option value="blue">🔵 Blau · Mathematik</option><option value="red">🔴 Rot · Deutsch</option><option value="green">🟢 Grün · Sachunterricht</option><option value="yellow">🟡 Gelb</option><option value="purple">🟣 Lila</option><option value="orange">🟠 Orange</option></select></label>
+                </div>
+                <div class="task-template-head"><strong>★ Meine Vorlagen</strong><button id="saveTaskFavorite" type="button">Aktuelle Aufgabe speichern</button></div>
+                <div id="taskFavorites" class="task-favorites"></div>
+              </section>
+              <aside class="task-live-preview"><small>VORSCHAU AUF DER TAFEL</small><article><span>📝 HEUTIGE AUFGABE</span><h4 id="taskPreviewTitle">Mathebuch</h4><p id="taskPreviewText"></p><em id="taskPreviewHint"></em></article></aside>
+            </div>
+          </fieldset>
+        </div>
+        <div class="daily-save-row"><button id="saveTodayQuick" type="button" class="primary-button large">✓ Änderungen heute speichern</button><span class="panel-help">Die Tafel wird sofort aktualisiert.</span></div>
+      </section>
+
+      <details id="settingsClass" class="settings-accordion class-management-panel">
+        <summary><span>👧 Füchse, Namen & Fotos</span><small id="classRosterSummary">22 Füchse · 3 freie Plätze</small></summary>
+        <section class="panel settings-section">
+          <div class="class-management-toolbar">
+            <div><h3>Klasse verwalten</h3><p class="panel-help">Name, Geburtstag und Foto werden direkt gespeichert. <strong>„Pausieren“</strong> nimmt ein Fuchs vorübergehend aus Wald, Punkten und Diensten; Fotos, Notizen und Verläufe bleiben erhalten. Fotoempfehlung: quadratisch, mindestens 640 × 640 Pixel.</p></div>
+            <div class="class-management-actions">
+              <label class="photo-sheet-choice">Fotobogen
+                <select id="photoSheetLayout" aria-label="Papiergröße und Fotoraster">
+                  <option value="a4-3x5">A4 · 3 × 5 Passfotos</option>
+                  <option value="a4-2x3">A4 · 2 × 3 große Fotos</option>
+                  <option value="a5-3x4">A5 · 3 × 4 kompakt</option>
+                  <option value="a5-2x3">A5 · 2 × 3 große Fotos</option>
+                </select>
+              </label>
+              <button id="printPhotoSheet" type="button" class="secondary-button">🖨 Fotobogen drucken</button>
+              <button id="addStudentButton" type="button" class="primary-button">＋ Fuchs hinzufügen</button>
+            </div>
+          </div>
+          <div id="classStudentGrid" class="class-student-grid"></div>
+          <p id="classManagementStatus" class="status-note" aria-live="polite"></p>
+        </section>
+      </details>
+
+      <section id="settingsWeekly" class="panel settings-section weekly-quick-section">
+        <div class="editor-head"><div><h3>🎯 Wochenziel & Aufräumen</h3><p class="panel-help">Das Wochenziel wird als Holzschild vorne im Wald gezeigt.</p></div><span class="editor-badge">Diese Woche</span></div>
+        <div class="content-editor-grid shared-content-grid">
+          <fieldset><legend>Wochenziel</legend>
+            <label>Unser Wochenziel<input id="weeklyGoalInput" type="text" placeholder="z. B. Wir lassen Erwachsene ausreden."></label>
+            <label>Erfolgreiche Tage<select id="weeklyGoalRequiredDays"><option value="3">3 von 5 Tagen</option><option value="4">4 von 5 Tagen</option><option value="5">5 von 5 Tagen</option></select></label>
+          </fieldset>
+          <fieldset><legend>Aufräummusik</legend>
+            <label>Dauer in Sekunden<input id="cleanupDurationInput" type="number" min="15" max="600" step="15" value="90"></label>
+            <label>Optionaler Musik-Link<input id="cleanupAudioUrlInput" type="url" placeholder="https://…/aufraeummusik.mp3"></label>
+          </fieldset>
+        </div>
+      </section>
+
+      <details id="settingsPlan" class="settings-accordion semester-plan-section">
+        <summary><span>📅 Stundenplan</span><small>Wochenplan und eine Tagesänderung</small></summary>
+        <section class="panel settings-section schedule-workspace">
+          <div class="schedule-mode-tabs"><button type="button" data-schedule-mode="base" class="active">📅 Wochenplan</button><button type="button" data-schedule-mode="day">🔄 Nur einen Tag ändern</button></div>
+          <section id="scheduleBasePanel">
+            <div class="schedule-plan-head"><div><small>FESTER WOCHENPLAN</small><h3>Unterricht & Pausen</h3><p>Dieser Plan bleibt bestehen. Die Pausen sind bereits richtig eingebaut.</p></div><label>Wochentag<select id="weekdaySelect"><option value="1">Montag</option><option value="2">Dienstag</option><option value="3">Mittwoch</option><option value="4">Donnerstag</option><option value="5">Freitag</option></select></label></div>
+            <div id="weekScheduleEditor" class="week-schedule-editor"></div>
+          </section>
+          <section id="scheduleDayPanel" hidden>
+            <div class="simple-day-change-head"><div><small>NUR FÜR DIESEN TAG</small><h3>Stundenplan überschreiben</h3><p>Nach diesem Datum gilt automatisch wieder der normale Wochenplan.</p></div><label>Datum<input id="overrideDate" type="date"></label></div>
+            <div id="overrideEditor" class="override-editor"></div>
+          </section>
+        </section>
+      </details>
+
+      <details id="settingsWorld" class="advanced-settings-group">
+        <summary><span>🌍 Neue Klasse, Maskottchen & Klassenwelt</span><small>Nur bei Einrichtung oder für andere Schulen nötig</small></summary>
+        <section class="panel settings-section class-world-section">
+          <div class="editor-head"><div><h3>Klassenwelt einrichten</h3><p class="panel-help">Maskottchen, Klassenname und Hintergrund können für jede Klasse angepasst werden.</p></div><span class="editor-badge">Erweiterbar</span></div>
+          <div class="class-world-grid">
+            <fieldset><legend>Klasse</legend>
+              <label>Klassenname<input id="classNameInput" type="text" placeholder="z. B. Fuchsklasse"></label>
+              <label>Begrüßungssatz<input id="classWelcomeInput" type="text" placeholder="z. B. Schön, dass ihr da seid!"></label>
+              <label>Name des Kinderbereichs<input id="kidsAreaNameInput" type="text" placeholder="z. B. Fuchsbereich"><small class="field-hint">Wird für jede Themenwelt getrennt gespeichert.</small></label>
+              <label>Titel der Tagesübersicht<input id="dailyOverviewTitleInput" type="text" placeholder="z. B. Heute im Blick"><small class="field-hint">Zum Beispiel „Unser Tag“, „Klassenblick“ oder „Heute wichtig“.</small></label>
+              <label>Jahreszeit-Vorschau<select id="seasonPreviewSelect"><option value="auto">Automatisch nach Monat</option><option value="spring">🌸 Frühling testen</option><option value="summer">☀️ Sommer testen</option><option value="autumn">🍂 Herbst testen</option><option value="winter">❄️ Winter testen</option></select><small class="field-hint">Nur zur Vorschau. Im Alltag wechselt DigiBoard automatisch.</small></label>
+            </fieldset>
+            <fieldset><legend>Welt auswählen</legend>
+              <div id="themeChoiceGrid" class="theme-choice-grid">
+                <button type="button" class="theme-choice" data-theme-choice="forest"><span>🦊</span><strong>Wald</strong><small>Fuchs</small></button>
+                <button type="button" class="theme-choice" data-theme-choice="savanna"><span>🦁</span><strong>Savanne</strong><small>Löwe</small></button>
+                <button type="button" class="theme-choice" data-theme-choice="ocean"><span>🐬</span><strong>Ozean</strong><small>Delfin</small></button>
+                <button type="button" class="theme-choice" data-theme-choice="meadow"><span>🐝</span><strong>Blumenwiese</strong><small>Biene</small></button>
+                <button type="button" class="theme-choice custom-choice" data-theme-choice="custom"><span>✨</span><strong>Eigene Welt</strong><small>frei anpassbar</small></button>
+              </div>
+            </fieldset>
+          </div>
+          <div class="custom-world-builder">
+            <div class="editor-head"><div><h4>Eigene Klassenwelt bauen</h4><p class="panel-help">Offen für jedes Tier, jede Fantasiewelt und spätere Theme-Pakete.</p></div></div>
+            <div class="custom-world-fields">
+              <label>Maskottchen / Emoji<input id="customMascotInput" type="text" maxlength="8" placeholder="z. B. 🐼"></label>
+              <label>Name der Welt<input id="customWorldLabelInput" type="text" placeholder="z. B. Bambuswald"></label>
+              <label>Titel der Auszeichnung<input id="customRewardTitleInput" type="text" placeholder="z. B. Unsere Bambushelden"></label>
+              <label>Sammelbegriff<input id="customRewardUnitInput" type="text" placeholder="z. B. Bambusblätter"></label>
+              <label>Akzentfarbe<input id="customAccentInput" type="color" value="#2e7d32"></label>
+              <label>Dunkle Farbe<input id="customDeepInput" type="color" value="#315f28"></label>
+              <label>Himmelsfarbe<input id="customSkyInput" type="color" value="#eef8cf"></label>
+              <label>Bodenfarbe<input id="customGroundInput" type="color" value="#59a85b"></label>
+            </div>
+            <details class="theme-pack-box"><summary>Theme-Paket exportieren oder importieren</summary><textarea id="themePackTextarea" rows="7" spellcheck="false"></textarea><div class="theme-pack-actions"><button id="exportThemeButton" type="button" class="secondary-button">Theme kopieren</button><button id="importThemeButton" type="button" class="primary-button">Theme übernehmen</button><span id="themePackStatus" class="status-note"></span></div></details>
+          </div>
+        </section>
+      </details>
+
+      <details id="settingsTools" class="advanced-settings-group compact-advanced">
+        <summary><span>🧰 Weitere Einstellungen</span><small>Werkzeuge ein-/ausblenden</small></summary>
+        <section class="panel settings-section">
+          <div class="layout-settings-row">
+            <div><h3>✥ Tafel anordnen</h3><p class="panel-help">Werkzeuge auf der Waldansicht verschieben, vergrößern oder ausblenden.</p></div>
+            <button id="layoutReset" type="button" class="secondary-button">✥ Layout bearbeiten</button>
+          </div>
+          <div class="editor-head"><div><h3>Sichtbare Werkzeuge</h3><p class="panel-help">Ausgeblendete Werkzeuge können hier wieder auf die Tafel geholt werden.</p></div></div>
+          <div id="widgetVisibilitySettings" class="widget-visibility-settings"></div>
+          <div class="daily-quote-settings">
+            <div><h3>🪵 Spruch des Tages</h3><p class="panel-help">Wechselt morgens automatisch und bleibt anschließend den ganzen Tag gleich.</p></div>
+            <label>Anzeige<select id="dailyQuoteMode"><option value="auto">Jeden Morgen automatisch</option><option value="custom">Eigene Sprüche täglich wechseln</option><option value="fixed">Einen festen Spruch zeigen</option></select></label>
+            <label class="daily-quote-fixed">Fester Spruch<input id="dailyQuoteFixed" type="text" placeholder="Gemeinsam finden wir einen Weg."></label>
+            <label class="daily-quote-list">Eigene Sprüche · einer pro Zeile<textarea id="dailyQuoteCustom" rows="5" placeholder="Schlaue Füchse fragen nach.&#10;Gemeinsam wächst unser Wald.&#10;Jeder kleine Schritt zählt."></textarea></label>
+            <p id="dailyQuotePreview" class="daily-quote-preview"></p>
+          </div>
+          <div class="reward-chest-settings">
+            <div><h3>🧰 Schatztruhe</h3><p class="panel-help">Legt fest, wann sich die gemeinsame Schatztruhe öffnet.</p></div>
+            <label>Öffnungsregel<select id="rewardChestMode"><option value="leaves">Nach einer bestimmten Blattzahl</option><option value="all">Wenn alle Füchse im Baum sind</option></select></label>
+            <label id="rewardChestThresholdLabel">Benötigte Blätter<input id="rewardChestThreshold" type="number" min="10" max="5000" step="10"></label>
+          </div>
+        </section>
+      </details>
+
+      <section id="settingsShare" class="icloud-backup-panel settings-share-panel" hidden>
+        <div><span>🦊</span><div><h3>Kinderdaten sicher mitnehmen</h3><p>Sichert Namen, Fotos und Geburtstage in einer eigenen Datei. Beim Laden werden auch ältere vollständige DigiBoard-Backups erkannt; übernommen werden daraus nur die Kinder.</p></div></div>
+        <div class="icloud-backup-actions">
+          <button id="shareClassPackageBtn" type="button">⬇️ Kinderdaten sichern</button>
+          <!-- NEXT 15.51 – Das Dateifeld ist nicht mehr versteckt, sondern liegt
+               unsichtbar UEBER dem Knopf. Der Finger trifft damit das Feld
+               selbst. Ein verstecktes Feld per JavaScript anzuklicken hat auf
+               dem iPhone im Vollbild-Fenster nicht zuverlaessig geoeffnet –
+               genau daran scheiterte das Laden. -->
+          <span class="datei-wahl-v1547">
+            <button id="importClassPackageBtn" type="button" class="secondary">⬆️ Kinderdaten oder Backup laden</button>
+            <input id="classPackageFileInput" class="datei-eingabe-v1547" type="file"
+                   accept="application/json,text/plain,.json,*/*"
+                   aria-label="Kinderdaten- oder Backupdatei auswählen">
+          </span>
+        </div>
+        <p id="shareClassPackageStatus" class="status-note" aria-live="polite"></p>
+
+        <!-- NEXT 15.51 – Rettungsweg: Falls die Dateiauswahl auf einem Gerät
+             blockiert ist, kann der Inhalt der Datei auch eingefügt werden.
+             In der Dateien-App: Datei antippen, Alles auswählen, Kopieren. -->
+        <!-- NEXT 15.51 – Auskunft statt Ratespiel. -->
+        <div class="foto-pruefung-v1549">
+          <button id="photoDiagnoseButton" type="button">🔍 Fotospeicher prüfen</button>
+          <pre id="photoDiagnoseResult" aria-live="polite"></pre>
+        </div>
+
+        <details class="kinderdaten-rettung-v1547">
+          <summary>Datei lässt sich nicht auswählen? Inhalt einfügen</summary>
+          <p class="panel-help">In der Dateien-App die <strong>.json</strong>-Datei antippen, den ganzen
+            Text markieren und kopieren. Dann hier einfügen. Es werden nur die Kinder übernommen.</p>
+          <textarea id="childrenPasteInput" rows="4" placeholder='{"format":"digiboard-children", …}'
+                    aria-label="Inhalt der Kinderdatendatei einfügen"></textarea>
+          <button id="childrenPasteButton" type="button">📋 Eingefügte Kinderdaten übernehmen</button>
+        </details>
+        <p class="panel-help"><strong>Datenschutzhinweis:</strong> Die Datei enthält personenbezogene Daten. Bitte nur dienstlich, zum Beispiel per AirDrop oder iCloud Drive, an berechtigte Kolleginnen und Kollegen weitergeben.</p>
+      </section>
+
+      <section id="settingsBackup" class="icloud-backup-panel">
+        <div><span>☁️</span><div><h3>DigiBoard-Daten sichern</h3><p>Erstellt eine vollständige Backupdatei für iCloud Drive – einschließlich Füchse, Punkte, Verbote, Fundus, Pins und persönlicher Einstellungen.</p></div></div>
+        <div class="icloud-backup-actions">
+          <button id="exportDigiBoardBackup" type="button">⬇️ Backup für iCloud sichern</button>
+          <span class="datei-wahl-v1547">
+            <button id="importDigiBoardBackup" type="button">⬆️ Backup aus iCloud laden</button>
+            <input id="digiBoardBackupFile" class="datei-eingabe-v1547" type="file"
+                   accept="application/json,text/plain,.json,*/*"
+                   aria-label="Backupdatei auswählen">
+          </span>
+        </div>
+        <p id="digiBoardBackupStatus" class="status-note" aria-live="polite"></p>
+        <details class="board-sync-settings">
+          <summary>📡 Handy und Schultafel verbinden</summary>
+          <p>Der freigegebene Unterricht wird übertragen. Punkte (🟢🟡🔴) werden ebenfalls abgeglichen – aber nur als Zahlen zu einem anonymen Fuchs-Kürzel, ganz ohne Namen, Fotos oder Notizen. Namen und Fotos bleiben ausschließlich auf den Geräten, auf denen sie einmal heruntergeladen wurden.</p>
+          <div><label>Google-Web-App-Adresse<input id="boardSyncUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec"></label><label>Klassenkennung<input id="boardSyncClassId" type="text" placeholder="fuchsklasse-2026"></label><label>Zugangsschlüssel<input id="boardSyncKey" type="password" placeholder="Ihr ACCESS_KEY"></label></div>
+          <label class="sync-enable"><input id="boardSyncEnabled" type="checkbox"> Live-Verbindung aktivieren</label>
+          <button id="testBoardSync" type="button">Verbindung testen</button><span id="boardSyncStatus" class="status-note"></span>
+        </details>
+      </section>
+
+      <div class="editor-actions sticky-actions">
+        <button id="saveSettings" type="button" class="primary-button">Alle Einstellungen speichern</button>
+        <button id="resetSettings" type="button" class="secondary-button">Beispieldaten einsetzen</button>
+        <span id="settingsSaveStatus" class="status-note"></span>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="kidsDialog" class="dialog">
+    <form method="dialog" class="dialog-card wide kids-world-card">
+      <div class="dialog-head kids-world-head">
+        <div><p class="eyebrow">Nur für Füchse</p><h2>🦊 Willkommen in eurer Waldwelt!</h2><p>Hier könnt ihr lesen, schauen und bei eurem Dienst abstimmen.</p></div>
+        <button class="kids-back-button" value="cancel" aria-label="Zurück zur Tafel">← Zurück zur Tafel</button>
+      </div>
+      <section class="kids-services-hero">
+        <div class="kids-services-title"><div><small>Diese Woche helfen wir zusammen</small><h3>🌟 Unsere Wochendienste</h3></div><span>🤝</span></div>
+        <div id="kidsWeeklyServiceResult" class="kids-weekly-service-result" aria-live="polite"></div>
+        <div class="kids-service-draw">
+          <label>Dienst auswählen<select id="kidsWeeklyServiceSelect" aria-label="Dienst im Kinderbereich auswählen"></select></label>
+          <button id="kidsDrawWeeklyService" type="button" class="primary-button">🎲 Zwei Füchse auslosen</button>
+        </div>
+      </section>
+      <div class="kids-today-grid">
+        <section class="kids-unlocked-card kids-task-card"><span>📝</span><div><small>Eure Aufgabe</small><strong id="kidsTaskTitle">–</strong><p id="kidsTaskText">–</p></div></section>
+        <section class="kids-unlocked-card kids-meal-card"><span>🍽️</span><div><small>Heute im Waldcafé</small><strong id="kidsMealTitle">–</strong><p id="kidsMealText">–</p></div></section>
+      </div>
+      <section class="kids-goal-check">
+        <div><small>Unser Ziel heute</small><h3 id="kidsGoalText">–</h3><p>Wähle zuerst oben deinen Namen. Dann darfst du ehrlich sagen, wie es heute geklappt hat.</p></div>
+        <div class="kids-goal-actions">
+          <button id="kidsGoalYes" type="button" class="goal-vote green">🙂 Ja, geschafft</button>
+          <button id="kidsGoalNotYet" type="button" class="goal-vote yellow">🤔 Noch nicht ganz</button>
+        </div>
+        <p id="kidsGoalFeedback" class="feedback" role="status"></p>
+      </section>
+      <section class="kids-vote-space">
+        <div class="kids-vote-heading"><div><small>Gemeinsam freundlich</small><h3>Wer ist dir heute positiv aufgefallen?</h3></div><span>🌟</span></div>
+        <div class="kids-toolbar">
+          <label>Dein Name<select id="voterSelect"></select></label>
+          <label>Dein Dienst<select id="serviceSelect"></select></label>
+        </div>
+        <div id="kidsStudentGrid" class="kids-grid"></div>
+        <button id="submitVote" type="button" class="primary-button large">✓ Auswahl speichern</button>
+        <p id="voteFeedback" class="feedback" role="status"></p>
+      </section>
+    </form>
+  </dialog>
+
+  <dialog id="cleanupDialog" class="dialog cleanup-dialog">
+    <form method="dialog" class="dialog-card cleanup-card">
+      <div class="dialog-head"><div><p class="eyebrow">Jetzt wird aufgeräumt</p><h2>🎵 Aufräummusik</h2><p class="dialog-subtitle">Wenn die Musik endet, ist der Tisch leer.</p></div><button class="close-button" value="cancel" aria-label="Schließen">✕</button></div>
+      <div class="cleanup-countdown" id="cleanupCountdown">01:30</div>
+      <div class="cleanup-progress"><span id="cleanupProgressBar"></span></div>
+      <p id="cleanupMessage">Los geht's – gemeinsam schnell und ordentlich!</p>
+      <div class="button-stack horizontal"><button id="cleanupStartButton" type="button" class="primary-button">▶ Start</button><button id="cleanupStopButton" type="button" class="secondary-button">■ Stop</button></div>
+      <audio id="cleanupAudio" preload="none"></audio>
+    </form>
+  </dialog>
+
+  <dialog id="classTimerDialog" class="dialog class-timer-dialog">
+    <form method="dialog" class="dialog-card class-timer-card">
+      <div class="dialog-head">
+        <div><p class="eyebrow">Analoguhr · Zeitwerkzeug</p><h2>⏱️ Klassentimer</h2><p class="dialog-subtitle">Zeit auswählen, starten und für alle gut sichtbar laufen lassen.</p></div>
+        <button class="close-button" value="cancel" aria-label="Timer schließen">✕</button>
+      </div>
+      <div class="class-timer-layout">
+        <section id="classTimerDisplay" class="class-timer-display" style="--timer-progress:0deg">
+          <div class="class-timer-face">
+            <small id="classTimerState">BEREIT</small>
+            <strong id="classTimerCountdown">05:00</strong>
+            <span id="classTimerMessage">Wie viel Zeit braucht ihr?</span>
+          </div>
+        </section>
+        <section class="class-timer-controls">
+          <div class="class-timer-presets" aria-label="Schnelle Timer-Auswahl">
+            <button type="button" data-timer-minutes="1">1 Min.</button>
+            <button type="button" data-timer-minutes="3">3 Min.</button>
+            <button type="button" data-timer-minutes="5" class="active">5 Min.</button>
+            <button type="button" data-timer-minutes="10">10 Min.</button>
+            <button type="button" data-timer-minutes="15">15 Min.</button>
+            <button type="button" data-timer-minutes="20">20 Min.</button>
+          </div>
+          <label class="class-timer-custom">Eigene Zeit <span><input id="classTimerMinutes" type="number" min="1" max="120" value="5"> Minuten</span></label>
+          <div class="class-timer-actions">
+            <button id="classTimerStart" type="button" class="timer-start">▶ Start</button>
+            <button id="classTimerPause" type="button" class="timer-pause" disabled>Ⅱ Pause</button>
+            <button id="classTimerReset" type="button" class="timer-reset">↺ Zurücksetzen</button>
+          </div>
+          <p class="class-timer-help">Tipp: Ein weiterer Klick auf die Analoguhr öffnet diesen Timer jederzeit wieder.</p>
+        </section>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="widgetTemplate">
+    <section class="widget" draggable="true" tabindex="0">
+      <div class="widget-head">
+        <h2></h2>
+        <div class="widget-actions">
+          <button data-action="small" title="Klein" aria-label="Kleine Ansicht">−</button>
+          <button data-action="normal" title="Normal" aria-label="Normale Ansicht">□</button>
+          <button data-action="large" title="Groß" aria-label="Große Ansicht">↗</button>
+          <button data-action="hide" class="hide-widget-button" title="Ausblenden" aria-label="Werkzeug ausblenden">✕</button>
+        </div>
+      </div>
+      <div class="widget-body"></div>
+    </section>
+  </template>
+
+  <!-- STUFE 1 – photo-store.js muss vor app.js stehen; beide sind defer,
+       daher bleibt die Reihenfolge garantiert. -->
+  <script src="photo-store.js?v=15530" defer></script>
+  <script src="app.js?v=15530" defer></script>
+  <script src="package-export.js?v=15530" defer></script>
+</body>
+</html>

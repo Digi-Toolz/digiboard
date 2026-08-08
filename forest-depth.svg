@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8f3ae"/>
+      <stop offset="0.48" stop-color="#d8eda3"/>
+      <stop offset="1" stop-color="#7ec55f"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="20%" r="45%">
+      <stop offset="0" stop-color="#fffbd2" stop-opacity=".96"/>
+      <stop offset=".42" stop-color="#fff2a7" stop-opacity=".52"/>
+      <stop offset="1" stop-color="#fff1a0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="trunk" x1="0" x2="1">
+      <stop offset="0" stop-color="#4b2b18"/>
+      <stop offset=".5" stop-color="#8a542c"/>
+      <stop offset="1" stop-color="#3a2113"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect width="1600" height="900" fill="url(#sun)"/>
+  <g opacity=".22" filter="url(#blur)">
+    <circle cx="800" cy="140" r="140" fill="#fffbd8"/>
+    <path d="M540 0 L790 720 L875 720 L690 0 Z" fill="#fffde0"/>
+    <path d="M850 0 L930 720 L1010 720 L1015 0 Z" fill="#fffde0"/>
+  </g>
+  <!-- distant forest -->
+  <g opacity=".42" fill="#3b8848">
+    <ellipse cx="80" cy="500" rx="250" ry="160"/><ellipse cx="330" cy="520" rx="270" ry="170"/>
+    <ellipse cx="1290" cy="520" rx="270" ry="170"/><ellipse cx="1530" cy="500" rx="250" ry="160"/>
+  </g>
+  <path d="M0 610 Q300 520 560 610 T1100 600 T1600 610 V900 H0Z" fill="#56a94f"/>
+  <path d="M0 720 Q260 630 550 715 T1100 690 T1600 720 V900 H0Z" fill="#27753e"/>
+  <!-- side trunks -->
+  <g>
+    <path d="M0 0 H150 L180 900 H0Z" fill="url(#trunk)"/>
+    <path d="M1600 0 H1450 L1420 900 H1600Z" fill="url(#trunk)"/>
+    <path d="M95 250 Q210 220 280 60" fill="none" stroke="#5f3820" stroke-width="42" stroke-linecap="round"/>
+    <path d="M1505 250 Q1390 220 1320 60" fill="none" stroke="#5f3820" stroke-width="42" stroke-linecap="round"/>
+  </g>
+  <!-- top canopy -->
+  <g fill="#1d5d32">
+    <ellipse cx="80" cy="30" rx="170" ry="125"/><ellipse cx="250" cy="20" rx="190" ry="125"/>
+    <ellipse cx="460" cy="-20" rx="190" ry="115"/><ellipse cx="720" cy="-35" rx="210" ry="115"/>
+    <ellipse cx="920" cy="-30" rx="210" ry="115"/><ellipse cx="1160" cy="-20" rx="190" ry="115"/>
+    <ellipse cx="1370" cy="20" rx="190" ry="125"/><ellipse cx="1540" cy="30" rx="170" ry="125"/>
+  </g>
+  <g fill="#3c8c45" opacity=".9">
+    <ellipse cx="180" cy="75" rx="145" ry="95"/><ellipse cx="420" cy="45" rx="160" ry="95"/>
+    <ellipse cx="1180" cy="45" rx="160" ry="95"/><ellipse cx="1420" cy="75" rx="145" ry="95"/>
+  </g>
+  <!-- foreground shrubs -->
+  <g fill="#1a6739">
+    <ellipse cx="100" cy="850" rx="220" ry="110"/><ellipse cx="360" cy="875" rx="250" ry="120"/>
+    <ellipse cx="1240" cy="875" rx="250" ry="120"/><ellipse cx="1500" cy="850" rx="220" ry="110"/>
+  </g>
+  <!-- path -->
+  <path d="M690 900 C720 785 755 700 790 620 C825 700 865 785 910 900 Z" fill="#d5b170" opacity=".76"/>
+  <path d="M725 900 C745 800 770 715 794 650 C820 715 845 800 870 900 Z" fill="#f0d99a" opacity=".62"/>
+</svg>

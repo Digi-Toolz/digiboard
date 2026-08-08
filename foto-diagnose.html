@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DigiBoard – Fotos nachsehen und retten</title>
+<style>
+  :root{color-scheme:light}
+  *{box-sizing:border-box}
+  body{margin:0;padding:18px 16px 60px;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+       background:#f4f7f0;color:#22331f;-webkit-text-size-adjust:100%}
+  main{max-width:860px;margin:0 auto}
+  h1{font-size:20px;margin:0 0 4px}
+  h2{font-size:15px;margin:26px 0 8px;padding-bottom:5px;border-bottom:2px solid #d9e5cc}
+  p.lead{margin:0 0 18px;color:#4c5f47;font-size:13px}
+  .karte{background:#fff;border:1px solid #dbe6d0;border-radius:14px;padding:13px 15px;margin:0 0 12px;
+         box-shadow:0 3px 9px rgba(40,70,30,.05)}
+  .zeile{display:flex;gap:10px;justify-content:space-between;align-items:baseline;padding:4px 0;
+         border-bottom:1px dotted #e3ebda;font-size:13px}
+  .zeile:last-child{border-bottom:0}
+  .zeile b{font-weight:800}
+  .wert{font-variant-numeric:tabular-nums;text-align:right}
+  .gut{color:#256b32;font-weight:800}
+  .schlecht{color:#a32d1c;font-weight:800}
+  .mittel{color:#8a5a12;font-weight:800}
+  button{font:inherit;font-weight:800;padding:11px 15px;border-radius:11px;border:1.5px solid #9dbb8c;
+         background:#eaf3e2;color:#22461f;cursor:pointer;min-height:46px}
+  button:hover{background:#dfeed3}
+  button.haupt{background:#2f6b34;border-color:#2f6b34;color:#fff}
+  button.haupt:hover{background:#27592b}
+  button[disabled]{opacity:.5;cursor:default}
+  .knopfreihe{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+  label.datei{position:relative;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;
+              font-weight:800;padding:11px 15px;border-radius:11px;border:1.5px solid #2f6b34;background:#2f6b34;
+              color:#fff;cursor:pointer;min-height:46px}
+  label.datei input{position:absolute;inset:0;width:100%;height:100%;opacity:0;font-size:16px;cursor:pointer}
+  .gitter{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:9px;margin-top:10px}
+  .kachel{text-align:center;font-size:10px;line-height:1.25;word-break:break-word}
+  .kachel .rahmen{width:100%;aspect-ratio:1;border-radius:12px;border:2px solid #d5e2c8;background:#eef3e8;
+                  display:grid;place-items:center;overflow:hidden;margin-bottom:4px;font-weight:900;color:#8ea283}
+  .kachel img{width:100%;height:100%;object-fit:cover;display:block}
+  .kachel.fehlt .rahmen{border-color:#eab5ab;background:#fdeeea;color:#a3402c}
+  pre{white-space:pre-wrap;word-break:break-word;background:#20301c;color:#dcecd2;padding:12px;border-radius:11px;
+      font-size:11.5px;line-height:1.5;max-height:280px;overflow:auto}
+  .protokoll{font-size:12px;max-height:230px;overflow:auto;background:#f8fbf5;border:1px solid #e0ead6;
+             border-radius:10px;padding:9px 11px;margin-top:9px}
+  .protokoll div{padding:2px 0;border-bottom:1px dotted #e6eede}
+  .warn{background:#fff8e8;border:1px solid #e8d29a;border-radius:11px;padding:11px 13px;font-size:13px;margin:10px 0}
+  .fehler{background:#fdeeec;border:1px solid #f0b9b1;border-radius:11px;padding:11px 13px;font-size:13px;margin:10px 0}
+  .ok{background:#eef7ea;border:1px solid #bcd9b0;border-radius:11px;padding:11px 13px;font-size:13px;margin:10px 0}
+  small.hinweis{display:block;color:#5d6f57;font-size:12px;margin-top:6px}
+</style>
+</head>
+<body>
+<main>
+  <h1>🦊 Fotos nachsehen und retten</h1>
+  <p class="lead">Diese Seite gehört zum DigiBoard und sieht denselben Speicher wie die App.
+     Sie ändert von sich aus <b>nichts</b> – erst wenn du unten einen Knopf drückst.</p>
+
+  <h2>1 · Was dieses Gerät gerade hat</h2>
+  <div class="karte" id="befund">wird gelesen …</div>
+  <div id="hinweise"></div>
+
+  <h2>2 · Die Fotos, die wirklich da sind</h2>
+  <p class="lead">Jedes Bild wird hier <b>tatsächlich geladen</b>. Was du siehst, kann die App auch anzeigen.</p>
+  <div class="knopfreihe"><button id="zeigen" class="haupt">Fotos jetzt laden und anzeigen</button></div>
+  <div class="gitter" id="gitter"></div>
+
+  <h2>3 · Fotos aus der Sicherungsdatei zurückholen</h2>
+  <p class="lead">Wähle deine Datei <code>…digiboard-backup.json</code>. Die <b>Namen, Punkte und Notizen
+     auf diesem Gerät bleiben, wie sie sind</b> – es werden nur die Fotos nachgetragen.
+     Jeder Schritt wird einzeln protokolliert.</p>
+  <div class="knopfreihe">
+    <label class="datei">📂 Sicherungsdatei wählen und Fotos nachtragen
+      <input type="file" id="datei" accept="application/json,.json,text/plain,*/*"></label>
+  </div>
+  <div id="rettung"></div>
+
+  <h2>4 · Bericht zum Weitergeben</h2>
+  <div class="knopfreihe"><button id="kopieren">Bericht in die Zwischenablage</button></div>
+  <pre id="bericht">–</pre>
+</main>
+
+<script>
+/* ============================================================
+   Eigenständig. Nutzt bewusst NICHTS aus app.js, damit ein Fehler
+   dort diese Seite nicht mit ins Verderben zieht.
+   ============================================================ */
+const STORAGE_KEY='digiboard-next-10.0';
+const DB_NAME='digiboard-photos', STORE='photos', PREFIX='idb:';
+const zeilen=[];
+const $=s=>document.querySelector(s);
+function log(t){zeilen.push(t)}
+function frist(p,ms,was){return Promise.race([p,new Promise((_,ab)=>setTimeout(()=>ab(new Error('Zeitüberschreitung: '+was)),ms))])}
+
+function oeffneDb(){
+  return new Promise(fertig=>{
+    if(!('indexedDB' in window))return fertig(null);
+    let r;try{r=indexedDB.open(DB_NAME,1)}catch{return fertig(null)}
+    r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE)};
+    r.onsuccess=()=>fertig(r.result);
+    r.onerror=()=>fertig(null);
+    r.onblocked=()=>fertig(null);
+    setTimeout(()=>fertig(r.result||null),4000);
+  });
+}
+function bitte(op){return new Promise((ja,nein)=>{if(!op)return nein(new Error('kein Zugriff'));op.onsuccess=()=>ja(op.result);op.onerror=()=>nein(op.error||new Error('Datenbankfehler'))})}
+function laden(db,modus){try{return db.transaction(STORE,modus).objectStore(STORE)}catch{return null}}
+
+async function schreibprobe(db){
+  if(!db)return false;
+  try{
+    await bitte(laden(db,'readwrite')?.put(new Blob(['probe'],{type:'text/plain'}),'__probe__'));
+    const zurueck=await bitte(laden(db,'readonly')?.get('__probe__'));
+    try{await bitte(laden(db,'readwrite')?.delete('__probe__'))}catch{}
+    return zurueck instanceof Blob;
+  }catch{return false}
+}
+
+function zustandLesen(){
+  let roh=null;
+  try{roh=localStorage.getItem(STORAGE_KEY)}catch(e){return{fehler:'localStorage nicht lesbar: '+e.message}}
+  if(!roh)return{fehler:'Im Speicher dieses Browsers liegt gar kein DigiBoard-Zustand.'};
+  try{return{roh,zustand:JSON.parse(roh)}}catch(e){return{roh,fehler:'Der gespeicherte Zustand ist beschädigt: '+e.message}}
+}
+
+function fotoArt(p){
+  if(typeof p!=='string'||!p)return 'ohne';
+  if(p.startsWith('data:'))return 'bild-im-zustand';
+  if(p.startsWith(PREFIX))return 'verweis';
+  return 'dateipfad';
+}
+
+let db=null,schreibbar=false,zustand=null,schueler=[],idbSchluessel=[];
+
+async function befundErheben(){
+  db=await oeffneDb();
+  schreibbar=await schreibprobe(db);
+  const z=zustandLesen();
+  zustand=z.zustand||null;
+  schueler=Array.isArray(zustand?.students)?zustand.students:[];
+
+  if(db){
+    try{idbSchluessel=await bitte(laden(db,'readonly').getAllKeys())}catch{idbSchluessel=[]}
+  }
+  const arten={ohne:0,'bild-im-zustand':0,verweis:0,dateipfad:0};
+  schueler.forEach(s=>arten[fotoArt(s.photo)]++);
+
+  let platz=null;
+  try{if(navigator.storage?.estimate){const e=await navigator.storage.estimate();
+      platz={belegt:(e.usage/1048576).toFixed(1),frei:(e.quota/1048576).toFixed(0)}}}catch{}
+
+  const pwa=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  const safari=/^((?!chrome|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent);
+
+  const R=(name,wert,klasse='')=>`<div class="zeile"><b>${name}</b><span class="wert ${klasse}">${wert}</span></div>`;
+  $('#befund').innerHTML=
+     R('Browser',safari?'Safari':/crios/i.test(navigator.userAgent)?'Chrome (iOS)':/chrome|edg/i.test(navigator.userAgent)?'Chrome/Edge':'anderer')
+    +R('Als App installiert',pwa?'ja':'nein')
+    +R('Adresse',location.origin===  'null'?'Datei (file://) – Achtung':location.origin)
+    +R('Kinder im Speicher',schueler.length,schueler.length?'gut':'schlecht')
+    +R('davon mit Foto-Verweis (idb:)',arten.verweis)
+    +R('davon mit Bild direkt im Zustand',arten['bild-im-zustand'])
+    +R('davon ohne jedes Foto',arten.ohne,arten.ohne?'schlecht':'gut')
+    +R('Fotodatenbank geöffnet',db?'ja':'nein',db?'gut':'schlecht')
+    +R('Fotodatenbank beschreibbar',schreibbar?'ja':'nein',schreibbar?'gut':'mittel')
+    +R('Bilder in der Fotodatenbank',db?idbSchluessel.length:'–',idbSchluessel.length?'gut':'schlecht')
+    +R('Zustandsgröße',z.roh?(z.roh.length/1024).toFixed(0)+' KB':'–')
+    +(platz?R('Speicher belegt',`${platz.belegt} von ${platz.frei} MB`):'');
+
+  const h=[];
+  if(location.protocol==='file:')h.push(['fehler','Diese Seite läuft über <b>file://</b>. Dort hat jeder Tab seinen eigenen, leeren Speicher – DigiBoard kann so gar nichts finden. Die App muss über einen kleinen Server laufen (<code>serve.mjs</code>).']);
+  if(z.fehler)h.push(['fehler',z.fehler]);
+  if(schueler.length&&arten.ohne===schueler.length)h.push(['fehler','<b>Bei keinem einzigen Kind steht ein Foto im Zustand.</b> Die Fotos sind nicht „unsichtbar“, sie sind schlicht nicht eingetragen. Abschnitt 3 unten trägt sie aus der Sicherungsdatei nach.']);
+  if(arten.verweis>0&&idbSchluessel.length===0)h.push(['fehler','<b>Die Kinder verweisen auf Bilder, die Fotodatenbank ist aber leer.</b> Typisch nach einem Import auf einem anderen Gerät oder nach einer Speicherbereinigung durch iOS. Abschnitt 3 füllt die Datenbank wieder.']);
+  if(db&&!schreibbar)h.push(['warn','Die Fotodatenbank lässt sich <b>öffnen, aber nicht beschreiben</b>. Das passiert im privaten Fenster und bei vollem Speicher. Neue Fotos landen dann nur klein gerechnet im normalen Speicher.']);
+  if(!db)h.push(['fehler','Die Fotodatenbank ließ sich <b>gar nicht öffnen</b>. Läuft DigiBoard vielleicht in einem privaten Fenster?']);
+  if(pwa&&!safari)h.push(['warn','Als installierte App auf dem Home-Bildschirm hat DigiBoard einen <b>eigenen Speicher</b>, getrennt vom Browser. Fotos, die du im Browser eingespielt hast, fehlen in der App – und umgekehrt.']);
+  $('#hinweise').innerHTML=h.map(([k,t])=>`<div class="${k==='fehler'?'fehler':'warn'}">${t}</div>`).join('');
+
+  log('=== Befund ===');
+  log(`Browser: ${navigator.userAgent}`);
+  log(`Adresse: ${location.href}`);
+  log(`Als App installiert: ${pwa}`);
+  log(`Kinder: ${schueler.length} | Verweise: ${arten.verweis} | Bild im Zustand: ${arten['bild-im-zustand']} | ohne: ${arten.ohne}`);
+  log(`Datenbank offen: ${!!db} | beschreibbar: ${schreibbar} | Bilder darin: ${idbSchluessel.length}`);
+  if(platz)log(`Speicher: ${platz.belegt} / ${platz.frei} MB`);
+  berichtSchreiben();
+}
+
+function berichtSchreiben(){$('#bericht').textContent=zeilen.join('\n')}
+
+/* --- Abschnitt 2: Fotos wirklich laden ------------------------------- */
+function bildLaedt(src){
+  return new Promise(fertig=>{
+    const b=new Image();
+    const ende=e=>{clearTimeout(t);b.onload=null;b.onerror=null;fertig(e)};
+    const t=setTimeout(()=>ende(false),6000);
+    b.onload=()=>ende(true);b.onerror=()=>ende(false);
+    b.src=src;
+  });
+}
+$('#zeigen').onclick=async()=>{
+  const knopf=$('#zeigen');knopf.disabled=true;knopf.textContent='lädt …';
+  const gitter=$('#gitter');gitter.innerHTML='';
+  let konnten=0;
+  log('\n=== Bilder wirklich geladen ===');
+  for(const s of schueler){
+    const kachel=document.createElement('div');
+    kachel.className='kachel';
+    kachel.innerHTML=`<div class="rahmen">…</div>${(s.name||'?')}`;
+    gitter.append(kachel);
+    const rahmen=kachel.querySelector('.rahmen');
+    const wert=typeof s.photo==='string'?s.photo:'';
+    let src='';
+    if(!wert){rahmen.textContent='kein Eintrag';kachel.classList.add('fehlt');log(`${s.name}: kein Foto im Zustand`);continue}
+    if(wert.startsWith(PREFIX)){
+      let blob=null;
+      try{blob=await frist(bitte(laden(db,'readonly')?.get(wert)),6000,'Datenbank lesen')}catch(e){log(`${s.name}: ${e.message}`)}
+      if(!(blob instanceof Blob)){rahmen.textContent='nicht in der DB';kachel.classList.add('fehlt');log(`${s.name}: Verweis ${wert}, aber nichts in der Datenbank`);continue}
+      src=URL.createObjectURL(blob);
+    }else src=wert;
+    const ok=await bildLaedt(src);
+    if(ok){rahmen.innerHTML='';const i=new Image();i.src=src;rahmen.append(i);konnten++;log(`${s.name}: Bild lädt ✓`)}
+    else{rahmen.textContent='lädt nicht';kachel.classList.add('fehlt');log(`${s.name}: Bild lässt sich NICHT dekodieren`)}
+  }
+  knopf.textContent=`${konnten} von ${schueler.length} Fotos konnten geladen werden`;
+  log(`Ergebnis: ${konnten} von ${schueler.length} anzeigbar`);
+  berichtSchreiben();
+};
+
+/* --- Abschnitt 3: Rettung aus der Sicherungsdatei --------------------- */
+function dataUrlZuBlob(d){
+  const [kopf,koerper]=String(d).split(',');
+  const typ=(kopf.match(/data:([^;]+)/)||[,'image/png'])[1];
+  const roh=atob(koerper);
+  const bytes=new Uint8Array(roh.length);
+  for(let i=0;i<roh.length;i++)bytes[i]=roh.charCodeAt(i);
+  return new Blob([bytes],{type:typ});
+}
+async function kleinRechnen(blob,kante=200){
+  const url=URL.createObjectURL(blob);
+  try{
+    const bild=await frist(new Promise((ja,nein)=>{const b=new Image();b.onload=()=>ja(b);b.onerror=()=>nein(new Error('Bild nicht lesbar'));b.src=url}),8000,'Bild verkleinern');
+    const f=document.createElement('canvas');f.width=kante;f.height=kante;
+    const s=f.getContext('2d');if(!s)throw new Error('Canvas fehlt');
+    const k=Math.max(kante/bild.width,kante/bild.height),w=bild.width*k,h=bild.height*k;
+    s.drawImage(bild,(kante-w)/2,(kante-h)/2,w,h);
+    let klein=f.toDataURL('image/webp',.8);
+    if(!klein.startsWith('data:image/webp'))klein=f.toDataURL('image/jpeg',.78);
+    return klein;
+  }finally{try{URL.revokeObjectURL(url)}catch{}}
+}
+
+$('#datei').onchange=async ev=>{
+  const datei=ev.target.files?.[0];
+  ev.target.value='';
+  const feld=$('#rettung');
+  if(!datei){feld.innerHTML='<div class="fehler">Keine Datei angekommen.</div>';return}
+  feld.innerHTML=`<div class="karte">Datei <b>${datei.name}</b> (${(datei.size/1048576).toFixed(1)} MB) wird gelesen …<div class="protokoll" id="prot"></div></div>`;
+  const prot=$('#prot');
+  const sagen=t=>{const d=document.createElement('div');d.innerHTML=t;prot.append(d);prot.scrollTop=prot.scrollHeight;log(t.replace(/<[^>]+>/g,''))};
+
+  if(!datei.size){sagen('<b class="schlecht">Die Datei ist 0 Byte groß.</b> Liegt sie nur in iCloud und ist noch nicht geladen? Im Finder einmal darauf klicken, bis das Wolkensymbol verschwindet.');berichtSchreiben();return}
+
+  let text='';
+  try{text=await frist(datei.text(),60000,'Datei lesen')}
+  catch(e){sagen('<b class="schlecht">Datei nicht lesbar:</b> '+e.message);berichtSchreiben();return}
+
+  let daten=null;
+  try{daten=JSON.parse(text)}
+  catch(e){sagen('<b class="schlecht">Das ist keine gültige DigiBoard-Datei.</b> ('+e.message+')');berichtSchreiben();return}
+
+  const fremd=daten?.state&&Array.isArray(daten.state.students)?daten.state
+            :Array.isArray(daten?.students)?daten
+            :Array.isArray(daten)?{students:daten}:null;
+  if(!fremd){sagen('<b class="schlecht">In dieser Datei stehen keine Kinder.</b>');berichtSchreiben();return}
+  sagen(`Gefunden: <b>${fremd.students.length} Kinder</b> in der Sicherung (App-Version ${daten.appVersion||'unbekannt'}).`);
+
+  if(!schueler.length){sagen('<b class="schlecht">Auf diesem Gerät stehen gar keine Kinder.</b> Bitte zuerst in DigiBoard das Backup ganz normal laden, dann diese Seite erneut aufrufen.');berichtSchreiben();return}
+
+  /* Zuordnung: erst über die Kennung, sonst über den Namen. */
+  const nachId=new Map(schueler.map(s=>[String(s.id),s]));
+  const nachName=new Map(schueler.map(s=>[String(s.name||'').trim().toLowerCase(),s]));
+
+  let getroffen=0,geschrieben=0,klein=0,daneben=0,ohne=0;
+  for(const alt of fremd.students){
+    const name=String(alt.name||'?').trim();
+    const ziel=nachId.get(String(alt.id))||nachName.get(name.toLowerCase());
+    if(!ziel){sagen(`• ${name}: <span class="mittel">auf diesem Gerät nicht gefunden – übersprungen</span>`);daneben++;continue}
+    const wert=typeof alt.photo==='string'?alt.photo:'';
+    if(!wert){sagen(`• ${name}: in der Sicherung ist kein Foto`);ohne++;continue}
+    getroffen++;
+    if(!wert.startsWith('data:')){ziel.photo=wert;sagen(`• ${name}: Pfad übernommen`);geschrieben++;continue}
+    let blob=null;
+    try{blob=dataUrlZuBlob(wert)}catch(e){sagen(`• ${name}: <span class="schlecht">Bild unlesbar (${e.message})</span>`);daneben++;continue}
+    let erfolg=false;
+    if(schreibbar){
+      try{
+        await frist(bitte(laden(db,'readwrite')?.put(blob,PREFIX+ziel.id)),15000,'in die Datenbank schreiben');
+        ziel.photo=PREFIX+ziel.id;erfolg=true;geschrieben++;
+        sagen(`• ${name}: <span class="gut">in die Fotodatenbank geschrieben ✓</span> (${Math.round(blob.size/1024)} KB)`);
+      }catch(e){sagen(`• ${name}: Datenbank verweigert (${e.message}) – wird klein gerechnet`)}
+    }
+    if(!erfolg){
+      try{ziel.photo=await kleinRechnen(blob);klein++;geschrieben++;
+          sagen(`• ${name}: <span class="mittel">klein gerechnet und im Zustand abgelegt ✓</span>`)}
+      catch(e){sagen(`• ${name}: <span class="schlecht">fehlgeschlagen (${e.message})</span>`);daneben++}
+    }
+  }
+
+  sagen(`<br><b>Zwischenstand:</b> ${geschrieben} Fotos nachgetragen (davon ${klein} klein gerechnet), ${daneben} fehlgeschlagen, ${ohne} ohne Foto in der Sicherung.`);
+
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(zustand));
+    sagen('<b class="gut">Alles gespeichert ✓</b>');
+    feld.insertAdjacentHTML('beforeend','<div class="ok"><b>Fertig.</b> Schließe diesen Tab und lade DigiBoard neu (⌘⇧R bzw. auf dem iPhone die App einmal ganz schließen und neu öffnen). Vorher kannst du oben unter Punkt 2 nachsehen, ob die Bilder jetzt wirklich laden.</div>');
+  }catch(e){
+    sagen(`<b class="schlecht">Speichern fehlgeschlagen: ${e.name}</b>`);
+    feld.insertAdjacentHTML('beforeend','<div class="fehler"><b>Der Browserspeicher ist voll.</b> Das passiert, wenn die Bilder nicht in die Fotodatenbank durften und deshalb im normalen Speicher liegen. Bitte melde das zurück – dann rechnen wir die Bilder noch kleiner.</div>');
+  }
+  berichtSchreiben();
+};
+
+$('#kopieren').onclick=async()=>{
+  try{await navigator.clipboard.writeText(zeilen.join('\n'));$('#kopieren').textContent='kopiert ✓'}
+  catch{$('#kopieren').textContent='ging nicht – Text unten markieren'}
+};
+
+befundErheben();
+</script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+/* ============================================================
+   DigiBoard Next 15.45 – Waldbuehne, Belohnungsbaum und Werkzeuge
+
+   Diese Datei wird zuletzt geladen und veraendert ausschliesslich das
+   Aussehen. Keine Regel greift in gespeicherte Klassendaten, Fotos oder
+   Bedienlogik ein.
+
+   Drei Ziele:
+   1. Der Klassenbaum wird zur Buehne. Der Hintergrundwald tritt sichtbar
+      zurueck, der Baum steht davor.
+   2. Das Belohnungssystem (Schild, Baumstufe, Fortschritt, Schatztruhe)
+      wird zum Blickfang statt zur Randnotiz.
+   3. Die Werkzeugleiste, das Wochenziel und die Tagesinfos werden als
+      geschnitztes Holz modelliert und gehoeren sichtbar zusammen.
+   ============================================================ */
+
+html body .app-shell{
+  --holz-hell:#c98a4e;
+  --holz-mittel:#9c5f2f;
+  --holz-tief:#6d3f1e;
+  --holz-kante:#4b2912;
+  --holz-licht:rgba(255,231,186,.42);
+  --gold-hell:#ffd979;
+  --gold-tief:#c98a19;
+  --blatt-hell:#8fc861;
+  --blatt-tief:#2f7038;
+}
+
+/* ============================================================
+   1 · TIEFE – der Hintergrundwald tritt zurueck
+   ============================================================ */
+
+/* Eine ruhige Randabdunklung und ein warmer Dunst in der Mitte. Dadurch
+   liest das Auge die Waldlichtung als weit entfernt, noch bevor der Baum
+   ueberhaupt groesser wird. */
+@media (min-width:761px){
+  html body .app-shell .forest-light::after{
+    content:""!important;
+    position:absolute!important;
+    z-index:1!important;
+    inset:0!important;
+    display:block!important;
+    pointer-events:none!important;
+    border-radius:inherit!important;
+    background:
+      radial-gradient(ellipse 62% 58% at 50% 62%,transparent 0 46%,rgba(10,48,28,.13) 76%,rgba(8,40,24,.27) 100%),
+      radial-gradient(ellipse 44% 36% at 50% 56%,rgba(255,250,214,.20),transparent 68%)!important;
+  }
+  html body .app-shell.time-evening .forest-light::after{
+    background:
+      radial-gradient(ellipse 60% 56% at 50% 62%,transparent 0 42%,rgba(6,34,22,.22) 74%,rgba(5,28,19,.40) 100%),
+      radial-gradient(ellipse 42% 34% at 50% 56%,rgba(255,214,150,.16),transparent 66%)!important;
+  }
+
+  /* Ferne Nadelbaeume und Hain bleiben, verlieren aber Schaerfe und Farbe.
+     Genau dieser Unterschied laesst den Hauptbaum vortreten. */
+  html body .app-shell .wall-fixed .tree-depth-pines-v1542{
+    opacity:.62!important;
+    filter:blur(1.5px) saturate(.72) brightness(1.03)!important;
+  }
+  html body .app-shell .wall-fixed .tree-background-grove-v1539{
+    opacity:.66!important;
+    filter:blur(1.1px) saturate(.76)!important;
+  }
+  html body .app-shell .forest-depth-layers{
+    opacity:.5!important;
+    filter:blur(.8px) saturate(.8)!important;
+  }
+}
+
+/* ============================================================
+   2 · BUEHNE – der Klassenbaum bekommt Platz und Licht
+   ============================================================ */
+
+/* Die Grossansicht (.wall-expanded) behaelt ihre eigenen Masse. Alle
+   Buehnenmasse hier gelten ausdruecklich nur fuer die Tafelansicht. */
+@media (min-width:1251px){
+  html body .app-shell .wall-fixed:not(.wall-expanded){
+    left:288px!important;
+    right:auto!important;
+    top:186px!important;
+    width:868px!important;
+    height:540px!important;
+    transform:none!important;
+    overflow:visible!important;
+  }
+}
+
+@media (min-width:761px){
+  /* Warmer Lichtkegel auf dem Waldboden. Er sitzt hinter allem und gibt
+     dem Stamm einen Standpunkt. */
+  html body .app-shell .wall-fixed::after{
+    content:""!important;
+    position:absolute!important;
+    z-index:0!important;
+    left:6%!important;
+    right:6%!important;
+    bottom:6%!important;
+    height:62%!important;
+    display:block!important;
+    pointer-events:none!important;
+    border-radius:50%!important;
+    background:
+      radial-gradient(ellipse at 50% 78%,rgba(255,251,206,.30),rgba(255,247,190,.12) 46%,transparent 72%)!important;
+    filter:blur(6px)!important;
+  }
+  html body .app-shell.time-evening .wall-fixed::after{
+    background:radial-gradient(ellipse at 50% 78%,rgba(255,206,133,.22),transparent 68%)!important;
+  }
+
+  html body .app-shell .wall-fixed:not(.wall-expanded) .tree-scene-v22{
+    left:2%!important;
+    right:2%!important;
+    top:52px!important;
+    bottom:62px!important;
+    overflow:visible!important;
+  }
+
+  /* Der Hauptbaum: groesser, satter, mit klarer Kante gegen den Wald.
+     Der doppelte Schatten (weich + eng) erzeugt die Ablösung. */
+  html body .app-shell .wall-fixed .tree-main-image-v1539{
+    z-index:5!important;
+    background-size:106% 105%!important;
+    background-position:center bottom!important;
+    transform:scale(1.06)!important;
+    transform-origin:50% 88%!important;
+  }
+  html body .app-shell .wall-fixed .wall-stage .tree-main-image-v1539{
+    filter:
+      drop-shadow(0 30px 26px rgba(14,54,26,.30))
+      drop-shadow(0 6px 4px rgba(20,60,30,.22))
+      saturate(1.12) contrast(1.05) brightness(1.03)!important;
+  }
+  html body .app-shell .wall-fixed .wall-stage[data-growth-level="0"] .tree-main-image-v1539{
+    opacity:1!important;
+    filter:
+      drop-shadow(0 26px 22px rgba(14,54,26,.26))
+      drop-shadow(0 5px 4px rgba(20,60,30,.18))
+      saturate(.98) contrast(1.03) brightness(1.04)!important;
+  }
+  html body .app-shell .wall-fixed .wall-stage[data-growth-level="4"] .tree-main-image-v1539{
+    filter:
+      drop-shadow(0 32px 28px rgba(40,62,18,.32))
+      drop-shadow(0 6px 4px rgba(30,64,24,.24))
+      saturate(1.2) contrast(1.06) brightness(1.07)!important;
+  }
+
+  /* Kontaktschatten am Stammfuss. Ohne ihn schwebt der Baum. */
+  html body .app-shell .wall-fixed .tree-main-image-v1539::after{
+    left:26%!important;
+    right:26%!important;
+    bottom:3%!important;
+    height:30px!important;
+    background:radial-gradient(ellipse,rgba(20,58,26,.42),rgba(20,58,26,.14) 55%,transparent 72%)!important;
+    filter:blur(5px)!important;
+  }
+
+  /* Kinderfotos sitzen sichtbar VOR der Krone. */
+  html body .app-shell .wall-fixed .tree-portraits-v22{z-index:14!important}
+  html body .app-shell .wall-fixed .child-card-v22{
+    filter:drop-shadow(0 6px 7px rgba(18,54,27,.26))!important;
+  }
+  html body .app-shell .wall-fixed .empty-tree-v22{z-index:15!important}
+}
+
+/* ============================================================
+   3 · BELOHNUNGSSYSTEM – Schild, Stufe, Weg, Truhe
+   ============================================================ */
+
+@media (min-width:761px){
+
+  /* --- Das Waldhelden-Schild haengt an zwei Seilen ueber der Buehne --- */
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+    z-index:20!important;
+    min-height:52px!important;
+    padding:7px 10px 8px 12px!important;
+    border:2px solid var(--holz-kante)!important;
+    border-radius:14px 16px 15px 17px!important;
+    background:
+      linear-gradient(90deg,transparent 29%,rgba(70,36,16,.18) 30% 31%,transparent 32% 68%,rgba(70,36,16,.15) 69% 70%,transparent 71%),
+      linear-gradient(168deg,var(--holz-hell),var(--holz-mittel) 52%,var(--holz-tief))!important;
+    color:#fff6e2!important;
+    box-shadow:
+      inset 0 2px 0 var(--holz-licht),
+      inset 0 -3px 0 rgba(52,26,10,.35),
+      0 7px 0 var(--holz-kante),
+      0 16px 24px rgba(20,50,24,.30)!important;
+  }
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22::before,
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22::after{
+    content:""!important;
+    position:absolute!important;
+    top:-16px!important;
+    width:3px!important;
+    height:17px!important;
+    display:block!important;
+    border-radius:2px!important;
+    background:linear-gradient(180deg,rgba(120,86,44,.35),#8a6234)!important;
+  }
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22::before{left:16%!important;transform:rotate(4deg)!important}
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22::after{right:16%!important;transform:rotate(-4deg)!important}
+
+  /* Der Pokal wird zur eingelassenen Goldmuenze. */
+  html body .app-shell .wall-fixed .wall-title-v22>span:first-child{
+    width:31px!important;
+    height:31px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle at 34% 28%,#fff3c4,var(--gold-hell) 42%,var(--gold-tief))!important;
+    box-shadow:
+      inset 0 -2px 3px rgba(122,74,10,.42),
+      inset 0 2px 2px rgba(255,255,232,.75),
+      0 2px 4px rgba(48,26,8,.4)!important;
+    font-size:17px!important;
+  }
+  html body .app-shell .wall-fixed .wall-title-v22>div:not(.tree-title-actions-v1538)>strong{
+    font-size:17px!important;
+    letter-spacing:-.02em!important;
+    text-shadow:0 2px 2px rgba(58,28,10,.6)!important;
+  }
+  html body .app-shell .wall-fixed .wall-title-v22>div:not(.tree-title-actions-v1538)>small{
+    font-size:7.5px!important;
+    letter-spacing:.06em!important;
+    color:rgba(255,242,214,.9)!important;
+    text-shadow:0 1px 1px rgba(58,28,10,.5)!important;
+  }
+  html body .app-shell .wall-fixed .tree-focus-button-v1538,
+  html body .app-shell .wall-fixed .forest-map-button-v1534{
+    border:1.5px solid rgba(60,32,12,.55)!important;
+    border-radius:10px!important;
+    background:linear-gradient(180deg,#fdf3d8,#e3cfa4)!important;
+    color:#4a2c11!important;
+    font-weight:950!important;
+    text-shadow:none!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 0 rgba(74,42,18,.55)!important;
+    transition:transform .12s ease,box-shadow .12s ease!important;
+  }
+  html body .app-shell .wall-fixed .tree-focus-button-v1538:hover,
+  html body .app-shell .wall-fixed .forest-map-button-v1534:hover{
+    transform:translateY(-1px)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 4px 0 rgba(74,42,18,.6)!important;
+  }
+  html body .app-shell .wall-fixed .tree-focus-button-v1538:active,
+  html body .app-shell .wall-fixed .forest-map-button-v1534:active{
+    transform:translateY(2px)!important;
+    box-shadow:inset 0 2px 3px rgba(74,42,18,.4)!important;
+  }
+
+  /* --- Baumstufe und Tagesstand: zwei kleine Holzplaketten --- */
+  html body .app-shell .wall-fixed .tree-growth-badge-v1184,
+  html body .app-shell .wall-fixed .tree-today-badge-v1531{
+    z-index:18!important;
+    border:2px solid rgba(70,38,16,.75)!important;
+    border-radius:12px 13px 12px 14px!important;
+    background:linear-gradient(170deg,rgba(255,250,229,.97),rgba(240,226,190,.95))!important;
+    color:#3d2711!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      0 4px 0 rgba(74,42,18,.5),
+      0 11px 18px rgba(24,54,26,.22)!important;
+  }
+  html body .app-shell .wall-fixed .tree-growth-badge-v1184 strong{
+    color:#2c5d2b!important;
+    letter-spacing:-.015em!important;
+  }
+  html body .app-shell .wall-fixed .tree-growth-badge-v1184 small,
+  html body .app-shell .wall-fixed .tree-today-badge-v1531 small{
+    color:#7a5426!important;
+    letter-spacing:.07em!important;
+  }
+  html body .app-shell .wall-fixed .tree-growth-badge-v1184>span{
+    filter:drop-shadow(0 2px 2px rgba(60,40,14,.3))!important;
+  }
+
+  /* --- Die Werkbank des Belohnungssystems: Fortschritt und Truhe --- */
+  html body .app-shell .wall-fixed:not(.wall-expanded) .tree-footer-v22{
+    bottom:86px!important;
+    width:min(700px,64vw)!important;
+    height:70px!important;
+    min-height:70px!important;
+    grid-template-columns:minmax(200px,1fr) minmax(198px,1.14fr) 96px!important;
+  }
+  html body .app-shell .wall-fixed .tree-footer-v22{
+    z-index:22!important;
+    padding:7px 11px 7px 15px!important;
+    border:2px solid var(--holz-kante)!important;
+    border-radius:17px 19px 17px 20px!important;
+    background:
+      linear-gradient(90deg,transparent 33%,rgba(70,36,16,.13) 34% 35%,transparent 36% 65%,rgba(70,36,16,.12) 66% 67%,transparent 68%),
+      linear-gradient(172deg,#fffaea,#f3e6c6 58%,#e2cfa4)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.95),
+      inset 0 -3px 0 rgba(140,102,52,.24),
+      0 7px 0 var(--holz-kante),
+      0 18px 28px rgba(20,50,24,.28)!important;
+  }
+  /* Ein feiner Goldsaum, sobald die Truhe offen ist. */
+  html body .app-shell .wall-fixed .tree-footer-v22:has(.reward-chest.is-open){
+    border-color:var(--gold-tief)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.95),
+      0 7px 0 #8f6110,
+      0 0 0 3px rgba(255,214,110,.4),
+      0 18px 30px rgba(120,80,10,.3)!important;
+  }
+
+  html body .app-shell .wall-fixed .leaf-counter-v22>span{
+    font-size:23px!important;
+    filter:drop-shadow(0 2px 2px rgba(46,80,32,.3))!important;
+  }
+  html body .app-shell .wall-fixed .leaf-counter-v22 em{
+    color:#8a6127!important;
+    font-size:7.5px!important;
+    font-weight:950!important;
+    letter-spacing:.12em!important;
+    font-style:normal!important;
+  }
+  html body .app-shell .wall-fixed .leaf-counter-v22 strong{
+    color:#2b5c2a!important;
+    font-size:17px!important;
+    letter-spacing:-.02em!important;
+  }
+  html body .app-shell .wall-fixed .leaf-counter-v22 small{
+    color:#6a5330!important;
+    font-size:8px!important;
+  }
+
+  /* Der Fortschritt liest sich als Waldweg mit drei Wegsteinen. */
+  html body .app-shell .wall-fixed .progress-v22{
+    height:13px!important;
+    border:1.5px solid rgba(90,60,26,.5)!important;
+    border-radius:99px!important;
+    background:linear-gradient(180deg,#d9c9a3,#efe2c3)!important;
+    box-shadow:inset 0 2px 4px rgba(78,50,20,.32)!important;
+    overflow:visible!important;
+  }
+  html body .app-shell .wall-fixed .progress-v22>span{
+    border-radius:99px!important;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.42),transparent 48%),
+      linear-gradient(90deg,var(--blatt-tief),var(--blatt-hell) 72%,#c6e07a)!important;
+    box-shadow:0 0 9px rgba(120,190,90,.55),inset 0 -2px 2px rgba(28,72,30,.3)!important;
+    transition:width .7s cubic-bezier(.22,.9,.3,1)!important;
+  }
+  html body .app-shell .wall-fixed .reward-marker{
+    width:9px!important;
+    height:9px!important;
+    border:1.5px solid rgba(84,56,24,.6)!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle at 34% 30%,#fff6da,#d7c298)!important;
+    box-shadow:0 1px 2px rgba(50,32,12,.45)!important;
+  }
+  html body .app-shell .wall-fixed .reward-progress-label-v1186{
+    padding:1px 7px!important;
+    border-radius:99px!important;
+    background:linear-gradient(180deg,#3f8a3c,#2b6330)!important;
+    color:#f4ffe0!important;
+    font-size:8.5px!important;
+    font-weight:950!important;
+    box-shadow:0 2px 4px rgba(24,60,26,.4)!important;
+  }
+  html body .app-shell .wall-fixed .forest-milestones-v1531 span{
+    color:#7d6134!important;
+    font-size:6.5px!important;
+    letter-spacing:.08em!important;
+  }
+
+  /* Die Schatztruhe ist der Blickfang. Geschlossen atmet sie ruhig,
+     geoeffnet leuchtet sie golden. */
+  html body .app-shell .wall-fixed .reward-chest{
+    position:relative!important;
+    width:92px!important;
+    height:62px!important;
+    border:2px solid var(--holz-kante)!important;
+    border-radius:11px 11px 13px 13px!important;
+    background:
+      linear-gradient(90deg,transparent 44%,rgba(255,222,150,.5) 45% 55%,transparent 56%),
+      linear-gradient(172deg,var(--holz-hell),var(--holz-mittel) 46%,var(--holz-tief))!important;
+    box-shadow:
+      inset 0 2px 0 var(--holz-licht),
+      inset 0 -3px 0 rgba(48,24,8,.4),
+      0 5px 0 var(--holz-kante),
+      0 12px 18px rgba(22,52,24,.3)!important;
+    cursor:pointer!important;
+    transition:transform .16s ease,box-shadow .16s ease!important;
+    animation:truheAtem1545 4.4s ease-in-out infinite!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest::before{
+    content:""!important;
+    position:absolute!important;
+    left:8%!important;
+    right:8%!important;
+    top:34%!important;
+    height:5px!important;
+    display:block!important;
+    border-radius:2px!important;
+    background:linear-gradient(180deg,var(--gold-hell),var(--gold-tief))!important;
+    box-shadow:0 1px 2px rgba(48,24,8,.45)!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest>i{
+    position:absolute!important;
+    left:50%!important;
+    top:40%!important;
+    width:15px!important;
+    height:17px!important;
+    display:block!important;
+    transform:translateX(-50%)!important;
+    border-radius:3px 3px 5px 5px!important;
+    background:radial-gradient(circle at 40% 30%,#fff4cb,var(--gold-hell) 45%,var(--gold-tief))!important;
+    box-shadow:inset 0 -1px 2px rgba(120,72,10,.5),0 1px 2px rgba(48,24,8,.5)!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest>b{
+    position:absolute!important;
+    right:6px!important;
+    top:4px!important;
+    font-size:13px!important;
+    opacity:.55!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest:hover{
+    transform:translateY(-2px)!important;
+    box-shadow:
+      inset 0 2px 0 var(--holz-licht),
+      0 7px 0 var(--holz-kante),
+      0 15px 22px rgba(22,52,24,.34)!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest:active{
+    transform:translateY(3px)!important;
+    box-shadow:inset 0 3px 5px rgba(40,20,6,.45),0 2px 0 var(--holz-kante)!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest.is-open{
+    border-color:#8f6110!important;
+    background:
+      linear-gradient(180deg,rgba(255,242,190,.6),transparent 40%),
+      linear-gradient(172deg,#e5a94a,#b9761f 52%,#8a5312)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,240,192,.65),
+      0 5px 0 #6f4310,
+      0 0 22px rgba(255,206,96,.6),
+      0 14px 22px rgba(120,76,10,.32)!important;
+    animation:truheLeuchten1545 2.1s ease-in-out infinite!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest.is-open>b{opacity:1!important;font-size:16px!important}
+}
+
+@keyframes truheAtem1545{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-1.5px)}
+}
+@keyframes truheLeuchten1545{
+  0%,100%{filter:brightness(1)}
+  50%{filter:brightness(1.13)}
+}
+
+/* ============================================================
+   4 · WERKZEUGE – die Leiste wird zur modellierten Werkbank
+   ============================================================ */
+
+@media (min-width:761px){
+  html body .app-shell .forest-tool-belt-v1521.dock{
+    bottom:8px!important;
+    height:74px!important;
+    min-height:74px!important;
+    padding:7px 9px 8px!important;
+    gap:6px!important;
+    border:2px solid var(--holz-kante)!important;
+    border-radius:20px!important;
+    background:
+      linear-gradient(90deg,transparent 12%,rgba(66,34,14,.10) 13% 14%,transparent 15% 37%,rgba(66,34,14,.09) 38% 39%,transparent 40% 62%,rgba(66,34,14,.09) 63% 64%,transparent 65% 87%,rgba(66,34,14,.10) 88% 89%,transparent 90%),
+      linear-gradient(178deg,#a96e33,#8a5426 55%,#6b3e1b)!important;
+    box-shadow:
+      inset 0 2px 0 var(--holz-licht),
+      inset 0 -4px 0 rgba(46,22,8,.4),
+      0 8px 0 var(--holz-kante),
+      0 20px 34px rgba(14,44,22,.4)!important;
+    backdrop-filter:none!important;
+  }
+
+  /* Jedes Werkzeug ist ein eigener Holzklotz mit Lichtkante und Fuss. */
+  html body .app-shell .forest-tool-belt-v1521.dock>button{
+    height:59px!important;
+    min-height:59px!important;
+    padding:5px 8px!important;
+    border:1.5px solid rgba(52,28,10,.5)!important;
+    border-radius:13px!important;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,252,240,.62) 42%,rgba(238,228,203,.72))!important;
+    color:#3c2a13!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.98),
+      inset 0 -2px 0 rgba(120,88,44,.2),
+      0 4px 0 rgba(56,30,10,.55),
+      0 8px 12px rgba(18,44,20,.22)!important;
+    transition:transform .13s ease,box-shadow .13s ease,background .2s ease!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:hover{
+    transform:translateY(-2px)!important;
+    background:linear-gradient(180deg,#ffffff,rgba(255,253,238,.8) 44%,rgba(243,235,213,.8))!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.98),
+      0 6px 0 rgba(56,30,10,.6),
+      0 12px 16px rgba(18,44,20,.26)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:active{
+    transform:translateY(3px)!important;
+    box-shadow:
+      inset 0 3px 5px rgba(58,32,12,.34),
+      0 1px 0 rgba(56,30,10,.5)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:focus-visible{
+    outline:3px solid #ffd979!important;
+    outline-offset:2px!important;
+  }
+
+  /* Das Symbol sitzt auf einer eingelassenen Farbscheibe. */
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{
+    width:36px!important;
+    height:36px!important;
+    border:1.5px solid var(--tool-accent)!important;
+    border-radius:12px!important;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.88),transparent 54%),
+      linear-gradient(168deg,#fffdf6,var(--tool-soft))!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      inset 0 -3px 4px rgba(60,40,16,.14),
+      0 2px 3px rgba(40,26,10,.28)!important;
+    font-size:19px!important;
+    filter:drop-shadow(0 1px 1px rgba(40,26,10,.25))!important;
+    transition:transform .13s ease!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button:hover .dock-icon{
+    transform:rotate(-4deg) scale(1.06)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-label{
+    color:#33240f!important;
+    font-size:10.5px!important;
+    font-weight:950!important;
+    letter-spacing:-.015em!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-status-v1531{
+    color:#7a5c30!important;
+    font-size:7.5px!important;
+    font-weight:850!important;
+  }
+  /* Der Farbstreifen am Fuss bleibt die Zuordnung, wird aber Teil des Klotzes. */
+  html body .app-shell .forest-tool-belt-v1521.dock>button::after{
+    left:9px!important;
+    right:9px!important;
+    bottom:3px!important;
+    height:4px!important;
+    opacity:.9!important;
+    box-shadow:0 1px 2px rgba(40,24,8,.32)!important;
+  }
+
+  /* Der Fuchsbereich ist der Haupteingang und darf leuchten. */
+  html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance{
+    border-color:#7d3c0f!important;
+    background:
+      linear-gradient(180deg,rgba(255,244,214,.95),transparent 46%),
+      linear-gradient(168deg,#eb9c46,#cf6f1f 60%,#a95314)!important;
+    color:#fff6e4!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,236,196,.85),
+      0 5px 0 #7a3b0f,
+      0 10px 16px rgba(84,40,10,.34)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance .dock-label{
+    color:#fff7e6!important;
+    text-shadow:0 2px 2px rgba(84,38,8,.5)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance .dock-status-v1531{
+    color:rgba(255,238,207,.9)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance .dock-icon{
+    border-color:#8a4412!important;
+    background:linear-gradient(168deg,#fff0d2,#f6cf94)!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance:hover{
+    box-shadow:
+      inset 0 1px 0 rgba(255,236,196,.85),
+      0 7px 0 #7a3b0f,
+      0 14px 20px rgba(84,40,10,.38)!important;
+  }
+}
+
+/* ============================================================
+   5 · WOCHENZIEL UND TAGESINFOS – gleiche Holzsprache
+   ============================================================ */
+
+@media (min-width:761px){
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]{
+    border:2px solid var(--holz-kante)!important;
+    border-radius:15px 17px 15px 18px!important;
+    background:
+      linear-gradient(90deg,transparent 30%,rgba(66,32,14,.15) 31% 32%,transparent 33% 67%,rgba(66,32,14,.13) 68% 69%,transparent 70%),
+      linear-gradient(168deg,#b0703a,#8d5527 54%,#6d3f1c)!important;
+    color:#fff6e4!important;
+    text-shadow:0 2px 2px rgba(56,26,8,.55)!important;
+    box-shadow:
+      inset 0 2px 0 var(--holz-licht),
+      inset 0 -3px 0 rgba(48,24,8,.35),
+      0 7px 0 var(--holz-kante),
+      0 16px 24px rgba(20,48,22,.28)!important;
+  }
+  /* Zwei Naegel oben – kleines Detail, grosse Wirkung. */
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]::before{
+    content:""!important;
+    position:absolute!important;
+    z-index:3!important;
+    left:11px!important;
+    top:9px!important;
+    width:7px!important;
+    height:7px!important;
+    display:block!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle at 34% 30%,#fff2cf,#b08a4c 55%,#6f4f21)!important;
+    box-shadow:0 1px 2px rgba(40,20,6,.55)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]::after{
+    content:""!important;
+    position:absolute!important;
+    z-index:3!important;
+    right:11px!important;
+    top:9px!important;
+    width:7px!important;
+    height:7px!important;
+    display:block!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle at 34% 30%,#fff2cf,#b08a4c 55%,#6f4f21)!important;
+    box-shadow:0 1px 2px rgba(40,20,6,.55)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"] .weekly-goal-widget h3{
+    color:#fff8ea!important;
+    letter-spacing:-.02em!important;
+  }
+
+  html body .app-shell .dashboard>.widget[data-id="info"]{
+    border:3px solid var(--holz-kante)!important;
+    border-radius:16px 18px 16px 19px!important;
+    box-shadow:
+      inset 0 0 0 2px rgba(255,232,186,.14),
+      0 7px 0 var(--holz-kante),
+      0 17px 26px rgba(16,46,22,.3)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="info"] .widget-head h2{
+    letter-spacing:-.015em!important;
+    text-shadow:0 2px 2px rgba(6,42,26,.5)!important;
+  }
+  /* Kleine Holzleiste als Kopfkante, damit die Tafel „haengt". */
+  html body .app-shell .dashboard>.widget[data-id="info"] .widget-head{
+    border-bottom:2px solid rgba(255,232,186,.18)!important;
+  }
+
+  /* Beide Karten heben sich beim Ansteuern leicht an. */
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"],
+  html body .app-shell .dashboard>.widget[data-id="info"]{
+    transition:transform .18s ease,box-shadow .18s ease!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]:hover,
+  html body .app-shell .dashboard>.widget[data-id="info"]:hover{
+    transform:translateY(-2px)!important;
+  }
+}
+
+/* ============================================================
+   6 · MITTLERE LAPTOPS – gleiche Buehne, engere Masse
+   ============================================================ */
+
+@media (min-width:761px) and (max-width:1250px){
+  html body .app-shell .wall-fixed:not(.wall-expanded) .tree-footer-v22{
+    bottom:78px!important;
+    width:min(600px,72vw)!important;
+    height:64px!important;
+    min-height:64px!important;
+  }
+  html body .app-shell .wall-fixed .reward-chest{
+    width:80px!important;
+    height:55px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock{
+    height:70px!important;
+    min-height:70px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button{
+    height:55px!important;
+    min-height:55px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{
+    width:32px!important;
+    height:32px!important;
+    font-size:17px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-label{font-size:9.5px!important}
+}
+
+/* ============================================================
+   7 · HANDY – Holzsprache ja, Buehnenmasse nein
+   ============================================================ */
+
+@media (max-width:760px){
+  html body .app-shell .dock button{
+    border:1.5px solid rgba(52,28,10,.45)!important;
+    border-radius:13px!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 0 rgba(56,30,10,.45)!important;
+  }
+  html body .app-shell .dock button:active{
+    transform:translateY(2px)!important;
+    box-shadow:inset 0 2px 4px rgba(58,32,12,.3)!important;
+  }
+  html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]{
+    border:2px solid var(--holz-kante)!important;
+    box-shadow:0 5px 0 var(--holz-kante),0 12px 18px rgba(20,48,22,.22)!important;
+  }
+}
+
+/* ============================================================
+   8 · RUHIGE DARSTELLUNG
+   ============================================================ */
+
+@media (prefers-reduced-motion:reduce){
+  html body .app-shell .wall-fixed .reward-chest,
+  html body .app-shell .wall-fixed .reward-chest.is-open{animation:none!important}
+  html body .app-shell .wall-fixed .progress-v22>span{transition:none!important}
+  html body .app-shell .forest-tool-belt-v1521.dock>button,
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{transition:none!important}
+}

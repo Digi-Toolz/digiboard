@@ -1,0 +1,271 @@
+:root{--forest:#174c31;--cream:#fff9ed;--orange:#f36d20;--ink:#17382a;--wood:#754429;--gold:#e7b94a;--stage-scale:1;--shadow:0 14px 32px rgba(18,55,31,.22)}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#07120d}button,input,select,textarea{font:inherit}body{overflow:hidden}.forest-light{display:none}
+.app-shell{position:absolute;left:50%;top:50%;width:1440px;height:810px;transform:translate(-50%,-50%) scale(var(--stage-scale));transform-origin:center;overflow:hidden;border-radius:28px;background:linear-gradient(180deg,#e7f4bd 0 46%,#8fc76e 66%,#3f8a4b 100%);box-shadow:0 34px 100px rgba(0,0,0,.48)}
+.app-shell:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 8%,rgba(255,255,230,.95),transparent 38%),linear-gradient(90deg,rgba(14,77,42,.22),transparent 17%,transparent 83%,rgba(14,77,42,.22));pointer-events:none}.app-shell:after{content:"";position:absolute;left:0;right:0;bottom:0;height:165px;background:radial-gradient(ellipse at 15% 115%,#23683b 0 18%,transparent 19%),radial-gradient(ellipse at 50% 120%,#347e47 0 25%,transparent 26%),radial-gradient(ellipse at 82% 112%,#23683b 0 20%,transparent 21%);pointer-events:none}
+.topbar{position:absolute;z-index:50;left:0;right:0;top:0;height:58px;padding:10px 22px;display:flex;align-items:center;background:linear-gradient(180deg,rgba(10,57,34,.9),rgba(10,57,34,.28),transparent)}.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none}.brand-fox{font-size:30px}.brand strong{display:block;font-size:22px;line-height:1}.brand small{display:block;font-size:10px}.build-badge{margin-left:12px;padding:6px 10px;border-radius:999px;background:#ff7b22;color:#fff;font-size:10px;font-weight:950;letter-spacing:.5px}.top-actions{margin-left:auto;display:flex;gap:8px}.status-pill,.top-button{border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.9);color:#243a2c;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:850;box-shadow:0 6px 16px rgba(22,59,35,.12)}
+.hero{position:absolute;z-index:8;left:175px;right:175px;top:58px;height:152px;display:grid;place-items:center;text-align:center}.hero>div{position:relative;z-index:2}.hero-kicker{display:inline-block;margin:0 0 4px;padding:6px 15px;border-radius:999px;background:#2d8038;color:#fff;font-size:13px;font-weight:900}.hero h1{margin:0;line-height:.88;letter-spacing:-2px}.hero h1 span{display:block;font-size:43px;font-weight:950;color:#174f33;text-shadow:0 3px 0 #fff,0 8px 16px rgba(16,65,34,.16)}.hero h1 strong{display:block;font-size:57px;font-weight:950;color:var(--orange);text-shadow:0 3px 0 #fff,0 9px 18px rgba(110,53,17,.17)}.hero-date{margin:6px 0 3px;font-size:12px;font-weight:850}.morning-language{display:flex;justify-content:center;gap:6px}.morning-language>span,.morning-language button{border:0;border-radius:999px;background:rgba(255,255,255,.92);padding:6px 10px;font-size:10px;font-weight:850}.hero-fox{position:absolute!important;right:-38px;bottom:-3px;font-size:58px}.hero-leaf{position:absolute;font-size:22px;opacity:.7}.hero-leaf.left{left:5%;top:68%}.hero-leaf.right{right:10%;top:18%}.season-card{position:absolute;right:-155px;top:12px;width:112px;height:120px;border-radius:24px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.86);box-shadow:var(--shadow)}.season-icon{font-size:30px}.season-card strong{font-size:17px}.season-card small{font-size:9px;text-align:center}
+.dashboard{position:absolute;z-index:10;left:28px;right:28px;top:210px;bottom:62px;display:grid;grid-template-columns:150px 330px 1fr 245px;grid-template-rows:236px 190px;grid-template-areas:"clock schedule wall info" "weekly meal wall birthday";gap:14px;align-items:stretch}
+.widget{position:relative;min-width:0;min-height:0;overflow:hidden}.widget-head{height:36px;display:flex;align-items:center;justify-content:space-between;padding:9px 12px 4px}.widget-head h2{margin:0;font-size:15px}.widget-actions{display:none;gap:4px}.layout-editing .widget-actions{display:flex}.widget-actions button{border:0;width:27px;height:27px;border-radius:8px;background:rgba(255,255,255,.88)}.widget-body{height:calc(100% - 36px);padding:0 10px 10px;min-height:0}
+.widget[data-id="clock"]{grid-area:clock;overflow:visible}.widget[data-id="clock"] .widget-head{display:none}.widget[data-id="clock"] .widget-body{height:100%;padding:0;display:grid;place-items:center}.widget[data-id="clock"]:before{content:"";position:absolute;left:50%;top:-16px;width:7px;height:37px;transform:translateX(-50%);background:#6d4329;border-radius:4px}.analog-wrap{display:grid;place-items:center;gap:7px}.railway-clock{position:relative;width:142px;height:142px;border-radius:50%;background:#fff;border:9px solid #17251f;box-shadow:0 15px 28px rgba(9,44,26,.3)}.clock-number{position:absolute;inset:7px;transform:rotate(calc(var(--n)*30deg))}.clock-number span{position:absolute;left:50%;transform:translateX(-50%) rotate(calc(var(--n)*-30deg));font-size:15px;font-weight:950}.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:999px}.hour-hand{width:7px;height:38px;background:#111}.minute-hand{width:5px;height:53px;background:#111}.second-hand{width:2px;height:59px;background:#d6332d}.clock-center{position:absolute;left:50%;top:50%;width:13px;height:13px;border-radius:50%;background:#111;transform:translate(-50%,-50%)}.clock-date-outside{padding:6px 11px;border-radius:999px;background:#fff;font-size:11px;font-weight:900}
+.widget[data-id="schedule"]{grid-area:schedule;background:linear-gradient(180deg,#fffefa,#fbf5e8);border:2px solid #d6b17c;border-radius:16px 24px 17px 20px;box-shadow:var(--shadow);transform:rotate(-.2deg)}.widget[data-id="schedule"]:before{content:"";position:absolute;top:-7px;left:50%;width:15px;height:15px;border-radius:50%;background:#e18b31}.schedule-overview{display:grid;grid-template-columns:1.25fr .85fr;gap:8px}.schedule-now,.schedule-next{padding:9px;border-radius:12px;background:#edf2cf;border:1px solid #d2d8b7}.schedule-next{background:#f2edfa}.schedule-overview small{text-transform:uppercase;letter-spacing:.7px;font-size:8px;font-weight:950}.schedule-overview strong{display:block;font-size:16px}.schedule-overview span{font-size:9px}.lesson-progress{height:5px;margin-top:6px;background:#d8dfc4;border-radius:999px;overflow:hidden}.lesson-progress span{display:block;height:100%;background:#71a83e}.schedule-list{margin-top:6px}.schedule-row{display:grid;grid-template-columns:53px 1fr 84px;gap:5px;align-items:center;padding:3px 5px;border-bottom:1px dashed #dedbd0;font-size:10px}.schedule-row.active{background:#e4edb6;border-radius:7px}.schedule-row small{text-align:right}.inline-more{display:block;margin:5px auto 0;border:0;border-radius:999px;padding:6px 11px;font-size:9px;font-weight:900;background:#ece7dc}
+.widget[data-id="weeklyGoal"]{grid-area:weekly;background:linear-gradient(155deg,#95613a,#59301f);color:#fff;border:3px solid #442519;clip-path:polygon(3% 4%,97% 0,100% 92%,6% 100%,0 19%);box-shadow:var(--shadow)}.weekly-goal-widget h3{font-size:18px;margin:2px 0 7px}.goal-days{display:flex;gap:5px}.goal-day{width:25px;height:44px;border-radius:999px;background:#f7efe0;color:#3b2b22;display:grid;place-items:center;font-size:9px}.goal-day strong{font-size:16px}
+.widget[data-id="meal"]{grid-area:meal;background:linear-gradient(145deg,#c88b4e,#985d35);border:4px solid #75401f;border-radius:24px 13px 22px 15px;box-shadow:var(--shadow)}.widget[data-id="meal"] .widget-head{color:#fff}.meal-compact{height:100%;display:grid;grid-template-columns:1.2fr .8fr;gap:9px}.meal-main,.dessert-line{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:15px;background:rgba(255,249,233,.94);text-align:center}.meal-main strong,.dessert-line strong{display:block}.meal-main small,.dessert-line small{display:block;font-size:9px}.meal-emoji{font-size:28px}
+.widget[data-id="wall"]{grid-area:wall;overflow:visible!important}.widget[data-id="wall"] .widget-head{display:none}.widget[data-id="wall"] .widget-body{height:100%;padding:0}.wall-v22{position:relative;width:100%;height:100%;overflow:visible}.wall-title-v22{position:absolute;z-index:40;left:16px;top:4px;display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:#fff7da;border:2px solid #9b682f;box-shadow:0 8px 16px rgba(34,65,36,.18)}.tree-scene-v22{position:absolute;z-index:2;left:1%;right:1%;top:34px;bottom:64px}.tree-shadow-v22{position:absolute;left:22%;right:18%;bottom:0;height:12%;border-radius:50%;background:rgba(25,72,36,.28);filter:blur(7px)}.tree-trunk-v22{position:absolute;z-index:3;left:43%;bottom:2%;width:18%;height:52%;background:linear-gradient(90deg,#4c2414,#9c5a2e 38%,#6e371d 70%,#3a190d);clip-path:polygon(35% 0,67% 0,75% 40%,91% 100%,6% 100%,24% 42%);border-radius:40% 38% 12% 14%;box-shadow:inset 8px 0 rgba(255,255,255,.08),0 10px 16px rgba(35,53,25,.22)}.tree-branch-v22{position:absolute;z-index:4;height:7%;background:linear-gradient(180deg,#87502b,#4c2414);border-radius:999px;transform-origin:left center}.tree-branch-v22.branch-a{left:48%;top:42%;width:30%;transform:rotate(-27deg)}.tree-branch-v22.branch-b{left:47%;top:46%;width:29%;transform:rotate(205deg)}.tree-branch-v22.branch-c{left:50%;top:34%;width:22%;transform:rotate(-82deg)}.tree-crown-v22{position:absolute;z-index:6;inset:0 1% 22% 1%}.leaf-blob-v22{position:absolute;display:block;border-radius:50%;background:radial-gradient(circle at 34% 26%,#d8ee99 0 14%,#86bf52 38%,#4a923e 68%,#256337 100%);box-shadow:inset -11px -13px 20px rgba(28,91,47,.22),0 8px 16px rgba(29,78,39,.2)}
+.leaf-1{left:2%;top:31%;width:24%;height:39%}.leaf-2{left:8%;top:8%;width:25%;height:43%}.leaf-3{left:22%;top:1%;width:25%;height:44%}.leaf-4{left:38%;top:0;width:27%;height:46%}.leaf-5{left:56%;top:3%;width:26%;height:44%}.leaf-6{left:72%;top:14%;width:24%;height:42%}.leaf-7{left:78%;top:36%;width:21%;height:37%}.leaf-8{left:11%;top:40%;width:28%;height:46%}.leaf-9{left:28%;top:31%;width:28%;height:49%}.leaf-10{left:47%;top:31%;width:29%;height:49%}.leaf-11{left:65%;top:42%;width:27%;height:45%}.leaf-12{left:21%;top:55%;width:26%;height:41%}.leaf-13{left:39%;top:53%;width:28%;height:43%}.leaf-14{left:58%;top:56%;width:25%;height:39%}.leaf-15{left:17%;top:20%;width:16%;height:27%;filter:brightness(1.12)}.leaf-16{left:41%;top:17%;width:17%;height:28%;filter:brightness(1.1)}.leaf-17{left:64%;top:23%;width:16%;height:27%;filter:brightness(1.08)}.leaf-18{left:43%;top:49%;width:16%;height:27%;filter:brightness(1.12)}.tree-portraits-v22{position:absolute;z-index:20;left:4%;right:4%;top:4%;bottom:22%}.child-card-v22{position:absolute;transform:translate(-50%,-50%);text-align:center;filter:drop-shadow(0 7px 7px rgba(20,55,29,.24))}.avatar-v22{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#f27422;color:#fff;font-size:20px;font-weight:950;border:5px solid #fff;box-shadow:0 0 0 3px rgba(56,115,48,.3)}.child-card-v22 strong{display:block;margin-top:2px;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.96);font-size:10px;white-space:nowrap}.badge-v22{position:absolute;z-index:2;right:-4px;top:-13px;font-size:18px}.child-card-v22.hero-child .avatar-v22{border-color:#f2c84c;box-shadow:0 0 0 5px rgba(242,200,76,.31),0 8px 16px rgba(38,77,35,.28)}.tree-footer-v22{position:absolute;z-index:35;left:11%;right:5%;bottom:4px;height:55px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:7px 12px;border-radius:17px;background:rgba(255,250,230,.96);border:2px solid #af7839;box-shadow:0 9px 18px rgba(31,66,37,.2)}.leaf-counter-v22{display:flex;align-items:center;gap:7px}.leaf-counter-v22>span{font-size:24px}.leaf-counter-v22 strong{display:block;font-size:12px}.leaf-counter-v22 small{display:block;font-size:9px}.progress-v22{height:10px;border-radius:999px;background:#d6dec7;overflow:hidden}.progress-v22 span{display:block;height:100%;background:linear-gradient(90deg,#64a93b,#a8d760)}.tree-treasure-v22{font-size:28px}
+.widget[data-id="info"]{grid-area:info;background:linear-gradient(180deg,#174f3e,#0d372e);border:6px solid #764629;border-radius:18px;color:#fff;box-shadow:var(--shadow)}.info-row{display:grid;grid-template-columns:1fr auto;gap:7px;padding:7px 4px;border-bottom:1px solid rgba(255,255,255,.16);font-size:10px}.info-row strong{text-align:right}.widget[data-id="birthday"]{grid-area:birthday;align-self:center;justify-self:end;width:92%;background:linear-gradient(160deg,#fff7fd,#eed7ee);border:2px solid #b985b2;border-radius:46% 54% 48% 52%/38% 43% 57% 62%;box-shadow:var(--shadow)}.birthday{text-align:center;font-size:10px}.birthday p{margin:0 0 3px}.birthday .avatar{width:45px;height:45px;margin:auto;border-radius:50%;display:grid;place-items:center;background:var(--orange);color:#fff;font-weight:950}.birthday h3{margin:3px 0}.birthday strong{font-size:10px}.widget[data-id="kids"]{display:none}
+.dock{position:absolute;z-index:60;left:50%;bottom:10px;transform:translateX(-50%);height:46px;display:flex;align-items:center;gap:3px;padding:5px 8px;border-radius:18px;background:linear-gradient(180deg,#875739,#4a2b1c);border:2px solid #a16a43;box-shadow:0 10px 24px rgba(31,35,21,.3)}.dock button{border:0;border-radius:11px;background:rgba(255,255,255,.1);color:#fff;padding:0 9px;height:32px;font-size:10px;font-weight:850}.dock .cleanup-dock-button{background:#e98722}.dock .points-dock-button{background:#42a13b}
+.widget.size-large{position:fixed!important;left:70px!important;right:70px!important;top:72px!important;bottom:66px!important;z-index:100!important;grid-area:auto!important;background:rgba(250,249,240,.98)!important;border-radius:28px!important;clip-path:none!important;transform:none!important}.widget.size-large .widget-head{display:flex}.widget.size-large .widget-body{height:calc(100% - 42px)!important}
+/* Dialogs */
+.dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none}.dialog::backdrop{background:rgba(4,21,12,.72);backdrop-filter:blur(6px)}.dialog-card{width:min(1100px,92vw);max-height:90vh;overflow:auto;background:#faf7ed;border-radius:28px;padding:22px;box-shadow:0 30px 70px rgba(0,0,0,.4)}.dialog-card.wide{width:min(1240px,95vw)}.dialog-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:16px}.dialog-head h2{margin:0;font-size:30px}.eyebrow{text-transform:uppercase;letter-spacing:1.2px;font-size:11px;font-weight:850;color:#5d9145;margin:0}.dialog-subtitle,.panel-help{color:#6c736d}.close-button{border:0;width:42px;height:42px;border-radius:50%;background:#e8e4db}.panel,.settings-section,.team-switcher,.team-quick-panel{background:#fff;border:1px solid #e4dfd4;border-radius:20px;padding:16px;box-shadow:0 6px 15px rgba(45,55,45,.06);margin-bottom:14px}.primary-button,.secondary-button{border:0;border-radius:13px;padding:11px 16px;font-weight:850}.primary-button{background:#2f8235;color:#fff}.secondary-button{background:#e8e6df;color:#273329}.team-switcher-head,.material-head,.editor-head,.settings-toolbar,.editor-actions,.points-active-person,.team-quick-panel{display:flex;align-items:center;justify-content:space-between;gap:12px}.team-member-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.team-member-card{padding:14px;border:2px solid #e3ded2;background:#fff;border-radius:16px;text-align:center}.team-member-card.active{border-color:#4c9b43;background:#eff9e8}.teacher-grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}.student-list{display:grid;gap:8px}.student-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;border:1px solid #e6e2da;border-radius:14px}.button-stack{display:grid;gap:8px}.material-workspace{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}.material-add-card{background:#f0eee7;border-radius:16px;padding:14px}.material-add-card label,.settings-card label{display:grid;gap:5px;font-size:12px;font-weight:750;margin-bottom:9px}.material-add-card input,.material-add-card textarea,.material-add-card select,.settings-card input,.settings-card textarea,.settings-card select{width:100%;border:1px solid #d5d1c9;border-radius:10px;padding:9px}.kids-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kid-select{border:2px solid #e2ded4;border-radius:18px;padding:12px}.kid-select.selected{border-color:#54a446;background:#eff9e8}.cleanup-countdown{font-size:80px;font-weight:900;color:#23592b}.cleanup-progress{height:18px;background:#e5e1d8;border-radius:999px;overflow:hidden}.cleanup-progress span{display:block;height:100%;background:#58a844}
+@media(max-width:900px){.team-member-grid,.kids-grid{grid-template-columns:repeat(2,1fr)}.teacher-grid,.material-workspace{grid-template-columns:1fr}.dock button span{display:none}}
+
+
+
+
+/* =========================================================
+   DigiBoard Next 5.0 – sichtbarer Wald-Neuaufbau
+   Feste 16:9-Bühne, näher an der freigegebenen Designvorlage
+   ========================================================= */
+:root{--cream:#fff9ed;--card:#fffaf0;--green:#245d2f;--orange:#f47718;--wood:#704323;--soft-shadow:0 12px 28px rgba(40,46,22,.25)}
+.app-shell{
+  background-image:url('forest-scene.svg?v=500');
+  background-size:cover;background-position:center;
+  border-radius:24px;
+}
+.app-shell:before,.app-shell:after{display:none}
+.topbar{height:62px;padding:12px 20px;background:linear-gradient(180deg,rgba(18,62,31,.82),rgba(18,62,31,.28),transparent)}
+.brand strong{font-size:25px}.brand small{font-size:11px}.brand-fox{font-size:34px}.build-badge{background:#f17820;box-shadow:0 5px 12px rgba(94,46,10,.25)}
+.top-actions{gap:10px}.status-pill,.top-button{padding:10px 15px;font-size:13px;background:rgba(255,250,239,.95);border-color:#ead9b8;box-shadow:0 5px 12px rgba(61,52,25,.16)}
+.hero{left:300px;right:300px;top:54px;height:340px;display:flex;align-items:center;justify-content:center}
+.hero-kicker{font-size:17px;padding:9px 24px;margin-bottom:12px;background:linear-gradient(#4b962b,#2f6e24);box-shadow:0 8px 16px rgba(34,78,28,.22)}
+.hero h1{line-height:.82;letter-spacing:-4px}.hero h1 span{font-size:78px;color:#173d1f;text-shadow:0 5px 0 #fff,0 12px 22px rgba(29,72,34,.25)}.hero h1 strong{font-size:112px;color:var(--orange);text-shadow:0 5px 0 #fff,0 12px 24px rgba(118,56,9,.28)}
+.hero-date{font-size:14px;margin:14px 0 8px}.morning-language>span,.morning-language button{font-size:12px;padding:8px 13px;box-shadow:0 4px 12px rgba(38,53,24,.12)}
+.hero-fox{right:-185px;bottom:-2px;font-size:120px;filter:drop-shadow(0 15px 10px rgba(46,58,24,.25))}.hero-leaf.left{left:-8%;top:48%;font-size:35px}.hero-leaf.right{right:-10%;top:30%;font-size:32px}
+.season-card{right:-265px;top:42px;width:195px;height:280px;padding:18px;border-radius:24px;background:rgba(255,250,239,.94);border:1px solid #eadbbf;box-shadow:var(--soft-shadow)}.season-icon{font-size:50px}.season-card strong{font-size:24px}.season-card small{font-size:12px}
+/* Dashboard is now a fixed card row instead of stretching grid cells */
+.dashboard{position:absolute;left:24px;right:24px;top:425px;bottom:auto;height:300px;display:block;z-index:18}
+.dashboard>.widget{position:absolute!important;height:300px!important;min-height:0!important;transform:none!important;clip-path:none!important;overflow:hidden!important}
+.dashboard>.widget[data-id="clock"]{left:0;top:0;width:190px;background:rgba(255,250,239,.96);border:1px solid #e8d9bc;border-radius:22px;box-shadow:var(--soft-shadow)}
+.dashboard>.widget[data-id="schedule"]{left:202px;top:0;width:260px;background:rgba(255,250,239,.97);border:1px solid #e2cfab;border-radius:18px;box-shadow:var(--soft-shadow)}
+.dashboard>.widget[data-id="meal"]{left:786px;top:0;width:160px;background:rgba(255,250,239,.97);border:1px solid #e2cfab;border-radius:18px;box-shadow:var(--soft-shadow)}
+.dashboard>.widget[data-id="birthday"]{left:958px;top:0;width:170px!important;background:rgba(255,250,239,.97);border:1px solid #e2cfab;border-radius:18px!important;box-shadow:var(--soft-shadow);align-self:auto!important;justify-self:auto!important}
+.dashboard>.widget[data-id="info"]{left:1140px;top:0;width:252px;background:rgba(255,250,239,.97);color:#253a2d;border:1px solid #e2cfab;border-radius:18px;box-shadow:var(--soft-shadow)}
+.dashboard>.widget[data-id="weeklyGoal"]{left:440px;top:-55px;width:500px;height:52px!important;background:linear-gradient(180deg,#8e5b31,#69401f);border:3px solid #573319;border-radius:16px;clip-path:none!important;box-shadow:0 9px 20px rgba(52,42,20,.25);z-index:8}
+.dashboard>.widget[data-id="weeklyGoal"] .widget-head{display:none}.dashboard>.widget[data-id="weeklyGoal"] .widget-body{height:100%;padding:5px 14px}.weekly-goal-widget{height:100%;display:flex;align-items:center;gap:16px}.weekly-goal-widget h3{font-size:15px;margin:0;max-width:235px}.weekly-goal-widget>p{display:none}.goal-days{margin-left:auto}.goal-day{height:34px;width:30px}
+.widget-head{height:40px;padding:11px 13px 5px}.widget-head h2{font-size:16px}.widget-body{height:calc(100% - 40px);padding:0 12px 12px}
+/* Clock as clear round station clock inside a compact card */
+.widget[data-id="clock"]:before{display:none}.widget[data-id="clock"] .widget-head{display:flex}.widget[data-id="clock"] .widget-body{height:calc(100% - 40px);padding:0 12px 12px}.analog-wrap{gap:10px}.railway-clock{width:180px;height:180px;border:3px solid #294823;box-shadow:0 7px 14px rgba(60,53,25,.18)}.clock-number{inset:8px}.clock-number span{font-size:17px}.clock-date-outside{font-size:11px;background:transparent;padding:0;color:#4e3d2c}
+/* Schedule card */
+.schedule-overview{grid-template-columns:1.2fr .8fr}.schedule-now,.schedule-next{padding:10px}.schedule-overview strong{font-size:15px}.schedule-row{grid-template-columns:48px 1fr 72px;font-size:9px;padding:4px}.schedule-list{margin-top:8px}
+/* Wall card is a fixed centerpiece matching the reference */
+.wall-fixed{position:absolute!important;z-index:22!important;left:498px!important;top:425px!important;width:276px!important;height:300px!important;display:block!important;visibility:visible!important;opacity:1!important;background:rgba(255,250,239,.97)!important;border:1px solid #e2cfab!important;border-radius:18px!important;box-shadow:var(--soft-shadow)!important;overflow:hidden!important}
+.wall-fixed[hidden]{display:none!important}.wall-fixed .wall-v22{height:100%;overflow:hidden!important}.wall-fixed .wall-title-v22{left:12px!important;top:10px!important;transform:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;font-size:16px!important}.wall-fixed .tree-scene-v22{left:10px!important;right:10px!important;top:45px!important;bottom:48px!important;background:url('tree.png?v=500') center bottom/contain no-repeat!important;overflow:visible!important}.wall-fixed .tree-shadow-v22,.wall-fixed .tree-trunk-v22,.wall-fixed .tree-branch-v22,.wall-fixed .tree-crown-v22{display:none!important}.wall-fixed .tree-portraits-v22{left:5%!important;right:5%!important;top:3%!important;bottom:10%!important}.wall-fixed .avatar-v22{width:43px;height:43px;font-size:16px;border-width:3px}.wall-fixed .child-card-v22 strong{font-size:8px;padding:2px 6px}.wall-fixed .badge-v22{font-size:13px;top:-10px}.wall-fixed .tree-footer-v22{left:10px!important;right:10px!important;bottom:7px!important;height:40px!important;padding:5px 8px!important;border:0!important;background:rgba(255,250,239,.94)!important;box-shadow:none!important;grid-template-columns:auto 1fr auto!important}.leaf-counter-v22>span{font-size:18px}.leaf-counter-v22 strong{font-size:10px}.leaf-counter-v22 small{font-size:7px}.tree-treasure-v22{font-size:20px}.progress-v22{height:7px}
+/* Meal card vertical, closer to the reference */
+.widget[data-id="meal"]{border:1px solid #e2cfab!important;background:rgba(255,250,239,.97)!important}.widget[data-id="meal"] .widget-head{color:#253a2d}.meal-compact{grid-template-columns:1fr;grid-template-rows:1.65fr .75fr;gap:8px}.meal-main,.dessert-line{background:#fffaf0;border:1px solid #eadcc3;flex-direction:column;padding:10px}.meal-main:after{content:"🍝";font-size:52px;order:-1}.meal-emoji{display:none}.dessert-line>span:first-child{font-size:28px}
+/* Birthday card */
+.widget[data-id="birthday"]{border-radius:18px!important}.birthday{font-size:10px}.birthday .avatar{width:88px;height:88px;font-size:28px;border:5px solid #fff;box-shadow:0 6px 14px rgba(68,52,24,.18)}.birthday p{margin:10px 0}.birthday h3{font-size:18px;margin:8px 0}.birthday-confetti{font-size:18px}
+/* Info card: light paper list rather than dark rectangle */
+.widget[data-id="info"] .widget-head{color:#253a2d}.info-row{color:#253a2d;grid-template-columns:36px 1fr;gap:8px;padding:12px 5px;border-bottom:1px solid #e8dcc5;font-size:11px}.info-row strong{text-align:left;font-weight:650}.info-row span{font-weight:800}.info-row.hidden-by-size{display:grid}
+/* Dock as wooden shelf */
+.dock{bottom:8px;height:54px;padding:6px 14px;border-radius:20px;background:linear-gradient(180deg,#8a572e,#55311a);border:3px solid #97643a;box-shadow:0 12px 24px rgba(36,33,18,.32)}.dock button{height:38px;padding:0 14px;font-size:11px}.dock button:hover{transform:translateY(-3px)}
+/* view modes really alter scale of the whole card composition */
+.view-compact .dashboard,.view-compact .wall-fixed{transform:scale(.86);transform-origin:bottom left}.view-compact .wall-fixed{transform-origin:bottom left}.view-large .dashboard,.view-large .wall-fixed{transform:scale(1.08);transform-origin:bottom left}.view-large .hero h1 span{font-size:84px}.view-large .hero h1 strong{font-size:120px}
+@media(max-width:900px){.dock button span{display:none}}
+
+/* =========================================================
+   DigiBoard Next 6.0 – Vier Jahreszeiten / Waldlandschaft
+   ========================================================= */
+.app-shell{isolation:isolate;transition:background-color 1.2s ease,filter 1.2s ease}
+.season-effects{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;border-radius:inherit}
+.season-particle{position:absolute;top:-10%;width:18px;height:18px;opacity:0;animation:seasonFall 12s linear infinite;filter:drop-shadow(0 2px 2px rgba(40,45,20,.18))}
+.season-particle:nth-child(2n){animation-duration:15s}.season-particle:nth-child(3n){animation-duration:18s}
+.p1{left:5%;animation-delay:-2s}.p2{left:14%;animation-delay:-9s}.p3{left:23%;animation-delay:-5s}.p4{left:32%;animation-delay:-12s}.p5{left:42%;animation-delay:-7s}.p6{left:51%;animation-delay:-1s}.p7{left:60%;animation-delay:-10s}.p8{left:69%;animation-delay:-4s}.p9{left:77%;animation-delay:-13s}.p10{left:85%;animation-delay:-6s}.p11{left:92%;animation-delay:-11s}.p12{left:97%;animation-delay:-3s}
+@keyframes seasonFall{0%{transform:translate3d(0,-40px,0) rotate(0);opacity:0}8%{opacity:.8}50%{transform:translate3d(35px,420px,0) rotate(190deg)}100%{transform:translate3d(-20px,900px,0) rotate(420deg);opacity:0}}
+
+/* Seasonal atmosphere */
+.app-shell.season-spring{background-image:linear-gradient(rgba(236,255,222,.08),rgba(155,214,126,.08)),url('forest-scene.svg?v=600')}
+.app-shell.season-spring .season-particle{background:radial-gradient(circle at 35% 35%,#fff 0 25%,#ff9fc5 28% 70%,transparent 72%);border-radius:60% 40% 65% 35%}
+.app-shell.season-spring .season-effects:after{content:'🦋';position:absolute;left:73%;top:31%;font-size:28px;animation:butterfly 8s ease-in-out infinite}
+@keyframes butterfly{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(90px,-45px) rotate(10deg)}}
+.app-shell.season-summer{background-image:linear-gradient(rgba(255,226,89,.08),rgba(95,174,67,.04)),url('forest-scene.svg?v=600');filter:saturate(1.07)}
+.app-shell.season-summer .season-particle{background:#ffe45b;border-radius:50%;width:6px;height:6px;box-shadow:0 0 14px #fff16f;animation-name=summerSparkle;animation-duration:7s}
+@keyframes summerSparkle{0%,100%{transform:translateY(0) scale(.5);opacity:0}40%{opacity:.9}65%{transform:translateY(520px) scale(1.4);opacity:.7}}
+.app-shell.season-autumn{background-image:linear-gradient(rgba(199,98,26,.18),rgba(95,117,37,.08)),url('forest-scene.svg?v=600');filter:saturate(.94) sepia(.12)}
+.app-shell.season-autumn .season-particle{background:linear-gradient(135deg,#f59d22,#b84a20);border-radius:80% 10% 80% 10%;animation-duration:9s}
+.app-shell.season-winter{background-image:linear-gradient(rgba(207,232,248,.34),rgba(117,164,181,.16)),url('forest-scene.svg?v=600');filter:saturate(.72) brightness(1.04)}
+.app-shell.season-winter:after{display:block!important;content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 62%,rgba(245,252,255,.88) 63% 100%);z-index:2;pointer-events:none}
+.app-shell.season-winter .season-particle{width:9px;height:9px;background:#fff;border-radius:50%;box-shadow:0 0 9px #fff;animation-duration:10s}
+.app-shell.season-winter .season-card{background:rgba(244,251,255,.94)}
+
+/* Season card behaves like a small physical sign */
+.season-card{cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}.season-card:hover{transform:translateY(-5px) rotate(1deg);box-shadow:0 18px 35px rgba(41,53,25,.25)}
+
+/* Weekly goal as a real hanging wooden sign */
+.dashboard>.widget[data-id="weeklyGoal"]{
+  left:430px!important;top:-78px!important;width:560px!important;height:74px!important;
+  border:0!important;border-radius:0!important;
+  clip-path:polygon(3% 8%,47% 0,97% 7%,100% 88%,53% 100%,4% 91%,0 21%)!important;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.08),transparent 22%,rgba(42,20,5,.08) 48%,transparent 72%,rgba(255,255,255,.06)),
+    repeating-linear-gradient(0deg,#8a572f 0 7px,#81502b 8px 13px)!important;
+  box-shadow:0 13px 20px rgba(49,35,17,.36)!important;
+  overflow:visible!important;
+}
+.dashboard>.widget[data-id="weeklyGoal"]:before,.dashboard>.widget[data-id="weeklyGoal"]:after{content:'';position:absolute;top:-50px;width:4px;height:56px;background:#6a4323;border-radius:5px;box-shadow:1px 0 0 #bd8a55}
+.dashboard>.widget[data-id="weeklyGoal"]:before{left:15%;transform:rotate(-5deg)}.dashboard>.widget[data-id="weeklyGoal"]:after{right:15%;transform:rotate(5deg)}
+.dashboard>.widget[data-id="weeklyGoal"] .widget-body{padding:8px 23px!important}
+.weekly-goal-widget{position:relative;color:#fff;text-shadow:0 2px 2px rgba(53,25,8,.7)}
+.weekly-goal-widget:before,.weekly-goal-widget:after{content:'●';position:absolute;top:-3px;color:#d7a663;font-size:14px;text-shadow:0 1px 0 #48260f}.weekly-goal-widget:before{left:-9px}.weekly-goal-widget:after{right:-9px}
+.weekly-goal-widget h3{font-size:16px!important;max-width:310px!important;line-height:1.05}.goal-day{background:#fff3de!important;border:2px solid #5b351b!important;box-shadow:inset 0 1px 0 #fff,0 2px 3px rgba(32,17,7,.28)}
+
+/* Reduce the 'four-corner window' feel */
+.dashboard>.widget[data-id="clock"]{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}.dashboard>.widget[data-id="clock"] .widget-head{display:none!important}.dashboard>.widget[data-id="clock"] .widget-body{height:100%!important;display:grid;place-items:center;padding:0!important}
+.dashboard>.widget[data-id="schedule"]{transform:rotate(-.7deg)!important;clip-path:polygon(1% 2%,98% 0,100% 96%,3% 100%,0 11%)!important;border-radius:8px!important}
+.dashboard>.widget[data-id="schedule"]:before{content:'📌';position:absolute;left:48%;top:-14px;font-size:23px;z-index:3;filter:drop-shadow(0 3px 2px rgba(0,0,0,.2))}
+.dashboard>.widget[data-id="meal"]{clip-path:polygon(4% 0,97% 4%,100% 92%,91% 100%,2% 96%,0 12%)!important;background:linear-gradient(155deg,#b9773e,#855029)!important;border:3px solid #65401f!important}
+.dashboard>.widget[data-id="meal"] .widget-head{color:#fff;text-shadow:0 2px 2px #512b12}.dashboard>.widget[data-id="meal"] .meal-main,.dashboard>.widget[data-id="meal"] .dessert-line{background:#fff7e7}
+.dashboard>.widget[data-id="info"]{clip-path:polygon(2% 1%,98% 0,100% 97%,3% 100%,0 8%)!important;border:7px solid #704323!important;background:linear-gradient(160deg,#164d3e,#0b3a31)!important;color:#fff!important}.dashboard>.widget[data-id="info"] .widget-head,.dashboard>.widget[data-id="info"] .info-row{color:#fff!important}.dashboard>.widget[data-id="info"] .info-row{border-bottom:1px solid rgba(255,255,255,.2)}
+.dashboard>.widget[data-id="birthday"]{border-radius:50% 45% 52% 48%!important;clip-path:none!important;transform:rotate(1.4deg)!important;background:radial-gradient(circle at 42% 35%,#fff8fd,#f3cde8)!important;border:3px solid #c482b3!important}
+
+/* Tree card: visually integrated into the forest, not a white window */
+.wall-fixed{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}.wall-fixed .wall-v22{overflow:visible!important}.wall-fixed .wall-title-v22{background:linear-gradient(180deg,#8f5b31,#66391e)!important;color:#fff!important;padding:7px 15px!important;border:2px solid #5b321a!important;border-radius:14px!important;box-shadow:0 7px 12px rgba(50,35,17,.25)!important}.wall-fixed .tree-scene-v22{top:35px!important;bottom:42px!important;filter:drop-shadow(0 15px 10px rgba(41,61,26,.3))}.wall-fixed .tree-footer-v22{border-radius:16px!important;box-shadow:0 7px 18px rgba(46,56,25,.2)!important}
+
+/* Natural day lighting */
+.app-shell.time-morning{--daylight:rgba(255,224,130,.18)}.app-shell.time-afternoon{--daylight:rgba(255,244,183,.08)}.app-shell.time-evening{--daylight:rgba(255,139,80,.14)}
+.app-shell .forest-light{display:block!important;position:absolute;inset:0;z-index:3;background:linear-gradient(135deg,var(--daylight,rgba(255,244,183,.08)),transparent 48%);pointer-events:none}
+@media (prefers-reduced-motion:reduce){.season-particle,.season-effects:after{animation:none!important}}
+
+
+/* =========================================================
+   DigiBoard Next 6.1 – Der lebendige Wald
+   Sichtbarer Qualitätssprung: großer Klassenbaum, Morgen-Intro,
+   Waldbewegung und Belohnungsanimationen.
+   ========================================================= */
+:root{--tree-stage-left:455px;--tree-stage-width:430px}
+.build-badge{background:linear-gradient(180deg,#ff8c2b,#e85e16)!important;box-shadow:0 6px 15px rgba(118,50,7,.35)!important}
+/* Mehr Raum für den Baum: Begrüßung etwas kompakter, Inhalte weiter nach unten */
+.hero{left:250px!important;right:250px!important;top:48px!important;height:315px!important}
+.hero h1 span{font-size:68px!important}.hero h1 strong{font-size:98px!important}.hero-kicker{font-size:15px!important}.hero-fox{right:-150px!important;font-size:105px!important;animation:foxBreathe 3.8s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes foxBreathe{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+.dashboard{top:415px!important;height:315px!important}
+.dashboard>.widget{height:315px!important}
+.dashboard>.widget[data-id="clock"]{width:178px!important}.dashboard>.widget[data-id="schedule"]{left:190px!important;width:255px!important}.dashboard>.widget[data-id="meal"]{left:900px!important;width:165px!important}.dashboard>.widget[data-id="birthday"]{left:1075px!important;width:170px!important}.dashboard>.widget[data-id="info"]{left:1255px!important;width:235px!important}
+.dashboard>.widget[data-id="weeklyGoal"]{left:420px!important;top:-65px!important;width:650px!important}
+/* Der Baum wird tatsächlich zum Mittelpunkt */
+.wall-fixed{left:455px!important;top:405px!important;width:430px!important;height:330px!important}
+.wall-fixed .wall-title-v22{top:2px!important;left:50%!important;transform:translateX(-50%)!important;font-size:18px!important;white-space:nowrap}
+.wall-fixed .tree-scene-v22{left:4px!important;right:4px!important;top:34px!important;bottom:47px!important;background-size:94% auto!important;background-position:center bottom!important;animation:treeSway 7s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes treeSway{0%,100%{transform:rotate(-.45deg)}50%{transform:rotate(.45deg)}}
+.wall-fixed .tree-portraits-v22{left:7%!important;right:7%!important;top:7%!important;bottom:20%!important}
+.wall-fixed .avatar-v22{width:54px!important;height:54px!important;font-size:19px!important;border-width:4px!important;transition:transform .3s ease,box-shadow .3s ease}
+.wall-fixed .child-card-v22{animation:leafFloat 4.5s ease-in-out infinite}.wall-fixed .child-card-v22:nth-child(2n){animation-delay:-1.3s}.wall-fixed .child-card-v22:nth-child(3n){animation-delay:-2.6s}
+@keyframes leafFloat{0%,100%{transform:translate(-50%,-50%) rotate(-2deg)}50%{transform:translate(-50%,-56%) rotate(2deg)}}
+.wall-fixed .child-card-v22.hero-child .avatar-v22{box-shadow:0 0 0 4px #ffe06c,0 0 24px 10px rgba(255,221,76,.82),0 8px 18px rgba(38,68,25,.35)!important;animation:heroGlow 1.8s ease-in-out infinite}
+@keyframes heroGlow{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.wall-fixed .tree-footer-v22{left:3%!important;right:3%!important;bottom:1px!important;height:45px!important}
+.wall-fixed .leaf-counter-v22 strong{font-size:12px!important}.wall-fixed .leaf-counter-v22 small{font-size:9px!important}
+/* Waldatmosphäre */
+.forest-ambient{position:absolute;inset:0;z-index:7;overflow:hidden;pointer-events:none}
+.sunbeam{position:absolute;top:-20%;width:110px;height:125%;background:linear-gradient(180deg,rgba(255,250,190,.34),rgba(255,241,151,.03));filter:blur(10px);transform:rotate(16deg);animation:beamMove 11s ease-in-out infinite alternate}
+.beam-1{left:37%}.beam-2{left:56%;animation-delay:-5s;opacity:.55}
+@keyframes beamMove{from{transform:translateX(-18px) rotate(16deg);opacity:.35}to{transform:translateX(30px) rotate(20deg);opacity:.72}}
+.forest-bird,.forest-butterfly{position:absolute;filter:drop-shadow(0 4px 4px rgba(32,58,25,.25))}
+.bird-1{top:34%;left:61%;font-size:20px;animation:birdHop 10s ease-in-out infinite}.bird-2{top:29%;left:69%;font-size:15px;animation:birdHop 12s ease-in-out infinite reverse}
+@keyframes birdHop{0%,75%,100%{transform:translate(0,0)}82%{transform:translate(40px,-20px)}88%{transform:translate(80px,2px)}}
+.butterfly-1{top:37%;left:28%;font-size:24px;animation:butterflyWander 12s ease-in-out infinite}
+@keyframes butterflyWander{0%,100%{transform:translate(0,0) rotate(-12deg)}25%{transform:translate(90px,-35px) rotate(8deg)}55%{transform:translate(180px,15px) rotate(-5deg)}80%{transform:translate(85px,45px) rotate(10deg)}}
+/* kurzer Wow-Effekt beim ersten Öffnen */
+.morning-intro{position:absolute;inset:0;z-index:300;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(255,251,202,.97),rgba(35,102,48,.96));animation:introHide 4.4s ease forwards;pointer-events:none}
+.intro-sun{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,#fffde0 0 18%,#ffe96d 38%,rgba(255,224,84,.05) 72%);animation:sunRise 3.8s ease forwards}
+.intro-fox{position:relative;font-size:120px;filter:drop-shadow(0 18px 16px rgba(25,53,28,.35));animation:foxEnter 3.6s ease forwards}
+.intro-text{position:absolute;top:68%;font-size:34px;font-weight:900;color:#fff;text-shadow:0 4px 10px rgba(26,61,31,.6);animation:textEnter 3.5s ease forwards}
+@keyframes sunRise{0%{transform:translateY(260px) scale(.35);opacity:0}50%{opacity:1}100%{transform:translateY(-70px) scale(1.5);opacity:.55}}
+@keyframes foxEnter{0%{transform:translateX(-55vw) rotate(-10deg);opacity:0}45%{opacity:1}75%{transform:translateX(0) rotate(3deg)}100%{transform:translateX(0) rotate(0)}}
+@keyframes textEnter{0%,42%{opacity:0;transform:translateY(20px)}70%,100%{opacity:1;transform:none}}
+@keyframes introHide{0%,72%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+/* Herbst/Winter reagieren stärker sichtbar */
+.app-shell.season-autumn .wall-fixed .tree-scene-v22{filter:sepia(.35) saturate(1.2) hue-rotate(-15deg) drop-shadow(0 15px 10px rgba(62,39,18,.3))!important}
+.app-shell.season-winter .wall-fixed .tree-scene-v22{filter:saturate(.45) brightness(1.18) drop-shadow(0 15px 10px rgba(58,75,84,.3))!important}
+.app-shell.season-spring .wall-fixed .tree-scene-v22:after{content:'🌸  🌸  🌸';position:absolute;left:14%;right:14%;top:15%;font-size:20px;letter-spacing:38px;animation:blossomPulse 3s ease-in-out infinite}
+@keyframes blossomPulse{0%,100%{transform:scale(.96);opacity:.72}50%{transform:scale(1.04);opacity:1}}
+@media(prefers-reduced-motion:reduce){.morning-intro{display:none}.hero-fox,.tree-scene-v22,.child-card-v22,.sunbeam,.forest-bird,.forest-butterfly{animation:none!important}}
+body.reward-celebration .wall-fixed:after{content:'✨  🍃  ⭐  🍃  ✨';position:absolute;inset:8% 0 auto;text-align:center;font-size:34px;z-index:70;animation:rewardBurst 2.5s ease forwards;pointer-events:none}@keyframes rewardBurst{0%{opacity:0;transform:translateY(80px) scale(.5)}35%{opacity:1;transform:translateY(0) scale(1.2)}100%{opacity:0;transform:translateY(-90px) scale(.8)}}
+
+/* =========================================================
+   DigiBoard Next 11.45 – kompakte Einstellungs-Arbeitsflächen
+   ========================================================= */
+#settingsDialog .settings-card{height:min(840px,calc(100dvh - 28px));overflow:hidden}
+#settingsDialog .dialog-head{min-height:62px;padding:10px 18px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px}
+#settingsDialog .settings-title-block h2{font-size:22px;line-height:1;margin:1px 0}
+#settingsDialog .settings-title-block .eyebrow{font-size:9px}
+#settingsDialog .settings-title-block .dialog-subtitle{font-size:11px;margin:2px 0 0}
+#settingsDialog .settings-detail-bar{margin:0;padding:0 12px;border:0;background:transparent;display:flex;align-items:center;gap:12px;min-width:0}
+#settingsDialog .settings-detail-bar[hidden]{display:none}
+#settingsDialog .settings-detail-bar button{height:34px;padding:0 12px}
+#settingsDialog .settings-detail-bar strong{font-size:17px;white-space:nowrap}
+#settingsDialog .settings-detail-bar span{font-size:10px;margin-left:auto}
+#settingsDialog .settings-section:not([hidden]),#settingsDialog details.settings-accordion:not([hidden]){height:calc(100% - 78px);margin:8px 16px 10px;overflow:hidden}
+#settingsDialog .daily-settings-grid{height:calc(100% - 62px)}
+#settingsDialog .daily-card{height:100%;overflow:hidden;padding:10px 12px}
+#settingsDialog .editor-head{display:none}
+
+/* Tagesinfos: vier Zeilen plus Vorschau ohne innere Scrollbalken */
+#settingsDialog .info-composer-layout{grid-template-columns:minmax(0,1.65fr) minmax(300px,.85fr);gap:12px;height:calc(100% - 30px)}
+#settingsDialog .info-line-editor-panel,#settingsDialog .info-line-editor{overflow:visible;min-width:0}
+#settingsDialog .info-editor-row{padding:5px 7px 5px 12px;margin:0 0 5px;gap:5px;min-height:78px}
+#settingsDialog .info-row-number{width:22px;height:22px;font-size:11px;left:-7px;top:-5px}
+#settingsDialog .info-text-fields{grid-template-columns:48px 1fr 1fr;gap:5px}
+#settingsDialog .info-text-fields select,#settingsDialog .info-text-fields input{height:31px;padding:4px 7px;font-size:12px}
+#settingsDialog .info-text-fields select{font-size:18px;text-align:center}
+#settingsDialog .info-format-tools{grid-template-columns:31px repeat(4,minmax(0,1fr)) 30px;gap:4px;margin-top:4px}
+#settingsDialog .info-format-tools label{font-size:8px}
+#settingsDialog .info-format-tools select,#settingsDialog .info-format-tools button,#settingsDialog .info-bold-toggle{height:27px;min-height:27px;font-size:10px;padding:2px 5px}
+#settingsDialog .add-info-line{height:30px;margin-top:2px}
+#settingsDialog .info-live-preview{height:100%;min-height:0;padding:12px}
+#settingsDialog .info-preview-row{min-height:46px;padding:8px}
+
+/* Aufgaben: Eingabe, Vorlagen und echte Tafelvorschau nebeneinander */
+.task-editor-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:14px;height:100%}
+.task-form-panel{display:flex;flex-direction:column;gap:8px;min-width:0}
+.task-fields{display:grid;grid-template-columns:.65fr 1.35fr;gap:8px}
+.task-fields label:nth-child(3){grid-column:1/-1}
+.task-fields input,.task-fields textarea{font-size:14px;min-height:40px}
+.task-template-head{display:flex;align-items:center;justify-content:space-between}.task-template-head button{padding:8px 12px;border-radius:10px}
+.task-favorites{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.task-favorites>button{display:flex;align-items:center;gap:9px;text-align:left;padding:8px;border:1px solid #cbdcbc;border-radius:12px;background:#fff}
+.task-favorites>button>span{font-size:24px}.task-favorites strong,.task-favorites small{display:block}.task-favorites small{max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#61725c}
+.task-live-preview{border:6px solid #704323;border-radius:22px;padding:16px;background:linear-gradient(160deg,#1d7158,#0c4e40);color:#fff;box-shadow:0 10px 22px #254d2833}
+.task-live-preview>small{font-size:9px;letter-spacing:1.5px}.task-live-preview article{margin-top:18px;padding:18px;border-radius:16px;background:#fff9e9;color:#244d32;box-shadow:0 5px 14px #193b293d}.task-live-preview article span{font-size:10px;letter-spacing:1px}.task-live-preview h4{font-size:25px;margin:6px 0}.task-live-preview p{font-size:17px;font-weight:750}.task-live-preview em{display:block;margin-top:14px;padding-top:10px;border-top:1px dashed #b7c4a5;color:#6c684d}
+
+/* Kinderverwaltung: saubere Fotokarten und verständliches Pausieren */
+#settingsDialog .class-management-toolbar{padding:8px 12px;min-height:64px}
+#settingsDialog .class-management-toolbar .panel-help{max-width:850px;font-size:11px}
+#settingsDialog .class-student-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px;padding:8px;max-height:calc(100% - 78px);overflow:auto}
+#settingsDialog .class-student-card{display:grid!important;grid-template-columns:56px 1fr!important;grid-template-rows:auto auto!important;gap:6px 8px!important;padding:8px!important;min-height:122px}
+#settingsDialog .class-student-photo{grid-row:1}.class-roster-photo{width:52px!important;height:52px!important}
+#settingsDialog .class-student-copy{display:grid;grid-template-columns:1fr 1fr;gap:4px}.class-student-copy small{grid-column:1/-1;font-size:9px}
+#settingsDialog .class-student-copy input{height:31px;font-size:12px;padding:4px 6px}
+#settingsDialog .class-student-actions{grid-column:1/-1;display:grid!important;grid-template-columns:1.35fr .9fr;gap:6px;padding-left:56px}
+#settingsDialog .class-student-actions>*{height:32px!important;min-height:32px!important;font-size:10px!important;padding:5px 8px!important;justify-content:flex-start}
+
+/* Ein Stundenplan-Bereich mit zwei klaren Ansichten */
+.schedule-workspace{padding:10px!important}
+.schedule-mode-tabs{display:flex;gap:6px;padding:4px;background:#edf5e4;border:1px solid #cadcbc;border-radius:13px;margin-bottom:8px}
+.schedule-mode-tabs button{flex:1;height:38px;border:0;border-radius:9px;background:transparent;font-weight:800;color:#315a37}.schedule-mode-tabs button.active{background:linear-gradient(90deg,#fff1a8,#bfe985);box-shadow:0 3px 8px #355b2630}
+.schedule-workspace>section{height:calc(100% - 54px);overflow:auto}
+.schedule-plan-head,.simple-day-change-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;background:#f7faef;border:1px solid #d3e0c7;border-radius:12px;margin-bottom:7px}
+.schedule-plan-head h3,.simple-day-change-head h3{font-size:18px;margin:0}.schedule-plan-head p,.simple-day-change-head p{font-size:10px;margin:2px 0}
+.week-schedule-editor,.override-editor{display:grid;gap:4px}.schedule-edit-row,.override-row{min-height:45px!important;padding:4px 7px!important}
+.override-row{grid-template-columns:minmax(210px,.9fr) 160px 1fr 1fr!important}.override-base{display:grid!important;grid-template-columns:30px 95px 1fr;align-items:center}.override-base small{grid-column:3}
+.override-break-row,.schedule-break-row{min-height:30px!important;padding:4px 12px!important}
+
+@media(max-width:760px){
+  #settingsDialog .settings-card{height:100dvh;max-height:none;border-radius:0}
+  #settingsDialog .dialog-head{grid-template-columns:1fr auto;padding:8px 10px}.settings-title-block .dialog-subtitle,.settings-title-block .eyebrow{display:none}
+  #settingsDialog .settings-detail-bar{grid-column:1/-1;order:3;padding:0}.settings-detail-bar span{display:none}
+  #settingsDialog .info-composer-layout,.task-editor-layout{grid-template-columns:1fr;overflow:auto}.info-live-preview,.task-live-preview{min-height:260px}
+  #settingsDialog .info-text-fields{grid-template-columns:44px 1fr}.info-text-fields input:last-child{grid-column:2}
+  #settingsDialog .info-format-tools{grid-template-columns:30px repeat(2,1fr) 30px}
+  #settingsDialog .class-student-grid{grid-template-columns:1fr!important}
+  .override-row{grid-template-columns:1fr!important}.schedule-plan-head,.simple-day-change-head{align-items:flex-start;flex-direction:column}
+}

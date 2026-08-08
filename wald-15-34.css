@@ -1,0 +1,364 @@
+/* DigiBoard Next 15.34 – Waldkarte und ruhige Waldwerkzeuge. */
+
+html body .app-shell .wall-fixed .wall-stage.wall-tree-stage{
+  position:relative!important;
+}
+
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+  box-sizing:border-box!important;
+  width:min(82%,560px)!important;
+  min-height:38px!important;
+  padding:6px 8px!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:7px!important;
+}
+
+html body .app-shell .wall-fixed .wall-title-v22>div{
+  min-width:0!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-button-v1534{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  min-height:28px!important;
+  padding:5px 9px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border:1px solid rgba(255,242,187,.58)!important;
+  border-radius:9px!important;
+  background:rgba(255,250,220,.17)!important;
+  color:#fff8dc!important;
+  box-shadow:none!important;
+  font:850 7px/1 system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  white-space:nowrap!important;
+  cursor:pointer!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-button-v1534:hover,
+html body .app-shell .wall-fixed .forest-map-button-v1534:focus-visible,
+html body .app-shell .wall-fixed .forest-map-button-v1534[aria-expanded="true"]{
+  border-color:#ffe68c!important;
+  background:#fff2b4!important;
+  color:#285a3b!important;
+  outline:0!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-button-v1534:focus-visible{
+  box-shadow:0 0 0 3px rgba(255,230,140,.35)!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534{
+  box-sizing:border-box!important;
+  position:absolute!important;
+  z-index:120!important;
+  inset:42px 5px 5px!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:10px!important;
+  overflow:auto!important;
+  display:grid!important;
+  grid-template-rows:auto auto minmax(0,1fr) auto!important;
+  gap:9px!important;
+  border:1px solid rgba(94,118,65,.3)!important;
+  border-radius:18px!important;
+  background:linear-gradient(155deg,rgba(255,254,229,.98),rgba(224,244,196,.98))!important;
+  color:#285738!important;
+  box-shadow:0 18px 38px rgba(35,70,37,.3)!important;
+  backdrop-filter:blur(12px)!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534[hidden]{
+  display:none!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>header{
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:start!important;
+  gap:8px!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>header>div{
+  min-width:0!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>header small{
+  display:block!important;
+  color:#7b814b!important;
+  font-size:5.5px!important;
+  font-weight:900!important;
+  letter-spacing:.13em!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>header strong{
+  display:block!important;
+  margin-top:1px!important;
+  color:#1f5e3c!important;
+  font-size:13px!important;
+  line-height:1.1!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>header p{
+  margin:2px 0 0!important;
+  color:#637361!important;
+  font-size:6px!important;
+  line-height:1.3!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-close-v1534{
+  width:26px!important;
+  height:26px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid #ceddbf!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  color:#2a6540!important;
+  box-shadow:none!important;
+  font-size:16px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0!important;
+  padding:4px!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:4px!important;
+  list-style:none!important;
+  border:1px solid #d8e3c4!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.66)!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li{
+  position:relative!important;
+  min-width:0!important;
+  min-height:47px!important;
+  padding:5px 3px!important;
+  display:grid!important;
+  grid-template-rows:17px auto auto!important;
+  place-items:center!important;
+  align-content:center!important;
+  gap:1px!important;
+  border:1px solid transparent!important;
+  border-radius:10px!important;
+  color:#829080!important;
+  text-align:center!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li:not(:last-child)::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:2!important;
+  top:14px!important;
+  right:-5px!important;
+  width:8px!important;
+  height:2px!important;
+  background:#d2ddc4!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li>span{
+  font-size:14px!important;
+  filter:grayscale(.75)!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li>strong{
+  max-width:100%!important;
+  overflow:hidden!important;
+  font-size:5.4px!important;
+  line-height:1.1!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li>small{
+  font-size:4.7px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li.is-complete{
+  color:#397247!important;
+  background:#eef8df!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li.is-complete>span{
+  filter:none!important;
+}
+
+html body .app-shell .wall-fixed .forest-growth-trail-v1534 li.is-current{
+  border-color:#e0ba43!important;
+  background:linear-gradient(180deg,#fff6bd,#eef6d4)!important;
+  color:#275d3a!important;
+  box-shadow:0 3px 8px rgba(78,99,46,.13)!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534{
+  min-height:0!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:6px!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534 article{
+  min-width:0!important;
+  min-height:0!important;
+  padding:8px!important;
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:6px!important;
+  border:1px solid #d5e2ca!important;
+  border-radius:12px!important;
+  background:rgba(255,255,255,.76)!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534 article>span{
+  width:24px!important;
+  height:24px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:9px!important;
+  background:#eff6dd!important;
+  font-size:14px!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534 article>div{
+  min-width:0!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534 small{
+  display:block!important;
+  color:#75816d!important;
+  font-size:4.7px!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534 strong{
+  display:block!important;
+  margin-top:1px!important;
+  color:#245b39!important;
+  font-size:10px!important;
+  line-height:1!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-stats-v1534 p{
+  margin:2px 0 0!important;
+  overflow:hidden!important;
+  color:#687666!important;
+  font-size:5px!important;
+  line-height:1.2!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>footer{
+  min-width:0!important;
+  padding:7px 9px!important;
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:7px!important;
+  border:1px solid #d7c67c!important;
+  border-radius:12px!important;
+  background:linear-gradient(90deg,#fff3bc,#f5e7a4)!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>footer>span{
+  font-size:18px!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>footer strong,
+html body .app-shell .wall-fixed .forest-map-panel-v1534>footer small{
+  display:block!important;
+  line-height:1.15!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>footer strong{
+  color:#5b4a1f!important;
+  font-size:7px!important;
+}
+
+html body .app-shell .wall-fixed .forest-map-panel-v1534>footer small{
+  margin-top:2px!important;
+  color:#786a3d!important;
+  font-size:5px!important;
+}
+
+html body .app-shell .forest-tool-belt-v1521.dock>button.has-status::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:4!important;
+  top:5px!important;
+  right:6px!important;
+  width:5px!important;
+  height:5px!important;
+  border:1px solid #fff!important;
+  border-radius:50%!important;
+  background:var(--tool-accent,#3a9951)!important;
+  box-shadow:0 1px 3px rgba(29,66,37,.25)!important;
+  pointer-events:none!important;
+}
+
+html body .app-shell .forest-tool-belt-v1521.dock>button:focus-visible{
+  outline:3px solid rgba(255,213,83,.72)!important;
+  outline-offset:2px!important;
+}
+
+@media (max-width:1050px){
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+    width:min(88%,560px)!important;
+  }
+
+  html body .app-shell .wall-fixed .forest-map-button-v1534{
+    padding:5px 7px!important;
+  }
+}
+
+@media (max-width:760px){
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+    width:94%!important;
+  }
+
+  html body .app-shell .wall-fixed .forest-map-button-v1534{
+    width:28px!important;
+    padding:0!important;
+    font-size:0!important;
+  }
+
+  html body .app-shell .wall-fixed .forest-map-button-v1534 span{
+    font-size:14px!important;
+  }
+
+  html body .app-shell .wall-fixed .forest-map-panel-v1534{
+    inset:40px 3px 3px!important;
+    padding:8px!important;
+  }
+
+  html body .app-shell .wall-fixed .forest-map-stats-v1534{
+    grid-template-columns:1fr!important;
+  }
+
+  html body .app-shell .wall-fixed .forest-map-stats-v1534 article{
+    min-height:44px!important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  html body .app-shell .wall-fixed .forest-map-panel-v1534,
+  html body .app-shell .wall-fixed .forest-map-button-v1534{
+    scroll-behavior:auto!important;
+    transition:none!important;
+  }
+}

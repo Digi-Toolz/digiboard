@@ -1,0 +1,166 @@
+import fs from 'fs';
+import path from 'path';
+import {JSDOM} from '/tmp/node_modules/jsdom/lib/api.js';
+
+const dir=process.argv[2];
+const html=fs.readFileSync(path.join(dir,'index.html'),'utf8');
+
+const dom=new JSDOM(html,{url:'https://digiboard.test/',pretendToBeVisual:true,runScripts:'outside-only'});
+const {window}=dom;
+
+// ---- Umgebung, die jsdom nicht mitbringt ----
+window.matchMedia=q=>({matches:false,media:q,addEventListener(){},removeEventListener(){},addListener(){},removeListener(){}});
+window.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};
+window.HTMLCanvasElement.prototype.getContext=()=>null;
+window.HTMLCanvasElement.prototype.toBlob=function(cb){cb(null)};
+window.HTMLCanvasElement.prototype.toDataURL=()=>'';
+window.URL.createObjectURL=()=>'blob:test-'+Math.random().toString(36).slice(2);
+window.URL.revokeObjectURL=()=>{};
+window.scrollTo=()=>{};
+Object.defineProperty(window.navigator,'userAgent',{value:'jsdom-test',configurable:true});
+window.speechSynthesis={getVoices:()=>[],speak(){},cancel(){}};
+window.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','')};
+window.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open')};
+
+// CSS einspeisen, damit getComputedStyle etwas zu rechnen hat
+const cssProbleme=[];
+const cssDateien=[...html.matchAll(/href="([^"?]+\.css)/g)].map(m=>m[1]);
+for(const datei of cssDateien){
+  const stil=window.document.createElement('style');
+  stil.textContent=fs.readFileSync(path.join(dir,datei),'utf8');
+  window.document.head.append(stil);
+  if(!stil.sheet||!stil.sheet.cssRules.length) cssProbleme.push(datei);
+}
+
+// Skripte in der richtigen Reihenfolge ausführen
+const fehler=[];
+window.addEventListener('error',e=>fehler.push(String(e.error||e.message)));
+// Alle drei Dateien in EINEM eval: nur so teilen sie sich den Gueltigkeits-
+// bereich, genau wie <script>-Tags im Browser.
+const quelle=['photo-store.js','app.js','package-export.js']
+  .map(datei=>fs.readFileSync(path.join(dir,datei),'utf8')).join('\n;\n');
+try{ window.eval(quelle+'\n;globalThis.__app={renderClassManagement,replaceStudentPhoto,renderTeamMembers,renderTeachingToolSettings,manageTeachingTool,activeTeachingTools,teamPhotoMarkup,state,photoStore};'); }
+catch(e){ fehler.push('Skripte: '+e.message); }
+const app=window.__app||{};
+window.document.dispatchEvent(new window.Event('DOMContentLoaded',{bubbles:true}));
+await new Promise(r=>setTimeout(r,300));
+
+const $=s=>window.document.querySelector(s);
+const $$=s=>[...window.document.querySelectorAll(s)];
+const stil=el=>el?window.getComputedStyle(el):null;
+let fehlgeschlagen=0;
+function pruefe(name,bedingung,zusatz=''){
+  const ok=!!bedingung;
+  if(!ok)fehlgeschlagen++;
+  console.log(`  ${ok?'OK    ':'FEHLER'}  ${name}${zusatz?'   ['+zusatz+']':''}`);
+}
+
+if(cssProbleme.length)console.log('Hinweis – von jsdom nicht lesbare CSS-Dateien (Browser lesen sie):',cssProbleme.join(', '));
+console.log('=== Ladefehler ===');
+if(fehler.length){fehler.slice(0,6).forEach(f=>console.log('  !',f));fehlgeschlagen+=fehler.length}
+else console.log('  keine');
+
+console.log('\n=== Klassenteam-Karten ===');
+if(app.renderTeamMembers)app.renderTeamMembers();
+const karten=$$('#teamMemberGrid .team-member-card-v1551');
+pruefe('Karten werden erzeugt',karten.length>=5,`${karten.length} Karten`);
+pruefe('jede Karte hat einen Auswahlknopf',karten.every(k=>k.querySelector('.team-member-choose-v1551')));
+const mitFoto=karten.filter(k=>k.querySelector('.team-member-photo-pick-v1551'));
+pruefe('Fotofeld auf den Personenkarten',mitFoto.length===karten.length-1,`${mitFoto.length} von ${karten.length-1}`);
+pruefe('Fotofeld ist ein echtes Dateifeld',mitFoto.every(k=>k.querySelector('input[type="file"]')));
+pruefe('Dateifeld ist nicht versteckt',mitFoto.every(k=>{const s=stil(k.querySelector('input[type="file"]'));return s.display!=='none'&&s.visibility!=='hidden'}));
+pruefe('kein Dateifeld innerhalb eines Knopfes',!$$('#teamMemberGrid button input[type="file"]').length);
+pruefe('Initialen sichtbar, solange kein Foto da ist',karten.every(k=>k.querySelector('.team-member-initialen-v1551')||k.querySelector('img')));
+
+console.log('\n=== Meine Auswahl (Werkzeuge) ===');
+if(app.renderTeachingToolSettings)app.renderTeachingToolSettings();
+const wk=$$('#teachingToolManageList .werkzeug-karte-v1551');
+pruefe('Werkzeugkarten werden erzeugt',wk.length>0,`${wk.length} Karten`);
+if(wk.length){
+  const erste=wk[0];
+  const woKnoepfe=[...erste.querySelectorAll('.werkzeug-wo-v1551 button')].map(b=>b.textContent.trim());
+  pruefe('drei benannte Positionsschalter',woKnoepfe.join('/')==='Oben/Favorit/Beides',woKnoepfe.join('/'));
+  const anzahlAn=erste.querySelectorAll('.werkzeug-wo-v1551 button.ist-an').length;
+  pruefe('genau ein Schalter ist aktiv',anzahlAn===1,`${anzahlAn} aktiv`);
+  const aktionen=[...erste.querySelectorAll('.werkzeug-aktionen-v1551 button')].map(b=>b.textContent.trim());
+  pruefe('Aktionen sind beschriftet',aktionen.every(t=>t.length>1||['↑','↓'].includes(t)),aktionen.join(' | '));
+  pruefe('kein namenloser Symbolknopf mehr',!aktionen.some(t=>['↔','◉','×','☆','★'].includes(t)));
+}
+
+console.log('\n=== Positionsschalter wirklich schalten ===');
+const werkzeuge=app.activeTeachingTools?app.activeTeachingTools():[];
+if(werkzeuge.length){
+  const id=werkzeuge[0].id;
+  app.manageTeachingTool(id,'wo-favorit');
+  const t1=app.activeTeachingTools().find(t=>t.id===id);
+  pruefe('„Favorit" wird gesetzt',t1.placement==='favorite',t1.placement);
+  pruefe('Startrolle wandert weg von einem reinen Favoriten',!t1.isDefault);
+  app.manageTeachingTool(id,'wo-beides');
+  pruefe('„Beides" wird gesetzt',app.activeTeachingTools().find(t=>t.id===id).placement==='both');
+  app.manageTeachingTool(id,'wo-start');
+  pruefe('„Oben" wird gesetzt',app.activeTeachingTools().find(t=>t.id===id).placement==='start');
+  const nachher=app.activeTeachingTools();
+  pruefe('genau ein Startwerkzeug insgesamt',nachher.filter(t=>t.isDefault).length===1,
+    `${nachher.filter(t=>t.isDefault).length}`);
+}
+
+console.log('\n=== Doppelter Zurück-Knopf ===');
+const innererZurueck=$('#personalSettingsBack');
+pruefe('innerer Zurück-Knopf ist ausgeblendet',innererZurueck&&stil(innererZurueck).display==='none',
+  innererZurueck?stil(innererZurueck).display:'nicht vorhanden');
+pruefe('oben gibt es genau einen Zurück-Knopf',$$('#teamWorkspace .team-unified-nav-v1541 #backToBoardButton').length===1);
+
+console.log('\n=== Ausgeblendete Bereiche bleiben ausgeblendet (Regression 15.48) ===');
+const share=$('#settingsShare');
+if(share){
+  share.setAttribute('hidden','');
+  pruefe('#settingsShare mit hidden ist unsichtbar',stil(share).display==='none',stil(share).display);
+  share.removeAttribute('hidden');
+  pruefe('#settingsShare ohne hidden ist sichtbar',stil(share).display!=='none',stil(share).display);
+}
+
+console.log('\n=== Dateifelder sind antippbar (15.47) ===');
+['#classPackageFileInput','#digiBoardBackupFile'].forEach(sel=>{
+  const el=$(sel);
+  pruefe(`${sel} nicht per hidden versteckt`,el&&!el.hasAttribute('hidden'));
+  if(el)pruefe(`${sel} liegt über dem Knopf`,stil(el).position==='absolute'&&stil(el).opacity==='0');
+});
+
+console.log('\n=== Kinderfotos: Feld und Meldung (15.53) ===');
+if(app.renderClassManagement)app.renderClassManagement();
+const kinderkarten=$$('#classStudentGrid .class-student-card');
+pruefe('Kinderkarten werden erzeugt',kinderkarten.length>0,`${kinderkarten.length} Karten`);
+const fotofelder=kinderkarten.map(k=>k.querySelector('input[type="file"][data-student-photo]'));
+pruefe('jede Karte hat ein echtes Dateifeld',fotofelder.every(Boolean));
+if(fotofelder[0]){
+  const fs=stil(fotofelder[0]);
+  pruefe('Dateifeld ist wirklich antippbar',fs.pointerEvents!=='none',fs.pointerEvents);
+  pruefe('Dateifeld deckt den Knopf ab',fs.width==='100%'&&fs.height==='100%',`${fs.width} x ${fs.height}`);
+  pruefe('kein iOS-Zoom beim Fokus',parseInt(fs.fontSize,10)>=16,fs.fontSize);
+  pruefe('Dateifeld ist nicht display:none',fs.display!=='none'&&fs.visibility!=='hidden');
+  const knopf=fotofelder[0].closest('label');
+  pruefe('Knopf ist der Bezugspunkt des Feldes',knopf&&stil(knopf).position==='relative',knopf?stil(knopf).position:'-');
+  pruefe('kein Dateifeld innerhalb eines Knopfes',!$$('#classStudentGrid button input[type="file"]').length);
+}
+pruefe('jede Karte hat eine eigene Meldezeile',
+  kinderkarten.every(k=>k.querySelector('.foto-meldung-v1553')),
+  `${kinderkarten.filter(k=>k.querySelector('.foto-meldung-v1553')).length} von ${kinderkarten.length}`);
+
+// Die Meldung muss wirklich ankommen – nicht nur unten im Sammelabsatz.
+const ersterSchueler=app.state?.students?.[0];
+if(ersterSchueler){
+  await window.__app.replaceStudentPhoto(ersterSchueler.id,null);
+  const zeile=kinderkarten[0].querySelector('.foto-meldung-v1553');
+  pruefe('Fehlschlag erzeugt eine sichtbare Meldung auf der Karte',
+    zeile&&zeile.classList.contains('ist-sichtbar')&&zeile.textContent.trim().length>5,
+    zeile?zeile.textContent.trim().slice(0,60):'keine Zeile');
+  // HEIC in einem Nicht-Safari-Browser muss beim Namen genannt werden
+  const heicDatei={name:'IMG_4711.HEIC',type:'image/heic',size:2400000};
+  await window.__app.replaceStudentPhoto(ersterSchueler.id,heicDatei);
+  const heicText=kinderkarten[0].querySelector('.foto-meldung-v1553')?.textContent||'';
+  pruefe('HEIC wird erkannt und erklaert',/HEIC/.test(heicText)&&/Safari|JPEG/.test(heicText),
+    heicText.slice(0,70));
+}
+
+console.log(`\n=== Ergebnis: ${fehlgeschlagen?fehlgeschlagen+' Fehler':'alles bestanden'} ===`);
+process.exit(fehlgeschlagen?1:0);

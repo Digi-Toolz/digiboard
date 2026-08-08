@@ -1,0 +1,680 @@
+/* ============================================================
+   DigiBoard Next 15.51 – Klassenteam und Meine Auswahl
+
+   Drei Rückmeldungen, drei Antworten:
+
+   1) Der Zurück-Knopf war doppelt: einmal oben in der Leiste, einmal im
+      Bereich selbst. Der innere ist überflüssig – „Meine Übersicht" steht
+      oben schon als Reiter.
+   2) „Meine Auswahl" hatte sechs namenlose Symbolknöpfe pro Zeile
+      (★ ↔ ↑ ↓ ◉ ×). Niemand kann das deuten. Jetzt eine Karte pro Werkzeug
+      mit beschrifteten Schaltern.
+   3) Das Klassenteam-Fenster war eine Reihe blasser Kästchen. Jetzt Karten
+      mit großem Bild, und jede Person kann ein eigenes Foto bekommen.
+   ============================================================ */
+
+/* ============================================================
+   1 · KEIN DOPPELTER ZURÜCK-KNOPF
+   ============================================================ */
+
+html body #teamDialog #personalWorkspaceSettings>#personalSettingsBack,
+html body #teamDialog #personalWorkspaceSettings>.personal-settings-back{
+  display:none!important;
+}
+
+/* ============================================================
+   2 · DER KOPF DES BEREICHS WIRD RUHIG
+   ============================================================ */
+
+html body #teamDialog #personalWorkspaceSettings>.personal-settings-head{
+  box-sizing:border-box!important;
+  position:relative!important;
+  width:100%!important;
+  margin:0 0 14px!important;
+  padding:14px 62px 14px 16px!important;
+  display:block!important;
+  border:0!important;
+  border-radius:16px!important;
+  background:linear-gradient(102deg,#14683d,#2f9450 62%,#59ad55)!important;
+  color:#fff!important;
+}
+html body #teamDialog #personalWorkspaceSettings>.personal-settings-head>span{
+  position:absolute!important;
+  right:16px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  font-size:30px!important;
+}
+html body #teamDialog #personalWorkspaceSettings>.personal-settings-head .eyebrow{
+  margin:0 0 3px!important;
+  color:rgba(226,246,214,.92)!important;
+  font-size:9px!important;
+  letter-spacing:.14em!important;
+}
+html body #teamDialog #personalWorkspaceSettings>.personal-settings-head h3{
+  margin:0!important;
+  color:#fff!important;
+  font-size:21px!important;
+  line-height:1.12!important;
+}
+html body #teamDialog #personalWorkspaceSettings>.personal-settings-head p:last-child{
+  margin:4px 0 0!important;
+  color:rgba(233,248,222,.95)!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+}
+
+/* Der Zugangscode-Block war eine Textwand: Titel, Erklärung und
+   Ankreuzfeld liefen ohne Abstand ineinander. */
+html body #teamDialog #personalWorkspaceSettings .materials-pin-settings{
+  box-sizing:border-box!important;
+  margin:14px 0!important;
+  padding:13px 15px!important;
+  display:grid!important;
+  gap:9px!important;
+  border:1.5px solid #e2dcc4!important;
+  border-radius:15px!important;
+  background:#fdfaf0!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-head{
+  display:grid!important;
+  grid-template-columns:34px minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:11px!important;
+  margin:0!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-head>span{
+  width:34px!important;
+  height:34px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:11px!important;
+  background:#f2e7c4!important;
+  font-size:18px!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-head>div{
+  min-width:0!important;
+  display:grid!important;
+  gap:3px!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-head strong{
+  font-size:14px!important;
+  line-height:1.2!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-head small{
+  display:block!important;
+  color:#6d6242!important;
+  font-size:10.5px!important;
+  line-height:1.4!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-toggle{
+  min-height:44px!important;
+  margin:0!important;
+  padding:9px 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  border:1.5px solid #e4dcc0!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  font-size:12.5px!important;
+  font-weight:850!important;
+  cursor:pointer!important;
+}
+html body #teamDialog #personalWorkspaceSettings .materials-pin-toggle input{
+  width:20px!important;
+  height:20px!important;
+  margin:0!important;
+  flex:0 0 20px!important;
+  accent-color:#2f8235!important;
+}
+html body #teamDialog #personalWorkspaceSettings #materialsPinStatus{
+  margin:0!important;
+  font-size:11px!important;
+}
+
+/* Die drei Ankreuzfelder werden eine ruhige Reihe. */
+html body #teamDialog #personalWorkspaceSettings .personal-panel-options{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;
+  gap:8px!important;
+  padding:0!important;
+  margin:0 0 4px!important;
+}
+html body #teamDialog #personalWorkspaceSettings .personal-panel-options label{
+  min-height:46px!important;
+  padding:10px 13px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  border:1.5px solid #dde7d5!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  cursor:pointer!important;
+}
+html body #teamDialog #personalWorkspaceSettings .personal-panel-options input{
+  width:20px!important;
+  height:20px!important;
+  flex:0 0 20px!important;
+  margin:0!important;
+  accent-color:#2f8235!important;
+}
+
+/* ============================================================
+   3 · MEINE AUSWAHL – eine Karte pro Werkzeug, alles benannt
+   ============================================================ */
+
+html body #teamDialog .startpage-tool-settings .teaching-tool-manage-list{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-auto-rows:auto!important;
+  gap:9px!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+
+html body #teamDialog .werkzeug-karte-v1551{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:11px 13px!important;
+  display:grid!important;
+  grid-template-columns:38px minmax(0,1fr) auto!important;
+  grid-template-areas:
+    'symbol titel marken'
+    'symbol wo    wo'
+    'symbol tun   tun'!important;
+  align-items:center!important;
+  gap:8px 11px!important;
+  overflow:visible!important;
+  border:1.5px solid #dde7d5!important;
+  border-radius:15px!important;
+  background:#fff!important;
+  box-shadow:0 2px 0 rgba(70,100,72,.1)!important;
+}
+html body #teamDialog .werkzeug-karte-v1551.ist-start{
+  border-color:#8fbf7f!important;
+  background:linear-gradient(180deg,#f7fcf2,#eef7e6)!important;
+  box-shadow:0 2px 0 rgba(60,110,64,.16)!important;
+}
+html body #teamDialog .werkzeug-karte-v1551.is-hidden{
+  opacity:.62!important;
+  background:#f6f6f2!important;
+}
+
+html body #teamDialog .werkzeug-karte-v1551>.manage-tool-icon{
+  grid-area:symbol!important;
+  align-self:start!important;
+  width:38px!important;
+  height:38px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1.5px solid #dbe6d4!important;
+  border-radius:12px!important;
+  background:#f2f8ed!important;
+  color:#2f6141!important;
+  font-size:17px!important;
+  font-weight:950!important;
+  text-transform:uppercase!important;
+}
+html body #teamDialog .werkzeug-karte-v1551>.manage-tool-copy{
+  grid-area:titel!important;
+  min-width:0!important;
+  display:grid!important;
+  gap:2px!important;
+}
+html body #teamDialog .werkzeug-karte-v1551>.manage-tool-copy strong{
+  overflow:hidden!important;
+  font-size:14px!important;
+  line-height:1.15!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+html body #teamDialog .werkzeug-karte-v1551>.manage-tool-copy small{
+  display:block!important;
+  overflow:hidden!important;
+  color:#6d7f68!important;
+  font-size:10px!important;
+  line-height:1.25!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+html body #teamDialog .werkzeug-marken-v1551{
+  grid-area:marken!important;
+  justify-self:end!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:flex-end!important;
+  gap:5px!important;
+}
+html body #teamDialog .marke-start-v1551,
+html body #teamDialog .marke-aus-v1551{
+  padding:3px 9px!important;
+  border-radius:99px!important;
+  font-size:9px!important;
+  font-style:normal!important;
+  font-weight:950!important;
+  letter-spacing:.02em!important;
+  white-space:nowrap!important;
+}
+html body #teamDialog .marke-start-v1551{background:#dcefcf!important;color:#2c5f2c!important}
+html body #teamDialog .marke-aus-v1551{background:#e8e6de!important;color:#6b6960!important}
+
+/* Die Anzeigeposition: drei benannte Schalter statt eines Knopfes, der im
+   Kreis durchschaltet. Man sieht sofort, was gilt. */
+html body #teamDialog .werkzeug-wo-v1551{
+  grid-area:wo!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:5px!important;
+}
+html body #teamDialog .werkzeug-wo-v1551>b{
+  margin-right:2px!important;
+  color:#6d7f68!important;
+  font-size:10px!important;
+  font-weight:950!important;
+}
+html body #teamDialog .werkzeug-wo-v1551>button{
+  min-width:0!important;
+  min-height:34px!important;
+  margin:0!important;
+  padding:6px 12px!important;
+  border:1.5px solid #d6e2d0!important;
+  border-radius:10px!important;
+  background:#f7faf4!important;
+  color:#48624a!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+html body #teamDialog .werkzeug-wo-v1551>button.ist-an{
+  border-color:#1c7a45!important;
+  background:linear-gradient(168deg,#37b065,#16793f)!important;
+  color:#fff!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important;
+}
+
+html body #teamDialog .werkzeug-aktionen-v1551{
+  grid-area:tun!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin-top:2px!important;
+  padding-top:8px!important;
+  border-top:1px solid #ecf2e7!important;
+}
+html body #teamDialog .werkzeug-aktionen-v1551>button,
+html body #teamDialog .werkzeug-reihenfolge-v1551>button{
+  min-width:0!important;
+  min-height:36px!important;
+  margin:0!important;
+  padding:7px 12px!important;
+  border:1.5px solid #d6e2d0!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  color:#3d5a41!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+html body #teamDialog .werkzeug-stern-v1551[aria-pressed="true"]{
+  border-color:#c9a01f!important;
+  background:linear-gradient(168deg,#ffe89a,#f2c94c)!important;
+  color:#5c4610!important;
+}
+html body #teamDialog .werkzeug-reihenfolge-v1551{
+  display:flex!important;
+  gap:4px!important;
+}
+html body #teamDialog .werkzeug-reihenfolge-v1551>button{
+  width:36px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:14px!important;
+}
+html body #teamDialog .werkzeug-reihenfolge-v1551>button:disabled{
+  opacity:.35!important;
+  cursor:default!important;
+}
+html body #teamDialog .werkzeug-weg-v1551{
+  margin-left:auto!important;
+  border-color:#e2b3ab!important;
+  background:#fceeeb!important;
+  color:#96382b!important;
+}
+html body #teamDialog .werkzeug-leer-v1551{
+  margin:0!important;
+  padding:16px!important;
+  border:1.5px dashed #cfdcc7!important;
+  border-radius:14px!important;
+  background:#f7fbf3!important;
+  color:#5a7159!important;
+  font-size:12px!important;
+  text-align:center!important;
+}
+
+/* Schmale Fenster: alles untereinander, nichts wird gequetscht. */
+@media (max-width:760px){
+  html body #teamDialog .werkzeug-karte-v1551{
+    grid-template-columns:34px minmax(0,1fr)!important;
+    grid-template-areas:
+      'symbol titel'
+      'marken marken'
+      'wo     wo'
+      'tun    tun'!important;
+  }
+  html body #teamDialog .werkzeug-marken-v1551{justify-self:start!important;justify-content:flex-start!important}
+  html body #teamDialog .werkzeug-karte-v1551>.manage-tool-icon{width:34px!important;height:34px!important}
+  html body #teamDialog .werkzeug-wo-v1551>button{flex:1 1 0!important}
+  html body #teamDialog .werkzeug-weg-v1551{margin-left:0!important;flex:1 1 100%!important}
+}
+
+/* Die Eingabefelder darunter fließen statt in vier festen Spalten zu kleben. */
+html body #teamDialog .startpage-tool-settings .teaching-tool-fields{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr))!important;
+  grid-auto-rows:auto!important;
+  align-items:end!important;
+  gap:9px!important;
+  height:auto!important;
+  margin-top:11px!important;
+  overflow:visible!important;
+}
+html body #teamDialog .startpage-tool-settings .teaching-tool-fields label{
+  min-width:0!important;
+  margin:0!important;
+  display:grid!important;
+  gap:4px!important;
+  font-size:11px!important;
+  font-weight:850!important;
+}
+html body #teamDialog .startpage-tool-settings .teaching-tool-fields input,
+html body #teamDialog .startpage-tool-settings .teaching-tool-fields select{
+  width:100%!important;
+  min-height:44px!important;
+  padding:9px 11px!important;
+  border-radius:11px!important;
+  font-size:12.5px!important;
+}
+html body #teamDialog .startpage-tool-settings .teaching-tool-fields>button{
+  min-height:44px!important;
+  padding:10px 16px!important;
+  border:1.5px solid #0d5c34!important;
+  border-radius:12px!important;
+  background:linear-gradient(168deg,#37b065,#16793f)!important;
+  color:#fff!important;
+  font-size:12.5px!important;
+  font-weight:950!important;
+  touch-action:manipulation!important;
+}
+
+/* ============================================================
+   4 · KLASSENTEAM – Karten mit Bild und eigenem Foto
+   ============================================================ */
+
+html body #teamDialog .team-switcher-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:0!important;
+  margin:0 0 16px!important;
+}
+html body #teamDialog .team-switcher-head>div{
+  display:grid!important;
+  grid-template-columns:58px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:14px!important;
+  padding:14px 18px!important;
+  border-radius:18px!important;
+  background:linear-gradient(102deg,#14683d,#2f9450 60%,#5cae56)!important;
+}
+html body #teamDialog .team-selection-mascot{
+  width:58px!important;
+  height:58px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:3px solid rgba(255,236,176,.9)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.94)!important;
+  font-size:31px!important;
+  box-shadow:0 4px 12px rgba(8,48,26,.28)!important;
+}
+html body #teamDialog #teamSelectionTitle{
+  margin:0!important;
+  color:#fff!important;
+  font-size:23px!important;
+  line-height:1.12!important;
+  text-shadow:0 2px 3px rgba(6,44,24,.35)!important;
+}
+html body #teamDialog .team-title-sprig{font-size:24px!important;opacity:.9!important}
+
+html body #teamDialog #teamMemberGrid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;
+  grid-auto-rows:auto!important;
+  gap:12px!important;
+  margin-top:0!important;
+}
+
+html body #teamDialog .team-member-card-v1551{
+  --mitglied-farbe:#3f8f57;
+  box-sizing:border-box!important;
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:block!important;
+  overflow:hidden!important;
+  border:2px solid #dde7d5!important;
+  border-radius:20px!important;
+  background:#fff!important;
+  box-shadow:0 3px 0 rgba(70,100,72,.13),0 10px 20px rgba(38,72,40,.09)!important;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease!important;
+}
+html body #teamDialog .team-member-card-v1551::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  height:5px!important;
+  background:var(--mitglied-farbe)!important;
+}
+html body #teamDialog .team-member-card-v1551:hover{
+  transform:translateY(-3px)!important;
+  border-color:var(--mitglied-farbe)!important;
+  box-shadow:0 5px 0 rgba(70,100,72,.15),0 16px 26px rgba(38,72,40,.14)!important;
+}
+html body #teamDialog .team-member-card-v1551.active{
+  border-color:var(--mitglied-farbe)!important;
+  background:linear-gradient(180deg,#f6fcf1,#ecf7e4)!important;
+}
+
+html body #teamDialog .team-member-choose-v1551{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:20px 14px 16px!important;
+  display:grid!important;
+  justify-items:center!important;
+  gap:11px!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  text-align:center!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+html body #teamDialog .team-member-choose-v1551:focus-visible{
+  outline:3px solid #ffa941!important;
+  outline-offset:-4px!important;
+  border-radius:18px!important;
+}
+
+html body #teamDialog .team-member-face-v1551{
+  position:relative!important;
+  width:88px!important;
+  height:88px!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:hidden!important;
+  border:3px solid #fff!important;
+  border-radius:50%!important;
+  background:linear-gradient(168deg,#eef6e6,#dcecd2)!important;
+  box-shadow:0 0 0 3px var(--mitglied-farbe),0 6px 14px rgba(34,66,36,.2)!important;
+  font-size:38px!important;
+  line-height:1!important;
+}
+html body #teamDialog .team-member-photo-v1551{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;
+}
+html body #teamDialog .team-member-initialen-v1551{
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:100%!important;
+  color:#2f6141!important;
+  font-size:36px!important;
+  font-weight:950!important;
+  line-height:1!important;
+}
+
+html body #teamDialog .team-member-copy-v1551{
+  min-width:0!important;
+  display:grid!important;
+  gap:3px!important;
+  width:100%!important;
+}
+html body #teamDialog .team-member-copy-v1551>strong{
+  overflow:hidden!important;
+  color:#1f4a2e!important;
+  font-size:16px!important;
+  line-height:1.15!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+html body #teamDialog .team-member-copy-v1551>small{
+  display:block!important;
+  overflow:hidden!important;
+  color:#68795f!important;
+  font-size:10.5px!important;
+  line-height:1.25!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* Das Fotofeld liegt als kleiner Kreis auf der Karte. Es ist ein echtes
+   Dateifeld, damit der Tipp direkt darauf trifft – dasselbe Vorgehen, das
+   beim Laden der Kinderdaten den Ausschlag gab. */
+html body #teamDialog .team-member-photo-pick-v1551{
+  position:absolute!important;
+  right:9px!important;
+  top:13px!important;
+  z-index:3!important;
+  width:38px!important;
+  height:38px!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:hidden!important;
+  border:1.5px solid #cfdccf!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.96)!important;
+  color:#3d5a41!important;
+  font-size:16px!important;
+  box-shadow:0 2px 6px rgba(30,64,34,.2)!important;
+  cursor:pointer!important;
+}
+html body #teamDialog .team-member-photo-pick-v1551>span{pointer-events:none!important}
+html body #teamDialog .team-member-photo-pick-v1551>input{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  opacity:0!important;
+  border:0!important;
+  font-size:16px!important;
+  cursor:pointer!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+}
+html body #teamDialog .team-member-photo-pick-v1551:hover{
+  border-color:var(--mitglied-farbe)!important;
+  background:#fff!important;
+}
+html body #teamDialog .team-member-photo-pick-v1551:focus-within{
+  outline:3px solid #ffa941!important;
+  outline-offset:2px!important;
+}
+
+html body #teamDialog .team-member-photo-clear-v1551{
+  position:absolute!important;
+  right:9px!important;
+  top:57px!important;
+  z-index:3!important;
+  width:28px!important;
+  height:28px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1.5px solid #e2b3ab!important;
+  border-radius:50%!important;
+  background:#fceeeb!important;
+  color:#96382b!important;
+  font-size:15px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  box-shadow:0 2px 5px rgba(90,40,30,.18)!important;
+}
+
+html body #teamDialog .team-member-card-v1551.substitute-team-card{
+  --mitglied-farbe:#8a7bb3;
+  border-style:dashed!important;
+  background:#faf9fd!important;
+}
+
+@media (max-width:760px){
+  html body #teamDialog #teamMemberGrid{
+    grid-template-columns:repeat(auto-fill,minmax(148px,1fr))!important;
+    gap:9px!important;
+  }
+  html body #teamDialog .team-member-face-v1551{
+    width:68px!important;
+    height:68px!important;
+    font-size:30px!important;
+  }
+  html body #teamDialog .team-member-initialen-v1551{font-size:27px!important}
+  html body #teamDialog .team-member-choose-v1551{padding:17px 10px 13px!important;gap:9px!important}
+  html body #teamDialog .team-member-copy-v1551>strong{font-size:14px!important}
+  html body #teamDialog #teamSelectionTitle{font-size:18px!important}
+  html body #teamDialog .team-switcher-head>div{
+    grid-template-columns:46px minmax(0,1fr)!important;
+    gap:10px!important;
+    padding:11px 13px!important;
+  }
+  html body #teamDialog .team-selection-mascot{width:46px!important;height:46px!important;font-size:24px!important}
+  html body #teamDialog .team-title-sprig{display:none!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html body #teamDialog .team-member-card-v1551{transition:none!important}
+}

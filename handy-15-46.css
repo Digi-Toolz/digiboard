@@ -1,0 +1,1067 @@
+/* ============================================================
+   DigiBoard Next 15.46 – Handy: Kopfzeile, Fundus, Füchse
+
+   Diese Datei wird zuletzt geladen und raeumt die Telefonansicht auf.
+   Sie beschreibt den gewuenschten Endzustand vollstaendig neu, statt einzelne
+   Altregeln zu korrigieren. Das ist Absicht: die betroffenen Bereiche waren
+   von mehreren Generationen widerspruechlicher Regeln ueberlagert.
+
+   Grundsaetze:
+   - Nichts wird auf eine fixe Anzahl Zeilen oder Spalten festgelegt. Eine
+     Liste muss mit 5 Eintraegen genauso ruhig aussehen wie mit 50.
+   - Kein overflow:hidden auf Listen. Abgeschnittene Inhalte waren die
+     Ursache der uebereinanderliegenden Karten.
+   - Keine iOS-Eigenheiten voraussetzen: env(safe-area-inset-*) hat immer
+     einen Ersatzwert, damit Android und Desktop-Browser gleich rechnen.
+   - Alle Tippflaechen mindestens 44 px, wie es beide Systeme verlangen.
+   ============================================================ */
+
+:root{
+  --hd-safe-top:max(12px,env(safe-area-inset-top,0px));
+  --hd-safe-bottom:max(10px,env(safe-area-inset-bottom,0px));
+  --hd-safe-left:env(safe-area-inset-left,0px);
+  --hd-safe-right:env(safe-area-inset-right,0px);
+  --hd-kopf-hoehe:56px;
+
+  /* Orange: Zurueck und Schliessen sind ueberall dieselbe Farbe. */
+  --hd-orange-hell:#ff9c3f;
+  --hd-orange:#ea7419;
+  --hd-orange-tief:#b8530c;
+  --hd-orange-rand:#9c4409;
+}
+
+@media (max-width:760px){
+  :root{
+    /* Auf dem Telefon braucht die Statusleiste echten Platz. Safari meldet
+       fuer den Bereich der Dynamic Island gelegentlich 0 px – der
+       Mindestwert faengt das ab. */
+    --hd-safe-top:max(44px,env(safe-area-inset-top,0px));
+    --digiboard-safe-top:max(44px,env(safe-area-inset-top,0px));
+    --digiboard-safe-bottom:max(10px,env(safe-area-inset-bottom,0px));
+  }
+}
+
+/* ============================================================
+   1 · ZURÜCK UND SCHLIESSEN – immer orange, immer gleich
+   ============================================================ */
+
+html body .app-shell #backToBoardButton,
+html body #teamDialog #backToBoardButton,
+html body #teamDialog .team-back-button,
+html body #teamDialog .back-to-team-overview,
+html body #settingsDialog .settings-detail-bar>button:first-child,
+html body .close-button,
+html body #teamDialog .close-button.team-close-button,
+html body #settingsDialog .settings-card>.dialog-head>.close-button,
+html body #mobilePointsClose,
+html body .mobile-points-card>header>button{
+  border:1.5px solid var(--hd-orange-rand)!important;
+  background:linear-gradient(168deg,var(--hd-orange-hell),var(--hd-orange) 54%,var(--hd-orange-tief))!important;
+  color:#fff!important;
+  font-weight:950!important;
+  text-shadow:0 1px 2px rgba(96,42,4,.5)!important;
+  box-shadow:inset 0 1px 0 rgba(255,231,196,.7),0 3px 0 var(--hd-orange-rand),0 7px 12px rgba(120,58,8,.28)!important;
+  transition:transform .12s ease,box-shadow .12s ease!important;
+}
+html body .app-shell #backToBoardButton:active,
+html body #teamDialog #backToBoardButton:active,
+html body #teamDialog .team-back-button:active,
+html body .close-button:active,
+html body #mobilePointsClose:active{
+  transform:translateY(2px)!important;
+  box-shadow:inset 0 2px 4px rgba(96,42,4,.4),0 1px 0 var(--hd-orange-rand)!important;
+}
+html body .app-shell #backToBoardButton:focus-visible,
+html body .close-button:focus-visible,
+html body #mobilePointsClose:focus-visible{
+  outline:3px solid #ffd979!important;
+  outline-offset:2px!important;
+}
+
+/* ============================================================
+   2 · KOPFZEILE IM PERSÖNLICHEN BEREICH
+   Eine Zeile, immer unter der Statusleiste: [←] [👥] [Reiter] [⚙]
+   ============================================================ */
+
+@media (max-width:760px){
+
+  /* Der Vollbild-Dialog scrollt. Damit die klebende Kopfzeile beim Scrollen
+     nichts verdeckt, bekommt der Scrollbereich denselben Abstand als
+     Scroll-Polster. Das war der eigentliche Fehler: die Leiste klebte an
+     der Oberkante des Fensters und lag damit unter Uhrzeit und Akku. */
+  html body #teamDialog>.dialog-card{
+    padding-left:max(9px,var(--hd-safe-left))!important;
+    padding-right:max(9px,var(--hd-safe-right))!important;
+    padding-top:0!important;
+    scroll-padding-top:calc(var(--hd-kopf-hoehe) + var(--hd-safe-top) + 8px)!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+  }
+
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541{
+    position:sticky!important;
+    z-index:600!important;
+    top:0!important;
+    box-sizing:border-box!important;
+    width:calc(100% + 18px)!important;
+    height:auto!important;
+    min-height:calc(var(--hd-kopf-hoehe) + var(--hd-safe-top))!important;
+    margin:0 -9px 10px!important;
+    padding:calc(6px + var(--hd-safe-top)) 9px 8px!important;
+    display:grid!important;
+    grid-template-columns:44px 44px minmax(0,1fr) 44px!important;
+    grid-template-rows:auto!important;
+    align-items:center!important;
+    gap:6px!important;
+    border:0!important;
+    border-radius:0 0 18px 18px!important;
+    background:linear-gradient(180deg,#f7fbf1,#eef5e4)!important;
+    box-shadow:0 6px 16px rgba(24,66,38,.16)!important;
+    -webkit-backdrop-filter:blur(14px)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+
+  /* Die beiden linken Knoepfe werden echte Rasterzellen. Vorher lagen sie
+     in einem eigenen Kasten, der bei Platzmangel umbrach – daher die
+     gestapelte Kopfzeile. */
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-nav-left{
+    display:contents!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 #backToBoardButton{
+    grid-column:1!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 #changeTeamPersonButton{
+    grid-column:2!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-page-tabs{
+    grid-column:3!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-top-settings-button{
+    grid-column:4!important;
+  }
+
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 .team-nav-left button,
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-top-settings-button{
+    box-sizing:border-box!important;
+    width:44px!important;
+    min-width:44px!important;
+    max-width:44px!important;
+    height:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:13px!important;
+    font-size:18px!important;
+    line-height:1!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 #changeTeamPersonButton{
+    border:1.5px solid #cfdccf!important;
+    background:#fff!important;
+    color:#2d593d!important;
+    box-shadow:0 2px 0 rgba(60,90,64,.25)!important;
+    text-shadow:none!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-top-settings-button{
+    border:1.5px solid #d8bd57!important;
+    background:linear-gradient(168deg,#fff6cf,#f4dc8c)!important;
+    color:#6a511d!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 0 rgba(150,120,30,.4)!important;
+    text-shadow:none!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 .team-nav-left button span,
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-top-settings-button span{
+    margin:0!important;
+    display:block!important;
+  }
+
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-page-tabs{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    height:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:3px!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:3px!important;
+    border:1.5px solid #d4e1d3!important;
+    border-radius:13px!important;
+    background:#e6efe1!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-page-tabs button{
+    min-width:0!important;
+    height:100%!important;
+    padding:0 4px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:10px!important;
+    font-size:10px!important;
+    font-weight:950!important;
+    line-height:1.1!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    touch-action:manipulation!important;
+  }
+
+  /* Ganz schmale Telefone: die Reiter duerfen schrumpfen, die Knoepfe nicht. */
+  @media (max-width:380px){
+    html body #teamDialog #teamWorkspace>.team-unified-nav-v1541{
+      grid-template-columns:42px 42px minmax(0,1fr) 42px!important;
+      gap:4px!important;
+    }
+    html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-page-tabs button{
+      font-size:9px!important;
+    }
+  }
+
+  /* Der Einstellungsdialog nutzt dieselbe Hoehe und dasselbe Polster. */
+  html body #settingsDialog .settings-card{
+    scroll-padding-top:calc(var(--hd-kopf-hoehe) + var(--hd-safe-top) + 12px)!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  html body #settingsDialog .settings-card>.dialog-head{
+    min-height:calc(var(--hd-kopf-hoehe) + var(--hd-safe-top))!important;
+    padding-top:calc(6px + var(--hd-safe-top))!important;
+  }
+
+  /* Die mobile Punkteansicht ist ein eigener Vollbild-Dialog. */
+  html body .mobile-points-card>header{
+    position:sticky!important;
+    z-index:600!important;
+    top:0!important;
+    padding-top:calc(8px + var(--hd-safe-top))!important;
+  }
+}
+
+/* ============================================================
+   3 · FUNDUS AUF DEM HANDY – Ordner und Inhalte in ruhiger Ordnung
+
+   Die Ursache des Durcheinanders: die Liste war ein Raster mit genau drei
+   festen Zeilen (Kopf, Inhalt, Blaetterleiste) und overflow:hidden. Im DOM
+   liegen dort aber vier Bloecke – Kopf, Pfad, Ordner, Inhalte. Der vierte
+   Block wurde in dieselbe Zelle gedraengt und lag ueber dem dritten.
+   Hier wird die Liste ein normaler Fluss. Damit ist die Zahl der Bloecke
+   und der Eintraege beliebig.
+   ============================================================ */
+
+@media (max-width:760px){
+  html body #teamDialog #teamWorkspace.materials-mode .material-item-list,
+  html body #teamDialog #teamWorkspace .material-item-list{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:10px!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:10px!important;
+    overflow:visible!important;
+    border-radius:16px!important;
+    grid-template-rows:none!important;
+    grid-template-columns:none!important;
+  }
+
+  html body #teamDialog #teamWorkspace .material-list-head{
+    display:block!important;
+    min-height:0!important;
+    height:auto!important;
+    margin:0!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-list-head h4{
+    margin:0 0 3px!important;
+    font-size:16px!important;
+    line-height:1.15!important;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-list-head p{
+    margin:0!important;
+    font-size:10.5px!important;
+    line-height:1.35!important;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+
+  /* Der Ordnerpfad darf umbrechen statt zu ueberlappen. */
+  html body #teamDialog #teamWorkspace .material-folder-crumbs{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    gap:4px!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-crumb{
+    min-height:32px!important;
+    padding:5px 10px!important;
+    border-radius:9px!important;
+    font-size:10.5px!important;
+    white-space:nowrap!important;
+    touch-action:manipulation!important;
+  }
+
+  /* Ordner: zwei Spalten, beliebig viele Zeilen. Bei 20 AGs entstehen
+     einfach 10 Zeilen – die Liste scrollt, nichts wird gestapelt. */
+  html body #teamDialog #teamWorkspace .material-folder-grid.material-folder-grid{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr))!important;
+    grid-auto-rows:auto!important;
+    grid-auto-flow:row!important;
+    gap:8px!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-card{
+    position:relative!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:66px!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:9px 30px 9px 10px!important;
+    display:grid!important;
+    grid-template-columns:26px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:8px!important;
+    overflow:hidden!important;
+    border:1.5px solid #cfdfc9!important;
+    border-radius:13px!important;
+    background:#fff!important;
+    text-align:left!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-icon{
+    width:26px!important;
+    height:26px!important;
+    display:grid!important;
+    place-items:center!important;
+    font-size:19px!important;
+    line-height:1!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-copy{
+    min-width:0!important;
+    display:grid!important;
+    gap:2px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-copy strong{
+    display:block!important;
+    overflow:hidden!important;
+    font-size:12.5px!important;
+    line-height:1.15!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-copy small{
+    display:block!important;
+    overflow:hidden!important;
+    color:#6c8168!important;
+    font-size:9.5px!important;
+    line-height:1.2!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  /* Umbenennen und Loeschen sitzen als schmale Spalte rechts im Ordner,
+     nicht mehr frei ueber dem Text. */
+  html body #teamDialog #teamWorkspace .material-folder-actions{
+    position:absolute!important;
+    right:3px!important;
+    top:3px!important;
+    bottom:3px!important;
+    display:grid!important;
+    grid-template-rows:1fr 1fr!important;
+    align-items:stretch!important;
+    gap:2px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-actions button{
+    width:24px!important;
+    min-width:24px!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border:0!important;
+    border-radius:7px!important;
+    background:#eef4ea!important;
+    color:#48624a!important;
+    font-size:11px!important;
+    line-height:1!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-new{
+    border-style:dashed!important;
+    background:#f4faee!important;
+    padding-right:10px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-folder-up{
+    background:#eef5fb!important;
+    border-color:#bcd4e6!important;
+    padding-right:10px!important;
+  }
+
+  /* Inhalte: eine Karte pro Zeile. Titel, Notiz und Knoepfe stehen
+     untereinander und koennen sich nicht mehr ueberlagern. */
+  html body #teamDialog #teamWorkspace .material-page-grid.material-page-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:none!important;
+    grid-auto-rows:auto!important;
+    gap:8px!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:10px!important;
+    display:grid!important;
+    grid-template-columns:30px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    gap:8px!important;
+    overflow:visible!important;
+    border:1.5px solid #dbe6d4!important;
+    border-radius:13px!important;
+    background:#fff!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-type-icon{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:30px!important;
+    height:30px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:9px!important;
+    background:#eef5e8!important;
+    font-size:17px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-copy{
+    grid-column:2!important;
+    grid-row:1!important;
+    min-width:0!important;
+    display:grid!important;
+    gap:3px!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-title{
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:baseline!important;
+    gap:5px!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-title strong{
+    min-width:0!important;
+    font-size:13px!important;
+    line-height:1.2!important;
+    overflow-wrap:anywhere!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-title span{
+    padding:2px 7px!important;
+    border-radius:99px!important;
+    background:#e9f2e2!important;
+    color:#4b6a4c!important;
+    font-size:8.5px!important;
+    font-weight:900!important;
+    white-space:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-copy p,
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-copy small{
+    margin:0!important;
+    display:block!important;
+    color:#65795f!important;
+    font-size:10px!important;
+    line-height:1.35!important;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+
+  /* Die Aktionen bekommen eine eigene Zeile unter der Karte und sind
+     dadurch bei jedem Titel gleich gut zu treffen. */
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-actions{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(auto-fit,minmax(86px,1fr))!important;
+    align-items:stretch!important;
+    gap:5px!important;
+    margin:2px 0 0!important;
+    padding:8px 0 0!important;
+    border-top:1px solid #e8f0e2!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-actions>a,
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-actions>button{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    min-height:38px!important;
+    margin:0!important;
+    padding:6px 8px!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1.5px solid #d3e0cd!important;
+    border-radius:10px!important;
+    background:#f4f9f0!important;
+    color:#33553a!important;
+    font-size:10px!important;
+    font-weight:900!important;
+    line-height:1.15!important;
+    text-align:center!important;
+    text-decoration:none!important;
+    white-space:normal!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-actions>a{
+    border-color:#a8cbe4!important;
+    background:#e8f2fa!important;
+    color:#1c4f79!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-actions .today-pin-button.is-pinned{
+    border-color:#93c37f!important;
+    background:#dff0d2!important;
+    color:#265c2c!important;
+  }
+  html body #teamDialog #teamWorkspace .material-page-grid .material-item-actions>button[data-delete-material]{
+    border-color:#e6b4ac!important;
+    background:#fbeae7!important;
+    color:#95382c!important;
+  }
+
+  html body #teamDialog #teamWorkspace .material-page-grid>.material-empty{
+    grid-column:1/-1!important;
+    grid-row:auto!important;
+    height:auto!important;
+    min-height:110px!important;
+    padding:18px 14px!important;
+  }
+
+  html body #teamDialog #teamWorkspace .material-pager{
+    display:grid!important;
+    grid-template-columns:1fr auto 1fr!important;
+    align-items:center!important;
+    gap:8px!important;
+    width:100%!important;
+    height:auto!important;
+    margin:0!important;
+  }
+  html body #teamDialog #teamWorkspace .material-pager button{
+    min-height:40px!important;
+    border-radius:11px!important;
+    font-size:10.5px!important;
+    touch-action:manipulation!important;
+  }
+
+  /* Die Fach-Reiter oben (Freizeit, Wochenangebote, AGs …) bleiben ein
+     umbrechendes Raster. Auch 20 Faecher ergeben so eine ruhige Flaeche. */
+  html body #teamDialog #teamWorkspace .material-drawer-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;
+    grid-auto-rows:auto!important;
+    gap:7px!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace .drawer-tab{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-height:46px!important;
+    padding:8px 10px!important;
+    display:grid!important;
+    grid-template-columns:22px minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:7px!important;
+    border-radius:12px!important;
+    text-align:left!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace .drawer-tab strong{
+    min-width:0!important;
+    overflow:hidden!important;
+    font-size:12px!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace .drawer-tab small{
+    min-width:22px!important;
+    padding:2px 6px!important;
+    border-radius:99px!important;
+    background:rgba(255,255,255,.55)!important;
+    font-size:9.5px!important;
+    font-weight:900!important;
+  }
+}
+
+/* ============================================================
+   4 · ALLE FÜCHSE – Kinderkarte mit klarer Knopfreihe
+   ============================================================ */
+
+@media (max-width:760px){
+  html body #teamWorkspace .compact-team-points .student-list,
+  html body #teamWorkspace #teacherStudentList{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-auto-rows:auto!important;
+    gap:9px!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:0!important;
+  }
+
+  /* Name oben ueber die ganze Breite, Knoepfe darunter in einer Reihe.
+     Vorher wollte die Zeile zwei Spalten mit 202 px fuer die Knoepfe – auf
+     dem Telefon brach das um und die Knoepfe verschwanden. */
+  html body #teamWorkspace .student-row,
+  html body #teamWorkspace .compact-rating-row.compact-rating-row{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:10px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-auto-rows:auto!important;
+    gap:9px!important;
+    overflow:visible!important;
+    border:1.5px solid #dae6d3!important;
+    border-radius:15px!important;
+    background:#fff!important;
+  }
+
+  html body #teamWorkspace .student-row .student-point-name{
+    width:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:48px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:10px!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    text-align:left!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamWorkspace .student-row .mini-avatar{
+    width:48px!important;
+    height:48px!important;
+    min-width:48px!important;
+    border-radius:14px!important;
+    overflow:hidden!important;
+    font-size:19px!important;
+  }
+  html body #teamWorkspace .student-row .mini-avatar img,
+  html body #teamWorkspace .student-row .mini-photo{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    display:block!important;
+  }
+  html body #teamWorkspace .student-row .student-point-name>span:last-child{
+    min-width:0!important;
+    display:grid!important;
+    gap:2px!important;
+  }
+  html body #teamWorkspace .student-row .student-point-name strong{
+    overflow:hidden!important;
+    font-size:15px!important;
+    line-height:1.15!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #teamWorkspace .student-row .student-point-name>span:last-child>small{
+    font-size:11px!important;
+    letter-spacing:.02em!important;
+  }
+  html body #teamWorkspace .student-row .student-measure-list{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:3px!important;
+  }
+  html body #teamWorkspace .student-row .student-measure-slot{
+    padding:2px 6px!important;
+    border-radius:99px!important;
+    background:#eef4ea!important;
+    color:#5a7159!important;
+    font-size:8.5px!important;
+    font-style:normal!important;
+    font-weight:900!important;
+  }
+  html body #teamWorkspace .student-row .student-measure-slot.active{
+    background:#fbe6e2!important;
+    color:#9a3f31!important;
+  }
+
+  /* Sechs gleich breite Knoepfe, mindestens 44 px hoch, mit Beschriftung. */
+  html body #teamWorkspace .compact-rating-row .student-direct-actions,
+  html body #teamWorkspace .student-row .student-direct-actions{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    margin:0!important;
+    padding:8px 0 0!important;
+    display:grid!important;
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    grid-template-rows:auto!important;
+    align-items:stretch!important;
+    justify-content:stretch!important;
+    gap:5px!important;
+    overflow:visible!important;
+    border-top:1px solid #e8f0e2!important;
+  }
+  html body #teamWorkspace .student-direct-actions .point-btn,
+  html body #teamWorkspace .student-direct-actions .student-profile-shortcut{
+    box-sizing:border-box!important;
+    position:static!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:46px!important;
+    min-height:46px!important;
+    max-height:46px!important;
+    margin:0!important;
+    padding:3px 1px!important;
+    display:grid!important;
+    grid-template-rows:auto auto!important;
+    place-items:center!important;
+    align-content:center!important;
+    gap:1px!important;
+    border-radius:11px!important;
+    font-size:0!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamWorkspace .student-direct-actions .point-symbol,
+  html body #teamWorkspace .student-direct-actions .ban-glyph{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    font-size:17px!important;
+    line-height:1!important;
+  }
+  /* Die Beschriftung war ausgeblendet. Ohne sie ist ein Farbpunkt fuer
+     Vertretungen nicht zu deuten – sie kommt zurueck, klein und ruhig. */
+  html body #teamWorkspace .student-direct-actions small{
+    display:block!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    font-size:7px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    letter-spacing:-.01em!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #teamWorkspace .student-direct-actions .student-profile-shortcut>span{
+    font-size:13px!important;
+    font-weight:950!important;
+    line-height:1!important;
+  }
+
+  /* Die Punktekarten im eigenen Handy-Dialog folgen derselben Ordnung. */
+  html body #mobilePointsGrid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-auto-rows:auto!important;
+    gap:9px!important;
+    overflow:visible!important;
+  }
+  html body .mobile-rate-card{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    display:grid!important;
+    grid-auto-rows:auto!important;
+    gap:8px!important;
+    overflow:visible!important;
+  }
+  html body .mobile-rate-actions{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:6px!important;
+    width:100%!important;
+    overflow:visible!important;
+  }
+  html body .mobile-rate-actions .rate-btn{
+    width:100%!important;
+    min-width:0!important;
+    height:48px!important;
+    min-height:48px!important;
+    margin:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:12px!important;
+    touch-action:manipulation!important;
+  }
+}
+
+/* ============================================================
+   5 · MEINE ÜBERSICHT – „Füchse im Blick" wieder lesbar
+   ============================================================ */
+
+@media (max-width:760px){
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children{
+    display:grid!important;
+    grid-template-rows:none!important;
+    grid-auto-rows:auto!important;
+    gap:9px!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:14px 12px!important;
+    overflow:visible!important;
+  }
+
+  /* Das Holzschild stand halb ueber dem Datum, weil das Fuchsbild absolut
+     positioniert war und die Zeile keine eigene Hoehe hatte. Titel, Datum
+     und Hinweis stehen nun sauber untereinander. */
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children-title{
+    position:relative!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:56px!important;
+    margin:0!important;
+    padding:8px 12px 8px 62px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    align-items:center!important;
+    justify-content:start!important;
+    text-align:left!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children-title>span{
+    position:absolute!important;
+    left:4px!important;
+    top:50%!important;
+    width:48px!important;
+    height:48px!important;
+    display:grid!important;
+    place-items:center!important;
+    font-size:28px!important;
+    transform:translateY(-50%) rotate(-4deg)!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children-title>div{
+    min-width:0!important;
+    display:grid!important;
+    gap:2px!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children-title h3{
+    margin:0!important;
+    font-size:19px!important;
+    line-height:1.1!important;
+    white-space:normal!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children-title time{
+    display:block!important;
+    margin:0!important;
+    font-size:10.5px!important;
+    line-height:1.2!important;
+    text-transform:capitalize!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-children-hint{
+    display:block!important;
+    margin:0!important;
+    padding:5px 9px!important;
+    border-radius:99px!important;
+    background:rgba(255,255,255,.16)!important;
+    color:#f2fbe8!important;
+    font-size:9px!important;
+    font-weight:900!important;
+    letter-spacing:.05em!important;
+    text-align:center!important;
+  }
+
+  html body #teamDialog #teamWorkspace.overview-mode #cockpitIncidentList{
+    display:grid!important;
+    grid-auto-rows:auto!important;
+    gap:7px!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  /* „Heute keine Auffaelligkeiten" war grau in grau. Jetzt eine klare
+     Entlastungsmeldung. */
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-all-good{
+    display:grid!important;
+    grid-template-columns:34px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:10px!important;
+    min-height:56px!important;
+    padding:11px 13px!important;
+    border:1.5px solid rgba(255,255,255,.34)!important;
+    border-radius:14px!important;
+    background:rgba(255,255,255,.14)!important;
+    color:#fbfff4!important;
+    text-align:left!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-all-good>span{
+    width:34px!important;
+    height:34px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:50%!important;
+    background:rgba(255,255,255,.9)!important;
+    color:#1d7a41!important;
+    font-size:18px!important;
+    font-weight:950!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-all-good strong{
+    font-size:13px!important;
+    line-height:1.2!important;
+  }
+
+  /* Der gruene Knopf war ein Rahmen mit einem Pfeilkaestchen daneben – man
+     konnte nicht sehen, dass beides zusammen EIN Knopf ist. Jetzt eine
+     durchgehend gruene Flaeche mit Beschriftung und Pfeil darin. */
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-all-children-button{
+    box-sizing:border-box!important;
+    position:relative!important;
+    width:100%!important;
+    min-height:54px!important;
+    margin:2px 0 0!important;
+    padding:11px 50px 11px 15px!important;
+    display:grid!important;
+    align-items:center!important;
+    border:1.5px solid #0d5c34!important;
+    border-radius:15px!important;
+    background:linear-gradient(168deg,#37b065,#16793f)!important;
+    color:#fff!important;
+    font-size:13.5px!important;
+    font-weight:950!important;
+    line-height:1.2!important;
+    text-align:left!important;
+    text-decoration:none!important;
+    text-shadow:0 1px 2px rgba(6,54,26,.45)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 4px 0 #0b4c2b,0 9px 16px rgba(10,58,30,.26)!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-all-children-button::after{
+    content:"\203A"!important;
+    position:absolute!important;
+    right:11px!important;
+    top:50%!important;
+    width:30px!important;
+    height:30px!important;
+    display:grid!important;
+    place-items:center!important;
+    transform:translateY(-50%)!important;
+    border-radius:10px!important;
+    background:rgba(255,255,255,.24)!important;
+    font-size:19px!important;
+    line-height:1!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-all-children-button:active{
+    transform:translateY(2px)!important;
+    box-shadow:inset 0 2px 4px rgba(6,54,26,.4),0 1px 0 #0b4c2b!important;
+  }
+
+  /* Der Schnelleintrag stapelt sich, damit die Auswahlfelder voll lesbar
+     bleiben. Vorher standen drei Felder und ein Knopf in einer Zeile. */
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-quick-entry{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-auto-rows:auto!important;
+    gap:7px!important;
+    width:100%!important;
+    height:auto!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-quick-entry select,
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-quick-entry input,
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-quick-entry button{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:46px!important;
+    margin:0!important;
+    padding:10px 12px!important;
+    border-radius:12px!important;
+    font-size:12.5px!important;
+    touch-action:manipulation!important;
+  }
+  html body #teamDialog #teamWorkspace.overview-mode .cockpit-quick-entry button{
+    border:1.5px solid #0d5c34!important;
+    background:linear-gradient(168deg,#37b065,#16793f)!important;
+    color:#fff!important;
+    font-weight:950!important;
+  }
+}
+
+/* ============================================================
+   6 · GEMEINSAM FÜR iPHONE UND ANDROID
+
+   Android-Browser rechnen 100vh gegen die volle Bildschirmhoehe und
+   schieben Inhalt hinter die Systemleisten. 100dvh ist dort richtig, wird
+   aber von aelteren Ausgaben nicht verstanden – deshalb beides.
+   ============================================================ */
+
+@media (max-width:760px){
+  html body #teamDialog[open]>.dialog-card,
+  html body #settingsDialog[open] .settings-card{
+    height:100vh!important;
+    max-height:100vh!important;
+  }
+  @supports (height:100dvh){
+    html body #teamDialog[open]>.dialog-card,
+    html body #settingsDialog[open] .settings-card{
+      height:100dvh!important;
+      max-height:100dvh!important;
+    }
+  }
+
+  /* Kein Doppeltipp-Zoom auf Bedienelementen, sonst reagiert der erste
+     Tipp auf Android traege. */
+  html body button,
+  html body a[role="button"],
+  html body .drawer-tab,
+  html body .material-folder-card{
+    touch-action:manipulation!important;
+  }
+
+  /* Auslaufende Wortungetuemer wie „Wochenangebote bearbeiten" duerfen
+     umbrechen statt die Karte zu sprengen. */
+  html body #teamDialog #teamWorkspace button{
+    overflow-wrap:break-word!important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  html body .close-button,
+  html body #backToBoardButton{transition:none!important}
+}

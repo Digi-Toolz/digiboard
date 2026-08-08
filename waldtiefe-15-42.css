@@ -1,0 +1,317 @@
+/* ============================================================
+   DigiBoard Next 15.42 – Waldtiefe, Lichtung und Klassenbaum
+
+   Die reichere Waldlichtung bildet wieder den Hintergrund. Der Klassenbaum
+   bekommt davor drei klar getrennte Ebenen: fernen Nadelwald, Hauptbaum und
+   ruhigen Waldboden. Portraits und Bedienelemente bleiben unveraendert.
+   ============================================================ */
+
+html body .app-shell{
+  --forest-daylight:rgba(255,249,196,.24);
+  --forest-edge:rgba(6,54,31,.17);
+  --forest-floor-light:rgba(202,221,104,.08);
+  --tree-clearing-light:rgba(255,245,153,.34);
+  --tree-distant:#4f8b55;
+  --tree-distant-deep:#2f6842;
+  --tree-meadow:#5a9b49;
+  --tree-meadow-deep:#2d6f3d;
+  filter:none!important;
+  background-color:#dfe9a4!important;
+  background-image:
+    radial-gradient(ellipse at 50% 18%,var(--forest-daylight),transparent 43%),
+    linear-gradient(90deg,var(--forest-edge),transparent 17%,transparent 83%,var(--forest-edge)),
+    linear-gradient(180deg,transparent 62%,var(--forest-floor-light)),
+    url('forest-clearing-15.24.png')!important;
+  background-position:center,center,center,center center!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%,100% 100%,100% 100%,cover!important;
+}
+
+html body .app-shell::before{
+  display:block!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,rgba(5,45,27,.08),transparent 12%,transparent 88%,rgba(5,45,27,.08)),
+    radial-gradient(ellipse at 50% 34%,rgba(255,255,225,.13),transparent 42%),
+    linear-gradient(180deg,rgba(255,255,236,.02),transparent 54%,rgba(18,73,38,.08))!important;
+}
+
+html body .app-shell .forest-light{
+  opacity:1!important;
+  background:
+    linear-gradient(111deg,transparent 26%,rgba(255,251,208,.07) 35%,transparent 43%) 0 0/100% 100%,
+    linear-gradient(72deg,transparent 58%,rgba(255,250,203,.055) 66%,transparent 73%) 0 0/100% 100%,
+    radial-gradient(ellipse at 50% 20%,rgba(255,253,217,.18),transparent 48%)!important;
+}
+
+/* Die neue Hintergrundgrafik bringt ihre Waldtiere und Pflanzen bereits mit.
+   Alte Emoji-Dekorationen wuerden sie nur doppeln. Interaktive Geheimnisse
+   und ein paar ruhige Gluehpunkte bleiben erhalten. */
+html body .app-shell .forest-ambient>span{display:none!important}
+html body .app-shell .forest-ambient>.firefly{
+  display:block!important;
+  opacity:.52!important;
+  filter:drop-shadow(0 0 5px rgba(255,239,126,.62))!important;
+}
+html body .app-shell .forest-ambient>.forest-secret-v1523{display:grid!important}
+
+html body .app-shell.time-morning{
+  --forest-daylight:rgba(255,226,137,.34);
+  --forest-floor-light:rgba(236,204,90,.08);
+  --tree-clearing-light:rgba(255,226,123,.43);
+}
+html body .app-shell.time-midday{
+  --forest-daylight:rgba(255,254,218,.25);
+  --tree-clearing-light:rgba(255,250,182,.38);
+}
+html body .app-shell.time-afternoon{
+  --forest-daylight:rgba(255,209,116,.27);
+  --forest-floor-light:rgba(223,162,74,.09);
+  --tree-clearing-light:rgba(255,209,112,.39);
+}
+html body .app-shell.time-evening{
+  --forest-daylight:rgba(239,164,104,.17);
+  --forest-edge:rgba(6,39,27,.28);
+  --forest-floor-light:rgba(21,66,42,.18);
+  --tree-clearing-light:rgba(244,172,94,.27);
+  --tree-distant:#426d50;
+  --tree-distant-deep:#284b3b;
+}
+
+/* Lichtfenster direkt hinter dem Klassenbaum. */
+html body .app-shell .wall-fixed .tree-clearing-light-v1542{
+  position:absolute!important;
+  z-index:0!important;
+  inset:2% 5% 4%!important;
+  overflow:hidden!important;
+  border-radius:48% 52% 42% 44% / 36% 38% 28% 30%!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(circle at 50% 28%,var(--tree-clearing-light),transparent 39%),
+    radial-gradient(ellipse at 50% 92%,rgba(139,179,79,.26),transparent 64%)!important;
+  filter:blur(.2px)!important;
+}
+html body .app-shell .wall-fixed .tree-clearing-light-v1542::after{
+  content:""!important;
+  position:absolute!important;
+  left:22%!important;
+  right:22%!important;
+  bottom:2%!important;
+  height:25%!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(64,112,53,.28),transparent 70%)!important;
+  filter:blur(7px)!important;
+}
+html body .app-shell .wall-fixed .tree-clearing-light-v1542 i{
+  position:absolute!important;
+  top:-12%!important;
+  width:12%!important;
+  height:72%!important;
+  border-radius:50%!important;
+  background:linear-gradient(180deg,rgba(255,252,206,.17),transparent 84%)!important;
+  filter:blur(7px)!important;
+  transform-origin:50% 0!important;
+}
+html body .app-shell .wall-fixed .tree-clearing-light-v1542 i:nth-child(1){left:28%!important;transform:rotate(12deg)!important}
+html body .app-shell .wall-fixed .tree-clearing-light-v1542 i:nth-child(2){left:47%!important;width:9%!important;opacity:.72!important;transform:rotate(-3deg)!important}
+html body .app-shell .wall-fixed .tree-clearing-light-v1542 i:nth-child(3){right:26%!important;transform:rotate(-14deg)!important}
+
+/* Ferne Nadelbaeume schliessen die Luecke zwischen Hintergrund und Krone. */
+html body .app-shell .wall-fixed .tree-depth-pines-v1542{
+  position:absolute!important;
+  z-index:1!important;
+  inset:11% -3% 9%!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  opacity:.58!important;
+  filter:drop-shadow(0 9px 12px rgba(33,82,46,.12))!important;
+}
+html body .app-shell .wall-fixed .tree-depth-pines-v1542 i{
+  --pine-scale:1;
+  position:absolute!important;
+  bottom:5%!important;
+  width:13%!important;
+  height:55%!important;
+  background:linear-gradient(115deg,color-mix(in srgb,var(--tree-distant) 84%,#b6d281),var(--tree-distant-deep))!important;
+  clip-path:polygon(50% 0,64% 20%,57% 20%,73% 40%,63% 40%,82% 64%,61% 61%,61% 100%,42% 100%,42% 62%,17% 66%,37% 40%,27% 40%,44% 20%,37% 20%)!important;
+  transform:scale(var(--pine-scale))!important;
+  transform-origin:50% 100%!important;
+}
+html body .app-shell .wall-fixed .tree-depth-pines-v1542 i::after{
+  content:""!important;
+  position:absolute!important;
+  left:47%!important;
+  bottom:0!important;
+  width:7%!important;
+  height:40%!important;
+  background:rgba(70,55,34,.55)!important;
+}
+html body .app-shell .wall-fixed .depth-pine-a-v1542{left:1%!important;--pine-scale:.72;opacity:.56!important}
+html body .app-shell .wall-fixed .depth-pine-b-v1542{left:12%!important;--pine-scale:1.04;opacity:.74!important}
+html body .app-shell .wall-fixed .depth-pine-c-v1542{left:27%!important;--pine-scale:.67;opacity:.45!important}
+html body .app-shell .wall-fixed .depth-pine-d-v1542{right:27%!important;--pine-scale:.68;opacity:.45!important}
+html body .app-shell .wall-fixed .depth-pine-e-v1542{right:12%!important;--pine-scale:1.02;opacity:.74!important}
+html body .app-shell .wall-fixed .depth-pine-f-v1542{right:1%!important;--pine-scale:.74;opacity:.56!important}
+
+/* Kleine Lichtflecken machen die bestehende Baumgrafik plastischer. */
+html body .app-shell .wall-fixed .tree-canopy-light-v1542{
+  position:absolute!important;
+  z-index:7!important;
+  inset:8% 9% 20%!important;
+  overflow:hidden!important;
+  border-radius:48%!important;
+  pointer-events:none!important;
+  mix-blend-mode:screen!important;
+}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i{
+  position:absolute!important;
+  width:clamp(9px,2.2vw,18px)!important;
+  aspect-ratio:1!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle,rgba(255,252,194,.62),rgba(238,244,156,.16) 52%,transparent 72%)!important;
+  filter:blur(.5px)!important;
+  opacity:.66!important;
+  animation:canopyLight1542 7s ease-in-out infinite!important;
+}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(1){left:19%!important;top:24%!important}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(2){left:35%!important;top:10%!important;animation-delay:-1.4s!important}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(3){left:53%!important;top:19%!important;animation-delay:-3s!important}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(4){right:20%!important;top:29%!important;animation-delay:-4.4s!important}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(5){left:27%!important;bottom:29%!important;animation-delay:-5.2s!important}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(6){left:49%!important;bottom:20%!important;animation-delay:-2.1s!important}
+html body .app-shell .wall-fixed .tree-canopy-light-v1542 i:nth-child(7){right:24%!important;bottom:31%!important;animation-delay:-3.7s!important}
+
+/* Waldboden vor dem Stamm – bewusst niedrig, damit keine Namen verdeckt
+   werden. */
+html body .app-shell .wall-fixed .tree-meadow-v1542{
+  position:absolute!important;
+  z-index:8!important;
+  left:12%!important;
+  right:12%!important;
+  bottom:3.5%!important;
+  height:12%!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+}
+html body .app-shell .wall-fixed .tree-meadow-v1542::before{
+  content:""!important;
+  position:absolute!important;
+  inset:38% 0 0!important;
+  border-radius:50% 50% 28% 28%!important;
+  background:
+    radial-gradient(ellipse at 50% 100%,rgba(50,105,48,.43),transparent 69%),
+    linear-gradient(180deg,transparent,color-mix(in srgb,var(--tree-meadow) 42%,transparent))!important;
+  filter:blur(2px)!important;
+}
+html body .app-shell .wall-fixed .tree-meadow-v1542 i{
+  position:absolute!important;
+  bottom:17%!important;
+  width:24px!important;
+  height:31px!important;
+  border-radius:100% 0 100% 0!important;
+  background:linear-gradient(135deg,#8cc75a,var(--tree-meadow-deep))!important;
+  transform-origin:50% 100%!important;
+  filter:drop-shadow(7px 4px 0 color-mix(in srgb,var(--tree-meadow) 73%,transparent))!important;
+}
+html body .app-shell .wall-fixed .tree-meadow-v1542 i:nth-child(1){left:4%!important;transform:rotate(-22deg) scale(.82)!important}
+html body .app-shell .wall-fixed .tree-meadow-v1542 i:nth-child(2){left:18%!important;transform:rotate(17deg) scale(.56)!important}
+html body .app-shell .wall-fixed .tree-meadow-v1542 i:nth-child(3){left:35%!important;transform:rotate(-11deg) scale(.43)!important}
+html body .app-shell .wall-fixed .tree-meadow-v1542 i:nth-child(4){right:34%!important;transform:scaleX(-1) rotate(-14deg) scale(.48)!important}
+html body .app-shell .wall-fixed .tree-meadow-v1542 i:nth-child(5){right:6%!important;transform:scaleX(-1) rotate(-20deg) scale(.86)!important}
+html body .app-shell .wall-fixed .tree-meadow-v1542 span{
+  position:absolute!important;
+  bottom:13%!important;
+  width:25px!important;
+  height:10px!important;
+  border-radius:58% 48% 44% 52%!important;
+  background:linear-gradient(145deg,#c4c3a4,#778573)!important;
+  box-shadow:inset 3px 2px rgba(255,255,255,.18)!important;
+}
+html body .app-shell .wall-fixed .tree-meadow-v1542 span:nth-of-type(1){left:11%!important;transform:rotate(-6deg) scale(.72)!important}
+html body .app-shell .wall-fixed .tree-meadow-v1542 span:nth-of-type(2){right:13%!important;transform:rotate(7deg) scale(.84)!important}
+
+/* Die bisherigen Hintergrundbaeume sind nun die mittlere Tiefenebene. */
+html body .app-shell .wall-fixed .tree-background-grove-v1539{
+  z-index:2!important;
+  opacity:.78!important;
+  filter:blur(.2px) saturate(.9) drop-shadow(0 15px 13px rgba(24,73,37,.12))!important;
+}
+html body .app-shell .wall-fixed .tree-main-image-v1539{
+  z-index:4!important;
+  background-size:97% 100%!important;
+  filter:drop-shadow(0 25px 22px rgba(18,62,29,.24)) saturate(1.09) contrast(1.025) brightness(1.025)!important;
+}
+html body .app-shell .wall-fixed .tree-portraits-v22{z-index:11!important}
+html body .app-shell .wall-fixed .tree-floor-v1538{z-index:12!important}
+html body .app-shell .wall-fixed .tree-growth-badge-v1184,
+html body .app-shell .wall-fixed .tree-today-badge-v1531,
+html body .app-shell .wall-fixed .forest-visitor-v1187,
+html body .app-shell .wall-fixed .lucky-leaf-v131{z-index:15!important}
+
+/* Baumstufen veraendern die Lichtung sanft mit. */
+html body .app-shell .wall-fixed .wall-stage[data-growth-level="0"] .tree-depth-pines-v1542{opacity:.42!important}
+html body .app-shell .wall-fixed .wall-stage[data-growth-level="0"] .tree-canopy-light-v1542{opacity:.42!important}
+html body .app-shell .wall-fixed .wall-stage[data-growth-level="1"] .tree-canopy-light-v1542{opacity:.58!important}
+html body .app-shell .wall-fixed .wall-stage[data-growth-level="2"] .tree-canopy-light-v1542{opacity:.72!important}
+html body .app-shell .wall-fixed .wall-stage[data-growth-level="3"] .tree-canopy-light-v1542{opacity:.88!important}
+html body .app-shell .wall-fixed .wall-stage[data-growth-level="4"] .tree-canopy-light-v1542{
+  opacity:1!important;
+  filter:drop-shadow(0 0 10px rgba(255,227,101,.28))!important;
+}
+
+/* Jahreszeiten faerben nur Wald- und Baumebenen, niemals Kinderfotos. */
+html body .app-shell.season-autumn .wall-fixed{
+  --tree-distant:#9b6d37;--tree-distant-deep:#6e442d;--tree-meadow:#8f783c;--tree-meadow-deep:#5f4c2e;
+}
+html body .app-shell.season-winter .wall-fixed{
+  --tree-distant:#91a79e;--tree-distant-deep:#607970;--tree-meadow:#d9e9e8;--tree-meadow-deep:#8ea8a2;
+}
+html body .app-shell.season-winter .wall-fixed .tree-meadow-v1542::before{
+  background:radial-gradient(ellipse at 50% 100%,rgba(247,252,253,.88),rgba(213,232,234,.55) 58%,transparent 72%)!important;
+}
+html body .app-shell.season-winter .wall-fixed .tree-meadow-v1542 i{opacity:.28!important}
+
+html body .app-shell.time-evening .wall-fixed .tree-clearing-light-v1542{opacity:.74!important}
+html body .app-shell.time-evening .wall-fixed .tree-canopy-light-v1542 i{
+  background:radial-gradient(circle,rgba(255,222,137,.58),rgba(238,173,86,.13) 52%,transparent 72%)!important;
+}
+
+html body .app-shell .wall-fixed.wall-expanded .tree-clearing-light-v1542{inset:1% 4% 2%!important}
+html body .app-shell .wall-fixed.wall-expanded .tree-depth-pines-v1542{inset:8% 1% 7%!important;opacity:.51!important}
+html body .app-shell .wall-fixed.wall-expanded .tree-main-image-v1539{background-size:contain!important}
+html body .app-shell .wall-fixed.wall-expanded .tree-meadow-v1542{left:18%!important;right:18%!important;bottom:1.5%!important}
+
+@keyframes canopyLight1542{
+  0%,100%{opacity:.38;transform:scale(.82)}
+  50%{opacity:.78;transform:scale(1.14)}
+}
+
+@media(max-width:1180px) and (min-width:701px){
+  html body .app-shell{
+    background-position:center,center,center,52% center!important;
+  }
+  html body .app-shell .wall-fixed .tree-depth-pines-v1542{inset-inline:-8%!important;opacity:.48!important}
+  html body .app-shell .wall-fixed .tree-background-grove-v1539{opacity:.68!important}
+  html body .app-shell .wall-fixed .tree-main-image-v1539{background-size:100% 100%!important}
+}
+
+@media(max-width:760px){
+  html body .app-shell .wall-fixed .tree-depth-pines-v1542{inset-inline:-15%!important;opacity:.38!important}
+  html body .app-shell .wall-fixed .depth-pine-c-v1542,
+  html body .app-shell .wall-fixed .depth-pine-d-v1542{display:none!important}
+  html body .app-shell .wall-fixed .tree-canopy-light-v1542{inset-inline:5%!important}
+  html body .app-shell .wall-fixed .tree-meadow-v1542{left:7%!important;right:7%!important}
+}
+
+/* Auf dem Handy bleibt die bewusst ruhige, schnelle Personenansicht erhalten. */
+@media(max-width:700px){
+  html body .app-shell{
+    background:#edf3e8!important;
+  }
+  html body .app-shell::before,
+  html body .app-shell .forest-light{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body .app-shell .wall-fixed .tree-canopy-light-v1542 i{animation:none!important}
+}

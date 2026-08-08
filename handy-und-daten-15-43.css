@@ -1,0 +1,695 @@
+/* ============================================================
+   DigiBoard Next 15.43 – Handy-Sicherheitsabstaende, Fotos & Galerie
+
+   Diese Datei steht bewusst ganz zuletzt. Sie fasst die mobilen Regeln an
+   einer Stelle zusammen, damit alte Einzelkorrekturen die Kopfzeilen nicht
+   mehr ueberschreiben koennen.
+   ============================================================ */
+
+/* Einstellungen und Sicherungen muessen auf Laptop und iPad bis zum letzten
+   Knopf scrollbar bleiben. */
+html body #settingsDialog .settings-card{
+  overscroll-behavior:contain!important;
+  scrollbar-gutter:stable!important;
+}
+
+/* Der Wald wird parallel behutsam weitergefuehrt: kleine, unscharfe
+   Lichtpunkte verbinden die helle Lichtung noch besser mit der Baumkrone,
+   ohne Namen oder Fotos zu ueberlagern. */
+@media(min-width:701px){
+  html body .app-shell .wall-fixed .tree-clearing-light-v1542::before{
+    content:""!important;
+    position:absolute!important;
+    inset:7% 9% 24%!important;
+    pointer-events:none!important;
+    border-radius:48%!important;
+    background:
+      radial-gradient(circle at 21% 34%,rgba(255,248,164,.24) 0 5px,transparent 12px),
+      radial-gradient(circle at 38% 18%,rgba(255,252,188,.2) 0 4px,transparent 10px),
+      radial-gradient(circle at 63% 27%,rgba(255,247,157,.22) 0 5px,transparent 12px),
+      radial-gradient(circle at 79% 42%,rgba(255,243,142,.18) 0 4px,transparent 11px)!important;
+    filter:blur(.6px)!important;
+    opacity:.7!important;
+    animation:waldLicht1543 8s ease-in-out infinite!important;
+  }
+}
+
+@keyframes waldLicht1543{50%{opacity:.42;transform:translateY(2px) scale(1.015)}}
+
+@media(min-width:701px){
+  html body #settingsDialog .settings-card,
+  html body #settingsDialog .settings-card.settings-home-mode,
+  html body #settingsDialog .settings-card:not(.settings-home-mode){
+    box-sizing:border-box!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:calc(100dvh - 28px)!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+  }
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsShare,
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsBackup,
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsClass{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  html body #teamDialog #teamWorkspace.points-mode>.teacher-grid,
+  html body #teamDialog #teamWorkspace.materials-mode>.material-library-panel{
+    min-height:0!important;
+    overflow:auto!important;
+    overscroll-behavior:contain!important;
+  }
+}
+
+@media(max-width:700px){
+  :root{
+    /* Der Mindestwert schuetzt auch Web-App-Ansichten, in denen Safari fuer
+       den Dynamic-Island-Bereich faelschlich 0 px meldet. */
+    --digiboard-safe-top:max(44px,env(safe-area-inset-top,0px));
+    --digiboard-safe-bottom:max(10px,env(safe-area-inset-bottom,0px));
+  }
+
+  html{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+
+  /* Der Pauseknopf gehoert auf dem Telefon nicht in die Hauptnavigation. */
+  html body .app-shell .top-actions>.motion-toggle-button,
+  html body .app-shell #motionToggleButton{display:none!important}
+
+  /* ---------- Einstellungsdialog / Kinderdaten-Backup ---------- */
+  html body #settingsDialog[open]{
+    position:fixed!important;
+    inset:0!important;
+    box-sizing:border-box!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    background:#edf5df!important;
+  }
+  html body #settingsDialog .settings-card,
+  html body #settingsDialog .settings-card.settings-home-mode,
+  html body #settingsDialog .settings-card:not(.settings-home-mode){
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    margin:0!important;
+    padding:0 10px calc(82px + var(--digiboard-safe-bottom))!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    border:0!important;
+    border-radius:0!important;
+    background:linear-gradient(180deg,#f2f8e8,#edf5df)!important;
+    scroll-padding-top:calc(68px + var(--digiboard-safe-top))!important;
+  }
+  html body #settingsDialog .settings-card>.dialog-head,
+  html body #settingsDialog .settings-card.settings-home-mode>.dialog-head,
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>.dialog-head{
+    position:sticky!important;
+    z-index:500!important;
+    top:0!important;
+    box-sizing:border-box!important;
+    width:calc(100% + 20px)!important;
+    min-height:calc(60px + var(--digiboard-safe-top))!important;
+    margin:0 -10px 12px!important;
+    padding:calc(8px + var(--digiboard-safe-top)) 10px 8px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 46px!important;
+    grid-template-rows:44px!important;
+    align-items:center!important;
+    gap:8px!important;
+    border-radius:0 0 17px 17px!important;
+    background:linear-gradient(105deg,#06633e,#11904e 58%,#54b64f)!important;
+    box-shadow:0 8px 20px rgba(21,72,39,.2)!important;
+  }
+  html body #settingsDialog .settings-card>.dialog-head .settings-title-block,
+  html body #settingsDialog .settings-card>.dialog-head .settings-detail-bar{
+    grid-column:1!important;
+    grid-row:1!important;
+    min-width:0!important;
+    margin:0!important;
+  }
+  html body #settingsDialog .settings-card>.dialog-head .settings-title-block h2{
+    margin:0!important;
+    overflow:hidden!important;
+    color:#fff!important;
+    font-size:17px!important;
+    line-height:1.1!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>.dialog-head .settings-title-block{display:none!important}
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>.dialog-head .settings-detail-bar{
+    display:grid!important;
+    grid-template-columns:44px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:8px!important;
+  }
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>.dialog-head .settings-detail-bar button{
+    box-sizing:border-box!important;
+    width:44px!important;
+    min-width:44px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid rgba(94,72,27,.22)!important;
+    border-radius:14px!important;
+    background:linear-gradient(145deg,#fff3c8,#efd789)!important;
+    color:#19563a!important;
+  }
+  html body #settingsDialog .settings-detail-bar button>span:first-child{display:block!important;font-size:21px!important}
+  html body #settingsDialog .settings-detail-bar button>span:last-child,
+  html body #settingsDialog .settings-detail-bar>span:last-child{display:none!important}
+  html body #settingsDialog .settings-detail-bar strong{
+    min-width:0!important;
+    overflow:hidden!important;
+    color:#fff!important;
+    font-size:17px!important;
+    font-weight:850!important;
+    line-height:1.1!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #settingsDialog .settings-card>.dialog-head>.close-button{
+    position:static!important;
+    inset:auto!important;
+    grid-column:2!important;
+    grid-row:1!important;
+    justify-self:end!important;
+    box-sizing:border-box!important;
+    width:44px!important;
+    min-width:44px!important;
+    height:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid rgba(255,255,255,.55)!important;
+    border-radius:14px!important;
+    background:rgba(255,255,255,.92)!important;
+    color:#14613f!important;
+    font-size:21px!important;
+    line-height:1!important;
+    box-shadow:0 4px 10px rgba(16,59,34,.15)!important;
+  }
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsShare,
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsBackup,
+  html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsClass{
+    box-sizing:border-box!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:10px 0!important;
+    padding:16px!important;
+    overflow:visible!important;
+    border-radius:20px!important;
+  }
+  html body #settingsDialog .icloud-backup-panel>div:first-child{
+    display:grid!important;
+    grid-template-columns:52px minmax(0,1fr)!important;
+    gap:12px!important;
+    align-items:start!important;
+  }
+  html body #settingsDialog .icloud-backup-panel>div:first-child>span{
+    width:52px!important;
+    height:52px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:15px!important;
+    background:#e1f2df!important;
+    font-size:27px!important;
+  }
+  html body #settingsDialog .icloud-backup-panel h3{margin:2px 0 6px!important;font-size:19px!important;line-height:1.15!important}
+  html body #settingsDialog .icloud-backup-panel p{font-size:11px!important;line-height:1.45!important}
+  html body #settingsDialog .icloud-backup-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+    margin-top:14px!important;
+  }
+  html body #settingsDialog .icloud-backup-actions button{
+    width:100%!important;
+    min-height:50px!important;
+    margin:0!important;
+    padding:11px 12px!important;
+    border-radius:14px!important;
+    font-size:12px!important;
+    touch-action:manipulation!important;
+  }
+
+  /* ---------- Einzeilige Navigation im persoenlichen Bereich ---------- */
+  html body #teamDialog.team-workspace-open[open],
+  html body #teamDialog:has(#teamWorkspace:not([hidden]))[open]{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+  }
+  html body #teamDialog.team-workspace-open>.dialog-card,
+  html body #teamDialog:has(#teamWorkspace:not([hidden]))>.dialog-card{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    margin:0!important;
+    padding:0 9px calc(18px + var(--digiboard-safe-bottom))!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#eef5df!important;
+  }
+  html body #teamDialog.team-workspace-open>.dialog-card>.dialog-head,
+  html body #teamDialog.team-workspace-open .team-close-button,
+  html body #teamDialog:has(#teamWorkspace:not([hidden]))>.dialog-card>.dialog-head,
+  html body #teamDialog:has(#teamWorkspace:not([hidden])) .team-close-button{display:none!important}
+
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541{
+    position:sticky!important;
+    z-index:500!important;
+    top:0!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:calc(58px + var(--digiboard-safe-top))!important;
+    min-height:calc(58px + var(--digiboard-safe-top))!important;
+    margin:0!important;
+    padding:calc(7px + var(--digiboard-safe-top)) 7px 7px!important;
+    display:grid!important;
+    grid-template-columns:84px minmax(0,1fr) 42px!important;
+    grid-template-rows:44px!important;
+    align-items:center!important;
+    gap:5px!important;
+    border:1px solid #cadbcb!important;
+    border-radius:0 0 15px 15px!important;
+    background:rgba(249,252,244,.98)!important;
+    box-shadow:0 8px 18px rgba(28,70,39,.15)!important;
+    backdrop-filter:blur(15px)!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-nav-left{
+    width:84px!important;
+    height:44px!important;
+    display:grid!important;
+    grid-template-columns:40px 40px!important;
+    align-items:center!important;
+    gap:4px!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 .team-nav-left button{
+    box-sizing:border-box!important;
+    width:40px!important;
+    min-width:40px!important;
+    height:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    font-size:17px!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541 .team-nav-left button strong{
+    position:absolute!important;
+    width:1px!important;
+    height:1px!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    clip:rect(0,0,0,0)!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-page-tabs{
+    position:static!important;
+    inset:auto!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:3px!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:3px!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-page-tabs button{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    height:34px!important;
+    min-height:34px!important;
+    margin:0!important;
+    padding:4px 3px!important;
+    overflow:hidden!important;
+    font-size:8.5px!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-unified-nav-v1541>.team-top-settings-button{
+    position:static!important;
+    inset:auto!important;
+    grid-column:3!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:end!important;
+    box-sizing:border-box!important;
+    width:42px!important;
+    min-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    font-size:18px!important;
+  }
+  html body #teamDialog #teamWorkspace>.team-cockpit,
+  html body #teamDialog #teamWorkspace>.material-library-panel,
+  html body #teamDialog #teamWorkspace>.teacher-grid,
+  html body #teamDialog #teamWorkspace>#personalWorkspaceSettings{
+    margin-top:9px!important;
+  }
+
+  /* ---------- Aufgeraeumte Punktegalerie ---------- */
+  html body #mobilePointsDialog[open]{
+    position:fixed!important;
+    inset:0!important;
+    box-sizing:border-box!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    background:#eef5df!important;
+  }
+  html body #mobilePointsDialog .mobile-points-card{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-height:100dvh!important;
+    margin:0!important;
+    padding:0 10px calc(18px + var(--digiboard-safe-bottom))!important;
+    background:linear-gradient(180deg,#f2f8e9,#ebf3df)!important;
+  }
+  html body #mobilePointsDialog .mobile-points-card>header{
+    position:sticky!important;
+    z-index:30!important;
+    top:0!important;
+    box-sizing:border-box!important;
+    min-height:calc(76px + var(--digiboard-safe-top))!important;
+    margin:0 -10px 9px!important;
+    padding:calc(9px + var(--digiboard-safe-top)) 12px 9px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 44px!important;
+    align-items:center!important;
+    gap:8px!important;
+    border-radius:0 0 18px 18px!important;
+    background:linear-gradient(110deg,#fff09c,#dff19a 56%,#8bd174)!important;
+    box-shadow:0 8px 20px rgba(51,92,42,.15)!important;
+  }
+  html body #mobilePointsDialog .mobile-points-card>header>div{min-width:0!important}
+  html body #mobilePointsDialog .mobile-points-card>header small{font-size:7px!important;letter-spacing:.14em!important}
+  html body #mobilePointsDialog .mobile-points-card>header h2{
+    margin:2px 0!important;
+    overflow:hidden!important;
+    color:#24523a!important;
+    font-size:22px!important;
+    line-height:1.05!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #mobilePointsDialog .mobile-points-card>header p{
+    margin:0!important;
+    overflow:hidden!important;
+    color:#4f674f!important;
+    font-size:8px!important;
+    line-height:1.25!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #mobilePointsClose{
+    position:static!important;
+    inset:auto!important;
+    width:44px!important;
+    min-width:44px!important;
+    height:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0!important;
+    border-radius:14px!important;
+  }
+  html body #mobilePointsDialog .mobile-points-goal{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-height:60px!important;
+    margin:0 0 8px!important;
+    padding:9px 10px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:8px!important;
+    border:1px solid #d6e2c9!important;
+    border-radius:15px!important;
+    background:rgba(255,255,255,.82)!important;
+    box-shadow:none!important;
+  }
+  html body #mobilePointsDialog .mobile-points-goal-text{
+    min-width:0!important;
+    display:grid!important;
+    grid-template-columns:23px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:7px!important;
+  }
+  html body #mobilePointsDialog .mobile-points-goal-text>span{font-size:19px!important}
+  html body #mobilePointsDialog .mobile-points-goal-text p{
+    margin:0!important;
+    overflow:hidden!important;
+    color:#315a3e!important;
+    font-size:11px!important;
+    font-weight:850!important;
+    line-height:1.25!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #mobilePointsDialog .mobile-points-goal-actions{display:flex!important;gap:5px!important}
+  html body #mobilePointsDialog .mobile-points-goal-actions button{
+    width:auto!important;
+    min-width:54px!important;
+    height:38px!important;
+    min-height:38px!important;
+    margin:0!important;
+    padding:6px 9px!important;
+    border-radius:11px!important;
+    font-size:10px!important;
+  }
+  html body #mobilePointsDialog .mobile-points-toolbar{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-height:46px!important;
+    margin:0 0 9px!important;
+    padding:0!important;
+    display:block!important;
+  }
+  html body #mobilePointsDialog .mobile-child-search{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:46px!important;
+    margin:0!important;
+    padding:0 12px!important;
+    display:grid!important;
+    grid-template-columns:24px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:6px!important;
+    border:1px solid #cdddc6!important;
+    border-radius:14px!important;
+    background:#fff!important;
+  }
+  html body #mobilePointsDialog .mobile-child-search input{
+    width:100%!important;
+    min-width:0!important;
+    height:42px!important;
+    padding:0!important;
+    border:0!important;
+    outline:0!important;
+    background:transparent!important;
+    font-size:13px!important;
+  }
+  html body #mobilePointsLayout{display:none!important}
+
+  html body #mobilePointsGrid.mobile-points-grid,
+  html body #mobilePointsGrid.mobile-points-grid.layout-rows{
+    box-sizing:border-box!important;
+    width:100%!important;
+    padding:0 0 var(--digiboard-safe-bottom)!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    align-content:start!important;
+    gap:8px!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-card{
+    box-sizing:border-box!important;
+    min-width:0!important;
+    min-height:112px!important;
+    margin:0!important;
+    padding:9px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:52px 43px!important;
+    gap:7px!important;
+    overflow:hidden!important;
+    border:1px solid #d6e0cf!important;
+    border-left:5px solid #b9c8b5!important;
+    border-radius:17px!important;
+    background:rgba(255,255,255,.92)!important;
+    box-shadow:0 5px 13px rgba(47,80,43,.08)!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-card.status-green{border-left-color:#35a853!important}
+  html body #mobilePointsGrid .mobile-rate-card.status-yellow{border-left-color:#efbd2f!important}
+  html body #mobilePointsGrid .mobile-rate-card.status-red{border-left-color:#d94b43!important}
+  html body #mobilePointsGrid .mobile-rate-head{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    height:52px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:50px minmax(0,1fr) 18px!important;
+    align-items:center!important;
+    gap:9px!important;
+    border:0!important;
+    background:transparent!important;
+    text-align:left!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-photo{
+    box-sizing:border-box!important;
+    width:50px!important;
+    height:50px!important;
+    min-width:50px!important;
+    display:grid!important;
+    place-items:center!important;
+    overflow:hidden!important;
+    border:2px solid #d7b54e!important;
+    border-radius:14px!important;
+    background:#edf3e8!important;
+    color:#294d37!important;
+    font-size:19px!important;
+    font-weight:900!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-img{
+    width:100%!important;
+    height:100%!important;
+    display:block!important;
+    object-fit:cover!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-copy{min-width:0!important;display:grid!important;gap:2px!important}
+  html body #mobilePointsGrid .mobile-rate-copy strong{
+    overflow:hidden!important;
+    color:#28543a!important;
+    font-size:14px!important;
+    line-height:1.1!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-counts{color:#5f6f62!important;font-size:9px!important;line-height:1.15!important}
+  html body #mobilePointsGrid .mobile-rate-note,
+  html body #mobilePointsGrid .mobile-rate-ban{
+    overflow:hidden!important;
+    color:#7a6b55!important;
+    font-size:8px!important;
+    font-style:normal!important;
+    line-height:1.15!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-chevron{color:#78907b!important;font-size:20px!important}
+  html body #mobilePointsGrid .mobile-rate-actions{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:43px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-template-rows:43px!important;
+    gap:6px!important;
+  }
+  html body #mobilePointsGrid .mobile-rate-actions>.rate-btn{
+    position:static!important;
+    inset:auto!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    height:43px!important;
+    min-height:43px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid!important;
+    border-radius:12px!important;
+    box-shadow:none!important;
+    transform:none!important;
+  }
+  html body #mobilePointsGrid .rate-green{border-color:#8bcf94!important;background:#e2f6df!important}
+  html body #mobilePointsGrid .rate-yellow{border-color:#e7c45d!important;background:#fff2bf!important}
+  html body #mobilePointsGrid .rate-red{border-color:#df8b84!important;background:#ffe1dd!important}
+  html body #mobilePointsGrid .rate-more{border-color:#cbd6c7!important;background:#f0f3ed!important;color:#526359!important;font-size:14px!important;font-weight:950!important}
+  html body #mobilePointsGrid .rate-green>span,
+  html body #mobilePointsGrid .rate-yellow>span,
+  html body #mobilePointsGrid .rate-red>span{
+    width:21px!important;
+    height:21px!important;
+    display:block!important;
+    border-radius:50%!important;
+  }
+  html body #mobilePointsGrid .rate-green>span{background:#31b34f!important;box-shadow:inset 0 -2px rgba(0,0,0,.12)!important}
+  html body #mobilePointsGrid .rate-yellow>span{background:#f2be27!important;box-shadow:inset 0 -2px rgba(0,0,0,.1)!important}
+  html body #mobilePointsGrid .rate-red>span{background:#d94a42!important;box-shadow:inset 0 -2px rgba(0,0,0,.12)!important}
+
+  /* Weitere Optionen sind in einem ruhigen Blatt gebuendelt. */
+  html body #mobileChildActionsDialog .mobile-action-buttons{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  html body #mobileChildActionsDialog .mobile-action-buttons button{
+    min-height:68px!important;
+    border-radius:15px!important;
+  }
+  html body #mobileChildActionsDialog .mobile-action-buttons .direct{
+    border-color:#dcb855!important;
+    background:#fff0b7!important;
+    color:#755517!important;
+  }
+  html body #mobileChildActionsDialog .mobile-action-buttons .ban{
+    grid-column:1/-1!important;
+    border-color:#dc8880!important;
+    background:#ffe5e1!important;
+    color:#84342f!important;
+  }
+}
+
+/* Auf einem breiteren Telefon oder kleinen iPad duerfen zwei ruhige Spalten
+   genutzt werden, ohne wieder sechs lose Knopfzeilen zu erzeugen. */
+@media(min-width:560px) and (max-width:700px){
+  html body #mobilePointsGrid.mobile-points-grid,
+  html body #mobilePointsGrid.mobile-points-grid.layout-rows{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body #mobilePointsGrid .mobile-rate-card,
+  html body .app-shell .wall-fixed .tree-clearing-light-v1542::before{animation:none!important;transition:none!important}
+}

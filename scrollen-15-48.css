@@ -1,0 +1,331 @@
+/* ============================================================
+   DigiBoard Next 15.48 – Scrollen im persönlichen Bereich
+
+   Der Fehler saß nicht im Einstellungsfenster, sondern in „Meine Ansicht"
+   im persönlichen Bereich. Dort steckt der Inhalt in einem Raster mit
+   `overflow:hidden`. Es gab zwar eine Rettung dafür – aber nur in
+   `@media(max-width:900px)`. Auf einem Laptop greift die nie. Deshalb war
+   auf dem Handy alles erreichbar und auf dem Laptop nicht, und es gab auch
+   keinen Scrollbalken: es war kein Scrollbereich vorhanden.
+
+   Hier wird jede Inhaltsfläche des persönlichen Bereichs zu einem echten
+   Scrollbereich – in jeder Breite, in jedem Modus.
+   ============================================================ */
+
+/* ============================================================
+   1 · JEDE INHALTSFLÄCHE SCROLLT
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace>#personalWorkspaceSettings,
+html body #teamDialog #teamWorkspace.settings-mode>#personalWorkspaceSettings,
+html body #teamDialog #teamWorkspace:not(.overview-mode) #personalWorkspaceSettings,
+html body #teamDialog #teamWorkspace>.team-cockpit,
+html body #teamDialog #teamWorkspace>.material-library-panel,
+html body #teamDialog #teamWorkspace>.teacher-grid,
+html body #teamDialog #teamWorkspace>.weekly-goal-team-panel{
+  min-height:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  scroll-behavior:smooth!important;
+  /* Luft unter dem letzten Bedienelement, damit der Speichern-Knopf nicht
+     an der Kante klebt. */
+  padding-bottom:26px!important;
+}
+
+/* Die feste Höhe muss weg. `height:calc(100vh - 255px)` mit
+   `min-height:520px` war auf einem 13-Zoll-Laptop höher als das Fenster –
+   der Rest lag außerhalb und war nicht erreichbar. */
+html body #teamDialog #teamWorkspace:not(.overview-mode) #personalWorkspaceSettings{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+}
+html body #teamDialog #teamWorkspace.settings-mode>#personalWorkspaceSettings{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+}
+
+/* Ein sichtbarer, schmaler Scrollbalken. Ohne ihn weiß niemand, dass es
+   weitergeht – genau das war die Rückmeldung. */
+html body #teamDialog #teamWorkspace>#personalWorkspaceSettings,
+html body #teamDialog #teamWorkspace>.team-cockpit,
+html body #teamDialog #teamWorkspace>.material-library-panel,
+html body #teamDialog #teamWorkspace>.teacher-grid,
+html body #settingsDialog .settings-card{
+  scrollbar-width:thin!important;
+  scrollbar-color:#8ab183 rgba(220,232,214,.55)!important;
+}
+html body #teamDialog #teamWorkspace>#personalWorkspaceSettings::-webkit-scrollbar,
+html body #teamDialog #teamWorkspace>.team-cockpit::-webkit-scrollbar,
+html body #teamDialog #teamWorkspace>.material-library-panel::-webkit-scrollbar,
+html body #teamDialog #teamWorkspace>.teacher-grid::-webkit-scrollbar,
+html body #settingsDialog .settings-card::-webkit-scrollbar{
+  width:11px!important;
+  height:11px!important;
+}
+html body #teamDialog #teamWorkspace>#personalWorkspaceSettings::-webkit-scrollbar-track,
+html body #teamDialog #teamWorkspace>.team-cockpit::-webkit-scrollbar-track,
+html body #teamDialog #teamWorkspace>.material-library-panel::-webkit-scrollbar-track,
+html body #teamDialog #teamWorkspace>.teacher-grid::-webkit-scrollbar-track,
+html body #settingsDialog .settings-card::-webkit-scrollbar-track{
+  border-radius:99px!important;
+  background:rgba(214,229,207,.5)!important;
+}
+html body #teamDialog #teamWorkspace>#personalWorkspaceSettings::-webkit-scrollbar-thumb,
+html body #teamDialog #teamWorkspace>.team-cockpit::-webkit-scrollbar-thumb,
+html body #teamDialog #teamWorkspace>.material-library-panel::-webkit-scrollbar-thumb,
+html body #teamDialog #teamWorkspace>.teacher-grid::-webkit-scrollbar-thumb,
+html body #settingsDialog .settings-card::-webkit-scrollbar-thumb{
+  border:2px solid transparent!important;
+  border-radius:99px!important;
+  background:#7ea877!important;
+  background-clip:content-box!important;
+}
+
+/* Die Klappabschnitte darin dürfen wachsen, statt ihren Inhalt zu kappen. */
+html body #teamDialog #personalWorkspaceSettings>*,
+html body #teamDialog #personalWorkspaceSettings .personal-settings-grid,
+html body #teamDialog #personalWorkspaceSettings .personal-panel-options,
+html body #teamDialog #personalWorkspaceSettings .startpage-tool-settings,
+html body #teamDialog #personalWorkspaceSettings .teaching-tool-manage-list{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+
+/* Der Speichern-Knopf bleibt am unteren Rand sichtbar, auch während man
+   scrollt. */
+html body #teamDialog #personalWorkspaceSettings>.personal-save-button{
+  position:sticky!important;
+  z-index:60!important;
+  bottom:0!important;
+  box-sizing:border-box!important;
+  width:calc(100% - 28px)!important;
+  min-height:46px!important;
+  margin:8px 14px 0!important;
+  border:1.5px solid #0d5c34!important;
+  border-radius:13px!important;
+  background:linear-gradient(168deg,#37b065,#16793f)!important;
+  color:#fff!important;
+  font-weight:950!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 0 #0b4c2b,0 -6px 14px rgba(240,247,232,.9)!important;
+  touch-action:manipulation!important;
+}
+
+/* Der Rahmen darf den Scrollbereich nicht abschneiden. */
+@media (min-width:701px){
+  html body #teamDialog #teamWorkspace,
+  html body #teamDialog #teamWorkspace.settings-mode,
+  html body #teamDialog #teamWorkspace.points-mode,
+  html body #teamDialog #teamWorkspace.materials-mode,
+  html body #teamDialog #teamWorkspace.overview-mode{
+    overflow:hidden!important;   /* der Rahmen selbst bleibt fest … */
+  }
+  /* … aber die Inhaltsfläche darin scrollt. Genau diese Trennung fehlte. */
+  html body #teamDialog #teamWorkspace.settings-mode>#personalWorkspaceSettings{
+    overflow-y:auto!important;
+  }
+}
+
+/* ============================================================
+   2 · DER EINFÜGE-BEREICH SPRENGTE DIE KARTE
+
+   Aufgeklappt lag das Textfeld über dem Datenschutzhinweis. Die Fläche
+   darüber hatte eine feste Höhe und schnitt den Zuwachs ab.
+   ============================================================ */
+
+/* WICHTIG – hier lag mein eigener Fehler aus 15.48: `display:block!important`
+   ohne `:not([hidden])` hat die Regel `[hidden]{display:none}` ueberstimmt.
+   Der Kinderdaten-Bereich war dadurch IMMER sichtbar und lag ueber den
+   Kacheln der Einstellungszentrale. Deshalb war dort alles durcheinander.
+   Ausgeblendete Bereiche bleiben ab jetzt ausgeblendet. */
+html body #settingsDialog #settingsShare:not([hidden]),
+html body #settingsDialog .settings-card>#settingsShare:not([hidden]),
+html body #settingsDialog .settings-card:not(.settings-home-mode)>#settingsShare:not([hidden]){
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:block!important;
+  overflow:visible!important;
+  padding-bottom:20px!important;
+}
+html body #settingsDialog #settingsShare>*{
+  position:static!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+html body #settingsDialog #settingsShare .icloud-backup-actions{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-auto-rows:auto!important;
+  gap:10px!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+
+/* Der Rettungsbereich ist ein normaler Block im Fluss und schiebt den
+   Datenschutzhinweis nach unten, statt ihn zu überlagern. */
+html body #settingsDialog .kinderdaten-rettung-v1547{
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  margin:12px 0!important;
+  overflow:visible!important;
+}
+html body #settingsDialog .kinderdaten-rettung-v1547[open]{
+  padding-bottom:4px!important;
+}
+html body #settingsDialog .kinderdaten-rettung-v1547 textarea{
+  position:static!important;
+  display:block!important;
+  box-sizing:border-box!important;
+  width:calc(100% - 28px)!important;
+  height:auto!important;
+  min-height:110px!important;
+  max-height:40vh!important;
+}
+/* Der Hinweistext im Rettungsbereich hatte den gelben Rahmen des
+   Datenschutzhinweises geerbt und sah dadurch aus wie dieser. */
+html body #settingsDialog .kinderdaten-rettung-v1547>p.panel-help{
+  border:0!important;
+  border-left:3px solid #cfe0c4!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#4a6249!important;
+}
+
+/* Der Datenschutzhinweis steht immer als letztes und ganz sichtbar. */
+html body #settingsDialog #settingsShare>p.panel-help:last-child{
+  position:static!important;
+  margin:12px 0 0!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+
+/* ============================================================
+   3 · SICHERHEITSNETZ: NIE MEHR EINE TOTE FLÄCHE
+
+   Wenn eine Fläche eine feste Höhe hat UND ihren Inhalt abschneidet, ist
+   sie unbedienbar. Für die Inhaltsflächen des persönlichen Bereichs und
+   des Einstellungsfensters wird das hier grundsätzlich ausgeschlossen.
+   ============================================================ */
+
+html body #settingsDialog .settings-card>section,
+html body #settingsDialog .settings-card>details,
+html body #teamDialog #teamWorkspace section.panel{
+  overflow:visible!important;
+}
+html body #settingsDialog .settings-card>section:not(#settingsPlan):not(#settingsDaily){
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+}
+
+/* ============================================================
+   4 · FOTOSPEICHER-PRÜFUNG (15.49)
+   ============================================================ */
+
+.foto-pruefung-v1549{
+  margin:12px 0 0!important;
+  padding:0!important;
+  display:grid!important;
+  gap:8px!important;
+}
+.foto-pruefung-v1549>button{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:46px!important;
+  padding:11px 14px!important;
+  border:1.5px solid #b9772a!important;
+  border-radius:13px!important;
+  background:linear-gradient(168deg,#ffd88f,#f0b055)!important;
+  color:#5a3a10!important;
+  font-size:12.5px!important;
+  font-weight:950!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 3px 0 #a8681f!important;
+  touch-action:manipulation!important;
+}
+.foto-pruefung-v1549>button:active{
+  transform:translateY(2px)!important;
+  box-shadow:inset 0 2px 4px rgba(90,58,16,.3),0 1px 0 #a8681f!important;
+}
+.foto-pruefung-v1549>pre{
+  margin:0!important;
+  padding:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  transition:max-height .2s ease!important;
+}
+.foto-pruefung-v1549>pre:not(:empty){
+  max-height:none!important;
+  padding:11px 13px!important;
+  border:1.5px solid #dfe7d6!important;
+  border-radius:12px!important;
+  background:#f7fbf3!important;
+  color:#33503a!important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+  font-size:10.5px!important;
+  line-height:1.55!important;
+  white-space:pre-wrap!important;
+  overflow-wrap:anywhere!important;
+}
+
+
+/* ============================================================
+   5 · SCHUTZREGEL: „ausgeblendet" gewinnt immer
+
+   Eine Gestaltungsregel darf niemals einen ausgeblendeten Bereich sichtbar
+   machen. Diese Regel steht bewusst zuletzt und verhindert die ganze
+   Fehlerklasse – auch fuer alle kuenftigen Ergaenzungen.
+   ============================================================ */
+
+/* Bewusst NICHT „html body [hidden]" – das waere zu grob. Es gibt aeltere
+   Regeln, die einzelne ausgeblendete Elemente absichtlich wieder zeigen
+   (etwa `.wall-fixed[hidden]`). Die Schutzregel gilt deshalb genau fuer die
+   Bereiche, die hier angefasst werden. */
+html body #settingsDialog .settings-card>section[hidden],
+html body #settingsDialog .settings-card>details[hidden],
+html body #settingsDialog #settingsHome[hidden],
+html body #settingsDialog #settingsShare[hidden],
+html body #settingsDialog #settingsBackup[hidden],
+html body #settingsDialog #settingsClass[hidden],
+html body #settingsDialog #settingsPlan[hidden],
+html body #settingsDialog #settingsDaily[hidden],
+html body #settingsDialog #settingsWorld[hidden],
+html body #settingsDialog #settingsTools[hidden],
+html body #settingsDialog #settingsWeekly[hidden],
+html body #settingsDialog #settingsChanges[hidden],
+html body #teamDialog #teamWorkspace>[hidden],
+html body #teamDialog #teamWorkspace #personalWorkspaceSettings[hidden]{
+  display:none!important;
+}
+
+/* ============================================================
+   6 · ANFANGSBUCHSTABEN ALS ELEMENT (15.50)
+
+   Der Ersatz fuer ein fehlendes Foto war bisher ein reiner Textknoten. Der
+   ist nicht mehr ansprechbar – ein spaeter eintreffendes Foto konnte nicht
+   mehr eingehaengt werden. Jetzt ist es ein Element, das sich im Layout
+   genauso verhaelt wie der Text vorher.
+   ============================================================ */
+
+.portrait-initialen-v1550{
+  display:inline!important;
+  font:inherit!important;
+  color:inherit!important;
+  letter-spacing:inherit!important;
+}
+
+/* Ein Bild ohne Adresse darf keinen kaputten Platzhalter zeigen, solange es
+   nachgeladen wird. */
+img[data-foto-schluessel]:not([src]){
+  visibility:hidden!important;
+}
