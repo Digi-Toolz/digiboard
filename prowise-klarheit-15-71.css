@@ -1,0 +1,126 @@
+/* DigiBoard Next 15.71 – Lesbarkeit und Ordnung aus Tafelentfernung */
+
+/* Mehr Platz für den vollständigen Entwicklungsstand des Baums. */
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .wall-title-v22.wall-title-v22.wall-title-v22{
+  width:min(760px,90%)!important;
+  grid-template-columns:36px minmax(260px,1fr) auto!important;
+  gap:11px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .wall-title-v22>div:not(.tree-title-actions-v1538){
+  min-width:0!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .wall-title-v22>div:not(.tree-title-actions-v1538)>small{
+  display:block!important;
+  max-width:none!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  font-size:9.5px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-title-actions-v1538{
+  gap:6px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-title-actions-v1538 button{
+  min-height:34px!important;padding-inline:10px!important;font-size:11px!important;
+}
+
+/* Die Leerzustandsmeldung sitzt wie ein kleines Schild am Stamm und
+   verdeckt weniger von den prägnanten Astgabeln. */
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22.empty-tree-v22{
+  top:61%!important;
+  width:min(220px,35%)!important;
+  padding:9px 13px!important;
+  border:2px solid rgba(72,121,57,.45)!important;
+  border-radius:17px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>span{
+  font-size:21px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>strong{
+  font-size:12px!important;line-height:1.08!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>small{
+  font-size:7.5px!important;line-height:1.15!important;
+}
+
+/* Der Tagesstand bekommt dieselbe helle Materialsprache wie das Hauptschild. */
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-today-badge-v1531.tree-today-badge-v1531{
+  border-color:#b88735!important;
+  background:linear-gradient(145deg,#fff9d9,#edcf82)!important;
+  color:#17442d!important;
+  box-shadow:inset 0 1px #fff,0 7px 14px rgba(40,68,31,.18)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-today-badge-v1531 strong,
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-today-badge-v1531 small{
+  color:#17442d!important;-webkit-text-fill-color:#17442d!important;text-shadow:none!important;
+}
+
+/* Schatztruhe: stärkere Zahlen und ein klar sichtbarer Weg. */
+html body .app-shell[data-theme="forest"] .wall-fixed .leaf-counter-v22 strong{
+  color:#145236!important;-webkit-text-fill-color:#145236!important;font-size:12px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .progress-v22{
+  height:11px!important;border-width:2px!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .progress-v22>span{
+  background:linear-gradient(90deg,#25914c,#75c74e 62%,#d8c34d)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.45)!important;
+}
+
+@media (min-width:761px){
+  /* Einheitliches Raster – der Fuchsbereich bekommt bewusst etwas mehr Raum. */
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
+    width:min(1540px,calc(100% - 170px))!important;
+    grid-template-columns:1.34fr repeat(7,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button{
+    min-width:0!important;width:auto!important;padding-inline:8px!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>.kids-forest-entrance{
+    min-width:0!important;max-width:none!important;width:auto!important;
+    display:grid!important;place-self:stretch!important;justify-content:stretch!important;
+    grid-template-columns:38px minmax(0,1fr)!important;
+    padding:5px 8px!important;margin:0!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-copy-v1531{
+    min-width:0!important;width:auto!important;overflow:visible!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-label{
+    max-width:none!important;overflow:visible!important;text-overflow:clip!important;
+    white-space:nowrap!important;font-size:10px!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-status-v1531{
+    max-width:none!important;overflow:hidden!important;text-overflow:ellipsis!important;
+    white-space:nowrap!important;font-size:8px!important;
+  }
+}
+
+@media (min-width:1700px){
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22.wall-title-v22.wall-title-v22{width:min(850px,90%)!important}
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22>div:not(.tree-title-actions-v1538)>strong{font-size:19px!important}
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22>div:not(.tree-title-actions-v1538)>small{font-size:10.5px!important}
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-label{font-size:11px!important}
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-status-v1531{font-size:8.5px!important}
+}
+
+@media (max-width:1180px) and (min-width:761px){
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22.wall-title-v22.wall-title-v22{width:min(680px,90%)!important}
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22>div:not(.tree-title-actions-v1538)>small{
+    overflow:hidden!important;text-overflow:ellipsis!important;
+  }
+}
+
+@media (max-width:760px){
+  html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22.empty-tree-v22{
+    top:58%!important;width:min(230px,64%)!important;
+  }
+}
