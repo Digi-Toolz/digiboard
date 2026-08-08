@@ -1,0 +1,315 @@
+/* ============================================================
+   DigiBoard Next 15.64 – Die Navigationsleiste, einheitlich
+
+   ------------------------------------------------------------
+   Was an 15.63 falsch war – auf dem Bildschirmfoto selbst gesehen
+   ------------------------------------------------------------
+
+   1 · DIE LEISTE PASSTE ZU NICHTS.
+       Ich hatte ihr eine sandfarbene Creme-Fläche gegeben. Der Rest der
+       App ist aber grün und weiß: dunkelgrüner Kopf, weiße Karten,
+       hellgrüne Fächer. Ein warmer Sandstreifen mittendrin sieht aus,
+       als sei er aus einer anderen App eingeklebt.
+
+   2 · DIE REITER LIEFEN AUSEINANDER.
+       `flex:1 1 auto` liess sie den ganzen Restplatz nehmen – auf dem
+       Laptop wurde „Meine Übersicht" ein 600 Pixel breiter Balken.
+       Reiter sind Schalter, keine Flächen. Sie gehören als kompakte
+       Gruppe zusammen, nur so breit wie ihre Wörter.
+
+   3 · „MEINE" WAR DUNKELGRÜN AUF GRÜN.
+       Ich hatte `color:#fff` auf den Knopf gesetzt – aber nicht auf die
+       Wörter darin. Ein <span> erbt die Farbe nur, solange ihm niemand
+       anders etwas sagt. Derselbe Fehler wie beim `flex-direction` in
+       15.61, eine Ebene tiefer.
+
+   4 · AUF DEM HANDY standen Symbol und Wort untereinander, riesig.
+
+   ------------------------------------------------------------
+   Die Regel für diese Fassung
+   ------------------------------------------------------------
+   Keine eigene Farbwelt für die Leiste. Sie benutzt genau das, was die
+   Einstellungsfächer und Karten schon verwenden: hellgrüner Verlauf,
+   grüner Rand, weiße Knöpfe. Orange kommt genau EINMAL vor – auf dem
+   Zurück-Knopf. Ein Akzent wirkt nur, solange er allein steht.
+   ============================================================ */
+
+html body #teamDialog{
+  /* Dieselben Werte wie in den Einstellungsfächern (schubladen-15-59). */
+  --navi-flaeche:linear-gradient(180deg,#f4faee,#e8f2df);
+  --navi-rand:#c3d9b6;
+  --navi-tinte:#22482c;
+  --navi-tinte-leise:#5c7360;
+  --navi-gruen:#2f7d4f;
+  --navi-gruen-hell:#48a068;
+  --navi-gruen-tief:#1d5735;
+  --navi-orange:#e07a2f;
+  --navi-orange-tief:#b25a17;
+}
+
+/* ============================================================
+   1 · DIE LEISTE – wie eine Karte, nicht wie ein Fremdkörper
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav.team-workspace-nav.team-workspace-nav{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0 0 12px!important;
+  padding:8px 10px!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  gap:9px!important;
+  border:1px solid var(--navi-rand)!important;
+  border-radius:16px!important;
+  background:var(--navi-flaeche)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),
+             0 2px 8px -5px rgba(28,60,32,.5)!important;
+}
+
+html body #teamDialog #teamWorkspace .team-nav-left.team-nav-left{
+  display:contents!important;
+}
+html body #teamDialog #teamWorkspace .team-workspace-nav #backToBoardButton{order:1!important}
+html body #teamDialog #teamWorkspace .team-workspace-nav #changeTeamPersonButton{order:2!important}
+html body #teamDialog #teamWorkspace .team-workspace-nav .team-page-tabs{order:3!important}
+html body #teamDialog #teamWorkspace .team-workspace-nav #openPersonalSettingsButton{
+  order:9!important;
+  margin-left:auto!important;
+}
+html body #teamDialog #teamWorkspace .team-workspace-nav .workspace-person-title,
+html body #teamDialog #teamWorkspace .team-workspace-nav .team-header-favorites{
+  display:none!important;
+}
+
+/* Ein gemeinsames Maß für alle vier Bedienelemente. Unterschiedliche
+   Höhen in einer Reihe sind der häufigste Grund, warum eine Leiste
+   „unruhig" aussieht. */
+html body #teamDialog #teamWorkspace .team-workspace-nav #backToBoardButton,
+html body #teamDialog #teamWorkspace .team-workspace-nav #changeTeamPersonButton,
+html body #teamDialog #teamWorkspace .team-workspace-nav #openPersonalSettingsButton,
+html body #teamDialog #teamWorkspace .team-workspace-nav .team-page-tabs button{
+  height:38px!important;
+  min-height:38px!important;
+  border-radius:11px!important;
+  font-size:12.5px!important;
+  font-weight:800!important;
+  letter-spacing:.005em!important;
+}
+
+/* ============================================================
+   2 · ZURÜCK – der einzige farbige Knopf
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #backToBoardButton.team-board-button.team-board-button{
+  flex:0 0 auto!important;
+  padding:0 14px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  border:1px solid var(--navi-orange-tief)!important;
+  background:var(--navi-orange)!important;
+  color:#fff!important;
+  box-shadow:0 1px 2px rgba(120,60,15,.3)!important;
+  text-shadow:none!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #backToBoardButton *{
+  color:#fff!important;          /* auch die Wörter darin, nicht nur der Knopf */
+  font-size:12.5px!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #backToBoardButton span{
+  font-size:15px!important;
+  line-height:1!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #backToBoardButton:hover{
+  background:#ee8b3f!important;
+}
+
+/* ============================================================
+   3 · PERSON UND ZAHNRAD – weiß, wie alle anderen Knöpfe der App
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #changeTeamPersonButton.team-person-button.team-person-button{
+  flex:0 0 auto!important;
+  padding:0 12px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  border:1px solid var(--navi-rand)!important;
+  background:#fff!important;
+  color:var(--navi-tinte)!important;
+  box-shadow:0 1px 2px rgba(24,52,30,.07)!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #changeTeamPersonButton *{
+  color:var(--navi-tinte)!important;
+  font-size:12.5px!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #changeTeamPersonButton .person-symbol-v1563{
+  font-size:15px!important;
+  line-height:1!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #openPersonalSettingsButton.team-top-settings-button.team-top-settings-button{
+  position:static!important;
+  top:auto!important; right:auto!important;
+  flex:0 0 auto!important;
+  width:38px!important;
+  min-width:38px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid var(--navi-rand)!important;
+  background:#fff!important;
+  box-shadow:0 1px 2px rgba(24,52,30,.07)!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #openPersonalSettingsButton span{
+  font-size:16px!important;
+  line-height:1!important;
+}
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #changeTeamPersonButton:hover,
+html body #teamDialog #teamWorkspace
+  .team-workspace-nav #openPersonalSettingsButton:hover{
+  border-color:var(--navi-gruen)!important;
+  background:#f4faf1!important;
+}
+
+/* ============================================================
+   4 · DIE REITER – eine kompakte Schaltergruppe
+
+   Sie nehmen nur so viel Platz, wie ihre Wörter brauchen.
+   `flex:0 0 auto` statt `1 1 auto` – das ist der ganze Unterschied
+   zwischen „Schalter" und „Balken".
+   ============================================================ */
+
+html body #teamDialog #teamWorkspace
+  .team-page-tabs.team-page-tabs.team-page-tabs.team-page-tabs{
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  display:inline-flex!important;
+  gap:4px!important;
+  margin:0 0 0 4px!important;
+  padding:3px!important;
+  border:1px solid var(--navi-rand)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.7)!important;
+}
+html body #teamDialog #teamWorkspace .team-page-tabs button{
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  height:32px!important;
+  min-height:32px!important;
+  padding:0 13px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  border:1px solid transparent!important;
+  border-radius:9px!important;
+  background:transparent!important;
+  color:var(--navi-tinte-leise)!important;
+  white-space:nowrap!important;
+  box-shadow:none!important;
+}
+html body #teamDialog #teamWorkspace .team-page-tabs button *{
+  color:inherit!important;       /* „Meine" stand dunkelgrün auf grün */
+  font-size:12.5px!important;
+}
+html body #teamDialog #teamWorkspace .team-page-tabs button .tab-symbol-v1563{
+  font-size:14px!important;
+  line-height:1!important;
+}
+html body #teamDialog #teamWorkspace .team-page-tabs button:hover{
+  background:#eef6ea!important;
+  color:var(--navi-tinte)!important;
+}
+html body #teamDialog #teamWorkspace .team-page-tabs button.active{
+  border-color:var(--navi-gruen-tief)!important;
+  background:linear-gradient(180deg,var(--navi-gruen-hell),var(--navi-gruen))!important;
+  color:#fff!important;
+  box-shadow:0 1px 3px rgba(20,70,40,.35)!important;
+}
+html body #teamDialog #teamWorkspace .team-page-tabs button.active *{
+  color:#fff!important;
+}
+
+/* ============================================================
+   5 · HANDY – dieselbe Leiste, nur enger
+
+   Symbol und Wort bleiben NEBENEINANDER. In 15.63 standen sie
+   untereinander, weil die Knöpfe umbrechen durften – deshalb hier
+   ausdrücklich `flex-wrap:nowrap` auf jedem Knopf.
+   ============================================================ */
+
+@media (max-width:760px){
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav.team-workspace-nav{
+    gap:6px!important;
+    padding:7px!important;
+    border-radius:14px!important;
+  }
+  html body #teamDialog #teamWorkspace .team-workspace-nav #backToBoardButton,
+  html body #teamDialog #teamWorkspace .team-workspace-nav #changeTeamPersonButton,
+  html body #teamDialog #teamWorkspace .team-workspace-nav #openPersonalSettingsButton,
+  html body #teamDialog #teamWorkspace .team-workspace-nav .team-page-tabs button{
+    height:36px!important;
+    min-height:36px!important;
+    flex-wrap:nowrap!important;
+  }
+  /* Auf dem Handy tragen die beiden linken Knöpfe nur ihr Symbol. */
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav #backToBoardButton strong,
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav #changeTeamPersonButton strong{
+    display:none!important;
+  }
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav #backToBoardButton.team-board-button.team-board-button,
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav #changeTeamPersonButton.team-person-button.team-person-button{
+    width:36px!important;
+    min-width:36px!important;
+    padding:0!important;
+  }
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav #openPersonalSettingsButton.team-top-settings-button.team-top-settings-button{
+    width:36px!important;
+    min-width:36px!important;
+  }
+  /* Die Reiter dürfen hier den Rest der Zeile füllen – aber als Gruppe,
+     nicht jeder für sich. */
+  html body #teamDialog #teamWorkspace
+    .team-page-tabs.team-page-tabs.team-page-tabs.team-page-tabs{
+    flex:1 1 auto!important;
+    margin-left:2px!important;
+  }
+  html body #teamDialog #teamWorkspace .team-page-tabs button{
+    flex:1 1 0!important;
+    height:30px!important;
+    min-height:30px!important;
+    padding:0 8px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  html body #teamDialog #teamWorkspace .team-page-tabs button *{
+    font-size:11.5px!important;
+  }
+  html body #teamDialog #teamWorkspace .team-page-tabs .tab-lang-v1563{
+    display:none!important;
+  }
+}
