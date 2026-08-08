@@ -1,0 +1,157 @@
+/* ============================================================
+   DigiBoard Next 15.65 – Auf der Tafel liest man wieder
+
+   Drei Stellen auf deinem Bildschirmfoto, an denen Text auf Text lag.
+   Alle drei haben denselben Charakter: nicht „hässlich", sondern
+   UNLESBAR. Auf einer Klassentafel ist das der schwerste Fehler.
+
+   ------------------------------------------------------------
+   1 · DIE TAGESINFOS LAGEN ÜBEREINANDER
+   ------------------------------------------------------------
+
+   „Sportsachen!" stand auf „Heute Schwimmen", „Klassenrunde" auf
+   „nach der 4. Stunde". Der Grund steht in `styles.css`:
+
+       .info-row{ grid-template-columns:36px 1fr }
+
+   Zwei Spalten: 36 Pixel für ein Symbol, der Rest für den Text. Nur
+   ist der Aufbau der Zeile ein anderer:
+
+       <span>🏊 Heute Schwimmen</span><strong>Sportsachen!</strong>
+
+   Das Symbol steckt MIT IM ERSTEN TEXT. Der ganze linke Satz wurde
+   also in 36 Pixel gequetscht, lief heraus und landete auf dem rechten.
+   Die Regel beschreibt einen Aufbau, den es hier nicht gibt.
+
+   Jetzt: links der Satz, rechts die Betonung, dazwischen echter
+   Abstand – und wenn es eng wird, rutscht die Betonung in die nächste
+   Zeile, statt sich zu überlagern.
+
+   ------------------------------------------------------------
+   2 · DER GEISTERTEXT ÜBER DER BAUMKRONE
+   ------------------------------------------------------------
+
+   „NÄCHSTES ZIEL · 300 BLÄTTER / 55 fehlen bis Blühender Baum" schwebte
+   halb durchsichtig über dem Baum. Es war ein eigenes Schild
+   (`.tree-growth-badge-v1184`), abgesetzt auf `top:-12px; left:50%` –
+   also genau dorthin, wo auch das Waldhelden-Schild sitzt. Zwei
+   Elemente, ein Platz.
+
+   Dazu stand seine Schrift auf **5 und 6,5 Pixel**. Das ist auf einer
+   Tafel, die aus fünf Metern Entfernung gelesen wird, keine Schrift
+   mehr, sondern Struktur.
+
+   Die Lösung ist keine neue Position, sondern eine weniger:
+   Die Aussage steht jetzt IM Waldhelden-Schild –
+   „Stufe 3 · Blätterdach · noch 55 Blätter bis „Blühender Baum"" –
+   in lesbarer Größe. Das schwebende Schild entfällt.
+
+   ------------------------------------------------------------
+   3 · DAS SCHILD SCHNITT SEINEN EIGENEN TEXT AB
+   ------------------------------------------------------------
+
+   „Stufe 3 · Blätterdach · 0 HE…" – abgeschnitten. Jetzt darf es
+   umbrechen, und es hat Platz dafür, weil das zweite Schild weg ist.
+   ============================================================ */
+
+/* ============================================================
+   1 · TAGESINFOS
+   ============================================================ */
+
+html body .app-shell .widget .info-row.info-row,
+html body .app-shell .info-row.styled-info-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:2px 12px!important;
+  grid-template-columns:none!important;   /* die 36px-Spalte ist die Ursache */
+}
+html body .app-shell .info-row.info-row>span{
+  min-width:0!important;
+  flex:1 1 auto!important;
+  overflow-wrap:anywhere!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  overflow:visible!important;
+}
+html body .app-shell .info-row.info-row>strong{
+  flex:0 0 auto!important;
+  max-width:100%!important;
+  text-align:right!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+/* Die Reiter über der Liste hiessen „Tagesi…" und „Unterr…". Zwei
+   Wörter, die man nicht erraten können muss. */
+html body .app-shell .widget[data-id="info"] .widget-head button,
+html body .app-shell .info-tab-v1543{
+  min-width:0!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
+  font-size:11px!important;
+  padding:5px 9px!important;
+}
+
+/* ============================================================
+   2 · DAS SCHWEBENDE WACHSTUMSSCHILD ENTFÄLLT
+
+   Seine Aussage steht jetzt im Waldhelden-Schild. Ein Element weniger,
+   das sich mit anderen um denselben Platz streitet.
+   ============================================================ */
+
+html body .app-shell .wall-fixed .tree-growth-badge-v1184.tree-growth-badge-v1184{
+  display:none!important;
+}
+
+/* ============================================================
+   3 · DAS WALDHELDEN-SCHILD DARF ATMEN
+   ============================================================ */
+
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22 small{
+  display:block!important;
+  max-width:none!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  color:#3f5c45!important;
+  font-size:11px!important;
+  font-weight:750!important;
+  line-height:1.3!important;
+  letter-spacing:0!important;
+  text-transform:none!important;   /* GROSSBUCHSTABEN lesen sich schlechter */
+}
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22 strong{
+  overflow:visible!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  font-size:15px!important;
+  line-height:1.2!important;
+}
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+  height:auto!important;
+  min-height:0!important;
+  align-items:center!important;
+}
+
+/* ============================================================
+   4 · KEINE 5-PIXEL-SCHRIFT AUF DER TAFEL
+
+   Eine Klassentafel wird aus mehreren Metern gelesen. Alles unter
+   10 Pixeln ist dort Dekoration, kein Text. Diese Regel fängt die
+   Stellen ab, an denen im Lauf der Zeit immer kleiner gestellt wurde,
+   um Inhalt in zu enge Kästen zu pressen.
+   ============================================================ */
+
+html body .app-shell .wall-fixed .wall-title-v22 *,
+html body .app-shell .widget[data-id="info"] .info-row *,
+html body .app-shell .widget[data-id="meal"] .info-row *{
+  font-size:inherit!important;
+}
+html body .app-shell .widget[data-id="info"] .info-row{
+  font-size:12px!important;
+  line-height:1.35!important;
+}
