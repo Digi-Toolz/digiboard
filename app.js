@@ -1408,7 +1408,7 @@ function renderClassManagement(){
   grid.innerHTML='';
   state.students.forEach(student=>{
     const card=document.createElement('article');card.className='class-student-card';if(student.active===false)card.classList.add('is-inactive');
-    card.innerHTML=`<div class="class-student-photo">${studentPhotoMarkup(student,'class-roster-photo')}</div><div class="class-student-copy"><label>Name<input type="text" maxlength="32" value="${escapeHtml(student.name)}" data-student-name="${escapeHtml(student.id)}"></label><label>Geburtstag<input type="date" value="${escapeHtml(student.birthday||'')}" data-student-birthday="${escapeHtml(student.id)}"></label><small>${student.active===false?'Pausiert – Daten bleiben erhalten':'Aktiv im DigiBoard'}</small></div><div class="class-student-actions"><label class="photo-upload-button"><span class="photo-upload-label-v1553">📷 Foto austauschen</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.heif" data-student-photo="${escapeHtml(student.id)}" aria-label="Foto für ${escapeHtml(student.name)} wählen"></label><button type="button" data-student-toggle="${escapeHtml(student.id)}" title="Pausierte Füchse verschwinden vorübergehend aus Wald, Punkten und Diensten. Fotos, Notizen und Verläufe bleiben erhalten.">${student.active===false?'Wieder aktivieren':'Pausieren'}</button></div><p class="foto-meldung-v1553" data-foto-meldung="${escapeHtml(student.id)}" aria-live="polite"></p>`;
+    card.innerHTML=`<div class="class-student-photo">${studentPhotoMarkup(student,'class-roster-photo')}</div><div class="class-student-copy"><label>Name<input type="text" maxlength="32" value="${escapeHtml(student.name)}" data-student-name="${escapeHtml(student.id)}"></label><label>Geburtstag<input type="date" value="${escapeHtml(student.birthday||'')}" data-student-birthday="${escapeHtml(student.id)}"></label><small>${student.active===false?'Pausiert – Daten bleiben erhalten':'Aktiv im DigiBoard'}</small></div><div class="class-student-actions"><label class="photo-upload-button"><span class="photo-upload-label-v1553">📷 Foto austauschen</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.heif" data-student-photo="${escapeHtml(student.id)}" aria-label="Foto für ${escapeHtml(student.name)} wählen"></label><button type="button" data-student-toggle="${escapeHtml(student.id)}" title="Pausierte Füchse verschwinden vorübergehend aus Wald, Punkten und Diensten. Fotos, Notizen und Verläufe bleiben erhalten.">${student.active===false?'Wieder aktivieren':'Pausieren'}</button><button type="button" class="kind-loeschen-v1558" data-student-delete="${escapeHtml(student.id)}" title="Entfernt ${escapeHtml(student.name)} endgültig aus der Klasse – mit Foto, Punkten und Notizen. Vorher wird gefragt, danach gibt es ein „Rückgängig“.">🗑️ Entfernen</button></div><p class="foto-meldung-v1553" data-foto-meldung="${escapeHtml(student.id)}" aria-live="polite"></p>`;
     const nameInput=card.querySelector('[data-student-name]');nameInput.onchange=()=>renameStudent(student.id,nameInput.value);
     const birthdayInput=card.querySelector('[data-student-birthday]');birthdayInput.onchange=()=>saveStudentBirthday(student.id,birthdayInput.value);
     const fotofeld=card.querySelector('[data-student-photo]');
@@ -1422,6 +1422,7 @@ function renderClassManagement(){
       try{ event.target.value=''; }catch{}
     };
     card.querySelector('[data-student-toggle]').onclick=()=>toggleStudentActive(student.id);
+    card.querySelector('[data-student-delete]').onclick=()=>deleteStudent(student.id);
     grid.append(card);
   });
   if(status)status.textContent='';
@@ -1441,6 +1442,147 @@ function toggleStudentActive(id){
   if(student.active===false){state.publishedGreen=(state.publishedGreen||[]).filter(studentId=>studentId!==id);state.previousPublishedGreen=(state.previousPublishedGreen||[]).filter(studentId=>studentId!==id)}
   saveState();renderClassManagement();renderTeacherList();renderQuickPointsList();renderDashboard();renderServicePlanner();
 }
+/* ============================================================
+   NEXT 15.58 – Ein Kind wirklich entfernen
+
+   „Pausieren" gab es schon, aber nichts, um ein Kind endgültig aus der
+   Klasse zu nehmen. Wechselt ein Kind die Schule, blieben Name, Fotos,
+   Punkte und Notizen für immer im Gerät stehen – nicht nur unordentlich,
+   sondern bei Kinderdaten auch datenschutzrechtlich unschön.
+
+   Loeschen heisst hier wirklich loeschen. Ein Kind steht an ZEHN Stellen
+   im Zustand, nicht nur in der Liste; bleibt eine davon zurueck, tauchen
+   spaeter Geisternamen in Verlaeufen und Diensten auf. Deshalb wird jede
+   Stelle einzeln geraeumt – und vorher fuer den Rueckweg gesichert.
+
+   Der Rueckweg ist wichtig: `confirm()` ist schnell weggeklickt. Nach dem
+   Loeschen steht deshalb bis zum naechsten Seitenaufruf ein
+   „Rueckgaengig" auf der Karte, inklusive des Fotos, das dafuer vorher
+   aus der Datenbank gelesen wird. */
+let letzteKindLoeschung=null;
+
+function studentDatenBilanz(id){
+  const punkte=Object.keys(state.points||{}).filter(k=>k.endsWith(':'+id)).length;
+  const verlauf=(state.pointHistory||[]).filter(e=>e.studentId===id).length;
+  const notizen=(state.teamIncidents||[]).filter(e=>e.studentId===id).length;
+  return {punkte,verlauf,notizen};
+}
+
+async function deleteStudent(id){
+  const student=state.students.find(item=>item.id===id);
+  if(!student)return;
+  const bilanz=studentDatenBilanz(id);
+  const teile=[
+    bilanz.punkte?`${bilanz.punkte} Tage mit Punkten`:'',
+    bilanz.verlauf?`${bilanz.verlauf} Einträge im Verlauf`:'',
+    bilanz.notizen?`${bilanz.notizen} Notizen und Maßnahmen`:'',
+    student.photo?'das Foto':''
+  ].filter(Boolean);
+  const frage=`„${student.name}" endgültig aus der Klasse entfernen?\n\n`
+    +(teile.length?`Mit gelöscht werden: ${teile.join(', ')}.\n\n`:'Zu diesem Kind sind keine weiteren Daten gespeichert.\n\n')
+    +'Die gesammelten Blätter der Klasse bleiben erhalten.\n'
+    +'Direkt danach steht auf der Karte ein „Rückgängig".';
+  if(!confirm(frage))return;
+
+  /* Erst sichern, dann raeumen – sonst gibt es kein Zurueck mehr. */
+  const sicherung={
+    student:JSON.parse(JSON.stringify(student)),
+    platz:state.students.findIndex(item=>item.id===id),
+    punkte:{}, verlauf:[], notizen:[], fern:[],
+    veroeffentlicht:(state.publishedGreen||[]).includes(id),
+    vorherVeroeffentlicht:(state.previousPublishedGreen||[]).includes(id),
+    blattTage:[], stimmen:{}, dienste:{}, foto:null
+  };
+  try{ if(photoStore.isReference(student.photo)) sicherung.foto=await photoStore.blobFor?.(student.photo)||null; }catch{}
+
+  /* 1 · Punkte (Schluessel: „JJJJ-MM-TT:kind-id") */
+  Object.keys(state.points||{}).forEach(k=>{
+    if(k.endsWith(':'+id)){ sicherung.punkte[k]=state.points[k]; delete state.points[k]; }
+  });
+  /* 2 · Verlauf, Notizen, uebertragene Vorfaelle */
+  sicherung.verlauf=(state.pointHistory||[]).filter(e=>e.studentId===id);
+  state.pointHistory=(state.pointHistory||[]).filter(e=>e.studentId!==id);
+  sicherung.notizen=(state.teamIncidents||[]).filter(e=>e.studentId===id);
+  state.teamIncidents=(state.teamIncidents||[]).filter(e=>e.studentId!==id);
+  sicherung.fern=(state.remoteIncidentsLite||[]).filter(e=>e.studentId===id);
+  state.remoteIncidentsLite=(state.remoteIncidentsLite||[]).filter(e=>e.studentId!==id);
+  /* 3 · Klassenbaum */
+  state.publishedGreen=(state.publishedGreen||[]).filter(x=>x!==id);
+  state.previousPublishedGreen=(state.previousPublishedGreen||[]).filter(x=>x!==id);
+  /* 4 · Blatt-Vermerke. Der ZAEHLER bleibt bewusst stehen: die Blätter hat
+         die ganze Klasse gesammelt, sie gehören nicht einem Kind allein.
+         Nur die persönlichen Tagesvermerke verschwinden. */
+  Object.keys(state.leafAwards||{}).forEach(k=>{
+    if(k.endsWith(':'+id)){ sicherung.blattTage.push(k); delete state.leafAwards[k]; }
+  });
+  /* 5 · Stimmen der Kinder und Wochendienste */
+  Object.entries(state.votes||{}).forEach(([k,liste])=>{
+    if(Array.isArray(liste)&&liste.includes(id)){
+      sicherung.stimmen[k]=[...liste];
+      state.votes[k]=liste.filter(x=>x!==id);
+    }
+  });
+  const dienste=state.weeklyServices?.assignments||{};
+  Object.entries(dienste).forEach(([k,liste])=>{
+    if(Array.isArray(liste)&&liste.includes(id)){
+      sicherung.dienste[k]=[...liste];
+      dienste[k]=liste.filter(x=>x!==id);
+    }
+  });
+  /* 6 · Foto aus der Gerätedatenbank */
+  try{ await photoStore.remove(id); }catch{}
+  /* 7 · Und zuletzt aus der Klassenliste */
+  state.students=state.students.filter(item=>item.id!==id);
+  state.reservedStudentPlaces=Math.max(0,(Number(state.reservedStudentPlaces)||0)+1);
+
+  letzteKindLoeschung=sicherung;
+  const dauerhaft=saveState();
+  renderClassManagement();renderTeacherList();renderQuickPointsList();renderDashboard();renderServicePlanner();
+  zeigeLoeschmeldung(student.name,dauerhaft);
+}
+
+function zeigeLoeschmeldung(name,dauerhaft){
+  const leiste=document.querySelector('#classManagementStatus');
+  if(!leiste)return;
+  leiste.innerHTML=`<span>${escapeHtml(name)} wurde aus der Klasse entfernt`
+    +`${dauerhaft?' ✓':' – konnte aber nicht dauerhaft gespeichert werden'}</span> `
+    +`<button type="button" class="kind-zurueck-v1558">↩︎ Rückgängig</button>`;
+  leiste.querySelector('.kind-zurueck-v1558').onclick=undoDeleteStudent;
+}
+
+async function undoDeleteStudent(){
+  const s=letzteKindLoeschung;
+  if(!s){ const l=document.querySelector('#classManagementStatus'); if(l)l.textContent='Es gibt nichts zurückzuholen.'; return; }
+  letzteKindLoeschung=null;
+
+  const platz=Math.max(0,Math.min(s.platz,state.students.length));
+  state.students.splice(platz,0,s.student);
+  Object.assign(state.points,s.punkte);
+  state.pointHistory=[...s.verlauf,...(state.pointHistory||[])];
+  state.teamIncidents=[...s.notizen,...(state.teamIncidents||[])];
+  state.remoteIncidentsLite=[...s.fern,...(state.remoteIncidentsLite||[])];
+  if(s.veroeffentlicht)state.publishedGreen=[...(state.publishedGreen||[]),s.student.id];
+  if(s.vorherVeroeffentlicht)state.previousPublishedGreen=[...(state.previousPublishedGreen||[]),s.student.id];
+  state.leafAwards=state.leafAwards||{};
+  s.blattTage.forEach(k=>{state.leafAwards[k]=true});
+  Object.entries(s.stimmen).forEach(([k,liste])=>{state.votes[k]=liste});
+  state.weeklyServices=state.weeklyServices||{week:currentWeekKey(),assignments:{}};
+  state.weeklyServices.assignments=state.weeklyServices.assignments||{};
+  Object.entries(s.dienste).forEach(([k,liste])=>{state.weeklyServices.assignments[k]=liste});
+  state.reservedStudentPlaces=Math.max(0,(Number(state.reservedStudentPlaces)||0)-1);
+
+  /* Das Foto lag als Blob im Arbeitsspeicher – zurueck in die Datenbank. */
+  if(s.foto){
+    try{ s.student.photo=await photoStore.put(s.student.id,s.foto); }
+    catch{ s.student.photo=''; }
+  }
+
+  saveState();
+  renderClassManagement();renderTeacherList();renderQuickPointsList();renderDashboard();renderServicePlanner();
+  const l=document.querySelector('#classManagementStatus');
+  if(l)l.textContent=`${s.student.name} ist wieder in der Klasse ✓`;
+}
+
 function addStudent(){
   const used=new Set(state.students.map(student=>student.id));let index=state.students.length+1,id=`kind-${index}`;while(used.has(id)){index++;id=`kind-${index}`}
   state.students.push({id,name:`Neues Fuchs ${index}`,avatar:'+',photo:'',birthday:'',active:true});state.reservedStudentPlaces=Math.max(0,(Number(state.reservedStudentPlaces)||0)-1);saveState();renderClassManagement();renderTeacherList();renderQuickPointsList();renderDashboard();
@@ -1927,7 +2069,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.57',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.58',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -1973,7 +2115,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.57',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.58',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}

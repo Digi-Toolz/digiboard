@@ -434,8 +434,11 @@ const photoStore=(()=>{
     return {available,count};
   })();
 
+  /* NEXT 15.58 – `blobFor` wird jetzt auch nach aussen gereicht: Beim
+     Loeschen eines Kindes muss das Foto VOR dem Entfernen gelesen werden,
+     sonst gaebe es beim „Rueckgaengig" kein Bild mehr zurueckzuholen. */
   return {ready,resolve,put,remove,migrate,inlineForExport,absorbFromImport,usage,
-          isReference,keyFor,dataUrlToBlob,photoReport,diagnose,verkleinereZuDataUrl,frischeUrl,
+          isReference,keyFor,dataUrlToBlob,photoReport,diagnose,verkleinereZuDataUrl,frischeUrl,blobFor,
           get lastExportReport(){return lastExportReport;},
           get lastImportReport(){return lastImportReport;},
           get available(){return available;},
