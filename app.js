@@ -1927,7 +1927,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.54',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.55',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -1973,7 +1973,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.54',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.55',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}
@@ -2831,12 +2831,24 @@ function fitResponsiveStudentGrid(list=document.querySelector('#teacherStudentLi
     if(rect.width<1)return;
     const viewportWidth=window.visualViewport?.width||window.innerWidth||rect.width;
     const gap=viewportWidth<900?7:8;
-    const minCardWidth=viewportWidth<=1180?260:viewportWidth<=1500?285:300;
-    const maxColumns=viewportWidth<=700?1:5;
+    /* NEXT 15.55 – Eine Zeile pro Kind statt einer Kachel.
+
+       Vorher wurde die verfuegbare HOEHE auf die Zeilen verteilt: bei
+       wenigen Zeilen wuchsen die Karten auf 112 Pixel und darueber, und
+       unter jedem Namen stand eine handbreit Leerflaeche. Gleichzeitig
+       wurde der Inhalt in der BREITE zusammengequetscht, bis Namen und
+       Knopfbeschriftungen abschnitten – „An…", „Ste…", „Ver…".
+
+       Hoehe verschenkt, Breite knapp. Deshalb jetzt umgekehrt: die
+       Kartenhoehe ist fest und flach, die Breite reicht fuer Foto,
+       vollen Namen und alle sechs Knoepfe. Was nicht auf den Schirm
+       passt, wird gescrollt. */
+    const schmal=viewportWidth<=900;
+    const minCardWidth=schmal?280:viewportWidth<=1500?430:450;
+    const maxColumns=viewportWidth<=700?1:4;
     const columns=Math.max(1,Math.min(maxColumns,Math.floor((rect.width+gap)/(minCardWidth+gap))));
     const rows=Math.max(1,Math.ceil(count/columns));
-    const naturalHeight=rect.height>0?Math.floor((rect.height-gap*(rows-1))/rows):68;
-    const cardHeight=Math.max(58,Math.min(112,naturalHeight));
+    const cardHeight=schmal?86:58;
     list.style.setProperty('--student-grid-columns',String(columns));
     list.style.setProperty('--student-grid-rows',String(rows));
     list.style.setProperty('--student-card-height',`${cardHeight}px`);

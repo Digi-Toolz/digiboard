@@ -1,0 +1,210 @@
+/* ============================================================
+   DigiBoard Next 15.55 – Punkte & Beobachtungen: eine Zeile pro Kind
+
+   Das Problem auf dem Bildschirmfoto: Foto, Name und sechs Knöpfe
+   teilten sich eine Karte von rund 155 Pixeln Höhe – und trotzdem war
+   alles abgeschnitten. „An…", „Ha…", „Luk…" bei den Namen, „Ste…",
+   „Ver…", „M…" bei den Knöpfen. Gleichzeitig stand unter jeder Karte
+   eine handbreit Leerfläche.
+
+   Der Grund: die Karte wuchs in die HÖHE, weil `fitResponsiveStudentGrid`
+   die verfügbare Fläche auf die Zeilen verteilte – aber der Inhalt
+   wurde in der BREITE zusammengequetscht. Höhe verschenkt, Breite knapp.
+
+   Jetzt: eine flache Zeile pro Kind.
+
+     ┌────────────────────────────────────────────────┐
+     │ (o) André Schmidt      ● ● ● ★ ⊘ •••           │
+     │     0 · keine Maßnahme                         │
+     └────────────────────────────────────────────────┘
+
+   - Foto als 28-Pixel-Kreis statt als Kachel
+   - Name ungekürzt, Knöpfe mit ausgeschriebener Beschriftung
+   - Kartenhöhe 58 statt 155 Pixel
+
+   Damit passen bei gleicher Fensterhöhe rund dreimal so viele Kinder
+   auf den Schirm.
+   ============================================================ */
+
+html body #teamWorkspace .compact-team-points .student-list,
+html body #teamWorkspace #teacherStudentList{
+  /* Die Zeilen wachsen nicht mehr in die Höhe, sie stapeln sich von
+     oben. Was nicht passt, wird gescrollt – das ist ehrlicher als
+     aufgeblähte Karten mit Leerraum. */
+  grid-auto-rows:var(--student-card-height,58px)!important;
+  align-content:start!important;
+}
+
+html body #teamWorkspace .compact-team-points .compact-rating-row,
+html body #teamWorkspace #teacherStudentList .compact-rating-row{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:var(--student-card-height,58px)!important;
+  min-height:var(--student-card-height,58px)!important;
+  max-height:var(--student-card-height,58px)!important;
+  margin:0!important;
+  padding:6px 9px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  border:1px solid #dde6d6!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  box-shadow:0 2px 6px rgba(39,72,40,.06)!important;
+  overflow:hidden!important;
+}
+
+/* --- links: Foto und Name ------------------------------------------- */
+
+html body #teamWorkspace .compact-rating-row .student-point-name{
+  grid-column:1!important;
+  grid-row:1!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:9px!important;
+  border:0!important;
+  background:transparent!important;
+  text-align:left!important;
+}
+
+/* Rund statt eckig: ein Kreis liest sich als Person, eine Kachel als
+   Bildfläche – und er braucht weniger Platz für dieselbe Erkennbarkeit. */
+html body #teamWorkspace .compact-rating-row .mini-avatar{
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  border:1px solid #c6d8c4!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  background:#eef4e9!important;
+  box-shadow:none!important;
+}
+html body #teamWorkspace .compact-rating-row .mini-avatar img,
+html body #teamWorkspace .compact-rating-row .mini-photo{
+  width:100%!important;
+  height:100%!important;
+  border-radius:50%!important;
+  object-fit:cover!important;
+  display:block!important;
+}
+/* Ohne Foto: Anfangsbuchstaben, mittig, gut lesbar. */
+html body #teamWorkspace .compact-rating-row .mini-avatar{
+  display:grid!important;
+  place-items:center!important;
+  color:#4d6b52!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+html body #teamWorkspace .compact-rating-row .student-point-name>span:last-child{
+  min-width:0!important;
+}
+html body #teamWorkspace .compact-rating-row .student-point-name strong{
+  display:block!important;
+  overflow:hidden!important;
+  color:#24513a!important;
+  font-size:12.5px!important;
+  font-weight:850!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+}
+/* Vorher 7 Pixel – das war für eine Lehrkraft im Stehen nicht lesbar. */
+html body #teamWorkspace .compact-rating-row .student-point-name small{
+  display:block!important;
+  margin-top:1px!important;
+  overflow:hidden!important;
+  color:#6f8271!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+  line-height:1.15!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+}
+html body #teamWorkspace .compact-rating-row .student-measure-list{display:none!important}
+
+/* --- rechts: die sechs Aktionen -------------------------------------- */
+
+html body #teamWorkspace .compact-rating-row .student-direct-actions{
+  grid-column:2!important;
+  grid-row:1!important;
+  width:auto!important;
+  min-width:0!important;
+  height:42px!important;
+  display:grid!important;
+  /* Feste Spaltenbreite statt `1fr`: so ist die Beschriftung immer
+     vollständig lesbar, egal wie breit die Karte gerade ist. */
+  grid-template-columns:repeat(6,44px)!important;
+  grid-template-rows:42px!important;
+  align-items:stretch!important;
+  gap:4px!important;
+  overflow:visible!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-btn,
+html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut{
+  box-sizing:border-box!important;
+  width:44px!important;
+  min-width:44px!important;
+  max-width:44px!important;
+  height:42px!important;
+  min-height:42px!important;
+  max-height:42px!important;
+  padding:3px 1px!important;
+  display:grid!important;
+  grid-template-rows:18px 11px!important;
+  place-items:center!important;
+  gap:1px!important;
+  border-radius:10px!important;
+}
+/* 6,5 Pixel waren der Grund für „Ste…" und „Ver…". Bei 8 Pixeln passt
+   „Verbot" vollständig in 44 Pixel Breite. */
+html body #teamWorkspace .compact-rating-row .student-direct-actions small{
+  display:block!important;
+  overflow:visible!important;
+  color:inherit!important;
+  font-size:8px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  letter-spacing:-.01em!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
+}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-symbol{font-size:16px!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .point-ban .ban-glyph{font-size:16px!important}
+html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut>span{font-size:12px!important}
+
+/* --- schmale Fenster: Knöpfe unter den Namen -------------------------- */
+
+@media (max-width:900px){
+  html body #teamWorkspace .compact-team-points .student-list,
+  html body #teamWorkspace #teacherStudentList{
+    grid-auto-rows:var(--student-card-height,86px)!important;
+  }
+  html body #teamWorkspace .compact-rating-row{
+    height:var(--student-card-height,86px)!important;
+    min-height:var(--student-card-height,86px)!important;
+    max-height:var(--student-card-height,86px)!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    gap:5px!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-direct-actions{
+    grid-column:1!important;
+    grid-row:2!important;
+    width:100%!important;
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  }
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .point-btn,
+  html body #teamWorkspace .compact-rating-row .student-direct-actions .student-profile-shortcut{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+}

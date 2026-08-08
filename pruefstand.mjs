@@ -39,7 +39,7 @@ window.addEventListener('error',e=>fehler.push(String(e.error||e.message)));
 // bereich, genau wie <script>-Tags im Browser.
 const quelle=['photo-store.js','app.js','package-export.js']
   .map(datei=>fs.readFileSync(path.join(dir,datei),'utf8')).join('\n;\n');
-try{ window.eval(quelle+'\n;globalThis.__app={renderClassManagement,replaceStudentPhoto,renderTeamMembers,renderTeachingToolSettings,manageTeachingTool,activeTeachingTools,teamPhotoMarkup,state,photoStore};'); }
+try{ window.eval(quelle+'\n;globalThis.__app={renderPointRows,fitResponsiveStudentGrid,renderClassManagement,replaceStudentPhoto,renderTeamMembers,renderTeachingToolSettings,manageTeachingTool,activeTeachingTools,teamPhotoMarkup,state,photoStore};'); }
 catch(e){ fehler.push('Skripte: '+e.message); }
 const app=window.__app||{};
 window.document.dispatchEvent(new window.Event('DOMContentLoaded',{bubbles:true}));
@@ -202,9 +202,21 @@ const regelVon=selektor=>{
   const i=waldfrischQuelle.indexOf(selektor+'{');
   return i<0?'':waldfrischQuelle.slice(i,waldfrischQuelle.indexOf('}',i));
 };
-const letzteDatei=[...html.matchAll(/href="([^"?]+\.css)/g)].map(m=>m[1]).pop();
-pruefe('waldfrisch wird als letzte Gestaltungsdatei geladen',
-  letzteDatei==='waldfrisch-15-54.css',letzteDatei);
+/* Nicht „ist die letzte Datei" pruefen – das bricht bei jeder neuen
+   Datei. Gemeint ist die eigentliche Bedingung: sie muss NACH den
+   Dateien stehen, deren Regeln sie ueberschreibt. Gleiche Spezifitaet
+   plus !important entscheidet allein die Reihenfolge. */
+const stilFolge=[...html.matchAll(/href="([^"?]+\.css)/g)].map(m=>m[1]);
+const nachRang=(datei,vorlaeufer)=>{
+  const i=stilFolge.indexOf(datei);
+  return i>-1&&vorlaeufer.every(v=>stilFolge.indexOf(v)>-1&&stilFolge.indexOf(v)<i);
+};
+pruefe('waldfrisch liegt hinter fixes und waldbuehne',
+  nachRang('waldfrisch-15-54.css',['fixes.css','override.css','waldbuehne-15-45.css']),
+  stilFolge.slice(-3).join(' → '));
+pruefe('punkteliste liegt hinter fixes',
+  nachRang('punkteliste-15-55.css',['fixes.css','override.css']),
+  stilFolge.slice(-3).join(' → '));
 
 const dockRegel=regelVon('html body .app-shell .forest-tool-belt-v1521.dock');
 pruefe('Werkzeugleiste wird ueberhaupt neu gesetzt',!!dockRegel,dockRegel?'Regel vorhanden':'FEHLT');
@@ -239,6 +251,52 @@ if(schild)pruefe('Waldhelden-Schild ohne Textschatten',
    dieser Fehler steckte bis 15.39 drin und darf nicht wiederkommen. */
 const schale=$('.app-shell');
 pruefe('kein Farbfilter auf der ganzen Szene',(stil(schale).filter||'none')==='none',stil(schale).filter);
+
+console.log('\n=== Punkte & Beobachtungen: eine Zeile pro Kind (15.55) ===');
+const punkteListe=$('#teacherStudentList');
+if(punkteListe&&app.renderPointRows){
+  app.renderPointRows(punkteListe);
+  const zeilen=$$('#teacherStudentList .compact-rating-row');
+  pruefe('eine Zeile je Kind',zeilen.length>0,`${zeilen.length} Zeilen`);
+
+  const avatar=zeilen[0]?.querySelector('.mini-avatar');
+  const a=stil(avatar);
+  pruefe('Foto ist auf 28 Pixel geschrumpft',a&&a.width==='28px',a?a.width:'fehlt');
+  pruefe('Foto ist rund',a&&a.borderRadius==='50%',a?a.borderRadius:'-');
+
+  /* Foto, Name UND Knoepfe muessen nebeneinander stehen. Sobald daraus
+     zwei Zeilen werden, waechst die Karte wieder in die Hoehe – genau
+     das war die Beschwerde. */
+  const z=stil(zeilen[0]);
+  pruefe('Foto/Name links, Knoepfe rechts – eine Reihe',
+    /1fr\)? auto$/.test((z.gridTemplateColumns||'').trim()),z.gridTemplateColumns);
+
+  const knoepfe=zeilen[0].querySelectorAll('.student-direct-actions button');
+  pruefe('alle sechs Aktionen vorhanden',knoepfe.length===6,`${knoepfe.length}`);
+  const beschriftungen=[...knoepfe].map(b=>b.querySelector('small')?.textContent||'');
+  pruefe('Knoepfe sind ausgeschrieben',
+    beschriftungen.join('/')==='Grün/Gelb/Rot/Stern/Verbot/Mehr',beschriftungen.join('/'));
+  const kl=stil(zeilen[0].querySelector('.student-direct-actions small'));
+  pruefe('Knopftext ist nicht mehr 6,5 Pixel klein',parseFloat(kl.fontSize)>=8,kl.fontSize);
+  pruefe('Knopftext wird nicht mehr abgeschnitten',kl.textOverflow!=='ellipsis',kl.textOverflow);
+  const nk=stil(zeilen[0].querySelector('.student-point-name small'));
+  pruefe('Punktestand ist lesbar gross',parseFloat(nk.fontSize)>=9,nk.fontSize);
+
+  /* Die Kartenhoehe kommt aus fitResponsiveStudentGrid. jsdom rechnet
+     kein Layout, deshalb wird die Breite hier gestellt – geprueft wird
+     die Rechnung, nicht der Browser. */
+  punkteListe.getBoundingClientRect=()=>({width:1500,height:620,top:0,left:0,right:1500,bottom:620});
+  app.fitResponsiveStudentGrid(punkteListe);
+  await new Promise(r=>setTimeout(r,60));
+  const hoehe=punkteListe.style.getPropertyValue('--student-card-height');
+  const spalten=Number(punkteListe.dataset.gridColumns||0);
+  pruefe('Karte ist flach statt aufgeblaeht',hoehe==='58px',hoehe||'nicht gesetzt');
+  pruefe('mindestens drei Spalten auf dem Laptop',spalten>=3,`${spalten} Spalten`);
+  /* 620 Pixel Hoehe, 58er Zeilen: frueher passten bei 155er Karten
+     4 Reihen = 12 Kinder, jetzt sind es 10 Reihen = 30. */
+  const sichtbareKinder=Math.floor(620/(58+8))*spalten;
+  pruefe('mehr Kinder ohne Scrollen als vorher (12)',sichtbareKinder>=24,`${sichtbareKinder} Kinder`);
+}
 
 console.log(`\n=== Ergebnis: ${fehlgeschlagen?fehlgeschlagen+' Fehler':'alles bestanden'} ===`);
 process.exit(fehlgeschlagen?1:0);
