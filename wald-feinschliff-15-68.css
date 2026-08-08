@@ -1,0 +1,154 @@
+/* DigiBoard Next 15.68 – Feinschliff nach der echten Laptopansicht */
+
+/* 1. Der Baum darf den Wald nicht verdecken. Die gesamte Baumebene wird
+   gemeinsam skaliert, damit Portraitpositionen und Entdeckerpunkte stimmen. */
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22.tree-scene-v22{
+  transform:translateZ(0) scale(.91)!important;
+  transform-origin:50% 94%!important;
+  filter:drop-shadow(0 23px 21px rgba(20,61,29,.20)) saturate(.94) contrast(1.015)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tree-main-image-v1539{
+  background-size:94% 96%!important;
+  filter:drop-shadow(0 25px 21px rgba(20,54,27,.25)) saturate(.82) contrast(1.04) brightness(.97)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-fill-v100.tree-crown-fill-v100{
+  opacity:.42!important;
+  filter:saturate(.72) contrast(1.03) drop-shadow(0 10px 11px rgba(17,63,27,.13))!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-v22.tree-crown-v22{
+  filter:saturate(.76) contrast(1.035) drop-shadow(0 12px 12px rgba(17,63,27,.16))!important;
+}
+
+/* 2. Schild: Unterzeile muss auch aus normalem Betrachtungsabstand lesbar
+   sein. Die Klassenwiederholung gewinnt gegen alte !important-Regeln. */
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .wall-title-v22.wall-title-v22.wall-title-v22{
+  width:min(620px,88%)!important;
+  min-height:54px!important;
+  padding:8px 10px 8px 13px!important;
+  grid-template-columns:34px minmax(170px,1fr) auto!important;
+  background:linear-gradient(180deg,rgba(255,253,236,.97),rgba(228,238,207,.96))!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .wall-title-v22.wall-title-v22.wall-title-v22
+  >div:not(.tree-title-actions-v1538)>strong{
+  color:#173c28!important;
+  font-size:17px!important;
+  font-weight:880!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .wall-title-v22.wall-title-v22.wall-title-v22
+  >div:not(.tree-title-actions-v1538)>small{
+  color:#536858!important;
+  font-size:9px!important;
+  font-weight:780!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  opacity:1!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* Der Fuchs bleibt im Begrüßungskasten und liegt nicht auf Waldkarte/Knopf. */
+html body .app-shell[data-theme="forest"] .hero.hero .hero-fox.hero-fox{
+  right:18px!important;
+  bottom:12px!important;
+  font-size:42px!important;
+  transform:none!important;
+  z-index:3!important;
+}
+
+/* 3. Das leere Baumschild wird kleiner und lässt mehr Stamm erkennen. */
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22.empty-tree-v22{
+  width:min(310px,46%)!important;
+  min-height:0!important;
+  padding:13px 18px!important;
+  gap:3px!important;
+  border-color:rgba(61,91,49,.38)!important;
+  background:linear-gradient(145deg,rgba(255,251,228,.95),rgba(220,235,195,.94))!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>span{font-size:25px!important}
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>strong{font-size:13px!important;line-height:1.1!important}
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>small{font-size:8px!important;color:#65755d!important}
+
+/* 4. Tagesinfos: heller Kreidetext auf dunkler Waldtafel. */
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget{
+  background:
+    radial-gradient(circle at 18% 10%,rgba(255,255,220,.10),transparent 31%),
+    linear-gradient(158deg,#20785a,#12513f)!important;
+  border-color:rgba(80,54,28,.62)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .widget-head,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .widget-head h2,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row span,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row strong{
+  color:#fff9de!important;
+  opacity:1!important;
+  text-shadow:0 1px 1px rgba(4,38,27,.28)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row{
+  border-color:rgba(245,246,211,.20)!important;
+}
+
+/* 5. Desktop-Werkzeuggürtel: die Namen passen vollständig hinein. */
+@media (min-width:761px){
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
+    left:50%!important;
+    right:auto!important;
+    width:min(1540px,calc(100% - 210px))!important;
+    max-width:none!important;
+    transform:translateX(-50%)!important;
+    display:grid!important;
+    grid-template-columns:1.15fr repeat(7,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    gap:5px!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button{
+    width:auto!important;
+    min-width:0!important;
+    padding-inline:7px!important;
+    overflow:visible!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-copy-v1531{
+    min-width:0!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-label{
+    display:block!important;
+    max-width:none!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    white-space:nowrap!important;
+    font-size:9.5px!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-status-v1531{
+    font-size:7px!important;
+  }
+}
+
+@media (max-width:1180px) and (min-width:761px){
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22.tree-scene-v22{
+    transform:translateZ(0) scale(.87)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22.wall-title-v22.wall-title-v22{
+    width:min(590px,90%)!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
+    width:calc(100% - 80px)!important;
+  }
+}
+
+@media (max-width:760px){
+  html body .app-shell[data-theme="forest"] .hero.hero .hero-fox.hero-fox{
+    right:10px!important;bottom:16px!important;font-size:44px!important;
+  }
+}
