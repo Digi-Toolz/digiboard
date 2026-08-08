@@ -1,0 +1,159 @@
+/* ============================================================
+   DigiBoard Next 15.60 – Drei Fächer, und das Handy sitzt mittig
+
+   ------------------------------------------------------------
+   1 · WARUM DAS FENSTER AUF DEM IPHONE NACH LINKS RUTSCHTE
+   ------------------------------------------------------------
+
+   In 15.56 hatte ich geschrieben:
+
+       .dialog-card{ width:100vw }
+
+   Das sieht richtig aus, ist es aber nicht. `100vw` ist die Breite des
+   Anzeigebereichs OHNE Rücksicht darauf, wo das Element sitzt. Das
+   <dialog> selbst hat einen eigenen Rand und eine eigene Mitte; die
+   Karte darin war deshalb breiter als der Platz, den sie hatte, lief
+   nach rechts hinaus und schob den Inhalt nach links. Was dabei als
+   „Rahmen" rechts sichtbar wurde, war der Hintergrund hinter dem
+   überstehenden Fenster.
+
+   `width:100%` fragt dagegen den Elternteil – und der weiß, wie breit
+   er ist. Dazu wird das <dialog> selbst auf die volle Fläche gesetzt
+   und ein waagerechtes Scrollen ausgeschlossen.
+
+   ------------------------------------------------------------
+   2 · DREI FÄCHER STATT ZWEI
+   ------------------------------------------------------------
+
+   Die Kinder standen zwischen Stundenplan und Klassenwelt, als wären
+   Namen und Fotos von 22 Kindern eine Einstellung wie jede andere.
+   Sie sind die einzigen personenbezogenen Daten in der App und haben
+   jetzt ein eigenes Fach in eigener Farbe.
+   ============================================================ */
+
+html body #settingsDialog,
+html body #teamDialog{
+  --fach-kinder-koerper:#fdf3f4;
+  --fach-kinder-kopf:linear-gradient(180deg,#fae3e5,#f5d3d7);
+  --fach-kinder-rand:#e6bcc0;
+  --fach-kinder-tinte:#7a3540;
+}
+
+html body #settingsDialog .settings-group-children.settings-group-children{
+  --fach-rand:var(--fach-kinder-rand);
+  --fach-koerper:var(--fach-kinder-koerper);
+  --fach-kopf:var(--fach-kinder-kopf);
+  --fach-tinte:var(--fach-kinder-tinte);
+}
+
+/* ============================================================
+   3 · HANDY: DAS FENSTER SITZT MITTIG UND FÜLLT DEN SCHIRM
+   ============================================================ */
+
+@media (max-width:760px){
+  html,body{ overflow-x:hidden!important; }
+
+  html body dialog.dialog{
+    inset:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  /* Spezifität, nachgerechnet statt geraten:
+       20402 !  fundus-fenster-15-57.css
+                …#teamDialog .dialog-card.dialog-card:has(#teamWorkspace.settings-mode)
+                → width:min(1320px,96vw)
+     Eine Breitenabfrage hebt die Spezifität NICHT. Diese Regel hier
+     muss also aus eigener Kraft darüber liegen, sonst bleibt es bei
+     96vw – und 96vw linksbündig ist genau der Streifen rechts. */
+  html body #settingsDialog .dialog-card.dialog-card.dialog-card.dialog-card:has(*),
+  html body #teamDialog .dialog-card.dialog-card.dialog-card.dialog-card:has(#teamWorkspace){
+    box-sizing:border-box!important;
+    width:100%!important;      /* war 100vw – DAS war der Versatz */
+    max-width:100%!important;
+    margin:0 auto!important;
+    padding:calc(env(safe-area-inset-top,0px) + 10px)
+            calc(env(safe-area-inset-right,0px) + 12px)
+            calc(env(safe-area-inset-bottom,0px) + 12px)
+            calc(env(safe-area-inset-left,0px) + 12px)!important;
+    border-radius:0!important;
+  }
+
+  /* Nichts darin darf breiter sein als das Fenster. Ein einziges zu
+     breites Kind erzeugt sonst wieder das waagerechte Verrutschen. */
+  html body #settingsDialog .dialog-card *,
+  html body #teamDialog .dialog-card *{
+    max-width:100%!important;
+  }
+
+  /* Die Kopfzeile im Teambereich stand als schmale Spalte in der Mitte,
+     weil die Knöpfe durch fremde Regeln auf volle Breite standen.
+     Jetzt reihen sie sich von links auf und brechen erst um, wenn es
+     wirklich eng wird. */
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav.team-workspace-nav{
+    justify-content:flex-start!important;
+    align-items:center!important;
+  }
+  html body #teamDialog #teamWorkspace
+    .team-workspace-nav.team-workspace-nav>*,
+  html body #teamDialog #teamWorkspace .team-nav-left.team-nav-left>*{
+    width:auto!important;
+    min-width:0!important;
+    flex:0 1 auto!important;
+  }
+  html body #teamDialog #teamWorkspace .team-page-tabs.team-page-tabs{
+    flex:1 1 100%!important;
+    width:100%!important;
+  }
+
+  /* Die Fächer bekommen auf dem Handy etwas mehr Luft nach aussen,
+     damit der farbige Rahmen als Rahmen lesbar bleibt. */
+  html body #settingsDialog .settings-group.settings-group{
+    margin:0 0 14px!important;
+    border-radius:16px!important;
+  }
+  html body #settingsDialog
+    .settings-home-grid.settings-home-grid.settings-home-grid{
+    padding:10px!important;
+    gap:8px!important;
+  }
+
+  /* Auf dem Bildschirmfoto brachen „Meine Ansicht & Werkzeuge" und
+     „Mein Unterricht" in fünf Zeilen um, weil die Kachel zu wenig
+     Breite für den Text hatte. Ein Symbol von 38 Pixeln und ein Pfeil
+     brauchen zusammen 60 Pixel – der Rest gehört dem Text. */
+  html body #settingsDialog .settings-group .settings-home-grid>button{
+    grid-template-columns:34px minmax(0,1fr) 12px!important;
+    gap:9px!important;
+    padding:10px!important;
+  }
+  html body #settingsDialog .settings-group .settings-home-grid .tile-icon{
+    width:34px!important;
+    height:34px!important;
+    font-size:17px!important;
+  }
+  html body #settingsDialog .settings-group .settings-home-grid>button strong{
+    font-size:12.5px!important;
+    hyphens:auto!important;
+  }
+  html body #settingsDialog .settings-group .settings-home-grid>button small{
+    font-size:10.5px!important;
+  }
+}
+
+/* ============================================================
+   4 · SEHR SCHMAL: EINE KACHEL PRO ZEILE
+
+   Zwei Kacheln nebeneinander sind unter 400 Pixeln keine zwei Kacheln
+   mehr, sondern zwei Wortsalate.
+   ============================================================ */
+
+@media (max-width:400px){
+  html body #settingsDialog
+    .settings-home-grid.settings-home-grid.settings-home-grid{
+    grid-template-columns:1fr!important;
+  }
+}
