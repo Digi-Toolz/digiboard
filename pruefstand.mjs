@@ -162,5 +162,83 @@ if(ersterSchueler){
     heicText.slice(0,70));
 }
 
+console.log('\n=== Walddesign frisch (15.54) ===');
+const weg=['.forest-squirrel','.forest-owl','.forest-deer','.forest-rabbit','.forest-bee',
+           '.forest-lantern','.forest-birdhouse','.forest-mushroom','.forest-flower','.forest-grass'];
+const nochDa=weg.filter(k=>{const el=$('.forest-ambient>'+k);return el&&stil(el).display!=='none'});
+pruefe('Emoji-Aufkleber bleiben ausgeblendet',nochDa.length===0,nochDa.join(' ')||'alle weg');
+
+/* Genau drei Elemente duerfen die Sammelregel `.forest-ambient>span
+   {display:none}` durchbrechen – nicht mehr. */
+const fuchs=$('.forest-ambient>.forest-fox-stage');
+pruefe('der Fuchs ist zurueck',fuchs&&stil(fuchs).display!=='none',fuchs?stil(fuchs).display:'fehlt');
+const falter=$$('.forest-ambient>.forest-butterfly').filter(b=>stil(b).display!=='none');
+pruefe('genau zwei Schmetterlinge',falter.length===2,`${falter.length}`);
+/* Gluehwuermchen sind Licht, keine Aufkleber – sie zaehlen nicht mit. */
+const sichtbar=$$('.forest-ambient>span')
+  .filter(s=>stil(s).display!=='none'&&!/firefly/.test(s.className));
+pruefe('nicht mehr als drei Deko-Elemente',sichtbar.length<=3,
+  sichtbar.map(s=>s.className.split(' ')[0]).join(', ')||'keine');
+
+const geheim=$$('.forest-secret-v1523');
+pruefe('Entdeckerpunkte sind noch da',geheim.length===3,`${geheim.length} Stück`);
+if(geheim[0]){
+  const g=stil(geheim[0]);
+  pruefe('Entdeckerpunkt ist antippbar gross',parseInt(g.width,10)>=28,g.width);
+  pruefe('Entdeckerpunkt ist ein Knopf',geheim[0].tagName==='BUTTON');
+  pruefe('Entdeckerpunkt hat eine Beschriftung fuer Vorlesegeraete',
+    !!geheim[0].getAttribute('aria-label'),geheim[0].getAttribute('aria-label')||'fehlt');
+}
+
+/* ACHTUNG, Grenze des Pruefstands: jsdom loest `var(--…)` NICHT auf und
+   verwirft jede Deklaration, die eine Variable enthaelt. Ueber
+   getComputedStyle sind solche Regeln deshalb nicht pruefbar – sie sahen
+   hier faelschlich so aus, als greife weiter die alte Holzoptik.
+   Fuer diese Faelle wird der Quelltext der Regel geprueft und zusaetzlich,
+   dass die Datei wirklich zuletzt geladen wird. Nur dann gewinnt sie im
+   Browser gegen fixes.css, das denselben Selektor mit !important belegt. */
+const waldfrischQuelle=fs.readFileSync(path.join(dir,'waldfrisch-15-54.css'),'utf8');
+const regelVon=selektor=>{
+  const i=waldfrischQuelle.indexOf(selektor+'{');
+  return i<0?'':waldfrischQuelle.slice(i,waldfrischQuelle.indexOf('}',i));
+};
+const letzteDatei=[...html.matchAll(/href="([^"?]+\.css)/g)].map(m=>m[1]).pop();
+pruefe('waldfrisch wird als letzte Gestaltungsdatei geladen',
+  letzteDatei==='waldfrisch-15-54.css',letzteDatei);
+
+const dockRegel=regelVon('html body .app-shell .forest-tool-belt-v1521.dock');
+pruefe('Werkzeugleiste wird ueberhaupt neu gesetzt',!!dockRegel,dockRegel?'Regel vorhanden':'FEHLT');
+/* Gemeint ist NUR der aussen liegende Sockelschatten. Eine innere
+   Lichtkante (`inset 0 1px 0 …`) ist genau das Gegenteil: sie macht die
+   Flaeche zart, nicht klotzig. Die erste Fassung dieser Pruefung warf
+   beides in einen Topf und schlug am eigenen Lichtsaum fehl. */
+const aussenSchatten=(dockRegel.match(/box-shadow:[^;]*/)||[''])[0]
+  .split(',').filter(t=>!/inset/.test(t));
+pruefe('Werkzeugleiste ohne harte Sockelkante',
+  !!dockRegel&&!aussenSchatten.some(t=>/\b0 \d+px 0\b/.test(t)),
+  aussenSchatten.join(',').trim().slice(0,40)||'nur Lichtkante');
+pruefe('Werkzeugleiste auf hellem Papier',/--frisch-papier/.test(dockRegel));
+pruefe('kein Gold mehr in der Leiste',!/#ffd979|--gold/.test(dockRegel));
+
+const knopfRegel=regelVon('html body .app-shell .forest-tool-belt-v1521.dock>button');
+pruefe('Werkzeugknoepfe ohne Sockel und ohne Textschatten',
+  /box-shadow:none/.test(knopfRegel)&&/text-shadow:none/.test(knopfRegel));
+
+/* Die Aussehen-Regeln duerfen NICHT in einer Breitenabfrage stehen, sonst
+   bleibt auf dem Handy die alte Holzoptik stehen. */
+const vorErsterAbfrage=waldfrischQuelle.slice(0,waldfrischQuelle.indexOf('@media'));
+pruefe('Leisten-Optik gilt auf allen Bildschirmbreiten',
+  vorErsterAbfrage.includes('.forest-tool-belt-v1521.dock{'));
+const schild=$('.wall-fixed .wall-title-v22');
+/* jsdom schreibt „keinen Schatten" als rgba(0,0,0,0) statt als none. */
+if(schild)pruefe('Waldhelden-Schild ohne Textschatten',
+  /^(none|rgba\(0, 0, 0, 0\))?$/.test((stil(schild).textShadow||'').trim()),
+  stil(schild).textShadow||'leer');
+
+/* Ein Filter auf der ganzen Szene wuerde auch die Kinderfotos einfaerben –
+   dieser Fehler steckte bis 15.39 drin und darf nicht wiederkommen. */
+const schale=$('.app-shell');
+pruefe('kein Farbfilter auf der ganzen Szene',(stil(schale).filter||'none')==='none',stil(schale).filter);
+
 console.log(`\n=== Ergebnis: ${fehlgeschlagen?fehlgeschlagen+' Fehler':'alles bestanden'} ===`);
 process.exit(fehlgeschlagen?1:0);

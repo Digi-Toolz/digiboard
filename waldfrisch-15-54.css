@@ -1,0 +1,407 @@
+/* ============================================================
+   DigiBoard Next 15.54 – Waldbild: frisch statt süß
+
+   Diese Datei wird ZULETZT geladen und ändert ausschließlich das
+   Aussehen. Keine Regel greift in Daten, Fotos oder Bedienlogik ein.
+
+   ------------------------------------------------------------
+   Was der Prüfstand beim Bauen dieser Datei aufgedeckt hat
+   ------------------------------------------------------------
+
+   Ich wollte zuerst die Emoji-Aufkleber ausblenden – Eichhörnchen,
+   Pilze, Laterne, Reh, Hase, Biene. Der Prüfstand meldete: alle längst
+   unsichtbar. In `waldtiefe-15-42.css` steht seit Langem eine einzige
+   Zeile, die den gesamten Aufkleberstapel abräumt:
+
+       html body .app-shell .forest-ambient>span{display:none!important}
+
+   Das heißt: Der Kitsch saß nie im Wald. Er saß in der BEDIENUNG.
+   Geschnitztes Holz, Gold, dunkelbraune Ränder und harte Sockelkanten
+   (`0 8px 0 …`) – jede Fläche ein Klotz, alles lauter als das Gemälde
+   dahinter. Genau da setzt diese Datei an.
+
+   Und weil die Szene dadurch vollkommen bewegungslos war, kommen genau
+   drei Dinge zurück: der Fuchs und zwei Schmetterlinge. So viel, dass
+   die Lichtung lebt – so wenig, dass sie nicht zappelt.
+
+   Was bleibt: die ✨-Entdeckerpunkte. Sie werden nur schöner.
+   ============================================================ */
+
+html body .app-shell{
+  /* Papier, Tinte, Moos – mehr Farben braucht die Oberfläche nicht. */
+  --frisch-papier:rgba(255,255,252,.90);
+  --frisch-papier-klar:rgba(255,255,253,.97);
+  --frisch-rahmen:rgba(46,84,52,.15);
+  --frisch-rahmen-stark:rgba(46,84,52,.30);
+  --frisch-tinte:#223d29;
+  --frisch-tinte-leise:#5a7360;
+  --frisch-moos:#4b8055;
+  --frisch-moos-hell:#8bbd77;
+  --frisch-nah:0 1px 2px rgba(24,52,30,.08);
+  --frisch-mittel:0 4px 12px -4px rgba(20,48,26,.28);
+  --frisch-weit:0 14px 30px -14px rgba(18,44,24,.50);
+}
+
+/* ============================================================
+   1 · LICHT – dieselbe Malerei, klarere Luft
+
+   Der Hintergrund war sehr warm und sehr gelb (`#dfe9a4` plus drei
+   gelbe Verläufe). Das wirkt sirupartig und nimmt allem darüber die
+   Frische. Jetzt liegt ein heller Dunst oben, ein Hauch Morgenkühle
+   darunter und eine sanfte Abdunklung am Boden.
+
+   KEIN `filter` auf der Szene! Ein Filter hier würde auch die
+   Kinderfotos einfärben – dieser Fehler steckte schon einmal drin und
+   wurde in 15.39 mühsam ausgebaut. Deshalb ausschließlich
+   Hintergrundebenen, die hinter allem Inhalt liegen.
+   ============================================================ */
+
+html body .app-shell{
+  background-color:#e9f0dd!important;
+  background-image:
+    radial-gradient(126% 74% at 50% 2%,rgba(255,255,255,.50),rgba(255,255,255,0) 56%),
+    linear-gradient(180deg,rgba(203,228,238,.34) 0%,rgba(255,255,255,0) 38%),
+    radial-gradient(150% 96% at 50% 112%,rgba(21,54,29,.26),rgba(21,54,29,0) 52%),
+    url('forest-clearing-15.24.png')!important;
+  background-position:center,center,center,center center!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%,100% 100%,100% 100%,cover!important;
+}
+
+/* Das Lichtflirren war kräftig gelb. Weiches Licht wirkt sonniger und
+   verfärbt die Gesichter auf den Fotos nicht. */
+html body .app-shell[data-theme="forest"] .forest-light{
+  opacity:.5!important;
+  mix-blend-mode:soft-light!important;
+}
+
+/* ============================================================
+   2 · LEBEN – drei Dinge kommen zurück, mehr nicht
+
+   Die Regel, die alles abräumt, wird hier gezielt für drei Elemente
+   zurückgenommen. Höhere Spezifität, damit sie sicher gewinnt:
+   `…​.forest-ambient>.forest-fox-stage` sticht `…​.forest-ambient>span`.
+   ============================================================ */
+
+html body .app-shell .forest-ambient>.forest-fox-stage,
+html body .app-shell .forest-ambient>.forest-butterfly.butterfly-1,
+html body .app-shell .forest-ambient>.forest-butterfly.butterfly-2{
+  display:block!important;
+}
+
+/* Der Fuchs bleibt. Es ist die Fuchsklasse – aber er sitzt jetzt im
+   Bild, statt darauf zu kleben. */
+html body .app-shell .forest-ambient>.forest-fox-stage{
+  opacity:.95!important;
+  font-size:38px!important;
+  filter:saturate(.94) drop-shadow(0 5px 7px rgba(24,50,24,.34))!important;
+}
+
+/* Zwei Schmetterlinge: kleiner, blasser, deutlich langsamer als vorher. */
+html body .app-shell .forest-ambient>.forest-butterfly{
+  font-size:18px!important;
+  opacity:.72!important;
+  filter:saturate(.8) drop-shadow(0 3px 4px rgba(20,44,20,.18))!important;
+  animation-duration:19s!important;
+}
+
+/* ============================================================
+   3 · ENTDECKERPUNKTE – bleiben, werden aber schön
+
+   Vorher: ein greller gelber Kreis mit ✨ darin, der hüpft.
+   Jetzt: ein ruhig atmender Lichtring. Deutlich genug, dass Kinder ihn
+   finden, leise genug, dass er die Szene nicht zerhackt. Beim Berühren
+   wird er klar und warm – die Belohnung fürs Entdecken.
+   ============================================================ */
+
+html body .app-shell .forest-secret-v1523{
+  width:30px!important;
+  height:30px!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.94) 0 22%,rgba(255,252,222,.42) 34%,rgba(255,250,214,0) 68%)!important;
+  box-shadow:
+    0 0 0 1.5px rgba(255,255,255,.62),
+    0 0 16px 3px rgba(255,246,196,.42)!important;
+  animation:frischAtmen1554 4.6s ease-in-out infinite!important;
+}
+html body .app-shell .forest-secret-v1523 span{
+  font-size:11px!important;
+  opacity:.9!important;
+  filter:none!important;
+}
+html body .app-shell .forest-secret-v1523:hover,
+html body .app-shell .forest-secret-v1523:focus-visible{
+  transform:scale(1.16)!important;
+  background:radial-gradient(circle at 50% 50%,#fffdf2 0 42%,rgba(255,240,186,.6) 62%,rgba(255,240,186,0) 78%)!important;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.9),
+    0 0 24px 6px rgba(255,232,150,.66)!important;
+  outline:3px solid rgba(255,255,255,.8)!important;
+  outline-offset:2px!important;
+}
+html body .app-shell .forest-secret-v1523.is-found{
+  opacity:.22!important;
+  animation:none!important;
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.4)!important;
+}
+
+/* ============================================================
+   4 · WERKZEUGLEISTE – helles Papier statt geschnitztem Holz
+
+   Die harten Schlagkanten (`0 8px 0 …`) sind der Grund, warum die
+   Leiste wie Spielzeug aussah. Ein Schatten, der wie ein Sockel wirkt,
+   macht jede Fläche zum Klotz. Jetzt trägt ein einziger weicher
+   Schatten die ganze Leiste, und die Knöpfe heben sich nur um ein
+   Grad ab.
+
+   Die AUSSEHEN-Regeln stehen bewusst AUSSERHALB der Bildschirmbreiten.
+   Nur Maße gehören in eine Breitenabfrage. Das war beim ersten Anlauf
+   anders – und dann greift auf dem Handy die alte Holzoptik weiter.
+   ============================================================ */
+
+html body .app-shell .forest-tool-belt-v1521.dock{
+  border:1px solid var(--frisch-rahmen)!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,var(--frisch-papier-klar),var(--frisch-papier))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    var(--frisch-weit)!important;
+  backdrop-filter:blur(9px) saturate(1.06)!important;
+  -webkit-backdrop-filter:blur(9px) saturate(1.06)!important;
+}
+
+html body .app-shell .forest-tool-belt-v1521.dock>button{
+  border:1px solid transparent!important;
+  border-radius:15px!important;
+  background:transparent!important;
+  color:var(--frisch-tinte)!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button:hover{
+  transform:none!important;
+  border-color:var(--frisch-rahmen)!important;
+  background:rgba(233,243,228,.86)!important;
+  box-shadow:var(--frisch-nah)!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button:active{
+  transform:scale(.975)!important;
+  background:rgba(220,235,214,.95)!important;
+  box-shadow:none!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button:focus-visible{
+  outline:3px solid var(--frisch-moos)!important;
+  outline-offset:2px!important;
+}
+
+/* Das Symbol sitzt auf einer ruhigen Scheibe, nicht in einer Fassung. */
+html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{
+  border:1px solid var(--frisch-rahmen)!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,#ffffff,#f0f6ea)!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>button:hover .dock-icon{
+  border-color:var(--frisch-moos-hell)!important;
+  background:#fff!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock .dock-label{
+  color:var(--frisch-tinte)!important;
+  font-weight:800!important;
+  text-shadow:none!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock .dock-status-v1531{
+  color:var(--frisch-tinte-leise)!important;
+  text-shadow:none!important;
+}
+
+/* Der Fuchseingang bleibt der Hauptweg – als einziges Element mit
+   Farbe. Ein Akzent wirkt nur, solange er allein steht. */
+html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance{
+  border-color:rgba(75,128,85,.34)!important;
+  background:linear-gradient(180deg,#f3faee,#e4f1dc)!important;
+  box-shadow:var(--frisch-nah)!important;
+}
+html body .app-shell .forest-tool-belt-v1521.dock>.kids-forest-entrance:hover{
+  background:linear-gradient(180deg,#f8fdf4,#dcecd2)!important;
+  border-color:var(--frisch-moos)!important;
+}
+
+/* Nur die Maße hängen an der Bildschirmbreite. */
+@media (min-width:761px){
+  html body .app-shell .forest-tool-belt-v1521.dock{
+    bottom:12px!important;
+    height:72px!important;
+    min-height:72px!important;
+    padding:8px 10px!important;
+    gap:8px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock>button{
+    height:56px!important;
+    min-height:56px!important;
+    padding:6px 11px!important;
+  }
+  html body .app-shell .forest-tool-belt-v1521.dock .dock-icon{
+    width:34px!important;
+    height:34px!important;
+    font-size:18px!important;
+  }
+}
+
+/* ============================================================
+   5 · WALDHELDEN-SCHILD – hängt weiter, drückt aber nicht mehr
+   ============================================================ */
+
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+  border:1px solid var(--frisch-rahmen)!important;
+  border-radius:14px!important;
+  background:linear-gradient(180deg,var(--frisch-papier-klar),var(--frisch-papier))!important;
+  color:var(--frisch-tinte)!important;
+  text-shadow:none!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    var(--frisch-mittel)!important;
+  backdrop-filter:blur(7px)!important;
+  -webkit-backdrop-filter:blur(7px)!important;
+}
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22 *{
+  text-shadow:none!important;
+}
+/* Die zwei gemalten Seile bleiben – aber dünn und hell, wie Schnur. */
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22::before,
+html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22::after{
+  width:1.5px!important;
+  height:14px!important;
+  top:-13px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(120,138,110,.7))!important;
+}
+html body .app-shell .wall-fixed .forest-map-button-v1534{
+  border:1px solid var(--frisch-rahmen-stark)!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  color:var(--frisch-tinte)!important;
+  box-shadow:var(--frisch-nah)!important;
+  text-shadow:none!important;
+}
+@media (min-width:761px){
+  html body .app-shell .wall-fixed .wall-title-v22.wall-title-v22{
+    min-height:46px!important;
+    padding:7px 12px!important;
+  }
+}
+
+/* ============================================================
+   6 · WOCHENZIEL UND TAGESINFOS – gleiche helle Sprache
+   ============================================================ */
+
+html body .app-shell .dashboard>.widget[data-id="weeklyGoal"],
+html body .app-shell .dashboard>.widget[data-id="meal"],
+html body .app-shell .dashboard>.widget[data-id="info"]{
+  border:1px solid var(--frisch-rahmen)!important;
+  border-radius:16px!important;
+  background:linear-gradient(180deg,var(--frisch-papier-klar),var(--frisch-papier))!important;
+  color:var(--frisch-tinte)!important;
+  text-shadow:none!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    var(--frisch-mittel)!important;
+  backdrop-filter:blur(7px)!important;
+  -webkit-backdrop-filter:blur(7px)!important;
+}
+html body .app-shell .dashboard>.widget[data-id="weeklyGoal"] *,
+html body .app-shell .dashboard>.widget[data-id="meal"] *,
+html body .app-shell .dashboard>.widget[data-id="info"] *{
+  text-shadow:none!important;
+}
+/* Eine schmale Moosleiste oben ersetzt die goldene Zierkante. */
+html body .app-shell .dashboard>.widget[data-id="weeklyGoal"]::before{
+  content:""!important;
+  position:absolute!important;
+  left:14px!important;right:14px!important;top:0!important;
+  height:2px!important;
+  border-radius:0 0 3px 3px!important;
+  background:linear-gradient(90deg,transparent,var(--frisch-moos-hell),transparent)!important;
+  opacity:.85!important;
+}
+
+/* ============================================================
+   7 · BEGRÜSSUNG – Luft statt Rahmen
+
+   Der Gruß steht vor einem gemalten Himmel. Alles, was er braucht, ist
+   genug Kontrast zum Lesen – kein Kasten.
+   ============================================================ */
+
+html body .app-shell .hero.hero{
+  border:1px solid rgba(255,255,255,.5)!important;
+  border-radius:20px!important;
+  background:linear-gradient(180deg,rgba(255,255,253,.80),rgba(255,255,253,.62))!important;
+  box-shadow:var(--frisch-mittel)!important;
+  backdrop-filter:blur(10px) saturate(1.04)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(1.04)!important;
+}
+html body .app-shell .hero #greetingTitle{
+  color:var(--frisch-tinte)!important;
+  text-shadow:none!important;
+}
+html body .app-shell .hero .hero-kicker,
+html body .app-shell .hero .hero-date{
+  color:var(--frisch-tinte-leise)!important;
+  text-shadow:none!important;
+}
+
+/* ============================================================
+   8 · HANDY – dieselbe Sprache, kleinere Maße
+
+   Auf dem kleinen Bildschirm zählt jeder Quadratzentimeter: hier
+   verschwindet auch das letzte bisschen Zierde wieder.
+   ============================================================ */
+
+@media (max-width:760px){
+  html body .app-shell .forest-tool-belt-v1521.dock{
+    border-radius:18px!important;
+  }
+  html body .app-shell .forest-ambient>.forest-fox-stage,
+  html body .app-shell .forest-ambient>.forest-butterfly.butterfly-1,
+  html body .app-shell .forest-ambient>.forest-butterfly.butterfly-2{
+    display:none!important;
+  }
+}
+
+/* ============================================================
+   9 · RUHIGE DARSTELLUNG
+
+   Wer Bewegung abgestellt hat, bekommt keine. Der Entdeckerpunkt
+   bleibt sichtbar – er ist eine Schaltfläche, kein Schmuck.
+   ============================================================ */
+
+@media (prefers-reduced-motion:reduce){
+  html body .app-shell .forest-secret-v1523{
+    animation:none!important;
+    opacity:1!important;
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,.8),
+      0 0 14px 3px rgba(255,246,196,.5)!important;
+  }
+  html body .app-shell .forest-ambient>.forest-butterfly,
+  html body .app-shell .forest-ambient>.forest-fox-stage,
+  html body .app-shell[data-theme="forest"] .forest-light{
+    animation:none!important;
+  }
+}
+
+/* ============================================================
+   10 · BEWEGUNGSKURVEN GANZ AM SCHLUSS
+
+   Kein Schoenheitsgrund, ein Pruefgrund: der Prueftstand liest die
+   Gestaltungsdateien mit einem einfachen Parser, und der bricht bei
+   `@keyframes` ab. Stand der Block in der Mitte, blieb ALLES danach
+   ungeprueft – die halbe Datei. Deshalb steht er hier unten.
+   ============================================================ */
+
+@keyframes frischAtmen1554{
+  0%,100%{transform:scale(1);opacity:.72}
+  50%    {transform:scale(1.1);opacity:1}
+}
