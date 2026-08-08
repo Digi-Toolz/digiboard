@@ -1,0 +1,157 @@
+/* DigiBoard Next 15.72 – Waldgruß als klarer Blickfang auf der Tafel */
+
+@media (min-width: 761px) {
+  html body .app-shell[data-theme="forest"] .hero.hero {
+    width: min(700px, 50vw) !important;
+    height: 122px !important;
+    min-height: 122px !important;
+    padding: 12px 92px 12px 42px !important;
+    overflow: visible !important;
+    border: 2px solid rgba(74, 132, 53, .38) !important;
+    border-radius: 0 0 30px 30px !important;
+    background:
+      radial-gradient(circle at 50% -18%, rgba(255, 224, 92, .48), transparent 43%),
+      linear-gradient(145deg, rgba(255, 255, 246, .98), rgba(234, 249, 202, .97)) !important;
+    box-shadow:
+      0 16px 30px rgba(31, 83, 46, .20),
+      0 3px 0 rgba(255, 255, 255, .92) inset,
+      0 -1px 0 rgba(92, 145, 61, .16) inset !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero.hero::before {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 0 !important;
+    top: 0 !important;
+    left: 8% !important;
+    right: 8% !important;
+    height: 6px !important;
+    border-radius: 0 0 10px 10px !important;
+    background: linear-gradient(90deg, transparent, #7fbd3e 22%, #f3c84d 50%, #7fbd3e 78%, transparent) !important;
+    opacity: .82 !important;
+    pointer-events: none !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero.hero::after {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 0 !important;
+    left: 28px !important;
+    top: 28px !important;
+    width: 24px !important;
+    height: 13px !important;
+    border-radius: 100% 0 100% 0 !important;
+    background: linear-gradient(135deg, #9bd34d, #3b8b40) !important;
+    box-shadow: 13px 11px 0 -3px #d3df48 !important;
+    transform: rotate(-25deg) !important;
+    opacity: .92 !important;
+    pointer-events: none !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 49px !important;
+    margin: 2px 0 0 !important;
+    line-height: .95 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-family: "Avenir Next Rounded", "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle > .greeting-desktop-v1540 {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    gap: .16em !important;
+    transform: translateZ(0) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle .greeting-desktop-v1540 > span {
+    display: inline !important;
+    color: #174c31 !important;
+    font-size: clamp(30px, 2.45vw, 42px) !important;
+    font-weight: 850 !important;
+    letter-spacing: -.055em !important;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, .78), 0 5px 12px rgba(41, 91, 46, .12) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle .greeting-desktop-v1540 > strong {
+    display: inline !important;
+    color: #2b873e !important;
+    font-size: clamp(34px, 2.9vw, 49px) !important;
+    font-weight: 950 !important;
+    letter-spacing: -.065em !important;
+    background: linear-gradient(180deg, #54ad3e 3%, #23733c 52%, #155233 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 2px 0 rgba(255, 255, 255, .76)) drop-shadow(0 5px 7px rgba(39, 94, 43, .16)) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle .greeting-desktop-v1540 > b {
+    display: inline-block !important;
+    margin-left: .01em !important;
+    color: #ee8421 !important;
+    font-size: clamp(38px, 3.1vw, 52px) !important;
+    font-weight: 950 !important;
+    line-height: .72 !important;
+    transform: rotate(3deg) translateY(1px) !important;
+    text-shadow: 0 2px 0 #fff2c2, 0 5px 8px rgba(164, 82, 20, .20) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero-date {
+    position: relative !important;
+    z-index: 2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: max-content !important;
+    margin: 3px auto 4px !important;
+    padding: 2px 11px !important;
+    border: 1px solid rgba(55, 116, 59, .16) !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 246, .68) !important;
+    color: #45634c !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: .025em !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .weekly-greeting-card {
+    position: relative !important;
+    z-index: 2 !important;
+    min-height: 36px !important;
+    border: 1px solid rgba(74, 126, 61, .22) !important;
+    background: rgba(255, 255, 250, .82) !important;
+    box-shadow: 0 4px 10px rgba(50, 92, 43, .08), 0 1px 0 #fff inset !important;
+    backdrop-filter: blur(5px) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero-mascot {
+    z-index: 3 !important;
+    right: 18px !important;
+    width: 64px !important;
+    height: 64px !important;
+    border: 5px solid rgba(255, 255, 238, .92) !important;
+    background: radial-gradient(circle at 38% 30%, #fffbe2, #cce991 72%, #8fbe55) !important;
+    box-shadow: 0 8px 16px rgba(40, 91, 45, .20), 0 0 0 2px rgba(93, 145, 62, .28) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html body .app-shell[data-theme="forest"] #greetingTitle {
+    font-family: "Avenir Next Rounded", "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif !important;
+    color: #185136 !important;
+    letter-spacing: -.035em !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero.hero {
+    background: linear-gradient(145deg, rgba(255, 255, 246, .98), rgba(233, 249, 202, .97)) !important;
+    border-color: rgba(73, 132, 54, .30) !important;
+    box-shadow: 0 10px 22px rgba(28, 82, 43, .16) !important;
+  }
+}
