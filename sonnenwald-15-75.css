@@ -1,0 +1,192 @@
+/* DigiBoard Next 15.75 – die sonnige Farbwelt des beliebten 9.8-Entwurfs,
+   übertragen auf den natürlichen aktuellen Wald. */
+
+html body .app-shell[data-theme="forest"] {
+  --sun-forest: #246f3b;
+  --sun-leaf: #78be3d;
+  --sun-lime: #b9df4e;
+  --sun-orange: #f27b18;
+  --sun-honey: #e5ad55;
+  --sun-wood: #985824;
+  --sun-wood-deep: #63351d;
+}
+
+@media (min-width: 761px) {
+  /* Begrüßung wie im früheren Lieblingsentwurf: ruhig oben, kräftig unten. */
+  html body .app-shell[data-theme="forest"] .hero.hero {
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 8px 88px 9px 38px !important;
+    border-color: rgba(101, 164, 63, .38) !important;
+    background:
+      radial-gradient(circle at 50% -16%, rgba(255, 232, 105, .42), transparent 44%),
+      linear-gradient(145deg, rgba(255,255,247,.96), rgba(238,251,205,.94)) !important;
+    box-shadow: 0 15px 28px rgba(45,94,44,.17), inset 0 2px rgba(255,255,255,.92) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle {
+    min-height: 59px !important;
+    margin: 0 !important;
+    line-height: .86 !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero-copy-v1535 {
+    transform: translateY(4px) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle > .greeting-desktop-v1540 {
+    display: grid !important;
+    grid-template-columns: auto min-content !important;
+    align-items: end !important;
+    justify-content: center !important;
+    column-gap: 4px !important;
+    row-gap: 0 !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle .greeting-desktop-v1540 > span {
+    grid-column: 1 / -1 !important;
+    display: block !important;
+    color: #17472f !important;
+    font-size: clamp(24px, 2.1vw, 35px) !important;
+    font-weight: 900 !important;
+    letter-spacing: -.048em !important;
+    line-height: .92 !important;
+    text-shadow: 0 2px #fff, 0 5px 11px rgba(38,86,41,.14) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle .greeting-desktop-v1540 > strong {
+    grid-column: 1 !important;
+    display: block !important;
+    color: var(--sun-orange) !important;
+    font-size: clamp(42px, 3.7vw, 61px) !important;
+    font-weight: 950 !important;
+    letter-spacing: -.065em !important;
+    line-height: .92 !important;
+    background: linear-gradient(180deg, #ff9c21 0%, #f07412 52%, #d9570b 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 2px 0 #fff6d3) drop-shadow(0 6px 8px rgba(164,75,15,.19)) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] #greetingTitle .greeting-desktop-v1540 > b {
+    grid-column: 2 !important;
+    display: block !important;
+    color: #ec7217 !important;
+    font-size: clamp(43px, 3.75vw, 62px) !important;
+    line-height: .84 !important;
+    transform: rotate(2deg) translateY(-1px) !important;
+    text-shadow: 0 2px #fff1c4, 0 6px 8px rgba(156,70,14,.18) !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .hero-date {
+    margin: 1px auto 3px !important;
+    padding: 1px 11px !important;
+    background: rgba(255,255,244,.78) !important;
+    color: #31553b !important;
+    font-size: 9.5px !important;
+  }
+
+  html body .app-shell[data-theme="forest"] .weekly-greeting-v1535 {
+    height: 29px !important;
+    min-height: 29px !important;
+    padding-block: 2px !important;
+  }
+  html body .app-shell[data-theme="forest"] .weekly-greeting-actions-v1535 button {
+    min-height: 25px !important;
+    padding-block: 3px !important;
+  }
+
+  /* Waldhelden: warmes Kastanienholz mit hellen Honigkanten. */
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22.wall-title-v22.wall-title-v22 {
+    border-color: #6d3d20 !important;
+    background:
+      radial-gradient(ellipse at 21% 15%, rgba(255,225,151,.20), transparent 30%),
+      repeating-linear-gradient(2deg, rgba(74,37,15,.08) 0 1px, transparent 1px 9px),
+      linear-gradient(180deg, #bd7938 0%, #955524 55%, #713a1d 100%) !important;
+    box-shadow:
+      inset 0 2px rgba(255,230,163,.55),
+      inset 0 -3px rgba(62,28,12,.24),
+      0 0 0 2px rgba(246,194,92,.40),
+      0 10px 19px rgba(42,62,28,.20) !important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22 > div:not(.tree-title-actions-v1538) > strong {
+    color: #fff8dc !important;
+    -webkit-text-fill-color: #fff8dc !important;
+    text-shadow: 0 2px 2px rgba(62,28,12,.35) !important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .wall-title-v22 > div:not(.tree-title-actions-v1538) > small {
+    color: #f5dca9 !important;
+    -webkit-text-fill-color: #f5dca9 !important;
+    text-shadow: 0 1px 2px rgba(62,28,12,.28) !important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-title-actions-v1538 button {
+    border-color: rgba(255,232,180,.55) !important;
+    background: linear-gradient(180deg, #fff7d8, #e8dfb8) !important;
+    color: #2f5838 !important;
+  }
+
+  /* Der natürliche Baum erhält den leuchtenden, kinderfreundlichen Farbcharakter. */
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tree-main-image-v1539 {
+    filter:
+      drop-shadow(0 22px 17px rgba(30,73,29,.19))
+      saturate(1.19)
+      brightness(1.095)
+      contrast(1.035) !important;
+  }
+
+  /* Werkzeugpfad: warmes Holz statt einer dunklen grünen Leiste. */
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock {
+    border: 2px solid #72421f !important;
+    background:
+      radial-gradient(ellipse at 50% 0, rgba(255,208,112,.19), transparent 48%),
+      repeating-linear-gradient(1deg, rgba(77,37,14,.075) 0 1px, transparent 1px 10px),
+      linear-gradient(180deg, #a96730, #75401f) !important;
+    box-shadow:
+      inset 0 2px rgba(255,222,150,.42),
+      inset 0 -3px rgba(54,27,13,.26),
+      0 10px 22px rgba(36,55,25,.25) !important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock > button {
+    border-color: rgba(255,229,170,.18) !important;
+    border-right-color: rgba(69,33,15,.28) !important;
+    background: linear-gradient(180deg, rgba(255,240,194,.09), rgba(255,255,255,.025)) !important;
+    color: #fff8df !important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-label {
+    color: #fff8df !important;
+    text-shadow: 0 1px 2px rgba(47,24,12,.46) !important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock .dock-status-v1531 {
+    color: #eedbb2 !important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock > button.is-active,
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock > button[aria-pressed="true"] {
+    border-color: #dff59c !important;
+    background: linear-gradient(180deg, #9cdb58, #69b943) !important;
+    color: #173f29 !important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock > button.is-active .dock-label,
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock > button[aria-pressed="true"] .dock-label {
+    color: #173f29 !important;
+    text-shadow: 0 1px rgba(255,255,255,.45) !important;
+  }
+
+  /* Das Versionsschild übernimmt den frischen orangefarbenen Akzent. */
+  html body .app-shell[data-theme="forest"] .build-badge {
+    border-color: rgba(255,236,190,.58) !important;
+    background: linear-gradient(180deg, #ff9d28, #e96813) !important;
+    color: #fff !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.35), 0 4px 9px rgba(120,55,12,.18) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html body .app-shell[data-theme="forest"] .build-badge {
+    background: linear-gradient(180deg, #ff9d28, #e96813) !important;
+    color: #fff !important;
+  }
+}
