@@ -1,0 +1,281 @@
+/* ============================================================
+   DigiBoard Next 15.59 – Schubladen und kurze Balken
+
+   Zwei Dinge, dieselbe Ursache: Volle Breite für Inhalt, der nur ein
+   Drittel davon braucht.
+
+   ------------------------------------------------------------
+   Vorher nachgerechnet statt hinterher gewundert
+   ------------------------------------------------------------
+   Der Kaskadenwächter sagt, wer heute gewinnt:
+
+     .settings-home-grid   10202 !  fixes.css                     repeat(3,…)
+     .werkzeug-karte-v1551 10102 !  team-und-werkzeuge-15-51.css  38px …
+
+   Deshalb stehen hier dreifache bzw. doppelte Klassen: 10302 schlägt
+   10202, 10202 schlägt 10102. Ohne diese Rechnung hätte die Datei
+   wieder stillschweigend verloren – der Fehler aus 15.56.
+   ============================================================ */
+
+html body #settingsDialog,
+html body #teamDialog{
+  --fach-privat-koerper:#f2f8ed;
+  --fach-privat-kopf:linear-gradient(180deg,#e2f0d8,#d5e9c8);
+  --fach-privat-rand:#bcd7ad;
+  --fach-privat-tinte:#2c5730;
+
+  --fach-gemein-koerper:#f1f5fc;
+  --fach-gemein-kopf:linear-gradient(180deg,#dfe9f8,#d0def3);
+  --fach-gemein-rand:#b4c7e4;
+  --fach-gemein-tinte:#28456e;
+}
+
+/* ============================================================
+   1 · DIE EINSTELLUNGSZENTRALE WIRD ZU ZWEI SCHUBLÄDEN
+
+   Vorher standen zwei Überschriften im Nichts und darunter neun
+   gleich aussehende Kacheln. Ob eine Einstellung nur das eigene
+   Gerät betrifft oder die ganze Klasse, stand zwar da – aber man
+   musste es lesen.
+
+   Jetzt ist es zu sehen: zwei geschlossene Fächer, jedes mit
+   eigener Farbe, eigener Griffleiste und einem Rahmen, der zeigt,
+   wo es anfängt und aufhört. Grün = nur ich, blau = alle.
+   ============================================================ */
+
+html body #settingsDialog .settings-group.settings-group{
+  position:relative!important;
+  margin:0 0 16px!important;
+  padding:0!important;
+  border:1.5px solid var(--fach-rand,#cfdcc6)!important;
+  border-radius:18px!important;
+  background:var(--fach-koerper,#f5f8f2)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.75),
+    0 4px 12px -6px rgba(28,56,32,.35)!important;
+  overflow:hidden!important;
+}
+html body #settingsDialog .settings-group-personal.settings-group-personal{
+  --fach-rand:var(--fach-privat-rand);
+  --fach-koerper:var(--fach-privat-koerper);
+  --fach-kopf:var(--fach-privat-kopf);
+  --fach-tinte:var(--fach-privat-tinte);
+}
+html body #settingsDialog .settings-group-shared.settings-group-shared{
+  --fach-rand:var(--fach-gemein-rand);
+  --fach-koerper:var(--fach-gemein-koerper);
+  --fach-kopf:var(--fach-gemein-kopf);
+  --fach-tinte:var(--fach-gemein-tinte);
+}
+
+/* Die Griffleiste: Kopf des Fachs, farbig abgesetzt, mit einem
+   angedeuteten Griff rechts. Er ist nur Zierde – deshalb steht er
+   als ::after da und fängt keine Klicks ab. */
+html body #settingsDialog .settings-group .settings-group-head.settings-group-head{
+  position:relative!important;
+  margin:0!important;
+  padding:12px 74px 12px 16px!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:12px!important;
+  border:0!important;
+  border-bottom:1.5px solid var(--fach-rand)!important;
+  border-radius:0!important;
+  background:var(--fach-kopf)!important;
+  color:var(--fach-tinte)!important;
+}
+html body #settingsDialog .settings-group .settings-group-head::after{
+  content:""!important;
+  position:absolute!important;
+  right:18px!important;
+  top:50%!important;
+  width:40px!important;
+  height:7px!important;
+  margin-top:-3px!important;
+  border-radius:99px!important;
+  background:rgba(255,255,255,.72)!important;
+  box-shadow:
+    inset 0 1px 2px rgba(30,50,30,.22),
+    0 1px 0 rgba(255,255,255,.8)!important;
+  pointer-events:none!important;
+}
+html body #settingsDialog .settings-group .settings-group-head strong{
+  display:block!important;
+  color:var(--fach-tinte)!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+html body #settingsDialog .settings-group .settings-group-head small{
+  display:block!important;
+  margin-top:2px!important;
+  color:var(--fach-tinte)!important;
+  opacity:.78!important;
+  font-size:11.5px!important;
+  font-weight:650!important;
+  line-height:1.35!important;
+}
+html body #settingsDialog .settings-group .settings-group-icon{
+  width:34px!important;
+  height:34px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid var(--fach-rand)!important;
+  border-radius:11px!important;
+  background:rgba(255,255,255,.85)!important;
+  font-size:18px!important;
+}
+
+/* Der Fachboden: die Kacheln sitzen IM Fach, nicht daneben. */
+html body #settingsDialog
+  .settings-home-grid.settings-home-grid.settings-home-grid{
+  margin:0!important;
+  padding:12px!important;
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(268px,1fr))!important;
+  gap:10px!important;
+  background:transparent!important;
+}
+
+html body #settingsDialog .settings-group .settings-home-grid>button{
+  min-height:0!important;
+  padding:11px 12px!important;
+  display:grid!important;
+  grid-template-columns:38px minmax(0,1fr) 14px!important;
+  align-items:center!important;
+  gap:11px!important;
+  border:1px solid var(--fach-rand)!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  text-align:left!important;
+  box-shadow:0 1px 2px rgba(24,52,30,.06)!important;
+  transition:transform .13s ease,box-shadow .13s ease,border-color .13s ease!important;
+}
+html body #settingsDialog .settings-group .settings-home-grid>button:hover{
+  transform:translateY(-1px)!important;
+  border-color:var(--fach-tinte)!important;
+  box-shadow:0 6px 14px -6px rgba(24,52,30,.4)!important;
+}
+html body #settingsDialog .settings-group .settings-home-grid>button:focus-visible{
+  outline:3px solid var(--fach-tinte)!important;
+  outline-offset:2px!important;
+}
+html body #settingsDialog .settings-group .settings-home-grid>button strong{
+  display:block!important;
+  color:#22331f!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+html body #settingsDialog .settings-group .settings-home-grid>button small{
+  display:block!important;
+  margin-top:2px!important;
+  color:#5f7161!important;
+  font-size:11px!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+}
+html body #settingsDialog .settings-group .settings-home-grid>button>b{
+  justify-self:end!important;
+  color:var(--fach-tinte)!important;
+  opacity:.55!important;
+  font-size:16px!important;
+}
+html body #settingsDialog .settings-group .settings-home-grid .tile-icon{
+  width:38px!important;
+  height:38px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid var(--fach-rand)!important;
+  border-radius:11px!important;
+  background:var(--fach-koerper)!important;
+  font-size:19px!important;
+}
+
+/* ============================================================
+   2 · DIE WERKZEUGBALKEN WERDEN KARTEN
+
+   Jede Werkzeugzeile lief über die volle Fensterbreite – rund 1800
+   Pixel für einen Namen, eine Adresse und ein paar Schalter. Rechts
+   daneben: nichts. Bei acht Werkzeugen musste man dafür scrollen.
+
+   Die Liste hatte gar keine eigene Regel; die Karten standen einfach
+   als Blöcke untereinander. Jetzt ist sie ein Raster, das sich nach
+   der Fensterbreite richtet – aus vier langen Balken werden acht
+   handliche Karten nebeneinander.
+   ============================================================ */
+
+html body #teamDialog #teachingToolManageList{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(310px,1fr))!important;
+  align-content:start!important;
+  gap:10px!important;
+}
+
+html body #teamDialog .werkzeug-karte-v1551.werkzeug-karte-v1551{
+  padding:10px 11px!important;
+  gap:6px 9px!important;
+  border-radius:14px!important;
+  box-shadow:0 1px 2px rgba(24,52,30,.07)!important;
+}
+html body #teamDialog .werkzeug-karte-v1551.werkzeug-karte-v1551>.manage-tool-icon{
+  width:32px!important;
+  height:32px!important;
+  font-size:15px!important;
+}
+html body #teamDialog .werkzeug-karte-v1551 .manage-tool-copy strong{
+  font-size:12.5px!important;
+  line-height:1.2!important;
+}
+html body #teamDialog .werkzeug-karte-v1551 .manage-tool-copy small{
+  font-size:10.5px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+html body #teamDialog .werkzeug-wo-v1551.werkzeug-wo-v1551>button{
+  min-height:30px!important;
+  padding:4px 9px!important;
+  font-size:11px!important;
+}
+html body #teamDialog .werkzeug-wo-v1551.werkzeug-wo-v1551>b{
+  font-size:10.5px!important;
+}
+html body #teamDialog .werkzeug-aktionen-v1551.werkzeug-aktionen-v1551{
+  margin-top:0!important;
+  padding-top:7px!important;
+  gap:5px!important;
+}
+html body #teamDialog .werkzeug-aktionen-v1551.werkzeug-aktionen-v1551>button,
+html body #teamDialog .werkzeug-reihenfolge-v1551.werkzeug-reihenfolge-v1551>button{
+  min-height:32px!important;
+  padding:5px 9px!important;
+  font-size:11px!important;
+  border-radius:9px!important;
+}
+/* Die beiden Pfeile brauchen keine Wortbreite. */
+html body #teamDialog .werkzeug-reihenfolge-v1551.werkzeug-reihenfolge-v1551>button{
+  width:32px!important;
+  padding:5px!important;
+}
+
+/* ============================================================
+   3 · SCHMALE FENSTER
+   ============================================================ */
+
+@media (max-width:700px){
+  html body #settingsDialog
+    .settings-home-grid.settings-home-grid.settings-home-grid{
+    grid-template-columns:1fr!important;
+  }
+  html body #settingsDialog .settings-group .settings-group-head.settings-group-head{
+    padding-right:16px!important;
+  }
+  html body #settingsDialog .settings-group .settings-group-head::after{
+    display:none!important;   /* der Zierbrief braucht auf dem Handy den Platz nicht */
+  }
+  html body #teamDialog #teachingToolManageList{
+    grid-template-columns:1fr!important;
+  }
+}
