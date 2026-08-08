@@ -14,7 +14,7 @@
    niemals ueber file://. Zum Testen liegt `serve.mjs` bei.
    ============================================================ */
 
-const VERSION='digiboard-15.72';
+const VERSION='digiboard-15.73';
 const CORE_CACHE=`${VERSION}-core`;
 const ASSET_CACHE=`${VERSION}-assets`;
 
@@ -58,6 +58,7 @@ const CORE=[
   './prowise-licht-15-70.css',
   './prowise-klarheit-15-71.css',
   './headline-wald-15-72.css',
+  './waldmagie-15-73.css',
   './foto-diagnose.html',
   './photo-store.js',
   './app.js',
