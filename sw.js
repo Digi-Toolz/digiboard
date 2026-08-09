@@ -1,5 +1,5 @@
-/* DigiBoard Next 15.80 – kompakter Offline-Cache für die Upload-Version. */
-const VERSION='digiboard-15.80-kompakt';
+/* DigiBoard Next 15.81 – kompakter Offline-Cache für die Upload-Version. */
+const VERSION='digiboard-15.81-kompakt';
 const CACHE=`${VERSION}-core`;
 
 const CORE=[

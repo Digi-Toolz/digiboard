@@ -1573,15 +1573,12 @@ function toggleLayoutEditing(){
 }
 
 function openTeam(){
-  /* NEXT 14.3 – Kein erneutes „Wer bist du?“ bei jedem Tipp auf den
-     Teambereich-Knopf: Ist bereits eine Person aktiv (auf diesem Gerät
-     gemerkt), öffnet sich direkt deren Bereich. Auf dem Handy wird dabei
-     die „Meine Übersicht“-Seite übersprungen, da sie dieselben Inhalte
-     wie die eigentliche Startseite zeigt (Fächer, Fundus, Favoriten) –
-     stattdessen geht es direkt zu „Fundus & Vorbereitung“. Auf dem Laptop
-     bleibt „Meine Übersicht“ die gewohnte Startseite des Arbeitsbereichs. */
+  /* NEXT 15.81 – Auf dem Laptop öffnet sich der zuletzt gewählte
+     Arbeitsbereich direkt. Auf dem Handy dient „Teambereich“ bewusst als
+     schneller Personenwechsel und zeigt deshalb immer zuerst das Team. */
   const remembered=state.activeTeamMember&&(state.teamMembers||[]).some(member=>member.id===state.activeTeamMember);
-  if(remembered){
+  const mobilePersonSwitch=window.matchMedia('(max-width:800px)').matches;
+  if(remembered&&!mobilePersonSwitch){
     teamDialog.showModal();enterTeamWorkspace(state.activeTeamMember);
     if(window.matchMedia('(max-width:700px)').matches)selectTeamPage('materials');
     return;
@@ -2526,7 +2523,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.80',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.81',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2572,7 +2569,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.80',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.81',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}

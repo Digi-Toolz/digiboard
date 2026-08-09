@@ -5182,7 +5182,7 @@ html body #teamDialog #teamWorkspace .cockpit-goal.cockpit-goal .cockpit-head>bu
 }
 
 /* ---- 3) Schließen-Knopf: hängt am Fenster, nie mehr angeschnitten ---- */
-html body #teamDialog .close-button.team-close-button{
+html body #teamDialog:not(.team-selection-open) .close-button.team-close-button{
   position:fixed!important;
   top:calc(env(safe-area-inset-top,0px) + 16px)!important;
   right:calc(env(safe-area-inset-right,0px) + 18px)!important;
