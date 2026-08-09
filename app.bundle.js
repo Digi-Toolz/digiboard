@@ -2541,7 +2541,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.84',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.85',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2587,7 +2587,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.84',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.85',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}

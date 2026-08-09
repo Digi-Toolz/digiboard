@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b6b45" />
-  <title>DigiBoard Next 15.84 – Kompakte Handy-Startseite</title>
+  <title>DigiBoard Next 15.85 – Dynamische Laptop-Ansicht</title>
   <link rel="manifest" href="manifest.webmanifest?v=15820" />
   <!-- KORREKTUR 4 – Symbole ergaenzt. Ohne sie war die App nicht installierbar
        und hatte auf dem iPhone-Homescreen kein Icon. -->
@@ -14,7 +14,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DigiBoard" />
-  <link rel="stylesheet" href="app.bundle.css?v=15840" />
+  <link rel="stylesheet" href="app.bundle.css?v=15850" />
   <style id="forest-tools-1579">
     @media (min-width:761px){
       html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
@@ -250,6 +250,141 @@
     }
     @media (min-width:701px) and (max-width:1180px){html body #teamDialog #teamWorkspace>.team-workspace-nav.team-workspace-nav{grid-template-columns:auto minmax(300px,1fr) 52px!important}html body #teamDialog #teamWorkspace .desktop-fox-panel-toggle{grid-column:2!important;justify-self:end!important;min-width:48px!important;width:48px!important;padding:0!important}html body #teamDialog #teamWorkspace .desktop-fox-panel-toggle strong{display:none!important}html body #teamDialog #teamWorkspace #openPersonalSettingsButton{grid-column:3!important}html body #teamDialog #teamWorkspace.overview-mode>.team-cockpit{grid-template-columns:minmax(0,1fr) minmax(320px,38vw)!important}}
     @media (max-width:700px){html body #teamDialog #teamWorkspace .desktop-fox-panel-toggle{display:none!important}}
+  </style>
+  <style id="desktop-1585-content-flow">
+    /* NEXT 15.85 – Auf Laptop und Prowise folgt die Fensterhoehe wieder dem
+       Inhalt. Verdeckte Privatbereiche reservieren keinen leeren Platz. */
+    @media (min-width:701px){
+      html body #teamDialog.team-workspace-open>.dialog-card,
+      html body #teamDialog:has(#teamWorkspace:not([hidden]))>.dialog-card{
+        width:min(1840px,calc(100vw - 34px))!important;
+        height:auto!important;
+        min-height:0!important;
+        max-height:calc(100dvh - 28px)!important;
+        margin:14px auto!important;
+        padding:12px!important;
+        overflow:hidden!important;
+      }
+      html body #teamDialog #teamWorkspace{
+        --team-workspace-dialog-height:auto;
+        --team-workspace-dialog-max-height:calc(100dvh - 54px);
+        --team-workspace-rows:64px auto;
+        height:auto!important;
+        min-height:0!important;
+        max-height:calc(100dvh - 54px)!important;
+        grid-template-rows:64px auto!important;
+        align-content:start!important;
+      }
+      html body #teamDialog #teamWorkspace>.team-workspace-nav.team-workspace-nav{
+        min-height:64px!important;
+        padding:7px 10px!important;
+      }
+      html body #teamDialog #teamWorkspace.overview-mode>.team-cockpit{
+        height:auto!important;
+        min-height:0!important;
+        max-height:calc(100dvh - 118px)!important;
+        grid-template-rows:auto auto!important;
+        align-content:start!important;
+        overflow:auto!important;
+      }
+      html body #teamDialog #teamWorkspace.overview-mode.desktop-fox-panel-collapsed>.team-cockpit,
+      html body #teamDialog #teamWorkspace.overview-mode.desktop-fox-panel-collapsed>#teamCockpit{
+        grid-template-columns:minmax(0,1fr)!important;
+        grid-template-rows:auto!important;
+        grid-template-areas:"pins"!important;
+        height:auto!important;
+        min-height:0!important;
+        align-content:start!important;
+      }
+      html body #teamDialog #teamWorkspace.overview-mode .cockpit-pins,
+      html body #teamDialog #teamWorkspace.overview-mode.desktop-fox-panel-collapsed>#teamCockpit>.cockpit-pins{
+        height:auto!important;
+        min-height:0!important;
+        max-height:none!important;
+        overflow:visible!important;
+        justify-content:flex-start!important;
+        align-content:start!important;
+      }
+      html body #teamDialog #teamWorkspace.overview-mode #cockpitPinnedList{
+        min-height:92px!important;
+        height:auto!important;
+      }
+      html body #teamDialog #teamWorkspace.overview-mode .cockpit-left-bottom{
+        min-height:0!important;
+        height:auto!important;
+        margin-top:0!important;
+        align-self:start!important;
+      }
+      html body #teamDialog #teamWorkspace.overview-mode .cockpit-quick-box{
+        min-height:136px!important;
+        height:auto!important;
+      }
+
+      /* Klassenteam: groessere, gleichmaessige Karten statt einer kleinen
+         Karteninsel in einer fast leeren Vollbildflaeche. */
+      html body #teamDialog.team-selection-open .dialog-card{
+        width:min(1420px,94vw)!important;
+        min-height:0!important;
+        height:auto!important;
+        max-height:calc(100dvh - 40px)!important;
+      }
+      html body #teamDialog.team-selection-open .team-selection-view{
+        min-height:0!important;
+        height:auto!important;
+        padding:94px 28px 30px!important;
+        align-content:start!important;
+      }
+      html body #teamDialog.team-selection-open #teamMemberGrid{
+        grid-template-columns:repeat(5,minmax(170px,1fr))!important;
+        grid-auto-rows:minmax(176px,auto)!important;
+        align-content:start!important;
+        gap:16px!important;
+        min-height:0!important;
+        height:auto!important;
+      }
+      html body #teamDialog.team-selection-open .team-member-card-v1551,
+      html body #teamDialog.team-selection-open .team-member-card-v1551:nth-child(even){
+        min-height:176px!important;
+      }
+
+      /* Alle Fuechse: Kartenzeilen bleiben kompakt und werden nicht ueber die
+         gesamte Whiteboard-Hoehe auseinandergezogen. */
+      html body #teamDialog #teamWorkspace.points-mode,
+      html body #teamDialog #teamWorkspace.substitute-mode{
+        height:auto!important;
+        min-height:0!important;
+        max-height:calc(100dvh - 54px)!important;
+      }
+      html body #teamDialog #teamWorkspace.points-mode .compact-team-points,
+      html body #teamDialog #teamWorkspace.substitute-mode .compact-team-points{
+        height:auto!important;
+        min-height:0!important;
+        max-height:calc(100dvh - 126px)!important;
+        overflow:auto!important;
+        align-content:start!important;
+      }
+      html body #teamDialog #teamWorkspace.points-mode .student-list,
+      html body #teamDialog #teamWorkspace.substitute-mode .student-list{
+        grid-template-columns:repeat(4,minmax(0,1fr))!important;
+        grid-auto-rows:68px!important;
+        align-content:start!important;
+        gap:9px!important;
+        height:auto!important;
+        min-height:0!important;
+        max-height:none!important;
+        overflow:visible!important;
+        padding:9px 0 2px!important;
+      }
+    }
+    @media (min-width:701px) and (max-width:1050px){
+      html body #teamDialog.team-selection-open #teamMemberGrid{
+        grid-template-columns:repeat(3,minmax(160px,1fr))!important;
+      }
+      html body #teamDialog #teamWorkspace.points-mode .student-list,
+      html body #teamDialog #teamWorkspace.substitute-mode .student-list{
+        grid-template-columns:repeat(3,minmax(0,1fr))!important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1217,6 +1352,6 @@
       html body .app-shell .hero{min-height:136px!important;padding:18px 64px 16px 14px!important}html body .app-shell .hero h1,html body .app-shell #greetingTitle{max-width:100%!important;font-size:clamp(25px,7.2vw,31px)!important;line-height:1.02!important;white-space:normal!important;overflow:visible!important}html body .app-shell .hero #greetingTitle>.greeting-mobile-v1540{display:block!important;max-width:250px!important;overflow:visible!important;font:inherit!important;line-height:1.02!important;text-overflow:clip!important;white-space:normal!important}html body .app-shell .hero-fox{right:13px!important;bottom:18px!important;font-size:44px!important}
     }
   </style>
-  <script src="app.bundle.js?v=15840" defer></script>
+  <script src="app.bundle.js?v=15850" defer></script>
 </body>
 </html>
