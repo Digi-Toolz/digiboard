@@ -40,7 +40,23 @@ Statische HTML-App, kein Backend nötig. Läuft direkt aus einem beliebigen
 Webserver-Verzeichnis (z. B. GitHub Pages). Ein Service Worker macht sie
 offlinefähig; Portraitfotos werden clientseitig in IndexedDB gespeichert.
 
+### Bundles bauen
+
+`app.js`, `photo-store.js`, `package-export.js` und die im Build-Skript
+aufgeführten CSS-Dateien sind die bearbeitbaren Quellen. `index.html` lädt die
+daraus erzeugten Dateien `app.bundle.js` und `app.bundle.css`.
+
+```bash
+npm run build
+npm run check:bundles
+npm run test:sheets
+```
+
+`check:bundles` schlägt fehl, sobald ein Bundle nicht mehr zu seinen Quellen
+passt. Das verhindert, dass Änderungen nur im Bundle oder nur in einer
+Einzeldatei landen.
+
 Für den lokalen Betrieb und den Offline-Modus siehe `OFFLINE.md`.
 
-Der Änderungsverlauf für die aktuelle Reihe (11.89 → 11.89.4) steht in
-`KORREKTUREN.md`.
+Die Änderungen dieser Wartungsversion stehen in `AENDERUNGEN-15_86_1.md`.
+Ältere technische Korrekturen sind kompakt in `KORREKTUREN.md` dokumentiert.

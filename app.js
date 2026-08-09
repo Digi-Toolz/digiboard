@@ -1016,24 +1016,45 @@ function renderWall(c){
 
   const grid=stage.querySelector('.tree-portraits-v22');
   grid.dataset.count=heroCount;
-  grid.style.setProperty('--tree-avatar-base',heroCount>20?'46px':heroCount>12?'52px':heroCount>7?'57px':heroCount>3?'62px':'68px');
+  /* 15.86 – Die Medaillons wachsen mit der Tafel: klein auf dem Laptop,
+     gross auf dem Prowise, ohne dass sich die Fuechse ueberdecken. */
+  grid.style.setProperty('--tree-avatar-base',
+    heroCount>20?'clamp(38px,3.5vw,78px)':
+    heroCount>12?'clamp(42px,4vw,88px)':
+    heroCount>7 ?'clamp(46px,4.5vw,98px)':
+    heroCount>3 ?'clamp(52px,5.1vw,112px)':'clamp(58px,5.8vw,124px)');
   grid.classList.toggle('is-dense',heroCount>12);
   grid.classList.toggle('is-full',heroCount>20);
-  const organicPresets={
-    1:[[50,30]],
-    2:[[36,31],[65,38]],
-    3:[[50,15],[28,43],[72,45]],
-    4:[[29,22],[69,20],[25,55],[72,55]],
-    5:[[24,23],[51,13],[77,29],[65,59],[29,58]],
-    6:[[20,20],[49,12],[78,23],[82,55],[54,64],[21,58]],
-    7:[[18,18],[43,10],[69,15],[84,39],[73,64],[44,67],[16,48]]
+  /* 15.86 – Sitzplaetze in der neuen Krone. Die Werte sind Prozent der
+     Baumbuehne und passen exakt zum gezeichneten Baum (Seitenverhaeltnis 4:3). */
+  const treeSeats1586={
+    1:[[50,32]],
+    2:[[38,30],[62,34]],
+    3:[[50,19],[33,41],[67,41]],
+    4:[[35,24],[65,24],[28,47],[72,47]],
+    5:[[50,17],[28,32],[72,32],[37,52],[63,52]],
+    6:[[49.2,15.9],[27.5,33.9],[74,36.1],[20,51.9],[49.2,54.1],[78.5,51.9]],
+    7:[[49.2,15.9],[24.9,33.9],[50.8,36.1],[76.7,33.9],[20,51.9],[49.2,54.1],[78.5,51.9]],
+    8:[[37.8,15.9],[60.6,18.1],[24.9,33.9],[50.8,36.1],[76.7,33.9],[20,51.9],[49.2,54.1],[78.5,51.9]],
+    9:[[37.8,15.9],[60.6,18.1],[24.9,33.9],[50.8,36.1],[76.7,33.9],[18.2,51.9],[38.9,54.1],[59.6,51.9],[80.2,54.1]],
+    10:[[37.8,15.9],[60.6,18.1],[23.3,33.9],[41.6,36.1],[59.9,33.9],[78.3,36.1],[18.2,51.9],[38.9,54.1],[59.6,51.9],[80.2,54.1]],
+    11:[[37.8,15.9],[60.6,18.1],[23.3,33.9],[41.6,36.1],[59.9,33.9],[78.3,36.1],[17,51.9],[33.1,54.1],[49.2,51.9],[65.3,54.1],[81.4,51.9]],
+    12:[[37.8,15.9],[60.6,18.1],[22.2,33.9],[36.5,36.1],[50.8,33.9],[65.1,36.1],[79.3,33.9],[17,51.9],[33.1,54.1],[49.2,51.9],[65.3,54.1],[81.4,51.9]],
+    13:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[21.1,36.1],[36,38.3],[50.8,36.1],[65.6,38.3],[80.4,36.1],[18.9,56.4],[34.1,58.6],[49.2,56.4],[64.4,58.6],[79.5,56.4]],
+    14:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[21.1,36.1],[36,38.3],[50.8,36.1],[65.6,38.3],[80.4,36.1],[18.1,56.4],[30.6,58.6],[43,56.4],[55.4,58.6],[67.9,56.4],[80.3,58.6]],
+    15:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[20.4,36.1],[32.5,38.3],[44.7,36.1],[56.9,38.3],[69,36.1],[81.2,38.3],[18.1,56.4],[30.6,58.6],[43,56.4],[55.4,58.6],[67.9,56.4],[80.3,58.6]],
+    16:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[20.4,36.1],[32.5,38.3],[44.7,36.1],[56.9,38.3],[69,36.1],[81.2,38.3],[17.5,56.4],[28.1,58.6],[38.7,56.4],[49.2,58.6],[59.8,56.4],[70.3,58.6],[80.9,56.4]],
+    17:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[26.3,29.4],[42.6,31.6],[59,29.4],[75.3,31.6],[17.4,42.9],[33.3,45.1],[49.2,42.9],[65.1,45.1],[81,42.9],[20.5,56.4],[35.6,58.6],[50.8,56.4],[65.9,58.6],[81.1,56.4]],
+    18:[[37.8,15.9],[60.6,18.1],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16.6,42.9],[29.7,45.1],[42.7,42.9],[55.7,45.1],[68.8,42.9],[81.8,45.1],[20.5,56.4],[35.6,58.6],[50.8,56.4],[65.9,58.6],[81.1,56.4]],
+    19:[[37.8,15.9],[60.6,18.1],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16.6,42.9],[29.7,45.1],[42.7,42.9],[55.7,45.1],[68.8,42.9],[81.8,45.1],[19.7,56.4],[32.1,58.6],[44.6,56.4],[57,58.6],[69.4,56.4],[81.9,58.6]],
+    20:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16.6,42.9],[29.7,45.1],[42.7,42.9],[55.7,45.1],[68.8,42.9],[81.8,45.1],[19.7,56.4],[32.1,58.6],[44.6,56.4],[57,58.6],[69.4,56.4],[81.9,58.6]],
+    21:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16,42.9],[27.1,45.1],[38.1,42.9],[49.2,45.1],[60.3,42.9],[71.4,45.1],[82.4,42.9],[19.7,56.4],[32.1,58.6],[44.6,56.4],[57,58.6],[69.4,56.4],[81.9,58.6]],
+    22:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16,42.9],[27.1,45.1],[38.1,42.9],[49.2,45.1],[60.3,42.9],[71.4,45.1],[82.4,42.9],[19.1,56.4],[29.7,58.6],[40.2,56.4],[50.8,58.6],[61.3,56.4],[71.9,58.6],[82.5,56.4]],
+    23:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[24.7,29.4],[35.1,31.6],[45.6,29.4],[56,31.6],[66.4,29.4],[76.9,31.6],[16,42.9],[27.1,45.1],[38.1,42.9],[49.2,45.1],[60.3,42.9],[71.4,45.1],[82.4,42.9],[19.1,56.4],[29.7,58.6],[40.2,56.4],[50.8,58.6],[61.3,56.4],[71.9,58.6],[82.5,56.4]],
+    24:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[24.7,29.4],[35.1,31.6],[45.6,29.4],[56,31.6],[66.4,29.4],[76.9,31.6],[15.5,42.9],[25.1,45.1],[34.8,42.9],[44.4,45.1],[54,42.9],[63.7,45.1],[73.3,42.9],[82.9,45.1],[19.1,56.4],[29.7,58.6],[40.2,56.4],[50.8,58.6],[61.3,56.4],[71.9,58.6],[82.5,56.4]],
+    25:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[24.7,29.4],[35.1,31.6],[45.6,29.4],[56,31.6],[66.4,29.4],[76.9,31.6],[15.5,42.9],[25.1,45.1],[34.8,42.9],[44.4,45.1],[54,42.9],[63.7,45.1],[73.3,42.9],[82.9,45.1],[18.6,56.4],[27.8,58.6],[37,56.4],[46.2,58.6],[55.4,56.4],[64.6,58.6],[73.7,56.4],[82.9,58.6]]
   };
-  const fullSlots=[
-    [34,12],[50,9],[66,12],[20,25],[35,23],[50,22],[65,23],[80,25],
-    [12,39],[27,37],[42,36],[57,36],[72,37],[87,39],[15,53],[30,52],
-    [45,51],[60,51],[75,52],[88,54],[23,68],[38,67],[53,66],[68,67],[82,69]
-  ];
-  const slots=organicPresets[heroCount]||fullSlots;
+  const slots=treeSeats1586[heroCount]||treeSeats1586[25];
   publishedHeroes.slice(0,25).forEach((id,i)=>{
     const student=state.students.find(x=>x.id===id);if(!student)return;
     const [left,top]=slots[i];
@@ -1123,15 +1144,12 @@ function toggleLayoutEditing(){
 }
 
 function openTeam(){
-  /* NEXT 14.3 – Kein erneutes „Wer bist du?“ bei jedem Tipp auf den
-     Teambereich-Knopf: Ist bereits eine Person aktiv (auf diesem Gerät
-     gemerkt), öffnet sich direkt deren Bereich. Auf dem Handy wird dabei
-     die „Meine Übersicht“-Seite übersprungen, da sie dieselben Inhalte
-     wie die eigentliche Startseite zeigt (Fächer, Fundus, Favoriten) –
-     stattdessen geht es direkt zu „Fundus & Vorbereitung“. Auf dem Laptop
-     bleibt „Meine Übersicht“ die gewohnte Startseite des Arbeitsbereichs. */
+  /* NEXT 15.81 – Auf dem Laptop öffnet sich der zuletzt gewählte
+     Arbeitsbereich direkt. Auf dem Handy dient „Teambereich“ bewusst als
+     schneller Personenwechsel und zeigt deshalb immer zuerst das Team. */
   const remembered=state.activeTeamMember&&(state.teamMembers||[]).some(member=>member.id===state.activeTeamMember);
-  if(remembered){
+  const mobilePersonSwitch=window.matchMedia('(max-width:800px)').matches;
+  if(remembered&&!mobilePersonSwitch){
     teamDialog.showModal();enterTeamWorkspace(state.activeTeamMember);
     if(window.matchMedia('(max-width:700px)').matches)selectTeamPage('materials');
     return;
@@ -1188,7 +1206,7 @@ function renderTopbarPerson(){
 function renderMobilePersonalHome(){
   const title=document.querySelector('#mobileTodayTitle');if(!title)return;
   renderTopbarPerson();
-  renderMobileBoardController();renderAutomaticLesson();renderMobileInlinePoints();
+  renderMobileBoardController();renderAutomaticLesson();renderMobileInlinePoints();renderMobileHomeGoal();
   const now=new Date(),date=document.querySelector('#mobileTodayDate'),mascot=document.querySelector('#mobileTodayMascot');
   /* NEXT 15.17 – der Titel lag als Text im gespeicherten Zustand. Wer die
      App schon benutzt hat, haette sonst weiter „Heute im Blick“ gesehen. */
@@ -1216,9 +1234,15 @@ function renderMobilePersonalHome(){
     if(!incidents.length){
       incidentList.innerHTML='<div class="mobile-all-good"><span>✓</span><div><strong>Heute keine Auffälligkeiten</strong><small>Alles ruhig in der Klasse.</small></div></div>';
     } else {
-      const shown=incidents.slice(0,5),extra=incidents.length-shown.length;
-      shown.forEach(item=>{const meta=item.type==='ban'?banMeta(item):incidentMeta(item.type),student=state.students.find(candidate=>candidate.id===item.studentId),row=document.createElement('button');row.type='button';row.className=`mobile-incident ${item.type} ${item.fromPoint?'is-point':''}`;row.innerHTML=`<span class="mobile-incident-photo">${studentPhotoMarkup(student||{name:item.studentName},'mobile-incident-img')}</span><div><strong>${escapeHtml(item.studentName)}</strong><small>${meta.icon} ${meta.label}${item.note?` · ${escapeHtml(item.note)}`:''}</small></div><time>${new Date(item.createdAt).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})}</time>`;row.onclick=()=>openStudentDetails(item.studentId);incidentList.append(row)});
-      if(extra>0){const more=document.createElement('button');more.type='button';more.className='mobile-incident-more';more.innerHTML=`<span>+ ${extra} weitere${extra===1?'':''} anzeigen</span><b>›</b>`;more.onclick=()=>openMobilePersonalPage('points');incidentList.append(more)}
+      /* NEXT 15.84 – Die Startseite ist eine Übersicht und kein zweites
+         Kinderprotokoll. Namen, Fotos und Einzelnotizen bleiben hinter
+         „Alle Füchse“. Das schützt die Daten auf gemeinsam sichtbaren
+         Displays und hält Wochenziel sowie Schnellzugriffe sofort sichtbar. */
+      const summary=document.createElement('button');
+      summary.type='button';summary.className='mobile-incident-summary';
+      summary.innerHTML=`<span class="mobile-summary-icon">📋</span><div><strong>${incidents.length} ${incidents.length===1?'Eintrag':'Einträge'} heute</strong><small>Bewertungen und Notizen geschützt ansehen</small></div><b aria-hidden="true">›</b>`;
+      summary.onclick=()=>openMobilePersonalPage('points');
+      incidentList.append(summary);
     }
   }
   /* Das Wochenziel steht seit 14.1 nur noch in „Alle Füchse & Punkte“ –
@@ -1299,6 +1323,15 @@ function renderMobilePointsGoal(){
   if(yes){yes.classList.toggle('is-active',vote==='green');yes.onclick=()=>{setWeeklyGoalVote('green');renderMobilePointsGoal();renderMobilePersonalHome();mobilePointsFeedback('✓ Wochenziel: Ja gespeichert')}}
   if(no){no.classList.toggle('is-active',vote==='red');no.onclick=()=>{setWeeklyGoalVote('red');renderMobilePointsGoal();renderMobilePersonalHome();mobilePointsFeedback('✕ Wochenziel: Nein gespeichert')}}
 }
+function renderMobileHomeGoal(){
+  const text=document.querySelector('#mobileHomeGoalText'),status=document.querySelector('#mobileHomeGoalStatus'),yes=document.querySelector('#mobileHomeGoalYes'),no=document.querySelector('#mobileHomeGoalNo');
+  if(!text)return;
+  const goal=state.content.weeklyGoal||{},vote=goalVotesForDay()[currentPointActor().id]||null;
+  text.textContent=goal.text||'Noch kein Wochenziel eingetragen';
+  if(status)status.textContent=vote==='green'?'Heute bestätigt ✓':vote==='red'?'Heute mit Veto markiert':'Heute noch offen';
+  if(yes){yes.classList.toggle('is-active',vote==='green');yes.onclick=()=>{setWeeklyGoalVote('green');renderMobileHomeGoal()}}
+  if(no){no.classList.toggle('is-active',vote==='red');no.onclick=()=>{setWeeklyGoalVote('red');renderMobileHomeGoal()}}
+}
 function mobilePointsFeedback(text){
   const target=document.querySelector('#mobilePointsFeedback');if(!target)return;
   target.textContent=text;target.classList.add('is-flash');
@@ -1309,6 +1342,7 @@ function renderMobilePoints(){
   const grid=document.querySelector('#mobilePointsGrid');if(!grid)return;grid.innerHTML='';
   const layout=state.ui?.mobilePointsLayout==='rows'?'rows':'cards';
   grid.classList.toggle('layout-rows',layout==='rows');
+  document.querySelectorAll('#mobilePointsLayout [data-mobile-layout]').forEach(button=>{const active=button.dataset.mobileLayout===layout;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
   const query=(document.querySelector('#mobileChildSearch')?.value||'').trim().toLocaleLowerCase('de-DE');
   const statusRank=s=>({'status-red':0,'status-yellow':1,'status-green':2,'status-neutral':3}[s]);
   const sorted=[...activeStudents()]
@@ -1336,6 +1370,7 @@ function renderMobilePoints(){
         <button type="button" class="rate-btn rate-green" aria-label="Grün für ${escapeHtml(student.name)}"><span></span></button>
         <button type="button" class="rate-btn rate-yellow" aria-label="Gelbe Karte für ${escapeHtml(student.name)}"><span></span></button>
         <button type="button" class="rate-btn rate-red" aria-label="Veto/Rot für ${escapeHtml(student.name)}"><span></span></button>
+        <button type="button" class="rate-btn rate-direct" aria-label="Direkt Grün für ${escapeHtml(student.name)}"><span aria-hidden="true">★</span></button>
         <button type="button" class="rate-btn rate-more" aria-label="Weitere Optionen für ${escapeHtml(student.name)}"><span aria-hidden="true">•••</span></button>
       </div>`;
     const flash=cls=>{card.classList.add(cls);setTimeout(()=>card.classList.remove(cls),500)};
@@ -1345,11 +1380,12 @@ function renderMobilePoints(){
       const el=card.querySelector('.mobile-rate-counts');if(el)el.textContent=`🟢 ${c.green||0} · 🟡 ${c.yellow||0} · 🔴 ${c.red||0}`;
     };
     card.querySelector('.mobile-rate-head').onclick=()=>openMobileChildActions(student.id);
-    const [g,y,r,more]=card.querySelectorAll('.rate-btn');
+    const [g,y,r,direct,more]=card.querySelectorAll('.rate-btn');
     const give=(type,cls,label)=>{addPoint(student.id,type);flash(cls);refresh();renderMobilePersonalHome();mobilePointsFeedback(`✓ ${label} für ${student.name} gespeichert`)};
     g.onclick=()=>give('green','just-green','Grüner Punkt');
     y.onclick=()=>give('yellow','just-yellow','Gelbe Karte');
     r.onclick=()=>give('red','just-red','Rot/Veto');
+    direct.onclick=()=>give('direct','just-green','Direkt Grün');
     more.onclick=()=>openMobileChildActions(student.id);
     grid.append(card);
   });
@@ -2076,7 +2112,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.75',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.86.1',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2122,7 +2158,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.75',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.86.1',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}
@@ -2296,7 +2332,7 @@ function showSubstituteSetup(){
 }
 function enterTeamWorkspace(memberId){
   ensureTeamMembersAvailable();
-  const member=state.teamMembers.find(item=>item.id===memberId);if(!member)return;state.activeTeamMember=memberId;state.activePointActor=memberId;activeTeamPage='overview';teamWorkspaceMode='workspace';materialsUnlockedThisSession=false;teamDialog?.classList.remove('team-selection-open');teamDialog?.classList.add('team-workspace-open');saveState();document.querySelector('#teamSelectionView').hidden=true;document.querySelector('#substituteSetupView').hidden=true;document.querySelector('#teamWorkspace').hidden=false;document.querySelector('#teamScrollTopButton').hidden=false;renderActiveTeamWorkspace();
+  const member=state.teamMembers.find(item=>item.id===memberId);if(!member)return;state.activeTeamMember=memberId;state.activePointActor=memberId;activeTeamPage='overview';teamWorkspaceMode='workspace';materialsUnlockedThisSession=false;teamDialog?.classList.remove('team-selection-open');teamDialog?.classList.add('team-workspace-open');saveState();document.querySelector('#teamSelectionView').hidden=true;document.querySelector('#substituteSetupView').hidden=true;const workspace=document.querySelector('#teamWorkspace');workspace.hidden=false;workspace.classList.add('desktop-fox-panel-collapsed');updateDesktopFoxPanelToggle();document.querySelector('#teamScrollTopButton').hidden=false;renderActiveTeamWorkspace();
 }
 function enterSubstituteWorkspace(substituteId){
   const substitute=state.substitutes.find(item=>item.id===substituteId);if(!substitute)return;state.activePointActor=`sub:${substituteId}`;activeTeamPage='points';teamWorkspaceMode='substitute';teamDialog?.classList.remove('team-selection-open');teamDialog?.classList.add('team-workspace-open');saveState();document.querySelector('#teamSelectionView').hidden=true;document.querySelector('#substituteSetupView').hidden=true;document.querySelector('#teamWorkspace').hidden=false;document.querySelector('#teamScrollTopButton').hidden=false;renderActiveTeamWorkspace();
@@ -2438,6 +2474,7 @@ function selectTeamPage(page){
   document.querySelector('#teamWorkspace')?.classList.toggle('materials-mode',page==='materials');
   document.querySelector('#teamWorkspace')?.classList.toggle('settings-mode',page==='settings');
   document.querySelector('#teamWorkspace')?.classList.toggle('points-mode',page==='points');
+  applyMobileWorkspacePreferences();
   const card=document.querySelector('#teamDialog .dialog-card');if(card)card.scrollTo({top:0,behavior:'smooth'});
   enforceMobileFundusLayout();
   /* NEXT 15.16 – zweiter Durchlauf, nachdem der Browser die Seite fertig
@@ -2447,6 +2484,14 @@ function selectTeamPage(page){
     enforceMobileFundusLayout();
     if(page==='points')fitResponsiveStudentGrid(document.querySelector('#teacherStudentList'));
   });
+}
+function updateDesktopFoxPanelToggle(){
+  const workspace=document.querySelector('#teamWorkspace'),button=document.querySelector('#toggleDesktopFoxPanel');if(!workspace||!button)return;
+  const expanded=!workspace.classList.contains('desktop-fox-panel-collapsed');button.setAttribute('aria-expanded',String(expanded));button.innerHTML=expanded?'<span aria-hidden="true">🙈</span><strong>Füchse ausblenden</strong>':'<span aria-hidden="true">🔒</span><strong>Füchse im Blick</strong>';
+}
+function toggleDesktopFoxPanel(){
+  if(window.matchMedia('(max-width:700px)').matches)return;
+  document.querySelector('#teamWorkspace')?.classList.toggle('desktop-fox-panel-collapsed');updateDesktopFoxPanelToggle();
 }
 function incidentMeta(type){return ({warning:{icon:'🟡',label:'Ermahnung'},note:{icon:'📝',label:'Notiz'},ban:{icon:'🔴',label:'Verbot'},praise:{icon:'🟢',label:'Lob'},veto:{icon:'🔴',label:'Veto'},positive:{icon:'🟢',label:'Grüner Punkt'}})[type]||{icon:'📝',label:'Notiz'}}
 function incidentPriority(type){return ({ban:0,veto:1,warning:2,note:3,praise:4,positive:5})[type]??3}
@@ -2528,7 +2573,7 @@ function renderTeamCockpit(){
   if(personIcon)personIcon.textContent=person.icon;if(personName)personName.textContent=person.name;if(personRole)personRole.textContent=person.role;
   const cockpitMascot=document.querySelector('#cockpitTodayMascot'),cockpitTitle=document.querySelector('#cockpitTodayTitle');if(cockpitMascot)cockpitMascot.textContent=currentTheme().mascot;if(cockpitTitle)cockpitTitle.textContent=state.classWorld.dailyOverviewTitle||'Füchse im Blick';const cockpitDate=document.querySelector('#cockpitTodayDate');if(cockpitDate){const now=new Date();cockpitDate.dateTime=dateKeyLocal(now);cockpitDate.textContent=now.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long'})}
   const makeToolLink=tool=>{const preset=TEACHING_TOOL_PRESETS[tool.type]||TEACHING_TOOL_PRESETS.custom,safeLink=normaliseMaterialLink(tool.url),link=document.createElement('a');link.className=`cockpit-tool-link tool-${tool.type||'custom'}`;link.href=safeLink||'#';link.target='_blank';link.rel='noopener';link.innerHTML=`<span>${escapeHtml(tool.mark||preset.mark||(tool.label||'U').slice(0,1))}</span><div><strong>${escapeHtml(tool.label||'Werkzeug')}</strong><small>${escapeHtml(tool.hint||preset.hint||'Öffnen')}</small></div>${tool.isDefault?'<b>★</b>':''}`;if(!safeLink)link.onclick=event=>{event.preventDefault();selectTeamPage('settings')};return link};
-  const tools=person.restricted?[]:activeTeachingTools().filter(tool=>!tool.hidden),startTools=tools.filter(tool=>tool.placement!=='favorite').slice(0,2),favoriteLinks=tools.filter(tool=>tool.placement!=='start').slice(0,5);
+  const tools=person.restricted?[]:activeTeachingTools().filter(tool=>!tool.hidden),startTools=tools.filter(tool=>tool.placement!=='favorite').slice(0,2),favoritePool=window.matchMedia('(max-width:700px)').matches?tools.filter(tool=>tool.type!=='prowise'):tools,favoriteLinks=favoritePool.filter(tool=>tool.placement!=='start').slice(0,5);
   const favoriteTools=document.querySelector('#cockpitFavoriteTools');if(favoriteTools){favoriteTools.innerHTML='';startTools.forEach(tool=>favoriteTools.append(makeToolLink(tool)));if(!startTools.length)favoriteTools.innerHTML='<button type="button" class="cockpit-tool-empty">＋ Startwerkzeug</button>';favoriteTools.querySelector('.cockpit-tool-empty')?.addEventListener('click',()=>selectTeamPage('settings'))}
   const favorites=document.querySelector('#cockpitFavorites');if(favorites){favorites.innerHTML='';favoriteLinks.forEach(tool=>favorites.append(makeToolLink(tool)));if(!favoriteLinks.length)favorites.innerHTML='<button type="button" class="cockpit-tool-empty">Favoriten einrichten</button>';favorites.querySelector('.cockpit-tool-empty')?.addEventListener('click',()=>selectTeamPage('settings'))}
   const pins=document.querySelector('#cockpitPinnedList');
@@ -2568,10 +2613,18 @@ function renderTeamCockpit(){
 function addCockpitIncident(){const studentId=document.querySelector('#cockpitStudentSelect')?.value,type=document.querySelector('#cockpitIncidentType')?.value||'note',note=(document.querySelector('#cockpitIncidentNote')?.value||'').trim(),status=document.querySelector('#cockpitIncidentStatus'),student=state.students.find(s=>s.id===studentId);if(!student){if(status)status.textContent='Bitte zuerst ein Fuchs auswählen.';return}const actor=activeWorkspacePerson();state.teamIncidents=(state.teamIncidents||[]).filter(item=>!item.demo);state.teamIncidents.unshift({id:`i${Date.now()}`,studentId,studentName:student.name,type,note,actorName:actor.name,createdAt:new Date().toISOString()});state.teamIncidents=state.teamIncidents.slice(0,500);saveState();document.querySelector('#cockpitIncidentNote').value='';if(status)status.textContent=`${incidentMeta(type).label} für ${student.name} gespeichert ✓`;renderTeamCockpit();renderMobilePersonalHome();sendPointsRemote()}
 function renderPersonalWorkspaceSettings(){
   const member=activeTeamPerson(),prefs=member.profilePrefs||{};const values=[['personalDisplayNameInput',prefs.displayName||member.name],['personalIconInput',prefs.icon||member.icon],['personalAccentInput',prefs.accent||'#315f28'],['materialsPinInput',prefs.materialsPin||'']];values.forEach(([id,value])=>{const input=document.querySelector('#'+id);if(input)input.value=value});[['showMaterialsPanel','showMaterials'],['showGoalPanel','showGoal'],['showPublicationPanel','showPublication']].forEach(([id,key])=>{const input=document.querySelector('#'+id);if(input)input.checked=prefs[key]!==false});
+  const mobileValues=[['mobileOverviewOrder',prefs.mobileOverviewOrder||'standard'],['mobileOverviewSize',prefs.mobileOverviewSize||'compact'],['mobileOverviewColor',prefs.mobileOverviewColor||prefs.accent||'#2f9f52']];mobileValues.forEach(([id,value])=>{const input=document.querySelector('#'+id);if(input)input.value=value});
   const pinStatus=document.querySelector('#materialsPinStatus');if(pinStatus)pinStatus.textContent=prefs.materialsPin?'Code aktiv ✓':'Kein Code – Fundus & Vorbereitung ist frei zugänglich.';
+  applyMobileWorkspacePreferences();
+}
+function applyMobileWorkspacePreferences(){
+  const workspace=document.querySelector('#teamWorkspace'),member=activeTeamPerson(),prefs=member.profilePrefs||{};if(!workspace)return;
+  workspace.dataset.mobileOrder=prefs.mobileOverviewOrder||'standard';
+  workspace.dataset.mobileSize=prefs.mobileOverviewSize||'compact';
+  workspace.style.setProperty('--mobile-personal-accent',prefs.mobileOverviewColor||prefs.accent||'#2f9f52');
 }
 function savePersonalWorkspace(){
-  const member=activeTeamPerson();member.profilePrefs={...member.profilePrefs,displayName:(document.querySelector('#personalDisplayNameInput').value||member.name).trim()||member.name,icon:(document.querySelector('#personalIconInput').value||member.icon).trim()||member.icon,accent:document.querySelector('#personalAccentInput').value||'#315f28',showMaterials:document.querySelector('#showMaterialsPanel').checked,showGoal:document.querySelector('#showGoalPanel').checked,showPublication:document.querySelector('#showPublicationPanel').checked,materialsPin:(document.querySelector('#materialsPinInput')?.value||'').replace(/\D/g,'').slice(0,4)};saveState();renderActiveTeamWorkspace();selectTeamPage('settings');const status=document.querySelector('#personalWorkspaceStatus');if(status)status.textContent='Meine Startseite wurde gespeichert ✓';
+  const member=activeTeamPerson();member.profilePrefs={...member.profilePrefs,displayName:(document.querySelector('#personalDisplayNameInput').value||member.name).trim()||member.name,icon:(document.querySelector('#personalIconInput').value||member.icon).trim()||member.icon,accent:document.querySelector('#personalAccentInput').value||'#315f28',mobileOverviewOrder:document.querySelector('#mobileOverviewOrder')?.value||'standard',mobileOverviewSize:document.querySelector('#mobileOverviewSize')?.value||'compact',mobileOverviewColor:document.querySelector('#mobileOverviewColor')?.value||'#2f9f52',showMaterials:document.querySelector('#showMaterialsPanel').checked,showGoal:document.querySelector('#showGoalPanel').checked,showPublication:document.querySelector('#showPublicationPanel').checked,materialsPin:(document.querySelector('#materialsPinInput')?.value||'').replace(/\D/g,'').slice(0,4)};saveState();renderActiveTeamWorkspace();selectTeamPage('settings');const status=document.querySelector('#personalWorkspaceStatus');if(status)status.textContent='Meine Startseite wurde gespeichert ✓';
 }
 function addSubstitute(){
   const input=document.querySelector('#substituteNameInput'),name=(input?.value||'').trim(),status=document.querySelector('#substituteStatus');if(!name){if(status)status.textContent='Bitte einen Namen eintragen.';return}const substitute={id:`v${Date.now()}`,name,createdAt:new Date().toISOString()};state.substitutes.push(substitute);state.activePointActor=`sub:${substitute.id}`;saveState();if(input)input.value='';enterSubstituteWorkspace(substitute.id);
@@ -2786,7 +2839,7 @@ function renderMaterialLibrary(){
   store.drawers.forEach((drawer,index)=>{
     const wrap=document.createElement('div');wrap.className='drawer-tab-wrap';
     const style=subjectStyle(drawer.name,index,drawer);
-    const b=document.createElement('button');b.type='button';b.className='drawer-tab';if(drawer.name===store.activeDrawer)b.classList.add('active');
+    const b=document.createElement('button');b.type='button';b.className='drawer-tab';b.style.setProperty('--drawer-color',style.color);if(drawer.name===store.activeDrawer)b.classList.add('active');
     b.innerHTML=`<span>${style.icon}</span><strong>${escapeHtml(drawer.name)}</strong><small>${drawer.items.length}</small>`;
     b.onclick=()=>{store.activeDrawer=drawer.name;materialPage=0;saveState();renderMaterialLibrary()};wrap.append(b);
     tabs.append(wrap);
@@ -2909,8 +2962,8 @@ function openIconPicker(drawer){
   if(!dialog||!grid)return;
   drawerEditorTarget=drawer;drawerEditorSelectedIcon=drawer.icon||subjectStyle(drawer.name,0,drawer).icon;
   if(title)title.textContent=`„${drawer.name}“ ruhig an einer Stelle anpassen`;
-  const nameInput=document.querySelector('#iconPickerDrawerName'),status=document.querySelector('#iconPickerStatus');
-  if(nameInput)nameInput.value=drawer.name;if(status)status.textContent='';
+  const nameInput=document.querySelector('#iconPickerDrawerName'),colorInput=document.querySelector('#iconPickerDrawerColor'),status=document.querySelector('#iconPickerStatus');
+  if(nameInput)nameInput.value=drawer.name;if(colorInput)colorInput.value=drawer.color||subjectStyle(drawer.name,0,drawer).color;if(status)status.textContent='';
   grid.innerHTML='';
   SUBJECT_ICON_CHOICES.forEach(icon=>{
     const button=document.createElement('button');button.type='button';button.className='icon-picker-choice';if(drawerEditorSelectedIcon===icon)button.classList.add('is-active');button.textContent=icon;
@@ -2929,12 +2982,12 @@ function openIconPicker(drawer){
   dialog.showModal();
 }
 function saveActiveDrawerEditor(){
-  const drawer=drawerEditorTarget,store=activeMaterialStore(),input=document.querySelector('#iconPickerDrawerName'),status=document.querySelector('#iconPickerStatus');
+  const drawer=drawerEditorTarget,store=activeMaterialStore(),input=document.querySelector('#iconPickerDrawerName'),colorInput=document.querySelector('#iconPickerDrawerColor'),status=document.querySelector('#iconPickerStatus');
   if(!drawer)return;
   const name=(input?.value||'').trim();
   if(!name){if(status)status.textContent='Bitte einen Fachnamen eintragen.';input?.focus();return}
   if(store.drawers.some(candidate=>candidate!==drawer&&candidate.name.toLocaleLowerCase('de-DE')===name.toLocaleLowerCase('de-DE'))){if(status)status.textContent='Dieses Fach gibt es bereits.';input?.focus();return}
-  const oldName=drawer.name;drawer.name=name;drawer.icon=drawerEditorSelectedIcon||drawer.icon;
+  const oldName=drawer.name;drawer.name=name;drawer.icon=drawerEditorSelectedIcon||drawer.icon;drawer.color=colorInput?.value||drawer.color||'#2878bd';
   if(store.activeDrawer===oldName)store.activeDrawer=name;
   saveState();renderMaterialLibrary();renderTeamCockpit();renderMobileBoardController();renderSubjectLaunchpad();
   document.querySelector('#iconPickerDialog')?.close();
@@ -3508,7 +3561,10 @@ const seasonPreviewSelect=document.querySelector('#seasonPreviewSelect');if(seas
 const openPointsDock=document.querySelector('#openPointsDock');if(openPointsDock)openPointsDock.onclick=openPoints;
 const openPointsFromTeam=document.querySelector('#openPointsFromTeam');if(openPointsFromTeam)openPointsFromTeam.onclick=()=>{teamDialog.close();openPoints()};
 const teacherStudentSearch=document.querySelector('#teacherStudentSearch');if(teacherStudentSearch)teacherStudentSearch.oninput=renderTeacherList;
-document.querySelectorAll('[data-team-page]').forEach(button=>button.onclick=()=>selectTeamPage(button.dataset.teamPage));
+document.querySelectorAll('[data-team-page]').forEach(button=>button.onclick=()=>{
+  if(button.dataset.teamPage==='points'&&window.matchMedia('(max-width:700px)').matches){teamDialog.close();openMobilePoints();return}
+  selectTeamPage(button.dataset.teamPage);
+});
 document.querySelectorAll('[data-cockpit-more]').forEach(button=>button.onclick=()=>selectTeamPage(button.dataset.cockpitMore));
 document.querySelectorAll('[data-mobile-personal]').forEach(button=>button.onclick=()=>openMobilePersonalPage(button.dataset.mobilePersonal));
 document.querySelector('#materialAddToggle')?.addEventListener('click',()=>{
@@ -3519,7 +3575,9 @@ document.querySelector('#materialAddToggle')?.addEventListener('click',()=>{
 });
 document.querySelector('#mobilePointsClose')?.addEventListener('click',()=>document.querySelector('#mobilePointsDialog')?.close());
 document.querySelector('#mobileChildSearch')?.addEventListener('input',()=>renderMobilePoints());
-document.querySelector('#mobilePointsLayout')?.addEventListener('click',()=>{state.ui=state.ui||{};state.ui.mobilePointsLayout=state.ui.mobilePointsLayout==='rows'?'cards':'rows';saveState();renderMobilePoints();mobilePointsFeedback(state.ui.mobilePointsLayout==='rows'?'Darstellung: Zeilen':'Darstellung: Kacheln')});
+document.querySelectorAll('#mobilePointsLayout [data-mobile-layout]').forEach(button=>button.addEventListener('click',()=>{state.ui=state.ui||{};state.ui.mobilePointsLayout=button.dataset.mobileLayout==='rows'?'rows':'cards';saveState();renderMobilePoints();mobilePointsFeedback(state.ui.mobilePointsLayout==='rows'?'Darstellung: Normal':'Darstellung: Kompakt')}));
+document.querySelector('#mobilePointsOverview')?.addEventListener('click',()=>{document.querySelector('#mobilePointsDialog')?.close();openMobilePersonalPage('overview')});
+document.querySelector('#mobilePointsSettings')?.addEventListener('click',()=>{document.querySelector('#mobilePointsDialog')?.close();openMobilePersonalPage('settings')});
 document.querySelector('#mobileUndoPoint')?.addEventListener('click',()=>{
   if(!mobileSelectedStudentId)return;
   const student=state.students.find(item=>item.id===mobileSelectedStudentId);
@@ -3559,6 +3617,7 @@ const cockpitGoalConfirm=document.querySelector('#cockpitGoalConfirm');if(cockpi
 
 document.querySelector('#mobileSwitchPerson')?.addEventListener('click',()=>{teamWorkspaceMode='selection';renderTeamMembers();showTeamSelection();teamDialog.showModal()});
 document.querySelector('#openPersonalSettingsButton').onclick=()=>selectTeamPage('settings');
+document.querySelector('#toggleDesktopFoxPanel')?.addEventListener('click',toggleDesktopFoxPanel);
 
 const wg=document.querySelector('#weeklyGoalGreen');if(wg)wg.onclick=()=>setWeeklyGoalVote('green');
 const kgy=document.querySelector('#kidsGoalYes');if(kgy)kgy.onclick=()=>setKidsGoalVote('green');

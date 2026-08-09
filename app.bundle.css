@@ -1,4 +1,3 @@
-
 /* ===== styles.css ===== */
 :root{--forest:#174c31;--cream:#fff9ed;--orange:#f36d20;--ink:#17382a;--wood:#754429;--gold:#e7b94a;--stage-scale:1;--shadow:0 14px 32px rgba(18,55,31,.22)}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#07120d}button,input,select,textarea{font:inherit}body{overflow:hidden}.forest-light{display:none}

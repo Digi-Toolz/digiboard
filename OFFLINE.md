@@ -67,7 +67,7 @@ Installationssymbol.
 Der Service Worker liefert absichtlich zuerst aus dem Cache. Nach einer Änderung
 an der App:
 
-1. In `sw.js` die Zeile `const VERSION='digiboard-11.89.2'` hochzählen.
+1. In `sw.js` die Zeile `const VERSION='digiboard-15.86.1'` auf eine neue Version hochzählen.
 2. Seite einmal neu laden, kurz warten, noch einmal laden.
 
 Beim Versionswechsel werden alle alten Caches automatisch gelöscht.

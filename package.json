@@ -1,0 +1,11 @@
+{
+  "name": "digiboard-next",
+  "version": "15.86.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-bundles.mjs",
+    "check:bundles": "node tools/build-bundles.mjs --check",
+    "test:sheets": "node tools/test-google-sheets-contract.mjs"
+  }
+}

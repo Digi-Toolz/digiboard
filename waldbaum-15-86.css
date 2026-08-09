@@ -1,0 +1,351 @@
+/* DigiBoard Next 15.86 – der Klassenbaum wird zum Blickfang.
+
+   Vorlage ist der freundliche 9.8-Entwurf: gezeichneter Baum mit runden
+   Blaetterballen, warmes Holz, klare Farben. Der Baum ist jetzt ein eigenes
+   Motiv (tree-reward-15.86.png) mit festem Seitenverhaeltnis 4:3. Buehne und
+   Portraitflaeche benutzen exakt dieselbe Box – dadurch sitzen die Fuechse
+   immer an derselben Stelle in der Krone, egal wie gross die Tafel ist. */
+
+html body .app-shell[data-theme="forest"]{
+  --holz-hell:#c98d51;
+  --holz-mittel:#a2662f;
+  --holz-tief:#6d4220;
+  --holz-rand:#7a4a22;
+  --holz-schrift:#fff6df;
+  --holz-schrift-leise:#efdcb6;
+}
+
+/* ------------------------------------------------------------------
+   1 · DER BAUM – ein Motiv, eine Box, feste Proportion
+   ------------------------------------------------------------------ */
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .tree-main-image-v1539.tree-main-image-v1539{
+  position:absolute!important;
+  inset:auto!important;
+  left:50%!important; right:auto!important; top:auto!important; bottom:1.5%!important;
+  transform:translateX(-50%)!important;
+  height:99%!important; width:auto!important; max-width:100%!important;
+  aspect-ratio:4/3!important;
+  background-image:url('tree-reward-15.86.png?v=15860')!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:100% 100%!important;
+  opacity:1!important;
+  filter:drop-shadow(0 20px 16px rgba(21,52,26,.22))!important;
+}
+
+/* Die Portraitflaeche ist deckungsgleich mit dem Baum. */
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .tree-portraits-v22.tree-portraits-v22{
+  position:absolute!important;
+  inset:auto!important;
+  left:50%!important; right:auto!important; top:auto!important; bottom:1.5%!important;
+  transform:translateX(-50%)!important;
+  height:99%!important; width:auto!important; max-width:100%!important;
+  aspect-ratio:4/3!important;
+  z-index:24!important;
+  pointer-events:none!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22{
+  pointer-events:auto!important;
+}
+
+/* Reste der frueheren CSS-Krone bleiben aus dem Weg. */
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-v22,
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-crown-fill-v100,
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-trunk-v22,
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-branch-v22,
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-roots-v80,
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-glow-v80{
+  display:none!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-shadow-v22{
+  left:38%!important; right:38%!important; bottom:1%!important; height:4%!important;
+  background:rgba(26,58,30,.22)!important; filter:blur(10px)!important; z-index:4!important;
+}
+
+/* ------------------------------------------------------------------
+   2 · DIE WALDHELDEN – runde Medaillons mit Namensschild
+   ------------------------------------------------------------------ */
+@keyframes fuchsSchweben1586{
+  0%,100%{transform:translate(-50%,-50%)}
+  50%{transform:translate(-50%,calc(-50% - 5px))}
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22.child-card-v22{
+  display:grid!important;
+  justify-items:center!important;
+  gap:0!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  transform:translate(-50%,-50%)!important;
+  animation:fuchsSchweben1586 5.4s ease-in-out infinite!important;
+  filter:drop-shadow(0 8px 9px rgba(20,52,27,.26))!important;
+  transition:filter .25s ease!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22:nth-child(3n){animation-delay:-1.8s!important}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22:nth-child(3n+1){animation-delay:-3.6s!important}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22:hover,
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22:focus-visible{
+  filter:drop-shadow(0 10px 14px rgba(255,196,84,.45))!important;
+  z-index:40!important;
+}
+
+/* Das Medaillon: Foto im weissen Ring, aussen ein warmer Holzreif. */
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 .avatar-v22{
+  width:var(--tree-avatar-base,56px)!important;
+  height:var(--tree-avatar-base,56px)!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  border:4px solid #fff9ea!important;
+  background:linear-gradient(150deg,#ffb549,#ef7a1e)!important;
+  color:#fff!important;
+  font-size:calc(var(--tree-avatar-base,56px)*.40)!important;
+  font-weight:950!important;
+  box-shadow:
+    0 0 0 5px #c58245,
+    0 0 0 7px rgba(96,54,23,.42),
+    inset 0 2px 5px rgba(255,255,255,.35)!important;
+  animation:none!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 .avatar-v22 img,
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 .portrait-photo{
+  width:100%!important; height:100%!important;
+  object-fit:cover!important; object-position:center 42%!important;
+  border-radius:50%!important; animation:none!important; filter:none!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22.hero-child .avatar-v22{
+  box-shadow:
+    0 0 0 5px #f5c65a,
+    0 0 0 8px rgba(122,74,34,.45),
+    0 0 22px 8px rgba(255,214,92,.55)!important;
+  animation:none!important;
+}
+
+/* Das Namensschild sitzt wie ein kleines Holzschild unter dem Medaillon. */
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 strong{
+  margin-top:calc(var(--tree-avatar-base,56px)*.13)!important;
+  padding:.22em .7em!important;
+  max-width:calc(var(--tree-avatar-base,56px)*2.1)!important;
+  overflow:hidden!important; text-overflow:ellipsis!important; white-space:nowrap!important;
+  border:1px solid rgba(116,70,31,.42)!important;
+  border-radius:999px!important;
+  background:linear-gradient(180deg,#fff9ea,#f3e2bd)!important;
+  color:#4a2f14!important;
+  font-size:calc(var(--tree-avatar-base,56px)*.24)!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  box-shadow:0 3px 7px rgba(38,60,30,.22),inset 0 1px rgba(255,255,255,.8)!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22 .badge-v22{
+  right:-2px!important; top:-8px!important;
+  font-size:calc(var(--tree-avatar-base,56px)*.30)!important;
+  filter:drop-shadow(0 2px 3px rgba(35,60,28,.35))!important;
+}
+/* Der Zustandstext erscheint erst beim Antippen – die Krone bleibt ruhig. */
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .child-card-v22 .tree-child-state-v1531{
+  display:none!important;
+}
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .child-card-v22.is-open .tree-child-state-v1531{
+  display:block!important;
+  margin-top:3px!important;
+  padding:.16em .6em!important;
+  border-radius:999px!important;
+  background:rgba(37,84,42,.92)!important;
+  color:#f2ffe0!important;
+  font-size:calc(var(--tree-avatar-base,56px)*.20)!important;
+  font-weight:800!important;
+}
+/* Kein Zweig-Strich mehr unter den Medaillons. */
+html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22:before{
+  display:none!important;
+}
+
+html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22.empty-tree-v22{
+  top:44%!important; left:50%!important; transform:translate(-50%,-50%)!important;
+  z-index:26!important;
+  border:1px solid rgba(122,74,34,.35)!important;
+  border-radius:16px!important;
+  background:linear-gradient(180deg,rgba(255,251,232,.95),rgba(244,228,193,.94))!important;
+  box-shadow:0 10px 20px rgba(28,58,30,.22)!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body .app-shell[data-theme="forest"] .wall-fixed .child-card-v22.child-card-v22{
+    animation:none!important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   3 · TAGESINFOS – eine haengende Holztafel
+   ------------------------------------------------------------------ */
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget{
+  border:2px solid #6f4320!important;
+  border-radius:18px!important;
+  background:
+    linear-gradient(180deg,rgba(255,238,199,.14),transparent 26% 74%,rgba(46,24,10,.16)),
+    repeating-linear-gradient(2deg,rgba(255,240,205,.05) 0 2px,transparent 2px 12px),
+    linear-gradient(180deg,#bd824a 0%,#9c5f2f 52%,#7c4722 100%)!important;
+  color:var(--holz-schrift)!important;
+  box-shadow:
+    inset 0 2px rgba(255,234,186,.42),
+    inset 0 -3px rgba(58,28,10,.28),
+    0 12px 22px rgba(30,58,32,.26)!important;
+  backdrop-filter:none!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .widget-head h2,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row span,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row strong{
+  color:var(--holz-schrift)!important;
+  -webkit-text-fill-color:var(--holz-schrift)!important;
+  text-shadow:0 1px 2px rgba(38,20,8,.34)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .info-row{
+  margin:0 0 5px!important;
+  padding:6px 9px!important;
+  border:1px solid rgba(255,232,180,.18)!important;
+  border-radius:11px!important;
+  background:linear-gradient(180deg,rgba(255,244,214,.14),rgba(52,26,10,.10))!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .forest-info-tabs button{
+  border:1px solid rgba(255,236,190,.28)!important;
+  border-radius:10px!important;
+  background:rgba(255,246,220,.12)!important;
+  color:var(--holz-schrift-leise)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="info"].widget.widget.widget .forest-info-tabs button.active{
+  background:linear-gradient(180deg,#fff6dd,#efd7a4)!important;
+  color:#5a3517!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.8),0 3px 7px rgba(44,24,10,.22)!important;
+}
+
+/* ------------------------------------------------------------------
+   4 · WALDCAFÉ – die Speisekarte im Holzrahmen
+   ------------------------------------------------------------------ */
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget{
+  border:2px solid #7a4a22!important;
+  border-radius:18px!important;
+  padding:5px!important;
+  background:
+    repeating-linear-gradient(88deg,rgba(255,240,205,.05) 0 2px,transparent 2px 12px),
+    linear-gradient(180deg,#c08a52 0%,#a1663a 55%,#82502a 100%)!important;
+  box-shadow:
+    inset 0 2px rgba(255,236,192,.44),
+    inset 0 -3px rgba(60,30,12,.26),
+    0 12px 22px rgba(30,58,32,.24)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .widget-head h2{
+  color:var(--holz-schrift)!important;
+  -webkit-text-fill-color:var(--holz-schrift)!important;
+  text-shadow:0 1px 2px rgba(38,20,8,.34)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-peek,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-daily-preview,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-expanded-panel{
+  border:1px solid rgba(122,74,34,.30)!important;
+  border-radius:13px!important;
+  background:linear-gradient(180deg,#fffaec,#f6e8ca)!important;
+  color:#452c12!important;
+  box-shadow:0 4px 10px rgba(48,28,12,.16),inset 0 1px rgba(255,255,255,.85)!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-peek *,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-daily-preview *{
+  color:#452c12!important; -webkit-text-fill-color:#452c12!important; text-shadow:none!important;
+}
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-peek-copy small,
+html body .app-shell[data-theme="forest"] .dashboard
+  >.widget[data-id="meal"].widget.widget.widget .meal-daily-preview small{
+  color:#8a5325!important; -webkit-text-fill-color:#8a5325!important;
+  letter-spacing:.6px!important; text-transform:uppercase!important;
+}
+
+/* ------------------------------------------------------------------
+   5 · WERKZEUGLEISTE – heller Holzbalken mit hellen Kacheln
+   ------------------------------------------------------------------ */
+@media (min-width:761px){
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
+    border:2px solid #7a4a22!important;
+    border-radius:22px!important;
+    background:
+      linear-gradient(94deg,rgba(255,231,171,.18),transparent 32% 70%,rgba(255,231,171,.12)),
+      repeating-linear-gradient(1deg,rgba(90,44,18,.055) 0 2px,transparent 2px 14px),
+      linear-gradient(180deg,#c98d51 0%,#ac6c39 56%,#8a5027 100%)!important;
+    box-shadow:
+      inset 0 2px rgba(255,236,190,.55),
+      inset 0 -3px rgba(72,34,12,.22),
+      0 12px 22px rgba(32,56,28,.26)!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button{
+    border:1px solid rgba(122,74,34,.30)!important;
+    border-radius:14px!important;
+    background:linear-gradient(180deg,#fffaec,#f4e6c8)!important;
+    color:#4a2f14!important;
+    box-shadow:0 3px 8px rgba(52,30,12,.18),inset 0 1px rgba(255,255,255,.9)!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button *{
+    color:#4a2f14!important; -webkit-text-fill-color:#4a2f14!important; text-shadow:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button .dock-status-v1531{
+    color:#8a5325!important; -webkit-text-fill-color:#8a5325!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button:hover,
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button:focus-visible,
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-active,
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button[aria-pressed="true"]{
+    background:linear-gradient(180deg,#d9f0ad,#b5dc7c)!important;
+    border-color:#7fae4b!important;
+    box-shadow:0 4px 10px rgba(44,74,28,.24),inset 0 1px rgba(255,255,255,.9)!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-active *,
+  html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button[aria-pressed="true"] *{
+    color:#1f4a2a!important; -webkit-text-fill-color:#1f4a2a!important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   6 · NACHZIEHEN – alter Baum aus, Masse sauber, Handy eigen
+   ------------------------------------------------------------------ */
+/* Der alte Baum lag zusaetzlich als Hintergrund der Buehne. Sonst schienen
+   zwei Baeume uebereinander. */
+html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22.tree-scene-v22{
+  background-image:none!important;
+}
+/* Keine Verzerrung: lieber am Rand etwas ueberstehen als den Baum quetschen. */
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .tree-main-image-v1539.tree-main-image-v1539,
+html body .app-shell[data-theme="forest"] .wall-fixed
+  .tree-portraits-v22.tree-portraits-v22{
+  max-width:none!important;
+}
+@media (max-width:760px){
+  /* Auf dem Handy ist die Buehne schmaler als der Baum breit ist.
+     Dort bestimmt die Breite die Groesse, nicht die Hoehe. */
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .tree-main-image-v1539.tree-main-image-v1539,
+  html body .app-shell[data-theme="forest"] .wall-fixed
+    .tree-portraits-v22.tree-portraits-v22{
+    width:100%!important; height:auto!important; max-height:100%!important;
+    aspect-ratio:4/3!important;
+    left:50%!important; right:auto!important; top:auto!important; bottom:2%!important;
+    transform:translateX(-50%)!important;
+  }
+}

@@ -21,7 +21,7 @@ html body .app-shell{
     radial-gradient(ellipse at 50% 18%,var(--forest-daylight),transparent 43%),
     linear-gradient(90deg,var(--forest-edge),transparent 17%,transparent 83%,var(--forest-edge)),
     linear-gradient(180deg,transparent 62%,var(--forest-floor-light)),
-    url('forest-clearing-15.24.png')!important;
+    url('forest-calm-15.78.png')!important;
   background-position:center,center,center,center center!important;
   background-repeat:no-repeat!important;
   background-size:100% 100%,100% 100%,100% 100%,cover!important;

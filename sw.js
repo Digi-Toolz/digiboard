@@ -1,5 +1,5 @@
-/* DigiBoard Next 15.86 – neuer Klassenbaum, Holzsprache in der Waldansicht. */
-const VERSION='digiboard-15.86';
+/* DigiBoard Next 15.86.1 – reproduzierbare Bundles und reparierter Sheets-Vertrag. */
+const VERSION='digiboard-15.86.1';
 const CACHE=`${VERSION}-core`;
 
 const CORE=[

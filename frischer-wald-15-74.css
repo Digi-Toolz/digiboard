@@ -5,7 +5,7 @@ html body .app-shell[data-theme="forest"] {
   background-image:
     radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.08), transparent 44%),
     linear-gradient(180deg, rgba(255,255,255,.015), rgba(71,145,57,.025)),
-    url('forest-clearing-15.74.png') !important;
+    url('forest-calm-15.78.png') !important;
   background-blend-mode: screen, soft-light, normal !important;
   background-position: center, center, center center !important;
   background-repeat: no-repeat !important;
@@ -54,7 +54,7 @@ html body .app-shell[data-theme="forest"] {
   html body .app-shell[data-theme="forest"] {
     background-image:
       linear-gradient(180deg, rgba(255,255,255,.06), rgba(83,159,66,.04)),
-      url('forest-clearing-15.74.png') !important;
+      url('forest-calm-15.78.png') !important;
     background-blend-mode: screen, normal !important;
   }
 }
