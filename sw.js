@@ -1,5 +1,5 @@
-/* DigiBoard Next 15.76 – kompakter Offline-Cache für die Upload-Version. */
-const VERSION='digiboard-15.76-kompakt';
+/* DigiBoard Next 15.77 – kompakter Offline-Cache für die Upload-Version. */
+const VERSION='digiboard-15.77-kompakt';
 const CACHE=`${VERSION}-core`;
 
 const CORE=[
@@ -14,7 +14,7 @@ const CORE=[
   './icon-512.png',
   './icon-maskable-512.png',
   './forest-clearing-15.74.png',
-  './tree-natural-15.69.png'
+  './tree-simple-15.77.svg'
 ];
 
 self.addEventListener('install',event=>{

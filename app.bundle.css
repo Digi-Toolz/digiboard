@@ -61,7 +61,7 @@
 .schedule-overview{grid-template-columns:1.2fr .8fr}.schedule-now,.schedule-next{padding:10px}.schedule-overview strong{font-size:15px}.schedule-row{grid-template-columns:48px 1fr 72px;font-size:9px;padding:4px}.schedule-list{margin-top:8px}
 /* Wall card is a fixed centerpiece matching the reference */
 .wall-fixed{position:absolute!important;z-index:22!important;left:498px!important;top:425px!important;width:276px!important;height:300px!important;display:block!important;visibility:visible!important;opacity:1!important;background:rgba(255,250,239,.97)!important;border:1px solid #e2cfab!important;border-radius:18px!important;box-shadow:var(--soft-shadow)!important;overflow:hidden!important}
-.wall-fixed[hidden]{display:none!important}.wall-fixed .wall-v22{height:100%;overflow:hidden!important}.wall-fixed .wall-title-v22{left:12px!important;top:10px!important;transform:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;font-size:16px!important}.wall-fixed .tree-scene-v22{left:10px!important;right:10px!important;top:45px!important;bottom:48px!important;background:url('tree-natural-15.69.png') center bottom/contain no-repeat!important;overflow:visible!important}.wall-fixed .tree-shadow-v22,.wall-fixed .tree-trunk-v22,.wall-fixed .tree-branch-v22,.wall-fixed .tree-crown-v22{display:none!important}.wall-fixed .tree-portraits-v22{left:5%!important;right:5%!important;top:3%!important;bottom:10%!important}.wall-fixed .avatar-v22{width:43px;height:43px;font-size:16px;border-width:3px}.wall-fixed .child-card-v22 strong{font-size:8px;padding:2px 6px}.wall-fixed .badge-v22{font-size:13px;top:-10px}.wall-fixed .tree-footer-v22{left:10px!important;right:10px!important;bottom:7px!important;height:40px!important;padding:5px 8px!important;border:0!important;background:rgba(255,250,239,.94)!important;box-shadow:none!important;grid-template-columns:auto 1fr auto!important}.leaf-counter-v22>span{font-size:18px}.leaf-counter-v22 strong{font-size:10px}.leaf-counter-v22 small{font-size:7px}.tree-treasure-v22{font-size:20px}.progress-v22{height:7px}
+.wall-fixed[hidden]{display:none!important}.wall-fixed .wall-v22{height:100%;overflow:hidden!important}.wall-fixed .wall-title-v22{left:12px!important;top:10px!important;transform:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;font-size:16px!important}.wall-fixed .tree-scene-v22{left:10px!important;right:10px!important;top:45px!important;bottom:48px!important;background:url('tree-simple-15.77.svg?v=15773') center bottom/contain no-repeat!important;overflow:visible!important}.wall-fixed .tree-shadow-v22,.wall-fixed .tree-trunk-v22,.wall-fixed .tree-branch-v22,.wall-fixed .tree-crown-v22{display:none!important}.wall-fixed .tree-portraits-v22{left:5%!important;right:5%!important;top:3%!important;bottom:10%!important}.wall-fixed .avatar-v22{width:43px;height:43px;font-size:16px;border-width:3px}.wall-fixed .child-card-v22 strong{font-size:8px;padding:2px 6px}.wall-fixed .badge-v22{font-size:13px;top:-10px}.wall-fixed .tree-footer-v22{left:10px!important;right:10px!important;bottom:7px!important;height:40px!important;padding:5px 8px!important;border:0!important;background:rgba(255,250,239,.94)!important;box-shadow:none!important;grid-template-columns:auto 1fr auto!important}.leaf-counter-v22>span{font-size:18px}.leaf-counter-v22 strong{font-size:10px}.leaf-counter-v22 small{font-size:7px}.tree-treasure-v22{font-size:20px}.progress-v22{height:7px}
 /* Meal card vertical, closer to the reference */
 .widget[data-id="meal"]{border:1px solid #e2cfab!important;background:rgba(255,250,239,.97)!important}.widget[data-id="meal"] .widget-head{color:#253a2d}.meal-compact{grid-template-columns:1fr;grid-template-rows:1.65fr .75fr;gap:8px}.meal-main,.dessert-line{background:#fffaf0;border:1px solid #eadcc3;flex-direction:column;padding:10px}.meal-main:after{content:"🍝";font-size:52px;order:-1}.meal-emoji{display:none}.dessert-line>span:first-child{font-size:28px}
 /* Birthday card */
@@ -1294,7 +1294,7 @@ body{background:#dff4a7!important}
 .hero-kicker{padding:8px 28px!important}
 .hero-fox{font-size:72px!important}
 .wall-fixed{filter:drop-shadow(0 23px 22px rgba(49,102,44,.17))!important}
-.wall-fixed .tree-scene-v22{background:url('tree-natural-15.69.png') center bottom/100% 100% no-repeat!important;animation:treeBreathe94 7s ease-in-out infinite!important}
+.wall-fixed .tree-scene-v22{background:url('tree-simple-15.77.svg?v=15773') center bottom/100% 100% no-repeat!important;animation:treeBreathe94 7s ease-in-out infinite!important}
 @keyframes treeBreathe94{0%,100%{transform:scale(1)}50%{transform:scale(1.008) translateY(-2px)}}
 .wall-fixed .tree-trunk-v22,
 .wall-fixed .tree-branch-v22,
@@ -1477,7 +1477,7 @@ body::before{background:radial-gradient(circle at 52% 28%,rgba(255,255,223,.68),
 .wall-fixed .tree-footer-v22{z-index:10!important}
 @media(max-width:1250px){.hero{top:74px!important;transform:scale(.86)!important} .wall-fixed{left:270px!important;top:238px!important;width:800px!important;height:555px!important} .wall-fixed .tree-scene-v22{background-size:100% 100%!important} .wall-fixed .tree-footer-v22{left:17%!important;right:17%!important} .dashboard>.widget[data-id="weeklyGoal"]{left:160px!important;width:350px!important} .dashboard>.widget[data-id="meal"]{right:174px!important;width:172px!important} .dashboard>.widget[data-id="info"]{right:8px!important;width:178px!important}}
 .wall-fixed .wall-title-v22{font-size:20px!important}
-.wall-fixed .tree-scene-v22{background-image:url('tree-natural-15.69.png')!important}
+.wall-fixed .tree-scene-v22{background-image:url('tree-simple-15.77.svg?v=15773')!important}
 .wall-fixed .tree-portraits-v22[data-count="1"]:before,
 .wall-fixed .tree-portraits-v22[data-count="2"]:before,
 .wall-fixed .tree-portraits-v22[data-count="3"]:before,
@@ -6013,7 +6013,7 @@ html body #teamDialog #teamWorkspace .material-folder-new small{color:#6d8a6d!im
     right:0!important;
     top:38px!important;
     bottom:54px!important;
-    background:url('tree-natural-15.69.png') center bottom/contain no-repeat!important;
+    background:url('tree-simple-15.77.svg?v=15773') center bottom/contain no-repeat!important;
     transform:translateZ(0) scale(.99)!important;
     transform-origin:50% 100%!important;
     filter:drop-shadow(0 18px 15px rgba(23,62,30,.2)) saturate(1.02)!important;
@@ -10005,7 +10005,7 @@ html body .app-shell .wall-fixed .tree-main-image-v1539{
   position:absolute!important;
   z-index:3!important;
   inset:0!important;
-  background:url('tree-natural-15.69.png') center bottom/98% 100% no-repeat!important;
+  background:url('tree-simple-15.77.svg?v=15773') center bottom/98% 100% no-repeat!important;
   pointer-events:none!important;
   transform-origin:50% 82%!important;
   filter:drop-shadow(0 23px 20px rgba(19,67,31,.22)) var(--tree-main-filter)!important;
@@ -18316,7 +18316,7 @@ html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tre
   inset:-1% -2% -2%!important;
   display:block!important;
   z-index:5!important;
-  background-image:url('tree-natural-15.69.png')!important;
+  background-image:url('tree-simple-15.77.svg?v=15773')!important;
   background-repeat:no-repeat!important;
   background-position:center bottom!important;
   background-size:auto 117%!important;
