@@ -1635,7 +1635,7 @@ function renderTopbarPerson(){
 function renderMobilePersonalHome(){
   const title=document.querySelector('#mobileTodayTitle');if(!title)return;
   renderTopbarPerson();
-  renderMobileBoardController();renderAutomaticLesson();renderMobileInlinePoints();
+  renderMobileBoardController();renderAutomaticLesson();renderMobileInlinePoints();renderMobileHomeGoal();
   const now=new Date(),date=document.querySelector('#mobileTodayDate'),mascot=document.querySelector('#mobileTodayMascot');
   /* NEXT 15.17 – der Titel lag als Text im gespeicherten Zustand. Wer die
      App schon benutzt hat, haette sonst weiter „Heute im Blick“ gesehen. */
@@ -1746,6 +1746,15 @@ function renderMobilePointsGoal(){
   if(yes){yes.classList.toggle('is-active',vote==='green');yes.onclick=()=>{setWeeklyGoalVote('green');renderMobilePointsGoal();renderMobilePersonalHome();mobilePointsFeedback('✓ Wochenziel: Ja gespeichert')}}
   if(no){no.classList.toggle('is-active',vote==='red');no.onclick=()=>{setWeeklyGoalVote('red');renderMobilePointsGoal();renderMobilePersonalHome();mobilePointsFeedback('✕ Wochenziel: Nein gespeichert')}}
 }
+function renderMobileHomeGoal(){
+  const text=document.querySelector('#mobileHomeGoalText'),status=document.querySelector('#mobileHomeGoalStatus'),yes=document.querySelector('#mobileHomeGoalYes'),no=document.querySelector('#mobileHomeGoalNo');
+  if(!text)return;
+  const goal=state.content.weeklyGoal||{},vote=goalVotesForDay()[currentPointActor().id]||null;
+  text.textContent=goal.text||'Noch kein Wochenziel eingetragen';
+  if(status)status.textContent=vote==='green'?'Heute bestätigt ✓':vote==='red'?'Heute mit Veto markiert':'Heute noch offen';
+  if(yes){yes.classList.toggle('is-active',vote==='green');yes.onclick=()=>{setWeeklyGoalVote('green');renderMobileHomeGoal()}}
+  if(no){no.classList.toggle('is-active',vote==='red');no.onclick=()=>{setWeeklyGoalVote('red');renderMobileHomeGoal()}}
+}
 function mobilePointsFeedback(text){
   const target=document.querySelector('#mobilePointsFeedback');if(!target)return;
   target.textContent=text;target.classList.add('is-flash');
@@ -1756,6 +1765,7 @@ function renderMobilePoints(){
   const grid=document.querySelector('#mobilePointsGrid');if(!grid)return;grid.innerHTML='';
   const layout=state.ui?.mobilePointsLayout==='rows'?'rows':'cards';
   grid.classList.toggle('layout-rows',layout==='rows');
+  document.querySelectorAll('#mobilePointsLayout [data-mobile-layout]').forEach(button=>{const active=button.dataset.mobileLayout===layout;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
   const query=(document.querySelector('#mobileChildSearch')?.value||'').trim().toLocaleLowerCase('de-DE');
   const statusRank=s=>({'status-red':0,'status-yellow':1,'status-green':2,'status-neutral':3}[s]);
   const sorted=[...activeStudents()]
@@ -1783,6 +1793,7 @@ function renderMobilePoints(){
         <button type="button" class="rate-btn rate-green" aria-label="Grün für ${escapeHtml(student.name)}"><span></span></button>
         <button type="button" class="rate-btn rate-yellow" aria-label="Gelbe Karte für ${escapeHtml(student.name)}"><span></span></button>
         <button type="button" class="rate-btn rate-red" aria-label="Veto/Rot für ${escapeHtml(student.name)}"><span></span></button>
+        <button type="button" class="rate-btn rate-direct" aria-label="Direkt Grün für ${escapeHtml(student.name)}"><span aria-hidden="true">★</span></button>
         <button type="button" class="rate-btn rate-more" aria-label="Weitere Optionen für ${escapeHtml(student.name)}"><span aria-hidden="true">•••</span></button>
       </div>`;
     const flash=cls=>{card.classList.add(cls);setTimeout(()=>card.classList.remove(cls),500)};
@@ -1792,11 +1803,12 @@ function renderMobilePoints(){
       const el=card.querySelector('.mobile-rate-counts');if(el)el.textContent=`🟢 ${c.green||0} · 🟡 ${c.yellow||0} · 🔴 ${c.red||0}`;
     };
     card.querySelector('.mobile-rate-head').onclick=()=>openMobileChildActions(student.id);
-    const [g,y,r,more]=card.querySelectorAll('.rate-btn');
+    const [g,y,r,direct,more]=card.querySelectorAll('.rate-btn');
     const give=(type,cls,label)=>{addPoint(student.id,type);flash(cls);refresh();renderMobilePersonalHome();mobilePointsFeedback(`✓ ${label} für ${student.name} gespeichert`)};
     g.onclick=()=>give('green','just-green','Grüner Punkt');
     y.onclick=()=>give('yellow','just-yellow','Gelbe Karte');
     r.onclick=()=>give('red','just-red','Rot/Veto');
+    direct.onclick=()=>give('direct','just-green','Direkt Grün');
     more.onclick=()=>openMobileChildActions(student.id);
     grid.append(card);
   });
@@ -2523,7 +2535,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.81',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.82',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2569,7 +2581,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.81',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.82',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}
@@ -2885,6 +2897,7 @@ function selectTeamPage(page){
   document.querySelector('#teamWorkspace')?.classList.toggle('materials-mode',page==='materials');
   document.querySelector('#teamWorkspace')?.classList.toggle('settings-mode',page==='settings');
   document.querySelector('#teamWorkspace')?.classList.toggle('points-mode',page==='points');
+  applyMobileWorkspacePreferences();
   const card=document.querySelector('#teamDialog .dialog-card');if(card)card.scrollTo({top:0,behavior:'smooth'});
   enforceMobileFundusLayout();
   /* NEXT 15.16 – zweiter Durchlauf, nachdem der Browser die Seite fertig
@@ -2975,7 +2988,7 @@ function renderTeamCockpit(){
   if(personIcon)personIcon.textContent=person.icon;if(personName)personName.textContent=person.name;if(personRole)personRole.textContent=person.role;
   const cockpitMascot=document.querySelector('#cockpitTodayMascot'),cockpitTitle=document.querySelector('#cockpitTodayTitle');if(cockpitMascot)cockpitMascot.textContent=currentTheme().mascot;if(cockpitTitle)cockpitTitle.textContent=state.classWorld.dailyOverviewTitle||'Füchse im Blick';const cockpitDate=document.querySelector('#cockpitTodayDate');if(cockpitDate){const now=new Date();cockpitDate.dateTime=dateKeyLocal(now);cockpitDate.textContent=now.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long'})}
   const makeToolLink=tool=>{const preset=TEACHING_TOOL_PRESETS[tool.type]||TEACHING_TOOL_PRESETS.custom,safeLink=normaliseMaterialLink(tool.url),link=document.createElement('a');link.className=`cockpit-tool-link tool-${tool.type||'custom'}`;link.href=safeLink||'#';link.target='_blank';link.rel='noopener';link.innerHTML=`<span>${escapeHtml(tool.mark||preset.mark||(tool.label||'U').slice(0,1))}</span><div><strong>${escapeHtml(tool.label||'Werkzeug')}</strong><small>${escapeHtml(tool.hint||preset.hint||'Öffnen')}</small></div>${tool.isDefault?'<b>★</b>':''}`;if(!safeLink)link.onclick=event=>{event.preventDefault();selectTeamPage('settings')};return link};
-  const tools=person.restricted?[]:activeTeachingTools().filter(tool=>!tool.hidden),startTools=tools.filter(tool=>tool.placement!=='favorite').slice(0,2),favoriteLinks=tools.filter(tool=>tool.placement!=='start').slice(0,5);
+  const tools=person.restricted?[]:activeTeachingTools().filter(tool=>!tool.hidden),startTools=tools.filter(tool=>tool.placement!=='favorite').slice(0,2),favoritePool=window.matchMedia('(max-width:700px)').matches?tools.filter(tool=>tool.type!=='prowise'):tools,favoriteLinks=favoritePool.filter(tool=>tool.placement!=='start').slice(0,5);
   const favoriteTools=document.querySelector('#cockpitFavoriteTools');if(favoriteTools){favoriteTools.innerHTML='';startTools.forEach(tool=>favoriteTools.append(makeToolLink(tool)));if(!startTools.length)favoriteTools.innerHTML='<button type="button" class="cockpit-tool-empty">＋ Startwerkzeug</button>';favoriteTools.querySelector('.cockpit-tool-empty')?.addEventListener('click',()=>selectTeamPage('settings'))}
   const favorites=document.querySelector('#cockpitFavorites');if(favorites){favorites.innerHTML='';favoriteLinks.forEach(tool=>favorites.append(makeToolLink(tool)));if(!favoriteLinks.length)favorites.innerHTML='<button type="button" class="cockpit-tool-empty">Favoriten einrichten</button>';favorites.querySelector('.cockpit-tool-empty')?.addEventListener('click',()=>selectTeamPage('settings'))}
   const pins=document.querySelector('#cockpitPinnedList');
@@ -3015,10 +3028,18 @@ function renderTeamCockpit(){
 function addCockpitIncident(){const studentId=document.querySelector('#cockpitStudentSelect')?.value,type=document.querySelector('#cockpitIncidentType')?.value||'note',note=(document.querySelector('#cockpitIncidentNote')?.value||'').trim(),status=document.querySelector('#cockpitIncidentStatus'),student=state.students.find(s=>s.id===studentId);if(!student){if(status)status.textContent='Bitte zuerst ein Fuchs auswählen.';return}const actor=activeWorkspacePerson();state.teamIncidents=(state.teamIncidents||[]).filter(item=>!item.demo);state.teamIncidents.unshift({id:`i${Date.now()}`,studentId,studentName:student.name,type,note,actorName:actor.name,createdAt:new Date().toISOString()});state.teamIncidents=state.teamIncidents.slice(0,500);saveState();document.querySelector('#cockpitIncidentNote').value='';if(status)status.textContent=`${incidentMeta(type).label} für ${student.name} gespeichert ✓`;renderTeamCockpit();renderMobilePersonalHome();sendPointsRemote()}
 function renderPersonalWorkspaceSettings(){
   const member=activeTeamPerson(),prefs=member.profilePrefs||{};const values=[['personalDisplayNameInput',prefs.displayName||member.name],['personalIconInput',prefs.icon||member.icon],['personalAccentInput',prefs.accent||'#315f28'],['materialsPinInput',prefs.materialsPin||'']];values.forEach(([id,value])=>{const input=document.querySelector('#'+id);if(input)input.value=value});[['showMaterialsPanel','showMaterials'],['showGoalPanel','showGoal'],['showPublicationPanel','showPublication']].forEach(([id,key])=>{const input=document.querySelector('#'+id);if(input)input.checked=prefs[key]!==false});
+  const mobileValues=[['mobileOverviewOrder',prefs.mobileOverviewOrder||'standard'],['mobileOverviewSize',prefs.mobileOverviewSize||'compact'],['mobileOverviewColor',prefs.mobileOverviewColor||prefs.accent||'#2f9f52']];mobileValues.forEach(([id,value])=>{const input=document.querySelector('#'+id);if(input)input.value=value});
   const pinStatus=document.querySelector('#materialsPinStatus');if(pinStatus)pinStatus.textContent=prefs.materialsPin?'Code aktiv ✓':'Kein Code – Fundus & Vorbereitung ist frei zugänglich.';
+  applyMobileWorkspacePreferences();
+}
+function applyMobileWorkspacePreferences(){
+  const workspace=document.querySelector('#teamWorkspace'),member=activeTeamPerson(),prefs=member.profilePrefs||{};if(!workspace)return;
+  workspace.dataset.mobileOrder=prefs.mobileOverviewOrder||'standard';
+  workspace.dataset.mobileSize=prefs.mobileOverviewSize||'compact';
+  workspace.style.setProperty('--mobile-personal-accent',prefs.mobileOverviewColor||prefs.accent||'#2f9f52');
 }
 function savePersonalWorkspace(){
-  const member=activeTeamPerson();member.profilePrefs={...member.profilePrefs,displayName:(document.querySelector('#personalDisplayNameInput').value||member.name).trim()||member.name,icon:(document.querySelector('#personalIconInput').value||member.icon).trim()||member.icon,accent:document.querySelector('#personalAccentInput').value||'#315f28',showMaterials:document.querySelector('#showMaterialsPanel').checked,showGoal:document.querySelector('#showGoalPanel').checked,showPublication:document.querySelector('#showPublicationPanel').checked,materialsPin:(document.querySelector('#materialsPinInput')?.value||'').replace(/\D/g,'').slice(0,4)};saveState();renderActiveTeamWorkspace();selectTeamPage('settings');const status=document.querySelector('#personalWorkspaceStatus');if(status)status.textContent='Meine Startseite wurde gespeichert ✓';
+  const member=activeTeamPerson();member.profilePrefs={...member.profilePrefs,displayName:(document.querySelector('#personalDisplayNameInput').value||member.name).trim()||member.name,icon:(document.querySelector('#personalIconInput').value||member.icon).trim()||member.icon,accent:document.querySelector('#personalAccentInput').value||'#315f28',mobileOverviewOrder:document.querySelector('#mobileOverviewOrder')?.value||'standard',mobileOverviewSize:document.querySelector('#mobileOverviewSize')?.value||'compact',mobileOverviewColor:document.querySelector('#mobileOverviewColor')?.value||'#2f9f52',showMaterials:document.querySelector('#showMaterialsPanel').checked,showGoal:document.querySelector('#showGoalPanel').checked,showPublication:document.querySelector('#showPublicationPanel').checked,materialsPin:(document.querySelector('#materialsPinInput')?.value||'').replace(/\D/g,'').slice(0,4)};saveState();renderActiveTeamWorkspace();selectTeamPage('settings');const status=document.querySelector('#personalWorkspaceStatus');if(status)status.textContent='Meine Startseite wurde gespeichert ✓';
 }
 function addSubstitute(){
   const input=document.querySelector('#substituteNameInput'),name=(input?.value||'').trim(),status=document.querySelector('#substituteStatus');if(!name){if(status)status.textContent='Bitte einen Namen eintragen.';return}const substitute={id:`v${Date.now()}`,name,createdAt:new Date().toISOString()};state.substitutes.push(substitute);state.activePointActor=`sub:${substitute.id}`;saveState();if(input)input.value='';enterSubstituteWorkspace(substitute.id);
@@ -3233,7 +3254,7 @@ function renderMaterialLibrary(){
   store.drawers.forEach((drawer,index)=>{
     const wrap=document.createElement('div');wrap.className='drawer-tab-wrap';
     const style=subjectStyle(drawer.name,index,drawer);
-    const b=document.createElement('button');b.type='button';b.className='drawer-tab';if(drawer.name===store.activeDrawer)b.classList.add('active');
+    const b=document.createElement('button');b.type='button';b.className='drawer-tab';b.style.setProperty('--drawer-color',style.color);if(drawer.name===store.activeDrawer)b.classList.add('active');
     b.innerHTML=`<span>${style.icon}</span><strong>${escapeHtml(drawer.name)}</strong><small>${drawer.items.length}</small>`;
     b.onclick=()=>{store.activeDrawer=drawer.name;materialPage=0;saveState();renderMaterialLibrary()};wrap.append(b);
     tabs.append(wrap);
@@ -3356,8 +3377,8 @@ function openIconPicker(drawer){
   if(!dialog||!grid)return;
   drawerEditorTarget=drawer;drawerEditorSelectedIcon=drawer.icon||subjectStyle(drawer.name,0,drawer).icon;
   if(title)title.textContent=`„${drawer.name}“ ruhig an einer Stelle anpassen`;
-  const nameInput=document.querySelector('#iconPickerDrawerName'),status=document.querySelector('#iconPickerStatus');
-  if(nameInput)nameInput.value=drawer.name;if(status)status.textContent='';
+  const nameInput=document.querySelector('#iconPickerDrawerName'),colorInput=document.querySelector('#iconPickerDrawerColor'),status=document.querySelector('#iconPickerStatus');
+  if(nameInput)nameInput.value=drawer.name;if(colorInput)colorInput.value=drawer.color||subjectStyle(drawer.name,0,drawer).color;if(status)status.textContent='';
   grid.innerHTML='';
   SUBJECT_ICON_CHOICES.forEach(icon=>{
     const button=document.createElement('button');button.type='button';button.className='icon-picker-choice';if(drawerEditorSelectedIcon===icon)button.classList.add('is-active');button.textContent=icon;
@@ -3376,12 +3397,12 @@ function openIconPicker(drawer){
   dialog.showModal();
 }
 function saveActiveDrawerEditor(){
-  const drawer=drawerEditorTarget,store=activeMaterialStore(),input=document.querySelector('#iconPickerDrawerName'),status=document.querySelector('#iconPickerStatus');
+  const drawer=drawerEditorTarget,store=activeMaterialStore(),input=document.querySelector('#iconPickerDrawerName'),colorInput=document.querySelector('#iconPickerDrawerColor'),status=document.querySelector('#iconPickerStatus');
   if(!drawer)return;
   const name=(input?.value||'').trim();
   if(!name){if(status)status.textContent='Bitte einen Fachnamen eintragen.';input?.focus();return}
   if(store.drawers.some(candidate=>candidate!==drawer&&candidate.name.toLocaleLowerCase('de-DE')===name.toLocaleLowerCase('de-DE'))){if(status)status.textContent='Dieses Fach gibt es bereits.';input?.focus();return}
-  const oldName=drawer.name;drawer.name=name;drawer.icon=drawerEditorSelectedIcon||drawer.icon;
+  const oldName=drawer.name;drawer.name=name;drawer.icon=drawerEditorSelectedIcon||drawer.icon;drawer.color=colorInput?.value||drawer.color||'#2878bd';
   if(store.activeDrawer===oldName)store.activeDrawer=name;
   saveState();renderMaterialLibrary();renderTeamCockpit();renderMobileBoardController();renderSubjectLaunchpad();
   document.querySelector('#iconPickerDialog')?.close();
@@ -3955,7 +3976,10 @@ const seasonPreviewSelect=document.querySelector('#seasonPreviewSelect');if(seas
 const openPointsDock=document.querySelector('#openPointsDock');if(openPointsDock)openPointsDock.onclick=openPoints;
 const openPointsFromTeam=document.querySelector('#openPointsFromTeam');if(openPointsFromTeam)openPointsFromTeam.onclick=()=>{teamDialog.close();openPoints()};
 const teacherStudentSearch=document.querySelector('#teacherStudentSearch');if(teacherStudentSearch)teacherStudentSearch.oninput=renderTeacherList;
-document.querySelectorAll('[data-team-page]').forEach(button=>button.onclick=()=>selectTeamPage(button.dataset.teamPage));
+document.querySelectorAll('[data-team-page]').forEach(button=>button.onclick=()=>{
+  if(button.dataset.teamPage==='points'&&window.matchMedia('(max-width:700px)').matches){teamDialog.close();openMobilePoints();return}
+  selectTeamPage(button.dataset.teamPage);
+});
 document.querySelectorAll('[data-cockpit-more]').forEach(button=>button.onclick=()=>selectTeamPage(button.dataset.cockpitMore));
 document.querySelectorAll('[data-mobile-personal]').forEach(button=>button.onclick=()=>openMobilePersonalPage(button.dataset.mobilePersonal));
 document.querySelector('#materialAddToggle')?.addEventListener('click',()=>{
@@ -3966,7 +3990,9 @@ document.querySelector('#materialAddToggle')?.addEventListener('click',()=>{
 });
 document.querySelector('#mobilePointsClose')?.addEventListener('click',()=>document.querySelector('#mobilePointsDialog')?.close());
 document.querySelector('#mobileChildSearch')?.addEventListener('input',()=>renderMobilePoints());
-document.querySelector('#mobilePointsLayout')?.addEventListener('click',()=>{state.ui=state.ui||{};state.ui.mobilePointsLayout=state.ui.mobilePointsLayout==='rows'?'cards':'rows';saveState();renderMobilePoints();mobilePointsFeedback(state.ui.mobilePointsLayout==='rows'?'Darstellung: Zeilen':'Darstellung: Kacheln')});
+document.querySelectorAll('#mobilePointsLayout [data-mobile-layout]').forEach(button=>button.addEventListener('click',()=>{state.ui=state.ui||{};state.ui.mobilePointsLayout=button.dataset.mobileLayout==='rows'?'rows':'cards';saveState();renderMobilePoints();mobilePointsFeedback(state.ui.mobilePointsLayout==='rows'?'Darstellung: Normal':'Darstellung: Kompakt')}));
+document.querySelector('#mobilePointsOverview')?.addEventListener('click',()=>{document.querySelector('#mobilePointsDialog')?.close();openMobilePersonalPage('overview')});
+document.querySelector('#mobilePointsSettings')?.addEventListener('click',()=>{document.querySelector('#mobilePointsDialog')?.close();openMobilePersonalPage('settings')});
 document.querySelector('#mobileUndoPoint')?.addEventListener('click',()=>{
   if(!mobileSelectedStudentId)return;
   const student=state.students.find(item=>item.id===mobileSelectedStudentId);
