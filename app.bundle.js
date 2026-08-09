@@ -2535,7 +2535,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.82',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.83',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2581,7 +2581,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.82',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.83',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}
@@ -2755,7 +2755,7 @@ function showSubstituteSetup(){
 }
 function enterTeamWorkspace(memberId){
   ensureTeamMembersAvailable();
-  const member=state.teamMembers.find(item=>item.id===memberId);if(!member)return;state.activeTeamMember=memberId;state.activePointActor=memberId;activeTeamPage='overview';teamWorkspaceMode='workspace';materialsUnlockedThisSession=false;teamDialog?.classList.remove('team-selection-open');teamDialog?.classList.add('team-workspace-open');saveState();document.querySelector('#teamSelectionView').hidden=true;document.querySelector('#substituteSetupView').hidden=true;document.querySelector('#teamWorkspace').hidden=false;document.querySelector('#teamScrollTopButton').hidden=false;renderActiveTeamWorkspace();
+  const member=state.teamMembers.find(item=>item.id===memberId);if(!member)return;state.activeTeamMember=memberId;state.activePointActor=memberId;activeTeamPage='overview';teamWorkspaceMode='workspace';materialsUnlockedThisSession=false;teamDialog?.classList.remove('team-selection-open');teamDialog?.classList.add('team-workspace-open');saveState();document.querySelector('#teamSelectionView').hidden=true;document.querySelector('#substituteSetupView').hidden=true;const workspace=document.querySelector('#teamWorkspace');workspace.hidden=false;workspace.classList.add('desktop-fox-panel-collapsed');updateDesktopFoxPanelToggle();document.querySelector('#teamScrollTopButton').hidden=false;renderActiveTeamWorkspace();
 }
 function enterSubstituteWorkspace(substituteId){
   const substitute=state.substitutes.find(item=>item.id===substituteId);if(!substitute)return;state.activePointActor=`sub:${substituteId}`;activeTeamPage='points';teamWorkspaceMode='substitute';teamDialog?.classList.remove('team-selection-open');teamDialog?.classList.add('team-workspace-open');saveState();document.querySelector('#teamSelectionView').hidden=true;document.querySelector('#substituteSetupView').hidden=true;document.querySelector('#teamWorkspace').hidden=false;document.querySelector('#teamScrollTopButton').hidden=false;renderActiveTeamWorkspace();
@@ -2907,6 +2907,14 @@ function selectTeamPage(page){
     enforceMobileFundusLayout();
     if(page==='points')fitResponsiveStudentGrid(document.querySelector('#teacherStudentList'));
   });
+}
+function updateDesktopFoxPanelToggle(){
+  const workspace=document.querySelector('#teamWorkspace'),button=document.querySelector('#toggleDesktopFoxPanel');if(!workspace||!button)return;
+  const expanded=!workspace.classList.contains('desktop-fox-panel-collapsed');button.setAttribute('aria-expanded',String(expanded));button.innerHTML=expanded?'<span aria-hidden="true">🙈</span><strong>Füchse ausblenden</strong>':'<span aria-hidden="true">🔒</span><strong>Füchse im Blick</strong>';
+}
+function toggleDesktopFoxPanel(){
+  if(window.matchMedia('(max-width:700px)').matches)return;
+  document.querySelector('#teamWorkspace')?.classList.toggle('desktop-fox-panel-collapsed');updateDesktopFoxPanelToggle();
 }
 function incidentMeta(type){return ({warning:{icon:'🟡',label:'Ermahnung'},note:{icon:'📝',label:'Notiz'},ban:{icon:'🔴',label:'Verbot'},praise:{icon:'🟢',label:'Lob'},veto:{icon:'🔴',label:'Veto'},positive:{icon:'🟢',label:'Grüner Punkt'}})[type]||{icon:'📝',label:'Notiz'}}
 function incidentPriority(type){return ({ban:0,veto:1,warning:2,note:3,praise:4,positive:5})[type]??3}
@@ -4032,6 +4040,7 @@ const cockpitGoalConfirm=document.querySelector('#cockpitGoalConfirm');if(cockpi
 
 document.querySelector('#mobileSwitchPerson')?.addEventListener('click',()=>{teamWorkspaceMode='selection';renderTeamMembers();showTeamSelection();teamDialog.showModal()});
 document.querySelector('#openPersonalSettingsButton').onclick=()=>selectTeamPage('settings');
+document.querySelector('#toggleDesktopFoxPanel')?.addEventListener('click',toggleDesktopFoxPanel);
 
 const wg=document.querySelector('#weeklyGoalGreen');if(wg)wg.onclick=()=>setWeeklyGoalVote('green');
 const kgy=document.querySelector('#kidsGoalYes');if(kgy)kgy.onclick=()=>setKidsGoalVote('green');

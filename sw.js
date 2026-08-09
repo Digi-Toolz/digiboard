@@ -1,5 +1,5 @@
-/* DigiBoard Next 15.82 – kompakter Offline-Cache für die Upload-Version. */
-const VERSION='digiboard-15.82-mobile-neu';
+/* DigiBoard Next 15.83 – dynamische Laptop- und Prowise-Ansicht. */
+const VERSION='digiboard-15.83-laptop-prowise';
 const CACHE=`${VERSION}-core`;
 
 const CORE=[
