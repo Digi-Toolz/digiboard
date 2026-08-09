@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b6b45" />
-  <title>DigiBoard Next 15.83 – Laptop &amp; Prowise</title>
+  <title>DigiBoard Next 15.84 – Kompakte Handy-Startseite</title>
   <link rel="manifest" href="manifest.webmanifest?v=15820" />
   <!-- KORREKTUR 4 – Symbole ergaenzt. Ohne sie war die App nicht installierbar
        und hatte auf dem iPhone-Homescreen kein Icon. -->
@@ -14,7 +14,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DigiBoard" />
-  <link rel="stylesheet" href="app.bundle.css?v=15830" />
+  <link rel="stylesheet" href="app.bundle.css?v=15840" />
   <style id="forest-tools-1579">
     @media (min-width:761px){
       html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
@@ -1208,6 +1208,15 @@
     </section>
   </template>
 
-  <script src="app.bundle.js?v=15830" defer></script>
+  <style id="mobile-start-1584-final">
+    @media(max-width:700px){
+      html body .mobile-personal-hub .mobile-today-lead .mobile-incident-list.mobile-incident-list{min-height:0!important;max-height:none!important;overflow:visible!important;padding:10px 11px 11px!important}
+      html body .mobile-incident-summary{width:100%!important;min-height:62px!important;padding:9px 11px!important;display:grid!important;grid-template-columns:40px minmax(0,1fr) 25px!important;align-items:center!important;gap:9px!important;border:1px solid #d8cfb8!important;border-radius:14px!important;background:linear-gradient(135deg,#fffdf6,#f4f0e4)!important;color:#2d583b!important;text-align:left!important;box-shadow:0 4px 11px rgba(54,72,42,.07)!important}
+      html body .mobile-incident-summary .mobile-summary-icon{display:grid!important;place-items:center!important;width:40px!important;height:40px!important;border-radius:12px!important;background:linear-gradient(145deg,#e6f3d9,#cae7b8)!important;font-size:21px!important}
+      html body .mobile-incident-summary div{display:grid!important;gap:2px!important;min-width:0!important}html body .mobile-incident-summary strong{font-size:13px!important;line-height:1.1!important}html body .mobile-incident-summary small{overflow:hidden!important;color:#6d796d!important;font-size:8.5px!important;text-overflow:ellipsis!important;white-space:nowrap!important}html body .mobile-incident-summary b{color:#26884a!important;font-size:23px!important;text-align:center!important}
+      html body .app-shell .hero{min-height:136px!important;padding:18px 64px 16px 14px!important}html body .app-shell .hero h1,html body .app-shell #greetingTitle{max-width:100%!important;font-size:clamp(25px,7.2vw,31px)!important;line-height:1.02!important;white-space:normal!important;overflow:visible!important}html body .app-shell .hero #greetingTitle>.greeting-mobile-v1540{display:block!important;max-width:250px!important;overflow:visible!important;font:inherit!important;line-height:1.02!important;text-overflow:clip!important;white-space:normal!important}html body .app-shell .hero-fox{right:13px!important;bottom:18px!important;font-size:44px!important}
+    }
+  </style>
+  <script src="app.bundle.js?v=15840" defer></script>
 </body>
 </html>

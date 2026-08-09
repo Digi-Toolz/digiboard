@@ -1663,9 +1663,15 @@ function renderMobilePersonalHome(){
     if(!incidents.length){
       incidentList.innerHTML='<div class="mobile-all-good"><span>✓</span><div><strong>Heute keine Auffälligkeiten</strong><small>Alles ruhig in der Klasse.</small></div></div>';
     } else {
-      const shown=incidents.slice(0,5),extra=incidents.length-shown.length;
-      shown.forEach(item=>{const meta=item.type==='ban'?banMeta(item):incidentMeta(item.type),student=state.students.find(candidate=>candidate.id===item.studentId),row=document.createElement('button');row.type='button';row.className=`mobile-incident ${item.type} ${item.fromPoint?'is-point':''}`;row.innerHTML=`<span class="mobile-incident-photo">${studentPhotoMarkup(student||{name:item.studentName},'mobile-incident-img')}</span><div><strong>${escapeHtml(item.studentName)}</strong><small>${meta.icon} ${meta.label}${item.note?` · ${escapeHtml(item.note)}`:''}</small></div><time>${new Date(item.createdAt).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})}</time>`;row.onclick=()=>openStudentDetails(item.studentId);incidentList.append(row)});
-      if(extra>0){const more=document.createElement('button');more.type='button';more.className='mobile-incident-more';more.innerHTML=`<span>+ ${extra} weitere${extra===1?'':''} anzeigen</span><b>›</b>`;more.onclick=()=>openMobilePersonalPage('points');incidentList.append(more)}
+      /* NEXT 15.84 – Die Startseite ist eine Übersicht und kein zweites
+         Kinderprotokoll. Namen, Fotos und Einzelnotizen bleiben hinter
+         „Alle Füchse“. Das schützt die Daten auf gemeinsam sichtbaren
+         Displays und hält Wochenziel sowie Schnellzugriffe sofort sichtbar. */
+      const summary=document.createElement('button');
+      summary.type='button';summary.className='mobile-incident-summary';
+      summary.innerHTML=`<span class="mobile-summary-icon">📋</span><div><strong>${incidents.length} ${incidents.length===1?'Eintrag':'Einträge'} heute</strong><small>Bewertungen und Notizen geschützt ansehen</small></div><b aria-hidden="true">›</b>`;
+      summary.onclick=()=>openMobilePersonalPage('points');
+      incidentList.append(summary);
     }
   }
   /* Das Wochenziel steht seit 14.1 nur noch in „Alle Füchse & Punkte“ –
@@ -2535,7 +2541,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.83',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.84',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2581,7 +2587,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.83',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.84',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}

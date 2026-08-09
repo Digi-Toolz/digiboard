@@ -1,5 +1,5 @@
-/* DigiBoard Next 15.83 – dynamische Laptop- und Prowise-Ansicht. */
-const VERSION='digiboard-15.83-laptop-prowise';
+/* DigiBoard Next 15.84 – kompakte, datensparsame Handy-Startseite. */
+const VERSION='digiboard-15.84-mobile-start-kompakt';
 const CACHE=`${VERSION}-core`;
 
 const CORE=[
