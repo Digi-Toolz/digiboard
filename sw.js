@@ -1,5 +1,5 @@
-/* DigiBoard Next 15.85 – dynamische Laptop- und Prowise-Ansicht. */
-const VERSION='digiboard-15.85';
+/* DigiBoard Next 15.86 – neuer Klassenbaum, Holzsprache in der Waldansicht. */
+const VERSION='digiboard-15.86';
 const CACHE=`${VERSION}-core`;
 
 const CORE=[
@@ -14,7 +14,8 @@ const CORE=[
   './icon-512.png',
   './icon-maskable-512.png',
   './forest-calm-15.78.png',
-  './tree-reward-15.78.png'
+  './tree-reward-15.78.png',
+  './tree-reward-15.86.png'
 ];
 
 self.addEventListener('install',event=>{

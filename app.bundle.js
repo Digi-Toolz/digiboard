@@ -1466,24 +1466,45 @@ function renderWall(c){
 
   const grid=stage.querySelector('.tree-portraits-v22');
   grid.dataset.count=heroCount;
-  grid.style.setProperty('--tree-avatar-base',heroCount>20?'46px':heroCount>12?'52px':heroCount>7?'57px':heroCount>3?'62px':'68px');
+  /* 15.86 – Die Medaillons wachsen mit der Tafel: klein auf dem Laptop,
+     gross auf dem Prowise, ohne dass sich die Fuechse ueberdecken. */
+  grid.style.setProperty('--tree-avatar-base',
+    heroCount>20?'clamp(38px,3.5vw,78px)':
+    heroCount>12?'clamp(42px,4vw,88px)':
+    heroCount>7 ?'clamp(46px,4.5vw,98px)':
+    heroCount>3 ?'clamp(52px,5.1vw,112px)':'clamp(58px,5.8vw,124px)');
   grid.classList.toggle('is-dense',heroCount>12);
   grid.classList.toggle('is-full',heroCount>20);
-  const organicPresets={
-    1:[[50,30]],
-    2:[[36,31],[65,38]],
-    3:[[50,15],[28,43],[72,45]],
-    4:[[29,22],[69,20],[25,55],[72,55]],
-    5:[[24,23],[51,13],[77,29],[65,59],[29,58]],
-    6:[[20,20],[49,12],[78,23],[82,55],[54,64],[21,58]],
-    7:[[18,18],[43,10],[69,15],[84,39],[73,64],[44,67],[16,48]]
+  /* 15.86 – Sitzplaetze in der neuen Krone. Die Werte sind Prozent der
+     Baumbuehne und passen exakt zum gezeichneten Baum (Seitenverhaeltnis 4:3). */
+  const treeSeats1586={
+    1:[[50,32]],
+    2:[[38,30],[62,34]],
+    3:[[50,19],[33,41],[67,41]],
+    4:[[35,24],[65,24],[28,47],[72,47]],
+    5:[[50,17],[28,32],[72,32],[37,52],[63,52]],
+    6:[[49.2,15.9],[27.5,33.9],[74,36.1],[20,51.9],[49.2,54.1],[78.5,51.9]],
+    7:[[49.2,15.9],[24.9,33.9],[50.8,36.1],[76.7,33.9],[20,51.9],[49.2,54.1],[78.5,51.9]],
+    8:[[37.8,15.9],[60.6,18.1],[24.9,33.9],[50.8,36.1],[76.7,33.9],[20,51.9],[49.2,54.1],[78.5,51.9]],
+    9:[[37.8,15.9],[60.6,18.1],[24.9,33.9],[50.8,36.1],[76.7,33.9],[18.2,51.9],[38.9,54.1],[59.6,51.9],[80.2,54.1]],
+    10:[[37.8,15.9],[60.6,18.1],[23.3,33.9],[41.6,36.1],[59.9,33.9],[78.3,36.1],[18.2,51.9],[38.9,54.1],[59.6,51.9],[80.2,54.1]],
+    11:[[37.8,15.9],[60.6,18.1],[23.3,33.9],[41.6,36.1],[59.9,33.9],[78.3,36.1],[17,51.9],[33.1,54.1],[49.2,51.9],[65.3,54.1],[81.4,51.9]],
+    12:[[37.8,15.9],[60.6,18.1],[22.2,33.9],[36.5,36.1],[50.8,33.9],[65.1,36.1],[79.3,33.9],[17,51.9],[33.1,54.1],[49.2,51.9],[65.3,54.1],[81.4,51.9]],
+    13:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[21.1,36.1],[36,38.3],[50.8,36.1],[65.6,38.3],[80.4,36.1],[18.9,56.4],[34.1,58.6],[49.2,56.4],[64.4,58.6],[79.5,56.4]],
+    14:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[21.1,36.1],[36,38.3],[50.8,36.1],[65.6,38.3],[80.4,36.1],[18.1,56.4],[30.6,58.6],[43,56.4],[55.4,58.6],[67.9,56.4],[80.3,58.6]],
+    15:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[20.4,36.1],[32.5,38.3],[44.7,36.1],[56.9,38.3],[69,36.1],[81.2,38.3],[18.1,56.4],[30.6,58.6],[43,56.4],[55.4,58.6],[67.9,56.4],[80.3,58.6]],
+    16:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[20.4,36.1],[32.5,38.3],[44.7,36.1],[56.9,38.3],[69,36.1],[81.2,38.3],[17.5,56.4],[28.1,58.6],[38.7,56.4],[49.2,58.6],[59.8,56.4],[70.3,58.6],[80.9,56.4]],
+    17:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[26.3,29.4],[42.6,31.6],[59,29.4],[75.3,31.6],[17.4,42.9],[33.3,45.1],[49.2,42.9],[65.1,45.1],[81,42.9],[20.5,56.4],[35.6,58.6],[50.8,56.4],[65.9,58.6],[81.1,56.4]],
+    18:[[37.8,15.9],[60.6,18.1],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16.6,42.9],[29.7,45.1],[42.7,42.9],[55.7,45.1],[68.8,42.9],[81.8,45.1],[20.5,56.4],[35.6,58.6],[50.8,56.4],[65.9,58.6],[81.1,56.4]],
+    19:[[37.8,15.9],[60.6,18.1],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16.6,42.9],[29.7,45.1],[42.7,42.9],[55.7,45.1],[68.8,42.9],[81.8,45.1],[19.7,56.4],[32.1,58.6],[44.6,56.4],[57,58.6],[69.4,56.4],[81.9,58.6]],
+    20:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16.6,42.9],[29.7,45.1],[42.7,42.9],[55.7,45.1],[68.8,42.9],[81.8,45.1],[19.7,56.4],[32.1,58.6],[44.6,56.4],[57,58.6],[69.4,56.4],[81.9,58.6]],
+    21:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16,42.9],[27.1,45.1],[38.1,42.9],[49.2,45.1],[60.3,42.9],[71.4,45.1],[82.4,42.9],[19.7,56.4],[32.1,58.6],[44.6,56.4],[57,58.6],[69.4,56.4],[81.9,58.6]],
+    22:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[25.3,29.4],[38.1,31.6],[50.8,29.4],[63.5,31.6],[76.2,29.4],[16,42.9],[27.1,45.1],[38.1,42.9],[49.2,45.1],[60.3,42.9],[71.4,45.1],[82.4,42.9],[19.1,56.4],[29.7,58.6],[40.2,56.4],[50.8,58.6],[61.3,56.4],[71.9,58.6],[82.5,56.4]],
+    23:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[24.7,29.4],[35.1,31.6],[45.6,29.4],[56,31.6],[66.4,29.4],[76.9,31.6],[16,42.9],[27.1,45.1],[38.1,42.9],[49.2,45.1],[60.3,42.9],[71.4,45.1],[82.4,42.9],[19.1,56.4],[29.7,58.6],[40.2,56.4],[50.8,58.6],[61.3,56.4],[71.9,58.6],[82.5,56.4]],
+    24:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[24.7,29.4],[35.1,31.6],[45.6,29.4],[56,31.6],[66.4,29.4],[76.9,31.6],[15.5,42.9],[25.1,45.1],[34.8,42.9],[44.4,45.1],[54,42.9],[63.7,45.1],[73.3,42.9],[82.9,45.1],[19.1,56.4],[29.7,58.6],[40.2,56.4],[50.8,58.6],[61.3,56.4],[71.9,58.6],[82.5,56.4]],
+    25:[[36.5,15.9],[49.2,18.1],[61.9,15.9],[24.7,29.4],[35.1,31.6],[45.6,29.4],[56,31.6],[66.4,29.4],[76.9,31.6],[15.5,42.9],[25.1,45.1],[34.8,42.9],[44.4,45.1],[54,42.9],[63.7,45.1],[73.3,42.9],[82.9,45.1],[18.6,56.4],[27.8,58.6],[37,56.4],[46.2,58.6],[55.4,56.4],[64.6,58.6],[73.7,56.4],[82.9,58.6]]
   };
-  const fullSlots=[
-    [34,12],[50,9],[66,12],[20,25],[35,23],[50,22],[65,23],[80,25],
-    [12,39],[27,37],[42,36],[57,36],[72,37],[87,39],[15,53],[30,52],
-    [45,51],[60,51],[75,52],[88,54],[23,68],[38,67],[53,66],[68,67],[82,69]
-  ];
-  const slots=organicPresets[heroCount]||fullSlots;
+  const slots=treeSeats1586[heroCount]||treeSeats1586[25];
   publishedHeroes.slice(0,25).forEach((id,i)=>{
     const student=state.students.find(x=>x.id===id);if(!student)return;
     const [left,top]=slots[i];
@@ -2541,7 +2562,7 @@ async function exportDigiBoardBackupFile(){
   await photoStore.ready;
   const exportState=await photoStore.inlineForExport(state);
   const fotoBilanz=photoStore.photoReport(exportState.students);
-  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.85',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
+  const payload={format:'digiboard-backup',version:2,createdAt:new Date().toISOString(),appVersion:'15.86',state:exportState},json=JSON.stringify(payload,null,2),fileName=`DigiBoard-${state.classWorld?.className||'Klasse'}-${date}.digiboard-backup.json`,file=new File([json],fileName,{type:'application/json'});
   try{
     /* NEXT 11.97 – Der macOS-Share-Dialog hat kein „In Finder sichern“ und
        verwirrt dort nur (AirDrop, Mail, Notizen …). Auf dem Mac deshalb
@@ -2587,7 +2608,7 @@ function importDigiBoardBackupFile(file){
 
 async function exportPersonalProfileFile(){
   const member=activeTeamPerson(),status=document.querySelector('#personalProfileStatus'),date=dateKeyLocal(new Date());
-  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.85',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
+  const payload={format:'digiboard-personal-profile',version:1,createdAt:new Date().toISOString(),appVersion:'15.86',person:{sourceId:member.id,name:member.profilePrefs?.displayName||member.name,role:member.role,profilePrefs:clone(member.profilePrefs||{}),teachingTools:clone(member.teachingTools||[])},materials:clone(state.materials?.[member.id]||{activeDrawer:'Allgemein',drawers:[]})};
   const safeName=(payload.person.name||'Profil').replace(/[^\p{L}\p{N}-]+/gu,'-'),fileName=`DigiBoard-Profil-${safeName}-${date}.digiboard-profil.json`,file=new File([JSON.stringify(payload,null,2)],fileName,{type:'application/json'});
   try{
     if(isIOSDevice()&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:`DigiBoard-Profil ${payload.person.name}`,text:'Persönliches Profil in iCloud Drive sichern'});if(status)status.textContent='Wähle „In Dateien sichern“ und anschließend deinen Ordner in iCloud Drive ✓';return}
