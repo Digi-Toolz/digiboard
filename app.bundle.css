@@ -30,7 +30,7 @@
    ========================================================= */
 :root{--cream:#fff9ed;--card:#fffaf0;--green:#245d2f;--orange:#f47718;--wood:#704323;--soft-shadow:0 12px 28px rgba(40,46,22,.25)}
 .app-shell{
-  background-image:url('forest-clearing-15.74.png');
+  background-image:url('forest-calm-15.78.png');
   background-size:cover;background-position:center;
   border-radius:24px;
 }
@@ -61,7 +61,7 @@
 .schedule-overview{grid-template-columns:1.2fr .8fr}.schedule-now,.schedule-next{padding:10px}.schedule-overview strong{font-size:15px}.schedule-row{grid-template-columns:48px 1fr 72px;font-size:9px;padding:4px}.schedule-list{margin-top:8px}
 /* Wall card is a fixed centerpiece matching the reference */
 .wall-fixed{position:absolute!important;z-index:22!important;left:498px!important;top:425px!important;width:276px!important;height:300px!important;display:block!important;visibility:visible!important;opacity:1!important;background:rgba(255,250,239,.97)!important;border:1px solid #e2cfab!important;border-radius:18px!important;box-shadow:var(--soft-shadow)!important;overflow:hidden!important}
-.wall-fixed[hidden]{display:none!important}.wall-fixed .wall-v22{height:100%;overflow:hidden!important}.wall-fixed .wall-title-v22{left:12px!important;top:10px!important;transform:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;font-size:16px!important}.wall-fixed .tree-scene-v22{left:10px!important;right:10px!important;top:45px!important;bottom:48px!important;background:url('tree-simple-15.77.svg?v=15773') center bottom/contain no-repeat!important;overflow:visible!important}.wall-fixed .tree-shadow-v22,.wall-fixed .tree-trunk-v22,.wall-fixed .tree-branch-v22,.wall-fixed .tree-crown-v22{display:none!important}.wall-fixed .tree-portraits-v22{left:5%!important;right:5%!important;top:3%!important;bottom:10%!important}.wall-fixed .avatar-v22{width:43px;height:43px;font-size:16px;border-width:3px}.wall-fixed .child-card-v22 strong{font-size:8px;padding:2px 6px}.wall-fixed .badge-v22{font-size:13px;top:-10px}.wall-fixed .tree-footer-v22{left:10px!important;right:10px!important;bottom:7px!important;height:40px!important;padding:5px 8px!important;border:0!important;background:rgba(255,250,239,.94)!important;box-shadow:none!important;grid-template-columns:auto 1fr auto!important}.leaf-counter-v22>span{font-size:18px}.leaf-counter-v22 strong{font-size:10px}.leaf-counter-v22 small{font-size:7px}.tree-treasure-v22{font-size:20px}.progress-v22{height:7px}
+.wall-fixed[hidden]{display:none!important}.wall-fixed .wall-v22{height:100%;overflow:hidden!important}.wall-fixed .wall-title-v22{left:12px!important;top:10px!important;transform:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;font-size:16px!important}.wall-fixed .tree-scene-v22{left:10px!important;right:10px!important;top:45px!important;bottom:48px!important;background:url('tree-reward-15.78.png?v=15780') center bottom/contain no-repeat!important;overflow:visible!important}.wall-fixed .tree-shadow-v22,.wall-fixed .tree-trunk-v22,.wall-fixed .tree-branch-v22,.wall-fixed .tree-crown-v22{display:none!important}.wall-fixed .tree-portraits-v22{left:5%!important;right:5%!important;top:3%!important;bottom:10%!important}.wall-fixed .avatar-v22{width:43px;height:43px;font-size:16px;border-width:3px}.wall-fixed .child-card-v22 strong{font-size:8px;padding:2px 6px}.wall-fixed .badge-v22{font-size:13px;top:-10px}.wall-fixed .tree-footer-v22{left:10px!important;right:10px!important;bottom:7px!important;height:40px!important;padding:5px 8px!important;border:0!important;background:rgba(255,250,239,.94)!important;box-shadow:none!important;grid-template-columns:auto 1fr auto!important}.leaf-counter-v22>span{font-size:18px}.leaf-counter-v22 strong{font-size:10px}.leaf-counter-v22 small{font-size:7px}.tree-treasure-v22{font-size:20px}.progress-v22{height:7px}
 /* Meal card vertical, closer to the reference */
 .widget[data-id="meal"]{border:1px solid #e2cfab!important;background:rgba(255,250,239,.97)!important}.widget[data-id="meal"] .widget-head{color:#253a2d}.meal-compact{grid-template-columns:1fr;grid-template-rows:1.65fr .75fr;gap:8px}.meal-main,.dessert-line{background:#fffaf0;border:1px solid #eadcc3;flex-direction:column;padding:10px}.meal-main:after{content:"🍝";font-size:52px;order:-1}.meal-emoji{display:none}.dessert-line>span:first-child{font-size:28px}
 /* Birthday card */
@@ -85,16 +85,16 @@
 @keyframes seasonFall{0%{transform:translate3d(0,-40px,0) rotate(0);opacity:0}8%{opacity:.8}50%{transform:translate3d(35px,420px,0) rotate(190deg)}100%{transform:translate3d(-20px,900px,0) rotate(420deg);opacity:0}}
 
 /* Seasonal atmosphere */
-.app-shell.season-spring{background-image:linear-gradient(rgba(236,255,222,.08),rgba(155,214,126,.08)),url('forest-clearing-15.74.png')}
+.app-shell.season-spring{background-image:linear-gradient(rgba(236,255,222,.08),rgba(155,214,126,.08)),url('forest-calm-15.78.png')}
 .app-shell.season-spring .season-particle{background:radial-gradient(circle at 35% 35%,#fff 0 25%,#ff9fc5 28% 70%,transparent 72%);border-radius:60% 40% 65% 35%}
 .app-shell.season-spring .season-effects:after{content:'🦋';position:absolute;left:73%;top:31%;font-size:28px;animation:butterfly 8s ease-in-out infinite}
 @keyframes butterfly{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(90px,-45px) rotate(10deg)}}
-.app-shell.season-summer{background-image:linear-gradient(rgba(255,226,89,.08),rgba(95,174,67,.04)),url('forest-clearing-15.74.png');filter:saturate(1.07)}
+.app-shell.season-summer{background-image:linear-gradient(rgba(255,226,89,.08),rgba(95,174,67,.04)),url('forest-calm-15.78.png');filter:saturate(1.07)}
 .app-shell.season-summer .season-particle{background:#ffe45b;border-radius:50%;width:6px;height:6px;box-shadow:0 0 14px #fff16f;animation-name=summerSparkle;animation-duration:7s}
 @keyframes summerSparkle{0%,100%{transform:translateY(0) scale(.5);opacity:0}40%{opacity:.9}65%{transform:translateY(520px) scale(1.4);opacity:.7}}
-.app-shell.season-autumn{background-image:linear-gradient(rgba(199,98,26,.18),rgba(95,117,37,.08)),url('forest-clearing-15.74.png');filter:saturate(.94) sepia(.12)}
+.app-shell.season-autumn{background-image:linear-gradient(rgba(199,98,26,.18),rgba(95,117,37,.08)),url('forest-calm-15.78.png');filter:saturate(.94) sepia(.12)}
 .app-shell.season-autumn .season-particle{background:linear-gradient(135deg,#f59d22,#b84a20);border-radius:80% 10% 80% 10%;animation-duration:9s}
-.app-shell.season-winter{background-image:linear-gradient(rgba(207,232,248,.34),rgba(117,164,181,.16)),url('forest-clearing-15.74.png');filter:saturate(.72) brightness(1.04)}
+.app-shell.season-winter{background-image:linear-gradient(rgba(207,232,248,.34),rgba(117,164,181,.16)),url('forest-calm-15.78.png');filter:saturate(.72) brightness(1.04)}
 .app-shell.season-winter:after{display:block!important;content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 62%,rgba(245,252,255,.88) 63% 100%);z-index:2;pointer-events:none}
 .app-shell.season-winter .season-particle{width:9px;height:9px;background:#fff;border-radius:50%;box-shadow:0 0 9px #fff;animation-duration:10s}
 .app-shell.season-winter .season-card{background:rgba(244,251,255,.94)}
@@ -1045,7 +1045,7 @@ body .app-shell .top-actions .status-pill{color:#31533a!important}
 @media(max-width:1180px){.wall-fixed{left:420px!important;width:510px!important;transform:scale(.9)!important;transform-origin:top left!important} .dashboard>.widget[data-id="meal"]{right:212px!important;width:160px!important} .dashboard>.widget[data-id="info"]{width:194px!important}}
 .app-shell{background-image:radial-gradient(ellipse at 51% 25%,rgba(255,255,222,.99) 0 11%,rgba(255,239,160,.84) 29%,rgba(113,178,89,.24) 58%,transparent 74%),
     linear-gradient(90deg,rgba(5,40,22,.70),transparent 21%,transparent 79%,rgba(5,40,22,.70)),
-    url('forest-clearing-15.74.png')!important}
+    url('forest-calm-15.78.png')!important}
 .forest-light{filter:blur(1px) saturate(1.08)!important}
 .forest-ambient:before{background:linear-gradient(105deg,transparent 15%,rgba(255,249,190,.23) 35%,transparent 52%,rgba(255,248,181,.19) 67%,transparent 83%)!important}
 .wall-fixed .tree-trunk-v22{border-radius:48% 48% 20% 23%!important}
@@ -1294,7 +1294,7 @@ body{background:#dff4a7!important}
 .hero-kicker{padding:8px 28px!important}
 .hero-fox{font-size:72px!important}
 .wall-fixed{filter:drop-shadow(0 23px 22px rgba(49,102,44,.17))!important}
-.wall-fixed .tree-scene-v22{background:url('tree-simple-15.77.svg?v=15773') center bottom/100% 100% no-repeat!important;animation:treeBreathe94 7s ease-in-out infinite!important}
+.wall-fixed .tree-scene-v22{background:url('tree-reward-15.78.png?v=15780') center bottom/100% 100% no-repeat!important;animation:treeBreathe94 7s ease-in-out infinite!important}
 @keyframes treeBreathe94{0%,100%{transform:scale(1)}50%{transform:scale(1.008) translateY(-2px)}}
 .wall-fixed .tree-trunk-v22,
 .wall-fixed .tree-branch-v22,
@@ -1477,7 +1477,7 @@ body::before{background:radial-gradient(circle at 52% 28%,rgba(255,255,223,.68),
 .wall-fixed .tree-footer-v22{z-index:10!important}
 @media(max-width:1250px){.hero{top:74px!important;transform:scale(.86)!important} .wall-fixed{left:270px!important;top:238px!important;width:800px!important;height:555px!important} .wall-fixed .tree-scene-v22{background-size:100% 100%!important} .wall-fixed .tree-footer-v22{left:17%!important;right:17%!important} .dashboard>.widget[data-id="weeklyGoal"]{left:160px!important;width:350px!important} .dashboard>.widget[data-id="meal"]{right:174px!important;width:172px!important} .dashboard>.widget[data-id="info"]{right:8px!important;width:178px!important}}
 .wall-fixed .wall-title-v22{font-size:20px!important}
-.wall-fixed .tree-scene-v22{background-image:url('tree-simple-15.77.svg?v=15773')!important}
+.wall-fixed .tree-scene-v22{background-image:url('tree-reward-15.78.png?v=15780')!important}
 .wall-fixed .tree-portraits-v22[data-count="1"]:before,
 .wall-fixed .tree-portraits-v22[data-count="2"]:before,
 .wall-fixed .tree-portraits-v22[data-count="3"]:before,
@@ -1512,7 +1512,7 @@ body::before{background:radial-gradient(circle at 52% 28%,rgba(255,255,223,.68),
 .dashboard>.widget[data-id="info"]{right:10px!important;width:202px!important;max-height:300px!important}
 .dock{bottom:9px!important}
 @media(max-width:1250px){.hero{top:56px!important;transform:scale(.64)!important} .wall-fixed{left:270px!important;top:240px!important;width:760px!important;height:500px!important} .dashboard>.widget[data-id="weeklyGoal"]{left:12px!important;top:260px!important;width:248px!important} .dashboard>.widget[data-id="meal"]{right:18px!important;top:118px!important;width:168px!important} .dashboard>.widget[data-id="info"]{right:7px!important;top:274px!important;width:180px!important}}
-.app-shell{background:#eaf3aa url('forest-clearing-15.74.png') center/cover no-repeat!important}
+.app-shell{background:#eaf3aa url('forest-calm-15.78.png') center/cover no-repeat!important}
 .app-shell:before{display:block!important;inset:0!important;height:auto!important;background:linear-gradient(180deg,rgba(255,255,235,.08),transparent 28%,rgba(57,121,44,.05))!important;opacity:1!important;filter:none!important}
 .app-shell:after{display:none!important}
 .forest-ambient:before,
@@ -1583,7 +1583,7 @@ body::before{background:radial-gradient(circle at 52% 28%,rgba(255,255,223,.68),
 .dock{max-width:900px!important}
 @media(max-width:900px){.daily-task-note{grid-template-columns:1fr!important}.task-note-view{padding:38px 24px 26px}.task-note-command{font-size:22px}}
 .dock button[hidden]{display:none!important}
-.kids-world-card{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;margin:0!important;padding:28px 38px 34px!important;border-radius:0!important;overflow:auto!important;background:linear-gradient(rgba(247,255,224,.84),rgba(223,245,183,.9)),url('forest-clearing-15.74.png') center/cover fixed no-repeat!important}
+.kids-world-card{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;margin:0!important;padding:28px 38px 34px!important;border-radius:0!important;overflow:auto!important;background:linear-gradient(rgba(247,255,224,.84),rgba(223,245,183,.9)),url('forest-calm-15.78.png') center/cover fixed no-repeat!important}
 .kids-world-head{position:sticky;top:-28px;z-index:30;margin:-28px -38px 22px!important;padding:22px 38px 17px;background:rgba(255,252,232,.9);backdrop-filter:blur(12px);border-bottom:3px solid rgba(84,121,50,.2)}
 .kids-world-head h2{color:#315f28;font-size:34px!important}
 .kids-world-head p{margin:5px 0 0;font-weight:750;color:#5b6b4c}
@@ -4351,6 +4351,34 @@ html body #iconPickerDialog #iconPickerStatus{
   }
 }
 
+/* Der Belohnungsbaum wächst sichtbar mit dem gemeinsamen Blattestand. */
+@media (min-width:761px){
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tree-main-image-v1539{
+    transition:background-size .7s ease,filter .7s ease,opacity .7s ease!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-stage[data-growth-level="0"] .tree-main-image-v1539{
+    background-size:72% 90%!important;
+    opacity:.94!important;
+    filter:drop-shadow(0 13px 13px rgba(29,84,36,.16)) saturate(.92) brightness(1.05)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-stage[data-growth-level="1"] .tree-main-image-v1539{
+    background-size:77% 94%!important;
+    filter:drop-shadow(0 14px 14px rgba(29,84,36,.18)) saturate(.98) brightness(1.045)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-stage[data-growth-level="2"] .tree-main-image-v1539{
+    background-size:82% 99%!important;
+    filter:drop-shadow(0 16px 15px rgba(29,84,36,.20)) saturate(1.04) brightness(1.035)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-stage[data-growth-level="3"] .tree-main-image-v1539{
+    background-size:86% 103%!important;
+    filter:drop-shadow(0 17px 16px rgba(29,84,36,.21)) saturate(1.08) brightness(1.04)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .wall-stage[data-growth-level="4"] .tree-main-image-v1539{
+    background-size:89% 106%!important;
+    filter:drop-shadow(0 18px 17px rgba(35,88,34,.23)) saturate(1.12) brightness(1.055)!important;
+  }
+}
+
 @media (max-width:700px){
   html body #teamDialog #teamWorkspace.materials-mode .material-head{
     min-height:54px!important;
@@ -5432,7 +5460,7 @@ html body .app-shell .forest-tool-belt-v1521.dock .kids-forest-entrance{
 @media(min-width:761px){
   html body .app-shell[data-theme="forest"]{
     background-color:#dff0a5!important;
-    background-image:url('forest-clearing-15.74.png')!important;
+    background-image:url('forest-calm-15.78.png')!important;
     background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;
     filter:saturate(1.035) contrast(1.015)!important;
   }
@@ -5516,7 +5544,7 @@ html body .app-shell[data-theme="forest"] .wall-fixed .tree-footer-v22{
 /* NEXT 15.24 – MEHR TIEFE: Bach, Brücke, Waldspuren und feinere Lichtluft */
 @media(min-width:761px){
   html body .app-shell[data-theme="forest"]{
-    background-image:url('forest-clearing-15.74.png')!important;
+    background-image:url('forest-calm-15.78.png')!important;
     background-position:center center!important;background-size:cover!important;
     filter:saturate(1.025) contrast(1.01)!important;
   }
@@ -5935,7 +5963,7 @@ html body #teamDialog #teamWorkspace .material-folder-new small{color:#6d8a6d!im
      verschwinden, die drei kleinen Entdeckungen bleiben aber klickbar. */
   html body .app-shell[data-theme="forest"]{
     background-color:#dfeeb8!important;
-    background-image:url('forest-clearing-15.74.png')!important;
+    background-image:url('forest-calm-15.78.png')!important;
     background-position:center center!important;
     background-size:cover!important;
     background-repeat:no-repeat!important;
@@ -6013,7 +6041,7 @@ html body #teamDialog #teamWorkspace .material-folder-new small{color:#6d8a6d!im
     right:0!important;
     top:38px!important;
     bottom:54px!important;
-    background:url('tree-simple-15.77.svg?v=15773') center bottom/contain no-repeat!important;
+    background:url('tree-reward-15.78.png?v=15780') center bottom/contain no-repeat!important;
     transform:translateZ(0) scale(.99)!important;
     transform-origin:50% 100%!important;
     filter:drop-shadow(0 18px 15px rgba(23,62,30,.2)) saturate(1.02)!important;
@@ -10005,7 +10033,7 @@ html body .app-shell .wall-fixed .tree-main-image-v1539{
   position:absolute!important;
   z-index:3!important;
   inset:0!important;
-  background:url('tree-simple-15.77.svg?v=15773') center bottom/98% 100% no-repeat!important;
+  background:url('tree-reward-15.78.png?v=15780') center bottom/98% 100% no-repeat!important;
   pointer-events:none!important;
   transform-origin:50% 82%!important;
   filter:drop-shadow(0 23px 20px rgba(19,67,31,.22)) var(--tree-main-filter)!important;
@@ -10814,7 +10842,7 @@ html body .app-shell{
     radial-gradient(ellipse at 50% 18%,var(--forest-daylight),transparent 43%),
     linear-gradient(90deg,var(--forest-edge),transparent 17%,transparent 83%,var(--forest-edge)),
     linear-gradient(180deg,transparent 62%,var(--forest-floor-light)),
-    url('forest-clearing-15.74.png')!important;
+    url('forest-calm-15.78.png')!important;
   background-position:center,center,center,center center!important;
   background-repeat:no-repeat!important;
   background-size:100% 100%,100% 100%,100% 100%,cover!important;
@@ -15471,7 +15499,7 @@ html body .app-shell{
     radial-gradient(126% 74% at 50% 2%,rgba(255,255,255,.50),rgba(255,255,255,0) 56%),
     linear-gradient(180deg,rgba(203,228,238,.34) 0%,rgba(255,255,255,0) 38%),
     radial-gradient(150% 96% at 50% 112%,rgba(21,54,29,.26),rgba(21,54,29,0) 52%),
-    url('forest-clearing-15.74.png')!important;
+    url('forest-calm-15.78.png')!important;
   background-position:center,center,center,center center!important;
   background-repeat:no-repeat!important;
   background-size:100% 100%,100% 100%,100% 100%,cover!important;
@@ -17901,7 +17929,7 @@ html body .app-shell[data-theme="forest"]{
   background-image:
     radial-gradient(115% 70% at 50% 2%,rgba(255,255,244,.20),transparent 58%),
     linear-gradient(180deg,rgba(34,80,44,.08),transparent 26%,rgba(21,54,31,.10)),
-    url('forest-clearing-15.74.png')!important;
+    url('forest-calm-15.78.png')!important;
   background-position:center,center,center center!important;
   background-repeat:no-repeat!important;
   background-size:100% 100%,100% 100%,cover!important;
@@ -18129,7 +18157,7 @@ html body .app-shell[data-theme="forest"] .dashboard>.widget[data-id="info"] .in
   html body .app-shell[data-theme="forest"]{
     background-image:
       linear-gradient(180deg,rgba(20,69,38,.18),rgba(244,248,220,.05) 38%,rgba(15,57,32,.16)),
-      url('forest-clearing-15.74.png')!important;
+      url('forest-calm-15.78.png')!important;
     background-size:100% 100%,auto 100dvh!important;
   }
   html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock{
@@ -18316,7 +18344,7 @@ html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tre
   inset:-1% -2% -2%!important;
   display:block!important;
   z-index:5!important;
-  background-image:url('tree-simple-15.77.svg?v=15773')!important;
+  background-image:url('tree-reward-15.78.png?v=15780')!important;
   background-repeat:no-repeat!important;
   background-position:center bottom!important;
   background-size:auto 117%!important;
@@ -18476,7 +18504,7 @@ html body .app-shell[data-theme="forest"]{
   background-image:
     radial-gradient(ellipse at 50% 43%,rgba(255,255,236,.30) 0 28%,rgba(255,250,202,.13) 50%,transparent 72%),
     linear-gradient(180deg,rgba(255,249,199,.12),rgba(129,196,91,.04)),
-    url('forest-clearing-15.74.png')!important;
+    url('forest-calm-15.78.png')!important;
   background-blend-mode:screen,soft-light,normal!important;
 }
 
@@ -18627,7 +18655,7 @@ html body .app-shell[data-theme="forest"] .topbar{
   html body .app-shell[data-theme="forest"]{
     background-image:
       linear-gradient(180deg,rgba(255,255,230,.12),rgba(119,189,87,.04)),
-      url('forest-clearing-15.74.png')!important;
+      url('forest-calm-15.78.png')!important;
   }
 }
 
@@ -19100,7 +19128,7 @@ html body .app-shell[data-theme="forest"] {
   background-image:
     radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.08), transparent 44%),
     linear-gradient(180deg, rgba(255,255,255,.015), rgba(71,145,57,.025)),
-    url('forest-clearing-15.74.png') !important;
+    url('forest-calm-15.78.png') !important;
   background-blend-mode: screen, soft-light, normal !important;
   background-position: center, center, center center !important;
   background-repeat: no-repeat !important;
@@ -19149,7 +19177,7 @@ html body .app-shell[data-theme="forest"] {
   html body .app-shell[data-theme="forest"] {
     background-image:
       linear-gradient(180deg, rgba(255,255,255,.06), rgba(83,159,66,.04)),
-      url('forest-clearing-15.74.png') !important;
+      url('forest-calm-15.78.png') !important;
     background-blend-mode: screen, normal !important;
   }
 }
@@ -19365,7 +19393,7 @@ html body .app-shell[data-theme="forest"] {
     background-image:
       radial-gradient(ellipse at 50% 13%, rgba(255,255,255,.22) 0 18%, rgba(255,248,185,.12) 38%, transparent 68%),
       linear-gradient(90deg, rgba(255,253,217,.11), transparent 24% 76%, rgba(255,253,217,.11)),
-      url("forest-clearing-15.74.png") !important;
+      url("forest-calm-15.78.png") !important;
     background-blend-mode: screen, screen, normal !important;
   }
 
@@ -19462,5 +19490,55 @@ html body .app-shell[data-theme="forest"] {
   /* Auch mobil freundlich; die eigentliche Mobile-Struktur bleibt unangetastet. */
   html body .app-shell[data-theme="forest"] {
     background-color: #dff3ad !important;
+  }
+}
+/* DigiBoard Next 15.78 – ruhige Bühne, besonderer Belohnungsbaum */
+@media (min-width:761px){
+  html body .app-shell[data-theme="forest"]{
+    background-image:
+      linear-gradient(180deg,rgba(255,255,255,.035),rgba(247,255,216,.025)),
+      url("forest-calm-15.78.png")!important;
+    background-blend-mode:screen,normal!important;
+    background-position:center!important;
+    background-size:cover!important;
+  }
+  html body .app-shell[data-theme="forest"] .forest-depth-layers,
+  html body .app-shell[data-theme="forest"] .forest-ambient,
+  html body .app-shell[data-theme="forest"] .season-effects{
+    display:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-scene-v22{
+    background:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-main-image-v1539.tree-main-image-v1539{
+    background-image:url("tree-reward-15.78.png?v=15780")!important;
+    background-position:center bottom!important;
+    background-size:84% 103%!important;
+    background-repeat:no-repeat!important;
+    filter:drop-shadow(0 16px 15px rgba(29,84,36,.20)) saturate(1.04) brightness(1.035) contrast(1.01)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-canopy-light-v1542,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-depth-pines-v1542,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-background-grove-v1539,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-growth-atmosphere-v1538,
+  html body .app-shell[data-theme="forest"] .wall-fixed .tree-season-details-v1539{
+    display:none!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22.empty-tree-v22{
+    top:70%!important;
+    width:min(205px,31%)!important;
+    padding:7px 11px!important;
+    background:rgba(255,255,235,.90)!important;
+    box-shadow:0 5px 12px rgba(34,80,35,.13)!important;
+  }
+  html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>span{display:none!important}
+  html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>strong{font-size:10px!important}
+  html body .app-shell[data-theme="forest"] .wall-fixed .empty-tree-v22>small{font-size:6.5px!important}
+}
+@media(max-width:760px){
+  html body .app-shell[data-theme="forest"]{
+    background-image:
+      linear-gradient(180deg,rgba(255,255,240,.10),rgba(211,239,167,.08)),
+      url("forest-calm-15.78.png")!important;
   }
 }
