@@ -35,7 +35,7 @@
   border-radius:24px;
 }
 
-/* DigiBoard Next 15.79 – warme, farbcodierte Waldwerkzeuge */
+/* DigiBoard Next 15.80 – warme Waldwerkzeuge mit sichtbarer Holzstruktur */
 @media (min-width:761px){
   html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
     height:66px!important;

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b6b45" />
-  <title>DigiBoard Next 15.79 – Warme Waldwerkzeuge</title>
+  <title>DigiBoard Next 15.80 – Holzstruktur Waldwerkzeuge</title>
   <link rel="manifest" href="manifest.webmanifest?v=15510" />
   <!-- KORREKTUR 4 – Symbole ergaenzt. Ohne sie war die App nicht installierbar
        und hatte auf dem iPhone-Homescreen kein Icon. -->
@@ -14,7 +14,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DigiBoard" />
-  <link rel="stylesheet" href="app.bundle.css?v=15790" />
+  <link rel="stylesheet" href="app.bundle.css?v=15800" />
   <style id="forest-tools-1579">
     @media (min-width:761px){
       html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
@@ -43,6 +43,45 @@
       html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-active,html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button[aria-pressed="true"],html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-playing{border-color:#fff4c8!important;background:var(--tool-accent)!important;color:#173d29!important;box-shadow:inset 0 2px rgba(255,255,255,.34),0 3px 8px rgba(75,39,18,.20)!important}
       html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-active .dock-label,html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button[aria-pressed="true"] .dock-label,html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-playing .dock-label{color:#173d29!important;text-shadow:0 1px rgba(255,255,255,.38)!important}
       html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>.kids-forest-entrance{background:linear-gradient(180deg,#e9943b,#c86524)!important;border-color:#ffe09a!important}
+    }
+  </style>
+  <style id="forest-wood-1580">
+    @media (min-width:761px){
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock{
+        border-color:#75421f!important;border-radius:20px!important;
+        background:
+          radial-gradient(ellipse 58px 13px at 10% 30%,transparent 43%,rgba(91,43,17,.17) 46% 49%,transparent 53%),
+          radial-gradient(ellipse 74px 15px at 73% 73%,transparent 43%,rgba(91,43,17,.14) 46% 49%,transparent 53%),
+          radial-gradient(ellipse 42px 10px at 92% 22%,transparent 42%,rgba(255,224,158,.10) 46% 49%,transparent 54%),
+          repeating-linear-gradient(2deg,rgba(91,43,17,.075) 0 1px,transparent 1px 8px,rgba(255,231,176,.05) 9px 10px,transparent 10px 17px),
+          linear-gradient(180deg,#e0a15f 0%,#cb7c40 52%,#a85e30 100%)!important;
+        box-shadow:inset 0 2px 0 rgba(255,239,196,.78),inset 0 0 0 4px rgba(255,209,132,.13),inset 0 -4px 0 rgba(91,43,19,.22),0 8px 18px rgba(39,65,28,.20)!important;
+      }
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button{
+        border:1px solid #96572d!important;border-top-color:rgba(255,225,167,.52)!important;border-radius:10px!important;
+        background:
+          radial-gradient(ellipse 30px 7px at 78% 23%,transparent 42%,rgba(92,42,15,.11) 46% 50%,transparent 55%),
+          repeating-linear-gradient(1deg,rgba(95,44,16,.065) 0 1px,transparent 1px 8px),
+          linear-gradient(180deg,rgba(226,158,91,.91),rgba(181,98,48,.93))!important;
+        box-shadow:inset 0 1px 0 rgba(255,237,193,.52),inset 0 -2px 0 rgba(84,38,15,.17),1px 0 rgba(255,211,139,.12)!important;
+      }
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button:hover,
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button:focus-visible{
+        border-color:#ffe4a4!important;
+        background:
+          radial-gradient(ellipse 30px 7px at 78% 23%,transparent 42%,rgba(92,42,15,.09) 46% 50%,transparent 55%),
+          repeating-linear-gradient(1deg,rgba(95,44,16,.055) 0 1px,transparent 1px 8px),
+          linear-gradient(180deg,#edb16f,#ca783d)!important;
+      }
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-active,
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button[aria-pressed="true"],
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>button.is-playing{
+        background:repeating-linear-gradient(1deg,rgba(52,79,32,.07) 0 1px,transparent 1px 8px),var(--tool-accent)!important;
+      }
+      html body .app-shell[data-theme="forest"] .forest-tool-belt-v1521.dock.dock>.kids-forest-entrance{
+        border-color:#ffe09a!important;
+        background:repeating-linear-gradient(1deg,rgba(112,49,12,.075) 0 1px,transparent 1px 8px),linear-gradient(180deg,#efa24d,#c96a2d)!important;
+      }
     }
   </style>
 </head>
@@ -982,6 +1021,6 @@
     </section>
   </template>
 
-  <script src="app.bundle.js?v=15790" defer></script>
+  <script src="app.bundle.js?v=15800" defer></script>
 </body>
 </html>
